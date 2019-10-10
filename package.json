@@ -1,0 +1,30 @@
+{
+  "name": "vue-admin",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "fs-extra": "^8.1.0",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "socket.io": "^2.3.0",
+    "style-loader": "^1.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.6.1",
+    "css-loader": "^3.2.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "node-sass": "^4.12.0",
+    "postcss-flexbugs-fixes": "^4.1.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9"
+  }
+}

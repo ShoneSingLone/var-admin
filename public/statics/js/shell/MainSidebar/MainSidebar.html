@@ -1,0 +1,15 @@
+<aside :class="['elevation6','aui-sidebar','aui-sidebar201906212159', 'aui-sidebar--' + sidebarLayoutSkin]">
+    <div class="search-wrapper" v-show="!APP.sidebarFold">
+        <span class="icon prefix"><i class="el-input__icon el-icon-search"></i></span>
+        <input class="input-search" type="text" autocomplete="off" placeholder="检索菜单..." v-model="searchKeyWord">
+        <span class="icon suffix" v-show="searchKeyWord" @click="searchKeyWord=''"><i
+                class="el-input__icon el-icon-circle-close"></i></span>
+    </div>
+    <el-scrollbar class="aui-sidebar__inner">
+        <el-menu :default-active="sidebarMenuActiveName" :collapse="sidebarFold" :unique-opened="true"
+            :collapseTransition="false" class="aui-sidebar__menu">
+            <main-sidebar-submenu v-for="menu in privateSidebarMenuList" :key="menu.id" :menu="menu">
+            </main-sidebar-submenu>
+        </el-menu>
+    </el-scrollbar>
+</aside>
