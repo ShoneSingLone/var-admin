@@ -17,6 +17,7 @@
         console.log('path: ', res);
         return res;
     };
+    
     window.Vue.log = function () {
         try {
             throw new Error();

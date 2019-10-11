@@ -1,3 +1,4 @@
+debugger;
 Promise.all([
     Vue.loadComponent(["MainContent", "MainNavbar", "MainThemeTools", "MainSidebar"], Vue.resolvePath("statics/js/shell")),
     Vue.loadJS([

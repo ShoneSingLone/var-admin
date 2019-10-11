@@ -1,6 +1,7 @@
 /**
  * main-theme-tools组件
  */
+
 (function (Vue) {
     var COMPONENT_NAME = "MainThemeTools";
     var self = null;
