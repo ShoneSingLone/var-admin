@@ -6,7 +6,8 @@ module.exports = {
     entry: "./sass/style.js",
     watch: true,
     module: {
-        rules: [{
+        rules: [
+            /* {
                 test: /\.scss$/,
                 use: (() => {
                     let loader = ExtractTextPlugin
@@ -24,6 +25,29 @@ module.exports = {
                                     }
                                 },
                                 "sass-loader"
+                            ]
+                        });
+                    return loader;
+                })()
+        }, */
+            {
+                test: /\.styl$/,
+                use: (() => {
+                    let loader = ExtractTextPlugin
+                        .extract({
+                            fallback: "style-loader",
+                            use: [
+                                "css-loader",
+                                {
+                                    loader: "postcss-loader",
+                                    options: {
+                                        sourceMap: false,
+                                        config: {
+                                            path: "postcss.config.js"
+                                        }
+                                    }
+                                },
+                                "stylus-loader"
                             ]
                         });
                     return loader;

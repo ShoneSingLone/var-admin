@@ -18,4 +18,5 @@ npm install extract-text-webpack-plugin@next
 npm install --save vue-highlightjs
 npm install monaco-editor
 npm install confman 
+npm i stylus stylus-loader -D
 ```
