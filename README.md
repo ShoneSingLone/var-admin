@@ -20,3 +20,20 @@ npm install monaco-editor
 npm install confman 
 npm i stylus stylus-loader -D
 ```
+
+## 生成vue组件的vs code插件
+
+[generatevuecomponent](https://marketplace.visualstudio.com/items?itemName=ShoneSingLone.generatevuecomponent)
+
+## 约定
+
+在相同的目录下
+page=compoentName?test=true
+
+### page 业务页面
+
+### test 测试、展示页面
+
+## 文档
+
+MainContent.js 主要是tab id 的问题 使用与selector相恰的变量名

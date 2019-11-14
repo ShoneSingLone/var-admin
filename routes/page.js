@@ -3,14 +3,14 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  
-  res.render("page", {
-    title: "Page"
+
+  res.render("shell", {
+    title: "Shell"
   });
 });
-router.get("/shell", function (req, res, next) {
+router.get("/page", function (req, res, next) {
   res.render("page", {
-    title: "Shell"
+    title: "Page"
   });
 });
 
