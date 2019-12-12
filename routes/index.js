@@ -6,7 +6,6 @@ router.get("/", function (req, res, next) {
   res.render("shell", {
     title: "Shell"
   });
-  // res.render("index", { title: "Express" });
 });
 
 module.exports = router;

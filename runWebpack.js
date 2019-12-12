@@ -14,5 +14,5 @@ compiler.watch({
     }
 });
 compiler.run((err, stats) => {
-    console.log("run");
+    console.log("success run webpack...");
 });
