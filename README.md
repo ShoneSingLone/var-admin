@@ -1,6 +1,5 @@
 # vue-admin
 
-
 ## 参考
 
 - [TypeScript-Node-Starter](https://github.com/microsoft/TypeScript-Node-Starter)
@@ -15,13 +14,10 @@
 ## package
 
 ``` bash
-npm install extract-text-webpack-plugin@next
-npm install --save vue-highlightjs
-npm install monaco-editor
-npm install confman 
-npm i stylus stylus-loader -D
-npm i webpack -g
-npm install -D vue-loader vue-template-compiler
+npm i -g webpack 
+npm i extract-text-webpack-plugin@next
+npm i -S vue-highlightjs monaco-editor
+npm i -D stylus stylus-loader confman vue-loader vue-template-compiler stylus stylus-loader postcss-loader 
 ```
 
 ## 生成vue组件的vs code插件

@@ -1,6 +1,8 @@
 const webpackDevMiddleware = require("webpack-dev-middleware")
 const webpackHotMiddleware = require("webpack-hot-middleware")
-const { PassThrough } = require('stream')
+const {
+  PassThrough
+} = require('stream')
 
 exports.koaDevMiddleware = (webpackCompiler, options) => {
   const expressStyled = webpackDevMiddleware(webpackCompiler, options)
