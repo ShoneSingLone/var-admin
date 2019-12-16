@@ -15,11 +15,14 @@
 ## package
 
 ``` bash
-npm i -g webpack 
+npm i -g webpack
 npm i extract-text-webpack-plugin@next
 npm i -S vue-highlightjs monaco-editor
 npm i -D stylus stylus-loader confman vue-loader vue-template-compiler stylus stylus-loader postcss-loader 
+
 ```
+
+~~node-sass sass-loader~~安装失败神烦
 
 ## 生成vue组件的vs code插件
 
