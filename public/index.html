@@ -7,82 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Shell</title>
     <link rel='stylesheet' href='./statics/css/style.css' />
-    <link rel="stylesheet" href="./statics/plugins/element-2.8.2/index.css">
-    <script src="./statics/js/config.js"></script>
 </head>
 
 <body>
-    <div
-        v-cloak
-        v-loading.fullscreen.lock="loading"
-        :element-loading-text="$t('loading')"
-        :class="{ 'aui-sidebar--fold': sidebarFold }"
-        class="aui-wrapper">
-        <template v-if="!loading">
-            <!-- navbar -->
-            <main-navbar
-                :navbar-layout-type="navbarLayoutType"
-                :content-tabs-active-name="contentTabsActiveName"
-                :user="user"
-                @switch-sidebar-fold="sidebarFold = !sidebarFold"></main-navbar>
-            <!-- sidebar -->
-            <main-sidebar
-                :sidebar-layout-skin="sidebarLayoutSkin"
-                :sidebar-fold="sidebarFold"
-                :sidebar-menu-list="sidebarMenuList"
-                :sidebar-menu-active-name="sidebarMenuActiveName"></main-sidebar>
-            <div class="aui-content__wrapper">
-                <!-- content -->
-                <main-content
-                    ref="content"
-                    :sidebar-menu-active-name="sidebarMenuActiveName"
-                    :content-tabs="contentTabs"
-                    :content-tabs-active-name="contentTabsActiveName"
-                    @set-sidebar-menu-active-name="setSidebarMenuActiveName"
-                    @set-content-tabs="setContentTabs"
-                    @set-content-tabs-active-name="setContentTabsActiveName"></main-content>
-            </div>
-            <!-- theme-tools -->
-            <main-theme-tools
-                :navbar-layout-type="navbarLayoutType"
-                :sidebar-layout-skin="sidebarLayoutSkin"
-                @set-navbar-layout-type="setNavbarLayoutType"
-                @set-sidebar-layout-type="setSidebarLayoutType"></main-theme-tools>
-        </template>
-    </div>
-    <!-- 插件 -->
-    <script src="/statics/plugins/screenfull-3.3.2/screenfull.min.js"></script>
-    <script src="/statics/plugins/vue-2.6.10/vue.js"></script>
-    <script src="/statics/plugins/element-2.8.2/index.js"></script>
-    <script src="/statics/plugins/common.main.js"></script>
-
-    <!-- 插件 -->
-    <script src="/statics/plugins/zangodb/polyfill.min.js"></script>
-    <script src="/statics/plugins/axios-0.18.0/axios.min.js"></script>
-    <script src="/statics/plugins/zangodb/idb-keyval.js"></script>
-
-    <script src="/statics/plugins/js-cookie-2.2.0/js-cookie.min.js"></script>
-    <script src="/statics/plugins/lodash-4.17.10/lodash.min.js"></script>
-    <script src="/statics/plugins/qs-6.5.2/qs.min.js"></script>
-    <!-- 国际化 -->
-    <script src="/statics/plugins/vue-i18n-8.1.0/vue-i18n.min.js"></script>
-    <script src="/statics/plugins/element-2.8.2/locale/zh-CN.js"></script>
-    <script src="/statics/plugins/element-2.8.2/locale/zh-TW.js"></script>
-    <script src="/statics/plugins/element-2.8.2/locale/en.js"></script>
-    <script src="/statics/i18n/zh-CN.js"></script>
-    <script src="/statics/i18n/zh-TW.js"></script>
-    <script src="/statics/i18n/en-US.js"></script>
-    <script src="/statics/i18n/index.js"></script>
-    <!-- 业务 -->
-    <script src="/statics/plugins/zangodb/IDBStorage.js"></script>
-    <script src="/statics/plugins/vue-2.6.10/vue.base.js"></script>
-    <script src="/statics/plugins/vue-2.6.10/vue.base.initAppStaticResource.js"></script>
-    <script src="/statics/icons/iconfont.js"></script>
-    <script src="/statics/js/common.js"></script>
-    <script src="/statics/mixins/view-module.js"></script>
-    <!-- 业务 -->
-    <script src="/statics/js/shell/shell.js"></script>
-
+    <div id="app"></div>
+    <script src="./statics/modules/main.js"></script>
 </body>
 
 </html>

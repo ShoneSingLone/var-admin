@@ -12,12 +12,3 @@ window.VueComponents = window.VueComponents || {
     }
 };
 window.VueComponents.add(test);
-
-setTimeout(() => {
-    import("vue")
-        .then(Vue => import("./modules/Shell/Shell.vue"))
-        .then((Vue, Shell) => new Vue({
-            el: "app",
-            render: h => h(Shell)
-        }))
-}, 3000);

@@ -22,13 +22,6 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
-{
-  /* 热替换开发页面 */
-  process.argv[2] && process.argv[2] === "hrm" && process.argv[2] && require("./runWebpack");
-
-}
-
 app.use("/", indexRouter);
 app.use("/any", routerPage);
 app.use("/users", usersRouter);

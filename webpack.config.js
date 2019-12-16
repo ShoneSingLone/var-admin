@@ -1,10 +1,15 @@
 const path = require("path");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+
 
 module.exports = {
     mode: "production",
-    entry: "./workspace/_main.js",
+    entry: {
+        "modules/main": "./workspace/_main.js",
+        "modules/sub": "./workspace/_sub.js",
+    },
     watch: true,
     module: {
         rules: [
@@ -42,12 +47,47 @@ module.exports = {
             }
         ],
     },
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                sourceMap: true,
+                parallel: true,
+                cache: true,
+                uglifyOptions: {
+                    keep_classnames: true,
+                    keep_fnames: true
+                }
+            }),
+        ],
+        /*         splitChunks: {
+                  cacheGroups: {
+                    default: false,
+                    commons: {
+                      test: /[\\/]node_modules[\\/]/,
+                      name: "main",
+                      chunks: "all",
+                      minChunks: 2
+                    },
+                  },
+                },
+         */
+    },
+
     plugins: [
         new VueLoaderPlugin(),
-        new ExtractTextPlugin("main.css"),
+        new ExtractTextPlugin({
+            filename: (getPath) => {
+                const a = getPath('css/[name].css');
+                const b = a.replace('css/modules', 'css');
+                console.log('b', a, b);
+                return b;
+            },
+            allChunks: true
+        })
     ],
     output: {
-        path: path.resolve(__dirname, "./public/statics/css"),
-        filename: "main.js"
+        path: path.resolve(__dirname, "./public/statics"),
+        publicPath: "/statics/",
+        filename: "[name].js"
     }
 };
