@@ -1,12 +1,12 @@
 # vue-admin
 
-
 ## 参考
 
 - [TypeScript-Node-Starter](https://github.com/microsoft/TypeScript-Node-Starter)
 - [stylus-lang 因 node而生](http://stylus-lang.com/)
 - [实施微前端的六种方式](https://segmentfault.com/a/1190000015566927)
 - [一个电商的微前端落地实现](https://www.jianshu.com/p/81272689a134)
+- [网易严选企业级微前端解决方案与落地实践](https://mp.weixin.qq.com/s/x2N-Y5xZV-XbrqxDT_wLKA)
 
 ## ？？？
 
@@ -15,14 +15,14 @@
 ## package
 
 ``` bash
-npm install extract-text-webpack-plugin@next
-npm install --save vue-highlightjs
-npm install monaco-editor
-npm install confman 
-npm i stylus stylus-loader -D
-npm i webpack -g
-npm install -D vue-loader vue-template-compiler
+npm i -g webpack
+npm i extract-text-webpack-plugin@next
+npm i -S vue-highlightjs monaco-editor
+npm i -D stylus stylus-loader confman vue-loader vue-template-compiler stylus stylus-loader postcss-loader 
+
 ```
+
+~~node-sass sass-loader~~安装失败神烦
 
 ## 生成vue组件的vs code插件
 
