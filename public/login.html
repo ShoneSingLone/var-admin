@@ -9,7 +9,53 @@
 </head>
 
 <body>
-    <h1>login</h1>
+    <h1 id="titel-content">Title</h1>
+    <div id="script-group">
+        <div id="script-group-base">
+            <script>
+                (function (w, isOldBrowser) {
+                    w.isOldBrowser = isOldBrowser;
+                    var systemjsurl = './static/lib/systemjs/system' + (isOldBrowser ? '.src.js' : '.js');
+                    var libs = [
+                        '<script src="./static/lib/polyfill/babel-polyfill.js"><\/script>',
+                        '<script src="./static/lib/polyfill/fetch.js"><\/script>',
+                        '<script src="' + systemjsurl + '"><\/script>',
+                        '<script src="./static/lib/systemjs/extras/transform.js"><\/script>',
+                        '<script src="./static/lib/systemjs/babel-transform.js"><\/script>',
+                    ];
+                    document.write(libs.join(""));
+                })(window, typeof fetch === 'undefined');
+            </script>
+        </div>
+        <script>
+            if (isOldBrowser) {
+                console.time("isOldBrowser");
+                System.config({
+                    map: {
+                        'plugin-babel': './static/lib/plugin-babel.js',
+                        'systemjs-babel-build': './static/lib/systemjs-babel-browser.js'
+                    },
+                    transpiler: 'plugin-babel'
+                });
+            } else {
+                console.time("smart");
+            }
+
+            System
+                .import('./static/js/testing-code.js')
+                .then(function (m) {
+                    return m.p()
+                        .then(function (result) {
+                            var h1 = document.querySelector("#titel-content");
+                            h1.innerText = result;
+                            return Promise.resolve("done")
+                        });
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        </script>
+    </div>
 </body>
 
 </html>
