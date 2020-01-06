@@ -719,6 +719,7 @@
             _export('default', stylesheet);
           });
         case '.html':
+          debugger;
           return getSourceRes().then(function (res) {
             return maybeJSFallback(res) || loadError("'.html' modules not implemented");
           });

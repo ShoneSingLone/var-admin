@@ -8,7 +8,7 @@ module.exports = merge(webpackBaseConfig, {
   mode: 'production',
   devtool: 'source-map',
   entry: [
-    'babel-polyfill',
+    // 'babel-polyfill',
     './index',
   ],
   output: {

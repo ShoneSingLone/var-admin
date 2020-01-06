@@ -5,52 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="static/js/main.js"></script>
     <title>Document</title>
 </head>
 
 <body>
     <h1 id="titel-content">Title</h1>
+    <canvas id="init-canvas" style=" bottom: 0; left: 0; margin: auto; position: absolute; right: 0; top: 0; ">
+    </canvas>
     <div id="script-group">
-        <div id="script-group-base">
-            <script>
-                (function (w, isOldBrowser) {
-                    w.isOldBrowser = isOldBrowser;
-                    var systemjsurl = './static/lib/systemjs/system' + (isOldBrowser ? '.src.js' : '.js');
-                    var libs = [
-                        '<script src="./static/lib/polyfill/babel-polyfill.js"><\/script>',
-                        '<script src="./static/lib/polyfill/fetch.js"><\/script>',
-                        '<script src="' + systemjsurl + '"><\/script>',
-                        '<script src="./static/lib/systemjs/extras/transform.js"><\/script>',
-                        '<script src="./static/lib/systemjs/babel-transform.js"><\/script>',
-                    ];
-                    document.write(libs.join(""));
-                })(window, typeof fetch === 'undefined');
-            </script>
-        </div>
+        <script src="static/js/main.js"></script>
         <script>
-            if (isOldBrowser) {
-                console.time("isOldBrowser");
-                System.config({
-                    map: {
-                        'plugin-babel': './static/lib/plugin-babel.js',
-                        'systemjs-babel-build': './static/lib/systemjs-babel-browser.js'
-                    },
-                    transpiler: 'plugin-babel'
-                });
-            } else {
-                console.time("smart");
-            }
-
             System
-                .import('./static/js/testing-code.js')
+                .import('./static/module/login/login.js')
                 .then(function (m) {
-                    return m.p()
-                        .then(function (result) {
-                            var h1 = document.querySelector("#titel-content");
-                            h1.innerText = result;
-                            return Promise.resolve("done")
-                        });
+                    for (var iterator in m) {
+                        console.log(iterator);
+                    }
+                    return 0;
+                    /*  m.p()
+                                            .then(function (result) {
+                                                var h1 = document.querySelector("#titel-content");
+                                                h1.innerText = result;
+                                                return Promise.resolve("done")
+                                            }); */
                 })
                 .catch(function (error) {
                     console.error(error);

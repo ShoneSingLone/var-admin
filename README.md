@@ -33,6 +33,12 @@ yarn add -D stylus stylus-loader confman vue-loader vue-template-compiler stylus
 
 [generatevuecomponent](https://marketplace.visualstudio.com/items?itemName=ShoneSingLone.generatevuecomponent)
 
+## Utils
+
+LoadString
+loadJS
+loadCSS
+
 ## 约定
 
 在相同的目录下
