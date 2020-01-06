@@ -11,11 +11,10 @@ var react = require('systemjs-babel-build').pluginsReact;
 
 var externalHelpers = require('systemjs-babel-build').externalHelpers;
 var runtimeTransform = require('systemjs-babel-build').runtimeTransform;
-debugger;
 var babelRuntimePath;
-var modularHelpersPath = System.decanonicalize('./babel-helpers/', module.id);
-var externalHelpersPath = System.decanonicalize('./babel-helpers.js', module.id);
-var regeneratorRuntimePath = System.decanonicalize('./regenerator-runtime.js', module.id);
+var modularHelpersPath = System.decanonicalize('./systemjs/babel-helpers/', module.id);
+var externalHelpersPath = System.decanonicalize('./systemjs/babel-helpers.js', module.id);
+var regeneratorRuntimePath = System.decanonicalize('./systemjs/regenerator-runtime.js', module.id);
 
 if (modularHelpersPath.substr(modularHelpersPath.length - 3, 3) == '.js')
   modularHelpersPath = modularHelpersPath.substr(0, modularHelpersPath.length - 3);
