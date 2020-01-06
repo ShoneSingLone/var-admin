@@ -6,11 +6,13 @@ const paths = require('./config/paths')
 module.exports = merge(webpackBaseConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
-  entry: [
-    'babel-polyfill',
-    './index',
-    'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
-  ],
+  entry: {
+    component: [
+      'babel-polyfill',
+      './index',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
+    ]
+  },
   output: {
     path: paths.output,
     filename: 'static/js/[name].js',
