@@ -1,34 +1,39 @@
-# vue-admin
+# koa-webpack-example
 
-## Project setup
-```
-yarn install
-```
+## Overview
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+Koa2 and webpack environment for development, production.
 
-### Compiles and minifies for production
-```
-yarn build
-```
+### Hot Module Reload
 
-### Run your unit tests
-```
-yarn test:unit
+HMR for client side and server side code, which means you'll never need to restart your node server or refresh your browser to see the changes.
+
+### Install
+
+```bash
+$ yarn install
 ```
 
-### Run your end-to-end tests
-```
-yarn test:e2e
+### Run as development
+
+```bash
+$ yarn start
 ```
 
-### Lints and fixes files
-```
-yarn lint
+### Build for production
+
+```bash
+$ yarn build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Serve with PM2
+
+```bash
+$ yarn serve
+```
+
+## License
+
+```
+MIT
+```
