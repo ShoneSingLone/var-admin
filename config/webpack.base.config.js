@@ -12,14 +12,39 @@ module.exports = {
         options: {
           compact: true,
         },
-      }, {
+      },
+      {
+        test: /\.vue$/,
+        loader: "vue-loader"
+      },
+      {
         test: /\.(scss|sass)$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', {
+          loader: "postcss-loader",
+          options: {
+            sourceMap: false,
+            config: {
+              path: "postcss.config.js"
+            }
+          }
+        }, 'sass-loader'],
+      },
+      {
+        test: /\.styl$/,
+        use: ["style-loader", "css-loader", {
+          loader: "postcss-loader",
+          options: {
+            sourceMap: false,
+            config: {
+              path: "postcss.config.js"
+            }
+          }
+        }, "stylus-loader"]
       }, {
         test: /\.(png|svg|jpg|gif)$/,
         loader: 'file-loader',
         options: {
-          name: 'static/media/[name].[hash:8].[ext]',
+          name: 'static/media/[name].[ext]',
         },
       },
     ],

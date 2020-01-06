@@ -20,7 +20,7 @@ const staticPath = path.resolve(__dirname, './public')
 app.use(mount('/', serve(staticPath)))
 
 if (isProd) {
-  const indexHtml = path.resolve(__dirname, './dist/index.html')
+  const indexHtml = path.resolve(__dirname, './public/index.html')
   app.use(ctx => {
     ctx.body = fs.readFileSync(indexHtml, {
       encoding: 'utf8'
@@ -36,7 +36,7 @@ if (isProd) {
   }))
 }
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 8082
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Server is listening on ${port} port`)

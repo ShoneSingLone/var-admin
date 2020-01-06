@@ -13,7 +13,7 @@ module.exports = merge(webpackBaseConfig, {
   ],
   output: {
     path: paths.output,
-    filename: 'static/js/[name].[hash:8].js',
+    filename: 'static/js/[name].js',
   },
   optimization: {
     minimizer: [

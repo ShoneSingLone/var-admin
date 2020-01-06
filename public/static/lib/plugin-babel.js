@@ -11,7 +11,7 @@ var react = require('systemjs-babel-build').pluginsReact;
 
 var externalHelpers = require('systemjs-babel-build').externalHelpers;
 var runtimeTransform = require('systemjs-babel-build').runtimeTransform;
-
+debugger;
 var babelRuntimePath;
 var modularHelpersPath = System.decanonicalize('./babel-helpers/', module.id);
 var externalHelpersPath = System.decanonicalize('./babel-helpers.js', module.id);
