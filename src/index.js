@@ -1,44 +1,20 @@
-import "./styles/main.scss";
+// import "./styles/main.scss";
+window.isOldBrowser = (typeof fetch === 'undefined');
+import _ from "lodash";
+window._ = _;
+import loadJS from "../public/static/utils/loadJS.js"
+
+/* 加载JS */
+_.$loadJS = loadJS;
 import loadingAnimation from "../public/static/js/loadingAnimation.js";
-import merge from "lodash/merge";
+setTimeout(() => loadingAnimation(), 30);
 
-const h = document.createElement.bind(document);
-const body = document.body;
-
-body.appendChild(merge(h("div"), {
-    innerHTML: 'loading'
-}));
-body.appendChild(merge(h("canvas"), {
-    id: "init-canvas",
-    style: " bottom: 0; left: 0; margin: auto; position: absolute; right: 0; top: 0; "
-}));
-setTimeout(loadingAnimation, 30);
-
-(function (w, isOldBrowser) {
-    w.isOldBrowser = isOldBrowser;
-    var systemjsurl = './static/lib/systemjs/system' + (isOldBrowser ? '.src.js' : '.js');
-    var libs = [
-        '<script src="./static/lib/polyfill/babel-polyfill.js"></script>',
-        '<script src="./static/lib/polyfill/fetch.js"></script>',
-        '<script src="' + systemjsurl + '"></script>',
-        '<script src="./static/lib/systemjs/extras/transform.js"></script>',
-        '<script src="./static/lib/systemjs/babel-transform.js"></script>',
-    ];
-    document.write(libs.join(""));
-    const {
-        System,
-        SystemJS
-    } = window;
-    if (isOldBrowser) {
-        console.time("isOldBrowser");
-        SystemJS.config({
-            map: {
-                'plugin-babel': './static/lib/plugin-babel.js',
-                'systemjs-babel-build': './static/lib/systemjs-babel-browser.js'
-            },
-            transpiler: 'plugin-babel'
-        });
-    } else {
-        console.time("smart");
-    }
-})(window, typeof fetch === 'undefined');
+(async () => {
+    const a = new Promise((r) => {
+        setTimeout(() => {
+            r(1);
+        }, 100);
+    });
+    let res = await a();
+    console.log("res", res);
+})();

@@ -20,9 +20,10 @@
 ## package
 
 ``` bash
-npm i -g webpack
+npm i -g webpack webpack-cli
 npm i extract-text-webpack-plugin@next
 npm i -S vue-highlightjs monaco-editor
+yarn add -D webpack webpack-cli
 yarn add -D stylus stylus-loader confman vue-loader vue-template-compiler stylus stylus-loader postcss-loader postcss-flexbugs-fixes
 
 ```

@@ -1,3 +1,15 @@
+const h = document.createElement.bind(document);
+const body = document.body;
+
+body.appendChild(_.merge(h("div"), {
+    innerHTML: 'loading'
+}));
+body.appendChild(_.merge(h("canvas"), {
+    id: "init-canvas",
+    style: " bottom: 0; left: 0; margin: auto; position: absolute; right: 0; top: 0; "
+}));
+
+
 export default function () {
     var canvas = document.getElementById("init-canvas"),
         ctx = canvas.getContext("2d"),

@@ -8,18 +8,34 @@ module.exports = {
     rules: [{
         test: /\.(js|jsx|mjs)$/,
         include: paths.context,
-        loader: 'babel-loader?cacheDirectory',
+        loader: 'babel-loader',
         options: {
           compact: true,
+          include: paths.output,
+          "presets": [
+            "@babel/preset-env"
+          ]
         },
       },
       {
         test: /\.vue$/,
         loader: "vue-loader"
       },
+      /*  {
+         test: /\.(scss|sass)$/,
+         use: ['style-loader', 'css-loader', {
+           loader: "postcss-loader",
+           options: {
+             sourceMap: false,
+             config: {
+               path: "postcss.config.js"
+             }
+           }
+         }, 'sass-loader'],
+       }, */
       {
-        test: /\.(scss|sass)$/,
-        use: ['style-loader', 'css-loader', {
+        test: /\.less$/,
+        loader: ["style-loader", "css-loader", {
           loader: "postcss-loader",
           options: {
             sourceMap: false,
@@ -27,7 +43,7 @@ module.exports = {
               path: "postcss.config.js"
             }
           }
-        }, 'sass-loader'],
+        }, 'less-loader'] // 将 Less 编译为 CSS
       },
       {
         test: /\.styl$/,
