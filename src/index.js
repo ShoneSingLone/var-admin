@@ -18,17 +18,20 @@ setTimeout(loadingAnimation, 30);
     w.isOldBrowser = isOldBrowser;
     var systemjsurl = './static/lib/systemjs/system' + (isOldBrowser ? '.src.js' : '.js');
     var libs = [
-        '<script src="./static/lib/polyfill/babel-polyfill.js"><\/script>',
-        '<script src="./static/lib/polyfill/fetch.js"><\/script>',
-        '<script src="' + systemjsurl + '"><\/script>',
-        '<script src="./static/lib/systemjs/extras/transform.js"><\/script>',
-        '<script src="./static/lib/systemjs/babel-transform.js"><\/script>',
+        '<script src="./static/lib/polyfill/babel-polyfill.js"></script>',
+        '<script src="./static/lib/polyfill/fetch.js"></script>',
+        '<script src="' + systemjsurl + '"></script>',
+        '<script src="./static/lib/systemjs/extras/transform.js"></script>',
+        '<script src="./static/lib/systemjs/babel-transform.js"></script>',
     ];
     document.write(libs.join(""));
-    const { System } = window;
+    const {
+        System,
+        SystemJS
+    } = window;
     if (isOldBrowser) {
         console.time("isOldBrowser");
-        System.config({
+        SystemJS.config({
             map: {
                 'plugin-babel': './static/lib/plugin-babel.js',
                 'systemjs-babel-build': './static/lib/systemjs-babel-browser.js'

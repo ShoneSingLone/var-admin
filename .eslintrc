@@ -11,6 +11,7 @@
   },
   "globals": {
     "document": true,
+    "TEMPLATE_PLACEHOLDER": true,
     "window": true
   }
 }
