@@ -1,3 +1,3 @@
-import app from "./login.html";
-debugger;
-export default app;
+import Direction from "./Direction.ts";
+console.log("Direction", Direction);
+export default Direction;

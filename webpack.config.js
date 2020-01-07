@@ -4,13 +4,11 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const webpackBaseConfig = require('./config/webpack.base.config')
 const paths = require('./config/paths')
 
+
 module.exports = merge(webpackBaseConfig, {
   mode: 'production',
   devtool: 'source-map',
-  entry: [
-    // 'babel-polyfill',
-    './index',
-  ],
+  entry: paths.entry,
   output: {
     path: paths.output,
     filename: 'static/js/[name].js',
@@ -18,7 +16,7 @@ module.exports = merge(webpackBaseConfig, {
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
-        sourceMap: true,
+        sourceMap: false,
         parallel: true,
         cache: true,
       }),
@@ -42,5 +40,6 @@ module.exports = merge(webpackBaseConfig, {
         BABEL_ENV: JSON.stringify('production'),
       },
     }),
+    ...paths.HtmlWebpackPlugin,
   ],
 })

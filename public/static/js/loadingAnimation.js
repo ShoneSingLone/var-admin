@@ -1,5 +1,5 @@
-export default function () {
-    var canvas = document.getElementById("init-canvas"),
+export default function (id) {
+    var canvas = document.getElementById(id),
         ctx = canvas.getContext("2d"),
         width = 400,
         height = 100,
