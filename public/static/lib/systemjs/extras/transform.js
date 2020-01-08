@@ -38,6 +38,7 @@
               );
               return script;
             }
+            debugger;
             return splitCode();
           })(source);
         }
@@ -45,7 +46,7 @@
         return loader.transform.call(this, url, source);
       })
       .then(function (source) {
-        console.log(source,null,2);
+        console.log(source, null, 2);
         (0, eval)(source + "\n//# sourceURL=" + url);
         return loader.getRegister();
       });

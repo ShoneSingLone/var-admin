@@ -13,10 +13,11 @@
     <canvas id="init-canvas" style=" bottom: 0; left: 0; margin: auto; position: absolute; right: 0; top: 0; ">
     </canvas>
     <div id="script-group">
-        <script src="static/lib/polyfill/babel-polyfill.js"></script>
-        <!-- <script src="static/lib/polyfill/fetch.js"></script> -->
-        <script src="static/js/main.js"></script>
-        <script src="static/js/sub.js"></script>
+        <script
+            id="script-main"
+            src="static/js/main.js"
+            data-entry="./static/module/login/login.js">
+        </script>
     </div>
 </body>
 

@@ -1,5 +1,5 @@
 const h = document.createElement.bind(document);
-const body = document.body;
+let body = document.body;
 
 body.appendChild(_.merge(h("div"), {
     innerHTML: 'loading'

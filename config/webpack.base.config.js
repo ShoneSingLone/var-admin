@@ -7,14 +7,9 @@ module.exports = {
   module: {
     rules: [{
         test: /\.(js|jsx|mjs)$/,
-        include: paths.context,
         loader: 'babel-loader',
         options: {
           compact: true,
-          include: paths.output,
-          "presets": [
-            "@babel/preset-env"
-          ]
         },
       },
       {

@@ -7,7 +7,7 @@ module.exports = merge(webpackBaseConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
   entry: [
-    // 'babel-polyfill',
+    'babel-polyfill',
     './index',
     'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
   ],

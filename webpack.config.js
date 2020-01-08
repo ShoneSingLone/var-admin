@@ -8,7 +8,7 @@ module.exports = merge(webpackBaseConfig, {
   mode: 'production',
   devtool: 'source-map',
   entry: [
-    // 'babel-polyfill',
+    'babel-polyfill',
     './index',
   ],
   output: {
@@ -16,11 +16,12 @@ module.exports = merge(webpackBaseConfig, {
     filename: 'static/js/[name].js',
   },
   optimization: {
+
     minimizer: [
       new UglifyJsPlugin({
-        sourceMap: true,
-        parallel: true,
-        cache: true,
+        sourceMap: false,
+        parallel: false,
+        cache: false
       }),
     ],
     splitChunks: {
@@ -34,6 +35,7 @@ module.exports = merge(webpackBaseConfig, {
         },
       },
     },
+
   },
   plugins: [
     new webpack.DefinePlugin({
