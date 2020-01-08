@@ -12,10 +12,16 @@ let c = {
 };
 
 (async (c) => {
-    console.table([...c]);
-    if (window.isOldBrowser) {
-        await loadJS(resolvePath("static/lib/polyfill/babel-polyfill.js"));
+    try {
+        console.log({
+            ...c
+        });
+        if (window.isOldBrowser) {
+            await loadJS(resolvePath("static/lib/polyfill/babel-polyfill.js"));
+        }
+    } catch (error) {
+        console.error(error);
     }
 })(c);
 
-console.log('a', a);
+console.timeEnd('a');

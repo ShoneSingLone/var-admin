@@ -52,3 +52,10 @@ page=compoentName?test=true
 ## 文档
 
 MainContent.js 主要是tab id 的问题 使用与selector相恰的变量名
+
+
+VueLoader
+idb-keyval 缓存
+hash 升级
+
+

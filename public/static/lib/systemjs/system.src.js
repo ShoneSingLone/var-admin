@@ -538,6 +538,7 @@ RegisterLoader$1.prototype[INSTANTIATE] = function (key, processAnonRegister) {}
 // once evaluated, the linkRecord is set to undefined leaving just the other load record properties
 // this allows tracking new binding listeners for es modules through importerSetters
 // for dynamic modules, the load record is removed entirely.
+/*  */
 function createLoadRecord (state, key, registration) {
   return state.records[key] = {
     key: key,
@@ -1485,7 +1486,11 @@ function xhrFetch (url, authorization, integrity, asBuffer) {
     if (asBuffer)
       xhr.responseType = 'arraybuffer';
     function load() {
-      resolve(asBuffer ? xhr.response : xhr.responseText);
+      var source = (asBuffer ? xhr.response : xhr.responseText);
+      if (url.slice(-4) === ".vue") {
+        source = window._.$VueLoader(url, source);
+      }
+      resolve(source);
     }
     function error() {
       reject(new Error('XHR error: ' + (xhr.status ? ' (' + xhr.status + (xhr.statusText ? ' ' + xhr.statusText  : '') + ')' : '') + ' loading ' + url));
