@@ -1,13 +1,7 @@
-let parentUrl = "/";
-export function resolvePath(relUrl) {
-    return resolveIfNotPlainOrUrl(relUrl, parentUrl) || (relUrl.indexOf(":") !== -1 ? relUrl : resolveIfNotPlainOrUrl("./" + relUrl, parentUrl));
-}
 const backslashRegEx = /\\/g;
-export function setBaseurl(url) {
-    parentUrl = url;
-}
+const parentUrl = getBaseurl();
 
-function getPath() {
+function getBaseurl() {
     var jsPath = document.currentScript ? document.currentScript.src : function () {
         var js = document.scripts,
             last = js.length - 1,
@@ -20,7 +14,7 @@ function getPath() {
         }
         return src || js[last].src;
     }();
-    return jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
+    return jsPath.substring(0, jsPath.lastIndexOf("static/js/main.js")) || "/";
 }
 
 function resolveIfNotPlainOrUrl(relUrl, parentUrl) {
@@ -98,4 +92,8 @@ function resolveIfNotPlainOrUrl(relUrl, parentUrl) {
             output.push(segmented.slice(segmentIndex));
         return parentUrl.slice(0, parentUrl.length - pathname.length) + output.join("");
     }
+}
+
+export default function resolvePath(relUrl) {
+    return resolveIfNotPlainOrUrl(relUrl, parentUrl) || (relUrl.indexOf(":") !== -1 ? relUrl : resolveIfNotPlainOrUrl("./" + relUrl, parentUrl));
 }
