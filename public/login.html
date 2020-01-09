@@ -9,14 +9,18 @@
 </head>
 
 <body>
-    <script>
-        console.time('a');
-    </script>
-    <h1 id="titel-content">Title</h1>
-    <canvas id="init-canvas" style=" bottom: 0; left: 0; margin: auto; position: absolute; right: 0; top: 0; ">
-    </canvas>
+    <div id="app">
+        <appvue></appvue>
+    </div>
     <div id="script-group">
-        <script id="script-main" src="static/js/main.js" data-entry="./static/module/login/login.js"> </script>
+        <script
+            id="script-main"
+            src="static/js/main.js"
+            data-baseurl="/"
+            data-entry="static/module/login/login.js">
+        </script>
+        <link rel="stylesheet/less" type="text/css" href="static/css/styles.less" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.10.0-beta/less.min.js"></script>
     </div>
 </body>
 

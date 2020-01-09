@@ -1,13 +1,13 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const paths = require('./paths')
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const paths = require("./paths");
 
 module.exports = {
   context: paths.context,
   module: {
     rules: [{
         test: /\.(js|jsx|mjs)$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         options: {
           compact: true,
         },
@@ -38,7 +38,7 @@ module.exports = {
               path: "postcss.config.js"
             }
           }
-        }, 'less-loader'] // 将 Less 编译为 CSS
+        }, "less-loader"] // 将 Less 编译为 CSS
       },
       {
         test: /\.styl$/,
@@ -53,9 +53,9 @@ module.exports = {
         }, "stylus-loader"]
       }, {
         test: /\.(png|svg|jpg|gif)$/,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: 'static/media/[name].[ext]',
+          name: "static/media/[name].[ext]",
         },
       },
     ],
@@ -63,7 +63,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin([paths.output]),
     new HtmlWebpackPlugin({
-      title: 'Hot Module Reload',
+      title: "Hot Module Reload",
     }),
   ],
-}
+};

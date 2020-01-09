@@ -34,11 +34,14 @@ yarn add -D stylus stylus-loader confman vue-loader vue-template-compiler stylus
 
 [generatevuecomponent](https://marketplace.visualstudio.com/items?itemName=ShoneSingLone.generatevuecomponent)
 
+## 
+[怎么使用 Service Worker](https://lavas.baidu.com/pwa/offline-and-cache-loading/service-worker/how-to-use-service-worker)
 ## Utils
 
 LoadString
 loadJS
 loadCSS
+md5
 
 ## 约定
 
@@ -53,9 +56,33 @@ page=compoentName?test=true
 
 MainContent.js 主要是tab id 的问题 使用与selector相恰的变量名
 
-
 VueLoader
-idb-keyval 缓存
+
+public\static\lib\systemjs\system.src.js
+public\static\lib\systemjs\extras\transform.js
+
+- [idb-keyval](https://github.com/jakearchibald/idb-keyval/blob/master/README.md) 
+- [localForage](https://github.com/localForage/localForage) 
+
+缓存
 hash 升级
 
 
+---
+<!-- 不明白 -->
+req.end is not function
+node_modules\webpack-hot-middleware\middleware.js
+
+```js
+req.on('close', function () {
+  console.error("close")
+  if (!res.finished) res.end && res.end();
+  delete clients[id];
+});
+```
+
+# axios 拦截封装
+
+- 403 权限
+  - 跳转 退出逻辑（清除敏感信息）
+- 超时

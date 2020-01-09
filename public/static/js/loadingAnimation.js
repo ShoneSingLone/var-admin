@@ -1,16 +1,25 @@
-const h = document.createElement.bind(document);
-let body = document.body;
+export function stopLoadingAnimation() {
+    let ele = document.getElementById("loading-placeholder");
+    if (ele && ele.parentNode) {
+        ele.parentNode.removeChild(ele);
+    }
+    startLoadingAnimation.isStop = true;
+    stopLoadingAnimation = null;
+}
+export function startLoadingAnimation(_) {
 
-body.appendChild(_.merge(h("div"), {
-    innerHTML: 'loading'
-}));
-body.appendChild(_.merge(h("canvas"), {
-    id: "init-canvas",
-    style: " bottom: 0; left: 0; margin: auto; position: absolute; right: 0; top: 0; "
-}));
+    const h = document.createElement.bind(document);
+    let body = document.body;
+    let eleLoading = _.merge(h("div"), {
+        id: "loading-placeholder",
+        innerHTML: '系统正在加载资源...'
+    });
 
-
-export default function () {
+    eleLoading.appendChild(_.merge(h("canvas"), {
+        id: "init-canvas",
+        style: " bottom: 0; left: 0; margin: auto; position: absolute; right: 0; top: 0; "
+    }));
+    body.appendChild(eleLoading);
     var canvas = document.getElementById("init-canvas"),
         ctx = canvas.getContext("2d"),
         width = 400,
@@ -113,14 +122,19 @@ export default function () {
 
 
     function loop() {
-        requestAnimationFrame(loop);
-        clearCanvas();
-        createParticles();
-        updateLoader();
-        updateParticles();
-        renderLoader();
-        renderParticles();
+        if (startLoadingAnimation.isStop) {
+            startLoadingAnimation = null
+        } else {
+            console.log('loop count', loop.count++);
+            requestAnimationFrame(loop);
+            clearCanvas();
+            createParticles();
+            updateLoader();
+            updateParticles();
+            renderLoader();
+            renderParticles();
+        }
     }
-
+    loop.count = 0;
     loop();
 }
