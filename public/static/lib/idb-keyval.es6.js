@@ -66,8 +66,7 @@ function keys(store = getDefaultStore()) {
         };
     }).then(() => keys);
 }
-
-export {
+export default {
     Store,
     get,
     set,

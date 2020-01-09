@@ -7,7 +7,6 @@
 
 <script>
 import sub from "./Sub.vue";
-debugger;
 export default {
   TEMPLATE_PLACEHOLDER,
   components: {

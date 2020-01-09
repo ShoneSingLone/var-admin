@@ -13,6 +13,7 @@ import {
 } from "../public/static/utils/checkStaticResource.js";
 /* 以key-val方式方便操作indexedDB */
 import idb from '../public/static/lib/idb-keyval.es6.js';
+console.log("idb", idb);
 import resolvePath from "../public/static/utils/resolvePath.js";
 import VueLoader from "../public/static/utils/VueLoader.js";
 import md5 from "md5";

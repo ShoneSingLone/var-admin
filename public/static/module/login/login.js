@@ -12,7 +12,6 @@ export default async () => {
         const {
             Vue
         } = window;
-        debugger;
         new Vue({
             el: "#app",
             mounted() {
