@@ -1,3 +1,5 @@
-export default (_) => {
-    
+export function checkStaticResource(_) {
+
 }
+
+export let checkStaticResourceManifest = {};

@@ -1,6 +1,6 @@
-import _ from "lodash";
-
 export default function (path) {
+    const { _ } = window;
+
     return new Promise((resolve, reject) => {
         let id = _.camelCase(path).toLowerCase()
         let ele = _.merge(document.createElement("script"), {

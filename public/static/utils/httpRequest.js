@@ -1,5 +1,5 @@
 import axios from 'axios'
-const createService = VueEventBus => {
+const createService = EventBus => {
     // 创建 axios 实例
     const service = axios.create({
         baseURL: "/", // api base_url
@@ -9,13 +9,13 @@ const createService = VueEventBus => {
         if (error.response) {
             const data = error.response.data
             if (error.response.status === 403) {
-                VueEventBus.$emit("notification_error", {
+                EventBus.emit("notification_error", {
                     message: 'Forbidden',
                     description: data.message
                 });
             }
             if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
-                VueEventBus.$emit("notification_error", {
+                EventBus.emit("notification_error", {
                     message: 'Unauthorized',
                     description: '权限认证失败'
                 });

@@ -1488,11 +1488,10 @@
 
       function load() {
         var source = (asBuffer ? xhr.response : xhr.responseText);
-        /* modifiy */
+        /* TODO:cache */
         if (url.slice(-4) === ".vue") {
           source = window._.$VueLoader(url, source);
         }
-        debugger;
         resolve(source);
       }
 

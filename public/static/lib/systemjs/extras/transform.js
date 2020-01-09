@@ -20,11 +20,10 @@
         return res.text();
       })
       .then(function (source) {
-        /* modifiy */
+        /* TODO:cache */
         if (url.slice(-4) === ".vue") {
           source = window._.$VueLoader(url, source);
         }
-        debugger;
         return loader.transform.call(this, url, source);
       })
       .then(function (source) {

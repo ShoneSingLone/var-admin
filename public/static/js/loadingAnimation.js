@@ -120,12 +120,11 @@ export function startLoadingAnimation(_) {
         ctx.clearRect(0, 0, width, height);
     }
 
-
     function loop() {
         if (startLoadingAnimation.isStop) {
             startLoadingAnimation = null
         } else {
-            console.log('loop count', loop.count++);
+            // console.log('loop count', loop.count++);
             requestAnimationFrame(loop);
             clearCanvas();
             createParticles();

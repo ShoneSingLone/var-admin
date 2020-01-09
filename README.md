@@ -86,3 +86,7 @@ req.on('close', function () {
 - 403 权限
   - 跳转 退出逻辑（清除敏感信息）
 - 超时
+
+
+
+EventBus 全局通信：messageBox not
