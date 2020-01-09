@@ -1470,10 +1470,25 @@
 
     return fetch(url, opts)
       .then(function (res) {
-        if (res.ok)
-          return asBuffer ? res.arrayBuffer() : res.text();
-        else
+        if (res.ok) {
+          var isVueFile = url.slice(-4) === ".vue";
+          var source;
+          if (isVueFile) {
+            /* TODO:cache */
+            source = res.blob()
+              .then(function (_blob) {
+                return _blob.text();
+              })
+              .then(function (text) {
+                return Promise.resolve(window._.$VueLoader(url, text));
+              })
+          } else {
+            source = (asBuffer ? res.arrayBuffer() : res.text());
+          }
+          return source;
+        } else {
           throw new Error('Fetch error: ' + res.status + ' ' + res.statusText);
+        }
       });
   }
 
@@ -2823,7 +2838,8 @@
           filename: address + (sourceMap ? '!transpiled' : '')
         });
       else {
-        /* modify */
+        /* TODO: modify */
+        /* debugger; */
         (0, eval)(getSource(source, sourceMap, address, !noWrap));
       }
       postExec();
@@ -3266,6 +3282,7 @@
           return;
 
         var metadata = loader[METADATA][key];
+        /* debugger; */
 
         // node module loading
         if (key.substr(0, 6) === '@node/') {
@@ -3475,7 +3492,7 @@
         if (metadata.load.format !== 'esm' && (metadata.load.format || !source.match(esmRegEx))) {
           return source;
         }
-
+        /* debugger; */
         metadata.load.format = 'esm';
         return transpile(loader, source, key, metadata, processAnonRegister);
       })
@@ -3509,7 +3526,7 @@
           metadata.load.format = detectLegacyFormat(source);
 
         var registered = false;
-
+        /* debugger; */
         switch (metadata.load.format) {
           case 'esm':
           case 'register':

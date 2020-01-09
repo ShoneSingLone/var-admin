@@ -8,17 +8,11 @@ export default (path) => {
         }
     } = window;
 
-    return Vue.component(camelCase(path).toLowerCase(), (resolve, reject) => {
+    return Vue.component(camelCase(path).toLowerCase() /* id */ , (resolve, reject) => {
         $system
             .import(path)
-            .then(function (res) {
-                debugger;
-                resolve(Vue.extend(res));
-            })
-            .catch(function (error) {
-                debugger;
-                reject(error);
-            });
+            .then((res) => resolve(Vue.extend(res.default)))
+            .catch(reject);
     });
 
 };

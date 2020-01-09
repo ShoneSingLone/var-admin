@@ -37,7 +37,9 @@ _.$idb = idb;
 _.$http = createHttpService(EventBus);
 
 window.EventBus = EventBus;
-window.isOldBrowser = true || (typeof fetch === "undefined");
+/* 用Chrome跑IE应该跑的代码 */
+// window.isOldBrowser = true || (typeof fetch === "undefined");
+window.isOldBrowser = (typeof fetch === "undefined");
 setTimeout(() => startLoadingAnimation(_), 30);
 
 checkStaticResource(_);
@@ -71,6 +73,7 @@ checkStaticResource(_);
         window.$system = window[window.isOldBrowser ? "SystemJS" : "System"];
         window.$system
             .import(resolvePath(eleMain.dataset.entry))
+            .then(module => module.default())
             .catch(console.error.bind(console))
             .finally(stopLoadingAnimation);
     }
