@@ -44,6 +44,7 @@ yarn add -D stylus stylus-loader confman vue-loader vue-template-compiler stylus
 
 - [ ] loadJS的处理流程
 - [ ] resolvePath 的处理流程
+  - 约定以static开头
 - [ ] lazyLoadComponent 的处理流程
   - [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob)fetch =》 blob =》 text =》 replace
   - [w3c-Blob](https://w3c.github.io/FileAPI/#constructorBlob)
@@ -53,6 +54,7 @@ md5
 ## 约定
 
 在相同的目录下
+resolvePath以static为前缀
 
 ### page 业务页面
 
@@ -97,9 +99,14 @@ EventBus 全局通信：messageBox not
 
 如果有耕细粒度的缓存，可以配置映射表，为每一个需要缓存的文件单独设置版本号
 
-fetch是否有兼容性问题？
+fetch是否有兼容性问题？=>XMLHttpRequest
 
-静态资源单独一个缓存=》手动维护一般不会改(毕竟)
+除了main.js
+静态资源缓存=》手动维护？！(毕竟)
+
+缓存分级别
+  A:大，最不容易变，如babeltransformjs antdesign element-ui=》单独处理 独立版本号
+  B:大小一般 容易变，业务代码 如Login.vue =》一起处理 统一本版本号
 
 1. 对比版本 STATIC_RES_VERSION
     1. 不同就清空加入版本信息
@@ -108,3 +115,17 @@ fetch是否有兼容性问题？
         1. 没有
         1. fetch
         1. set
+
+## 通知处理
+
+### messageBox
+
+ant
+
+```js
+                EventBus.emit("notification_error", {
+                    message: "Unauthorized",
+                    description: "权限认证失败"
+                });
+
+```

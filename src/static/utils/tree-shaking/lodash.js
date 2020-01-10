@@ -3,6 +3,7 @@ import merge from "lodash/merge";
 import isArray from "lodash/isArray";
 import isFunction from "lodash/isFunction";
 import last from "lodash/last";
+import concat from "lodash/concat";
 
 /* tree-shaking */
 export default {
@@ -10,5 +11,6 @@ export default {
     merge,
     isArray,
     isFunction,
-    last
+    last,
+    concat
 };

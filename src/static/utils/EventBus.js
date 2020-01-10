@@ -49,22 +49,22 @@ const on = (name, callback) => {
     } else {
         events[name] = callback;
     }
-}
+};
 
 const remove = (name, self) => {
     delete events[name];
-}
+};
 
 const emit = (name, data) => {
     let callbacks = events[name];
     if (_.isArray(callbacks)) {
-        callbacks.map((tuple) => {
+        callbacks.map(callback => {
             callback(data);
-        })
+        });
     } else if (_.isFunction(callbacks)) {
-        callbacks(data)
+        callbacks(data);
     }
-}
+};
 
 export default {
     on: on,

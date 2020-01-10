@@ -3,7 +3,8 @@ const {
         $loadJS,
         $resolvePath,
         $lazyLoadComponent
-    }
+    },
+    IS_DEV
 } = window;
 
 export default async (stopLoadingAnimation) => {
@@ -18,7 +19,7 @@ export default async (stopLoadingAnimation) => {
                 appvue: $lazyLoadComponent($resolvePath("static/module/login/Login.vue"))
             },
             data: () => ({
-                currentComponent: ""
+                currentComponent: "appvue"
             }),
             mounted() {
                 this.currentComponent = "appvue";

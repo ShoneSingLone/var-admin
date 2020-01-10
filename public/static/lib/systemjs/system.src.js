@@ -1474,7 +1474,6 @@
           var isVueFile = url.slice(-4) === ".vue";
           var source;
           if (isVueFile) {
-            /* TODO:cache */
             source = res.blob()
               .then(function (_blob) {
                 return _blob.text();
