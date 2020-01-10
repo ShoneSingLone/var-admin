@@ -1,6 +1,14 @@
 import "./styles/main.styl";
 import _ from "./static/utils/tree-shaking/lodash.js";
-window._ = _;
+/* 以key-val方式方便操作indexedDB */
+import idb from "./static/lib/idb-keyval.es6.js";
+import resolvePath from "./static/utils/resolvePath.js";
+import VueLoader from "./static/utils/VueLoader.js";
+import md5 from "md5";
+import {
+    startLoadingAnimation,
+    stopLoadingAnimation
+} from "./static/utils/loadingAnimation.js";
 import {
     createHttpService
 } from "./static/utils/httpRequest.js";
@@ -11,18 +19,8 @@ import {
     checkStaticResource,
     checkStaticResourceManifest
 } from "./static/utils/checkStaticResource.js";
-/* 以key-val方式方便操作indexedDB */
-import idb from "./static/lib/idb-keyval.es6.js";
-import resolvePath from "./static/utils/resolvePath.js";
-import VueLoader from "./static/utils/VueLoader.js";
-import md5 from "md5";
-import {
-    startLoadingAnimation,
-    stopLoadingAnimation
-} from "./static/utils/loadingAnimation.js";
 
-/* add utils */
-_.$loadJS = loadJS;
+window._ = _;
 /* 懒加载Vue组件 */
 _.$lazyLoadComponent = lazyLoadComponent;
 /* 处理资源路径 */
@@ -32,6 +30,8 @@ _.$VueLoader = VueLoader;
 _.$md5 = md5;
 _.$idb = idb;
 _.$http = createHttpService(EventBus);
+/* add utils */
+_.$loadJS = loadJS;
 
 /* 全局通信 */
 window.EventBus = EventBus;

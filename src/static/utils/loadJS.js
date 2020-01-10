@@ -1,22 +1,19 @@
-const {
-    _
-} = window;
-const {
-    set,
-    get,
-    clear,
-    Store
-} = _.$idb;
-
 export default function (path) {
+    const {
+        _: {
+            camelCase,
+            last
+        }
+    } = window;
+
     /* 开发模式不缓存 */
     // const isDev = /localhost:80/g.test(location.href);
     const isDev = false;
     window.STATIC_RES_VERSION = isDev ? Date.now() : "202001101743";
-    let id = _.camelCase(path).toLowerCase();
+    let id = camelCase(path).toLowerCase();
     /* 白名单，如果资源在白名单上，尽量缓存 */
 
-    const whiteListKey = _.camelCase(_.last(path.split("/"))).toLowerCase();
+    const whiteListKey = camelCase(last(path.split("/"))).toLowerCase();
     const handlerName = (~["systemjs", "babeltransformjs", "vue2611broswerjs", "transformjs"].indexOf(whiteListKey)) ? "cache" : "noCache";
     console.log("id:", id, "\ntarget:", whiteListKey, "\nhandlerName:", handlerName);
     return handler[handlerName](path, id);
@@ -24,7 +21,16 @@ export default function (path) {
 
 const handler = {
     async cache(url, id, _opts) {
-
+        const {
+            _: {
+                $idb: {
+                    set,
+                    get,
+                    clear,
+                    Store
+                }
+            }
+        } = window;
 
         try {
             const STATIC_RES_STORE = window.STATIC_RES_STORE || new Store("STATIC_RES_DB", "STATIC_RES_STORE");
@@ -39,12 +45,10 @@ const handler = {
                 console.log("cache", url);
                 return Promise.resolve();
             }
-
             source = await xhrFetch(url, _opts);
             if (source) {
                 /* TODO:cache */
                 await set(id, source, STATIC_RES_STORE);
-                /* Promise.resolve(window._.$VueLoader(url, text)); */
                 sourceToCode(source);
                 return Promise.resolve();
             }
@@ -54,8 +58,14 @@ const handler = {
         }
     },
     noCache(url, id, _opts) {
+        const {
+            _: {
+                merge
+            }
+        } = window;
+
         return new Promise((resolve, reject) => {
-            let ele = _.merge(document.createElement("script"), {
+            let ele = merge(document.createElement("script"), {
                 id,
                 src: url
             });
