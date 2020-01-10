@@ -12,8 +12,12 @@
 - [原子设计理论](https://www.uisdc.com/atomic-design-theory)
 - [Atomic Design原子设计理念](http://www.woshipm.com/pd/728887.html)
 - [设计系统](https://zhuanlan.zhihu.com/p/33345487)
+- [HTTP 响应代码](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status)
+- [webpack plugins](https://www.webpackjs.com/plugins/)
+- [eslint](https://eslint.vuejs.org/user-guide/#installation)
+- [怎么使用 Service Worker](https://lavas.baidu.com/pwa/offline-and-cache-loading/service-worker/how-to-use-service-worker)
 
-## ？？？
+## 说明
 
 - （一个组件就是一个应用？）
 
@@ -28,25 +32,27 @@ yarn add -D stylus stylus-loader confman vue-loader vue-template-compiler stylus
 
 ```
 
+![middlewareerror.png](./doc/middlewareerror.png)
+
 ~~node-sass sass-loader~~安装失败神烦
 
 ## 生成vue组件的vs code插件
 
 [generatevuecomponent](https://marketplace.visualstudio.com/items?itemName=ShoneSingLone.generatevuecomponent)
 
-## 
-[怎么使用 Service Worker](https://lavas.baidu.com/pwa/offline-and-cache-loading/service-worker/how-to-use-service-worker)
 ## Utils
 
-LoadString
-loadJS
-loadCSS
+- [ ] loadJS的处理流程
+- [ ] resolvePath 的处理流程
+- [ ] lazyLoadComponent 的处理流程
+  - [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob)fetch =》 blob =》 text =》 replace
+  - [w3c-Blob](https://w3c.github.io/FileAPI/#constructorBlob)
+
 md5
 
 ## 约定
 
 在相同的目录下
-page=compoentName?test=true
 
 ### page 业务页面
 
@@ -54,19 +60,17 @@ page=compoentName?test=true
 
 ## 文档
 
-MainContent.js 主要是tab id 的问题 使用与selector相恰的变量名
+![TEMPLATE_PLACEHOLDER](./public/static/doc/template_placeholder.png);
+VueLoader 方便替换字符串，妥协的写法。
 
-VueLoader
+- 修改了加载过程，主要是Vue单文件的字符串拼接。
+  - public\static\lib\systemjs\system.src.js
+  - public\static\lib\systemjs\extras\transform.js
 
-public\static\lib\systemjs\system.src.js
-public\static\lib\systemjs\extras\transform.js
+- [idb-keyval](https://github.com/jakearchibald/idb-keyval/blob/master/README.md)
+- [localForage](https://github.com/localForage/localForage)
 
-- [idb-keyval](https://github.com/jakearchibald/idb-keyval/blob/master/README.md) 
-- [localForage](https://github.com/localForage/localForage) 
-
-缓存
 hash 升级
-
 
 ---
 <!-- 不明白 -->
@@ -81,12 +85,26 @@ req.on('close', function () {
 });
 ```
 
-# axios 拦截封装
+## axios 拦截封装
 
 - 403 权限
   - 跳转 退出逻辑（清除敏感信息）
 - 超时
 
-
-
 EventBus 全局通信：messageBox not
+
+## 缓存
+
+如果有耕细粒度的缓存，可以配置映射表，为每一个需要缓存的文件单独设置版本号
+
+fetch是否有兼容性问题？
+
+静态资源单独一个缓存=》手动维护一般不会改(毕竟)
+
+1. 对比版本 STATIC_RES_VERSION
+    1. 不同就清空加入版本信息
+    1. id get
+        1. 有直接输出
+        1. 没有
+        1. fetch
+        1. set

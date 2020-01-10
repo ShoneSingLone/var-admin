@@ -7,10 +7,12 @@
 
 <script>
 import sub from "./Sub.vue";
+const testData = { a: "a", b: "b", c: 1 };
 export default {
   TEMPLATE_PLACEHOLDER,
   components: {
     subDiv: sub
-  }
+  },
+  data: () => ({ ...testData })
 };
 </script>

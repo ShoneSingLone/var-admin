@@ -6,7 +6,7 @@ const {
     }
 } = window;
 
-export default async () => {
+export default async (stopLoadingAnimation) => {
     try {
         await $loadJS($resolvePath("static/lib/vue-2.6.11.broswer.js"));
         const {
@@ -14,17 +14,16 @@ export default async () => {
         } = window;
         new Vue({
             el: "#app",
-            mounted() {
-                setTimeout(() => {
-                    this.currentComponent = "appvue";
-                }, 1000 * 1);
+            components: {
+                appvue: $lazyLoadComponent($resolvePath("static/module/login/Login.vue"))
             },
             data: () => ({
                 currentComponent: ""
             }),
-            components: {
-                appvue: $lazyLoadComponent($resolvePath("static/module/login/Login.vue"))
-            }
+            mounted() {
+                this.currentComponent = "appvue";
+                stopLoadingAnimation();
+            },
         });
     } catch (error) {
         console.error(error);

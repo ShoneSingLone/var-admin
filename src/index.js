@@ -1,26 +1,25 @@
 import "./styles/main.styl";
-import _ from "../public/static/utils/tree-shaking/lodash.js";
+import _ from "./static/utils/tree-shaking/lodash.js";
 window._ = _;
 import {
     createHttpService
-} from "../public/static/utils/httpRequest.js";
-import lazyLoadComponent from "../public/static/utils/lazyLoadComponent.js";
-import EventBus from "../public/static/utils/EventBus.js";
-import loadJS from "../public/static/utils/loadJS.js";
+} from "./static/utils/httpRequest.js";
+import lazyLoadComponent from "./static/utils/lazyLoadComponent.js";
+import EventBus from "./static/utils/EventBus.js";
+import loadJS from "./static/utils/loadJS.js";
 import {
     checkStaticResource,
     checkStaticResourceManifest
-} from "../public/static/utils/checkStaticResource.js";
+} from "./static/utils/checkStaticResource.js";
 /* 以key-val方式方便操作indexedDB */
-import idb from '../public/static/lib/idb-keyval.es6.js';
-console.log("idb", idb);
-import resolvePath from "../public/static/utils/resolvePath.js";
-import VueLoader from "../public/static/utils/VueLoader.js";
+import idb from "./static/lib/idb-keyval.es6.js";
+import resolvePath from "./static/utils/resolvePath.js";
+import VueLoader from "./static/utils/VueLoader.js";
 import md5 from "md5";
 import {
     startLoadingAnimation,
     stopLoadingAnimation
-} from "../public/static/js/loadingAnimation.js";
+} from "./static/utils/loadingAnimation.js";
 
 /* add utils */
 _.$loadJS = loadJS;
@@ -34,6 +33,7 @@ _.$md5 = md5;
 _.$idb = idb;
 _.$http = createHttpService(EventBus);
 
+/* 全局通信 */
 window.EventBus = EventBus;
 /* 用Chrome跑IE应该跑的代码 */
 // window.isOldBrowser = true || (typeof fetch === "undefined");
@@ -44,9 +44,6 @@ checkStaticResource(_);
 
 (async (eleMain) => {
     /* 加载JS */
-    if (eleMain && eleMain.dataset && eleMain.dataset.entry && eleMain.dataset.entry.baseurl) {
-        setBaseurl(eleMain.dataset.entry.baseurl);
-    }
     if (window.isOldBrowser) {
         await loadJS(resolvePath("static/lib/systemjs/system.src.js"));
         await loadJS(resolvePath("static/lib/systemjs/extras/transform.js"));
@@ -71,8 +68,9 @@ checkStaticResource(_);
         window.$system = window[window.isOldBrowser ? "SystemJS" : "System"];
         window.$system
             .import(resolvePath(eleMain.dataset.entry))
-            .then(module => module.default())
+            .then(module => module.default(stopLoadingAnimation))
             .catch(console.error.bind(console))
-            .finally(stopLoadingAnimation);
+            /* stopLoadingAnimation调用之后会stopLoadingAnimation=null */
+            .finally(() => setTimeout(() => stopLoadingAnimation && stopLoadingAnimation(), 10 * 1000));
     }
 })(document.querySelector("#script-main"));
