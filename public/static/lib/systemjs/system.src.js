@@ -1441,111 +1441,13 @@
    * Source loading
    */
   function fetchFetch(url, authorization, integrity, asBuffer) {
-    // fetch doesn't support file:/// urls
-    if (url.substr(0, 8) === 'file:///') {
-      if (hasXhr)
-        return xhrFetch(url, authorization, integrity, asBuffer);
-      else
-        throw new Error('Unable to fetch file URLs in this environment.');
-    }
-
-    // percent encode just "#" for HTTP requests
-    url = url.replace(/#/g, '%23');
-
-    var opts = {
-      // NB deprecate
-      headers: {
-        Accept: 'application/x-es-module, */*'
-      }
-    };
-
-    if (integrity)
-      opts.integrity = integrity;
-
-    if (authorization) {
-      if (typeof authorization == 'string')
-        opts.headers['Authorization'] = authorization;
-      opts.credentials = 'include';
-    }
-
-    return fetch(url, opts)
-      .then(function (res) {
-        if (res.ok) {
-          var isVueFile = url.slice(-4) === ".vue";
-          var source;
-          if (isVueFile) {
-            source = res.blob()
-              .then(function (_blob) {
-                return _blob.text();
-              })
-              .then(function (text) {
-                return Promise.resolve(window._.$VueLoader(url, text));
-              })
-          } else {
-            source = (asBuffer ? res.arrayBuffer() : res.text());
-          }
-          return source;
-        } else {
-          throw new Error('Fetch error: ' + res.status + ' ' + res.statusText);
-        }
-      });
+    console.log('fetchFetch');
+    return xhrFetch(url, authorization, integrity, asBuffer);
   }
 
   function xhrFetch(url, authorization, integrity, asBuffer) {
-    return new Promise(function (resolve, reject) {
-      // percent encode just "#" for HTTP requests
-      url = url.replace(/#/g, '%23');
-
-      var xhr = new XMLHttpRequest();
-      if (asBuffer)
-        xhr.responseType = 'arraybuffer';
-
-      function load() {
-        var source = (asBuffer ? xhr.response : xhr.responseText);
-        /* TODO:cache */
-        if (url.slice(-4) === ".vue") {
-          source = window._.$VueLoader(url, source);
-        }
-        resolve(source);
-      }
-
-      function error() {
-        reject(new Error('XHR error: ' + (xhr.status ? ' (' + xhr.status + (xhr.statusText ? ' ' + xhr.statusText : '') + ')' : '') + ' loading ' + url));
-      }
-
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          // in Chrome on file:/// URLs, status is 0
-          if (xhr.status == 0) {
-            if (xhr.response) {
-              load();
-            } else {
-              // when responseText is empty, wait for load or error event
-              // to inform if it is a 404 or empty file
-              xhr.addEventListener('error', error);
-              xhr.addEventListener('load', load);
-            }
-          } else if (xhr.status === 200) {
-            load();
-          } else {
-            error();
-          }
-        }
-      };
-      xhr.open("GET", url, true);
-
-      if (xhr.setRequestHeader) {
-        xhr.setRequestHeader('Accept', 'application/x-es-module, */*');
-        // can set "authorization: true" to enable withCredentials only
-        if (authorization) {
-          if (typeof authorization == 'string')
-            xhr.setRequestHeader('Authorization', authorization);
-          xhr.withCredentials = true;
-        }
-      }
-
-      xhr.send(null);
-    });
+    console.log('xhrFetch', url);
+    return window._.$xhrFetchWithCache(url, authorization, integrity, asBuffer);
   }
 
   var fs;

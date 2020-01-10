@@ -1,25 +1,28 @@
 import camelCase from "lodash/camelCase";
+import merge from "lodash/merge";
 import last from "lodash/last";
 import {
     cacheStaticResourceAndToCode
 } from "./cacheStaticResource.js";
-
-export default function (url) {
+export default function loadJS(url) {
     /* 白名单，如果资源在白名单上，缓存 */
-    const whiteList = ["systemjs", "systemsrcjs", "babeltransformjs", "vue2611broswerjs", "transformjs", "lessminjs"];
+    let whiteList = ["systemjs", "systemsrcjs", "babeltransformjs", "vue2611broswerjs", "transformjs", "lessminjs"];
+    // whiteList = [];
     const whiteListKey = camelCase(last(url.split("/"))).toLowerCase();
     const handlerName = (~whiteList.indexOf(whiteListKey)) ? "cache" : "noCache";
-    if (handlerName === "cache") {
-        return cacheStaticResourceAndToCode(url);
-    } else {
-        return loadJSByAddScriptElement(url);
-    }
+    const _loadJS = (handlerName === "cache" ? cacheStaticResourceAndToCode(url) : loadJSByAddScriptElement(url));
+    return _loadJS.then(function (res) {
+            console.log("loaded", url);
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
 }
 
 
-function loadJSByAddScriptElement(url, id, _opts) {
+function loadJSByAddScriptElement(url, _opts) {
     return new Promise((resolve, reject) => {
-        let ele = window._.merge(document.createElement("script"), {
+        let ele = merge(document.createElement("script"), {
             id: camelCase(url).toLowerCase(),
             src: url
         });

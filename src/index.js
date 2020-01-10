@@ -1,7 +1,7 @@
 import "./styles/main.styl";
 import _ from "./static/utils/tree-shaking/lodash.js";
 /* 以key-val方式方便操作indexedDB */
-import idb from "./static/lib/idb-keyval.es6.js";
+import localforage from "localforage";
 import resolvePath from "./static/utils/resolvePath.js";
 import VueLoader from "./static/utils/VueLoader.js";
 import md5 from "md5";
@@ -20,7 +20,7 @@ import {
     $error
 } from "./static/utils/console.js";
 import {
-    cacheStaticResource
+    xhrFetchWithCache
 } from "./static/utils/cacheStaticResource.js";
 
 let IS_DEV = /localhost:80/g.test(location.href);
@@ -29,17 +29,17 @@ window.APP_CONFIGS = {
     STATIC_RES_VERSION: IS_DEV ? Date.now() : "202001101753"
 };
 
-
 window._ = _;
 /* 懒加载Vue组件 */
 _.$lazyLoadComponent = lazyLoadComponent;
 /* 处理资源路径 */
-_.$cacheStaticResource = cacheStaticResource;
+_.$xhrFetchWithCache = xhrFetchWithCache;
 _.$resolvePath = resolvePath;
 /* system.src.js transform.js loader Vue 单文件 */
 _.$VueLoader = VueLoader;
 _.$md5 = md5;
-_.$idb = idb;
+/* indexedDB key-val 操作库 */
+_.$localforage = localforage;
 _.$http = createHttpService(EventBus);
 /* add utils */
 _.$loadJS = loadJS;
@@ -75,7 +75,7 @@ setTimeout(() => startLoadingAnimation(_), 30);
         await loadJS(resolvePath("static/lib/systemjs/babel-transform.js"));
     }
     await loadJS(resolvePath("static/lib/less.min.js"));
-
+    /* 基础的JS加载完毕之后加载entryjs */
     if (eleMain && eleMain.dataset && eleMain.dataset.entry) {
         window.$system = window[window.isOldBrowser ? "SystemJS" : "System"];
         window.$system

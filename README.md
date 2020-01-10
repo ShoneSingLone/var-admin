@@ -69,7 +69,7 @@ VueLoader 方便替换字符串，妥协的写法。
   - public\static\lib\systemjs\system.src.js
   - public\static\lib\systemjs\extras\transform.js
 
-- [idb-keyval](https://github.com/jakearchibald/idb-keyval/blob/master/README.md)
+~~- [idb-keyval](https://github.com/jakearchibald/idb-keyval/blob/master/README.md)~~在IE上报错，兼容性不好
 - [localForage](https://github.com/localForage/localForage)
 
 hash 升级

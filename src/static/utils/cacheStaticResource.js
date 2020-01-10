@@ -1,84 +1,77 @@
-import idb from "../lib/idb-keyval.es6.js";
+import localforage from "localforage";
 
-const {
-    set,
-    get,
-    clear,
-    Store
-} = idb;
+const store = localforage.createInstance({
+    name: "STATIC_RES_DB"
+});
 
 export async function cacheStaticResourceAndToCode(url, _opts) {
     try {
-        const {
-            _,
-        } = window;
-        const {
-            camelCase
-        } = _;
-
-        let id = camelCase(url).toLowerCase();
-        /* 全局单例用于存储大体积静态资源的Store */
-        _.$$STORE = _.$$STORE || new Store("STATIC_RES_DB", "STATIC_RES_STORE");
-        const BIG_STORE = _.$$STORE;
-        let source = await cacheStaticResource(url, _opts);
+        let source = await xhrFetchWithCache(url);
         if (source) {
-            /* TODO:cache */
-            await set(id, source, BIG_STORE);
-            /* Promise.resolve(window._.$VueLoader(url, text)); */
-            sourceToCode(source);
-            console.log("%c cache", "background:green;color:white;", "\tid:", id);
-            return Promise.resolve();
+            return sourceToCode(source);
         }
-        throw new Error(`Fetch error: ${url}`);
+        throw new Error("Unable to cacheStaticResourceAndToCode");
     } catch (error) {
-        return Promise.reject(error);
+        console.error(error);
     }
-
-}
-
-export let checkStaticResourceManifest = {};
-
-async function cacheStaticResource(url, _opts) {
-    const {
-        _,
-        APP_CONFIGS: {
-            STATIC_RES_VERSION
-        }
-    } = window;
-    const {
-        camelCase
-    } = _;
-
-    let id = camelCase(url).toLowerCase();
-
-    /* 全局单例用于存储大体积静态资源的Store */
-    _.$$STORE = _.$$STORE || new Store("STATIC_RES_DB", "STATIC_RES_STORE");
-    const BIG_STORE = _.$$STORE;
-    let _version = await get("VERSION" + STATIC_RES_VERSION, BIG_STORE);
-    if (!_version) {
-        await clear(BIG_STORE);
-        set("VERSION" + STATIC_RES_VERSION, "VERSION" + STATIC_RES_VERSION, BIG_STORE);
-    }
-    let source = await get(id, BIG_STORE);
-    if (source) {
-        return Promise.resolve(source);
-    }
-    return await xhrFetch(url, _opts);
 }
 
 function sourceToCode(source) {
     (0, eval)(source);
 }
 
-function xhrFetch(url, authorization) {
+export async function xhrFetchWithCache(url, authorization, integrity, asBuffer) {
+    try {
+        const {
+            _,
+            APP_CONFIGS: {
+                STATIC_RES_VERSION
+            }
+        } = window;
+        const {
+            camelCase
+        } = _;
+        let id = camelCase(url).toLowerCase();
+        /* 全局单例用于存储大体积静态资源的Store */
+        _.$$STORE = _.$$STORE || store;
+        try {
+            let _version = await store.getItem("VERSION" + STATIC_RES_VERSION);
+            if (!_version) {
+                await store.clear();
+                await store.setItem("VERSION" + STATIC_RES_VERSION, "VERSION" + STATIC_RES_VERSION);
+            }
+        } catch (error) {
+            throw new Error("Unable to get version");
+        }
+        let source = await store.getItem(id);
+        if (!source) {
+            source = await xhrRetch(url, authorization, integrity, asBuffer);
+        }
+        if (!source) {
+            throw new Error("Unable to xhrFetchWithCache");
+        }
+        return source;
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
+function xhrRetch(url, authorization, integrity, asBuffer) {
     return new Promise(function (resolve, reject) {
         // percent encode just "#" for HTTP requests
         url = url.replace(/#/g, "%23");
 
         var xhr = new XMLHttpRequest();
+        if (asBuffer)
+            xhr.responseType = "arraybuffer";
 
         function load() {
-            resolve(xhr.responseText);
+            var source = (asBuffer ? xhr.response : xhr.responseText);
+            if (url.slice(-4) === ".vue") {
+                source = window._.$VueLoader(url, source);
+            }
+            resolve(source);
         }
 
         function error() {
@@ -118,4 +111,5 @@ function xhrFetch(url, authorization) {
 
         xhr.send(null);
     });
+
 }
