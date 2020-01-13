@@ -19,11 +19,13 @@ import {
     $log,
     $error
 } from "./static/utils/console.js";
+
 import {
     xhrFetchWithCache
-} from "./static/utils/cacheStaticResource.js";
+} from "./static/utils/loadJS.js";
 
 let IS_DEV = /localhost:80/g.test(location.href);
+
 window.APP_CONFIGS = {
     IS_DEV,
     STATIC_RES_VERSION: IS_DEV ? Date.now() : "202001101753"

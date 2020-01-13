@@ -34,7 +34,9 @@
 
 ## 说明
 
-- （一个组件就是一个应用？）
+- 实际运行是public
+- 
+
 
 ## package
 
@@ -53,11 +55,14 @@ yarn add -D stylus stylus-loader confman vue-loader vue-template-compiler stylus
 
 ## 生成vue组件的vs code插件
 
-[generatevuecomponent](https://marketplace.visualstudio.com/items?itemName=ShoneSingLone.generatevuecomponent)
+~~[generatevuecomponent](https://marketplace.visualstudio.com/items?itemName=ShoneSingLone.generatevuecomponent)~~
 
 ## Utils
 
-- [ ] loadJS的处理流程
+- [ ] loadJS的作用是加载js使之运行
+  - 从remote获取 add script
+  - 或者indexedDB缓存 get and eval
+  
 - [ ] resolvePath 的处理流程
   - 约定以static开头
 - [ ] lazyLoadComponent 的处理流程
@@ -70,6 +75,8 @@ md5
 
 在相同的目录下
 resolvePath以static为前缀
+
+## 基座开发
 
 ### page 业务页面
 
@@ -85,7 +92,6 @@ VueLoader 方便替换字符串，妥协的写法。
   - public\static\lib\systemjs\extras\transform.js
 
 ~~- [idb-keyval](https://github.com/jakearchibald/idb-keyval/blob/master/README.md)~~在IE上报错，兼容性不好
-- [localForage](https://github.com/localForage/localForage)
 
 hash 升级
 
@@ -118,6 +124,9 @@ fetch是否有兼容性问题？=>XMLHttpRequest
 
 除了main.js
 静态资源缓存=》手动维护？！(毕竟)
+
+- _.$$STORE
+- [localForage](https://github.com/localForage/localForage)
 
 缓存分级别
   A:大，最不容易变，如babeltransformjs antdesign element-ui=》单独处理 独立版本号

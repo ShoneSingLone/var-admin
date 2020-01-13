@@ -17,6 +17,7 @@ function getBaseurl() {
     return jsPath.substring(0, jsPath.lastIndexOf("static/js/main.js")) || "/";
 }
 
+/* system.js line:27 */
 function resolveIfNotPlainOrUrl(relUrl, parentUrl) {
     if (relUrl.indexOf("\\") !== -1)
         relUrl = relUrl.replace(backslashRegEx, "/");

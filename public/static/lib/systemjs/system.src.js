@@ -1441,12 +1441,12 @@
    * Source loading
    */
   function fetchFetch(url, authorization, integrity, asBuffer) {
-    console.log('fetchFetch');
+    // console.log('fetchFetch');
     return xhrFetch(url, authorization, integrity, asBuffer);
   }
 
   function xhrFetch(url, authorization, integrity, asBuffer) {
-    console.log('xhrFetch', url);
+    // console.log('xhrFetch', url);
     return window._.$xhrFetchWithCache(url, authorization, integrity, asBuffer);
   }
 

@@ -8,8 +8,7 @@
     "git:push": "git push && git push gitee master && git push coding master",
     "lint": "eslint . --ignore-path .eslintignore",
     "lint:fix": "eslint --fix . --ignore-path .eslintignore",
-    "build": "cross-env NODE_ENV=production webpack --config config/index.js",
-    "build:stats": "cross-env NODE_ENV=production webpack --progress --profile --config config/index.js --json > stats.json",
+    "build": "cross-env NODE_ENV=production webpack --progress --profile --config config/index.js --json > stats.json",
     "start": "cross-env NODE_ENV=development nodemon server.js",
     "serve": "cross-env NODE_ENV=production PORT=10080 pm2 start server.js -i 4 --name koa-webpack-example --merge-logs --log-date-format='YYYY-MM-DD HH:mm Z' && pm2 save 2> /dev/null",
     "stop": "pm2 stop koa-webpack-example"
