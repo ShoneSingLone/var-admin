@@ -149,8 +149,8 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
                 }
             }
         };
-        xhr.open("GET", url, true);
-
+        xhr.open("GET", `${url}?_t=${Date.now()}`, true);
+        
         if (xhr.setRequestHeader) {
             xhr.setRequestHeader("Accept", "application/x-es-module, */*");
             // can set "authorization: true" to enable withCredentials only
