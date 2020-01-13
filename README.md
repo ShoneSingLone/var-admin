@@ -1,5 +1,9 @@
 # vue-admin
 
+- [github 慢](https://shonesinglone.github.io/var-admin/)
+- [coding](http://jz0a27.coding-pages.com/public/login.html)
+- [gitee](https://shonesinglone.gitee.io/var-admin/)
+
 基于SystemJS，使用VueJS编写基座的微前端Demo。
 
 - 以微件为单位构建应用；
