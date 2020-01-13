@@ -4,8 +4,8 @@
   "description": "CRM with Koa2, Webpack,Vue Angular React=>var",
   "main": "server.js",
   "scripts": {
-    "git:pull": "git pull && git pull gitee master",
-    "git:push": "git push && git push gitee master",
+    "git:pull": "git pull && git pull gitee master && git pull coding master",
+    "git:push": "git push && git push gitee master && git push coding master",
     "lint": "eslint . --ignore-path .eslintignore",
     "lint:fix": "eslint --fix . --ignore-path .eslintignore",
     "build": "cross-env NODE_ENV=production webpack --config config/index.js",
