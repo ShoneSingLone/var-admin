@@ -3,7 +3,8 @@ const fsextra = require("fs-extra");
 const path = require("path");
 
 let sourceDir = path.join(__dirname, "../public");
-const basePath = `D:/Users/Administrator/Documents/GitHub/ShoneSingLone.github.io`
+
+const basePath = path.join(__dirname, "../..", "ShoneSingLone.github.io")
 let deployStaticsDir = path.join(basePath, `var-admin`);
 console.log(sourceDir, " ", deployStaticsDir);
 (async () => {
