@@ -1,5 +1,15 @@
 # vue-admin
 
+基于SystemJS，使用VueJS编写基座的微前端Demo。
+
+- 以微件为单位构建应用；
+- 无须webpack打包；
+- 在线babel转译ES7（async/await）；
+- 支持.vue单文件；
+- 支持less在线编译；
+- 支持IE11；
+- 使用Koa2+webpack实现基座HRM开发。
+
 ## 参考
 
 - [Server-sent_events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events#Tools)
