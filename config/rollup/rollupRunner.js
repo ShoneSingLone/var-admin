@@ -1,15 +1,15 @@
-const rollup = require('rollup');
+const rollup = require("rollup");
 const path = require("path");
 
 // see below for details on the options
-const input = path.join(__dirname, "../..", 'node_modules/ant-design-vue/lib/date-picker/index.js');
-console.log('input', input);
+const input = path.join(__dirname, "../..", "node_modules/ant-design-vue/es/input/index.js");
 const inputOptions = {
-    input,
+    // input: "./main.js",
+    input
 };
 const outputOptions = {
-    file: 'bundle.js',
-    format: 'iife'
+    file: "bundle.js",
+    format: "iife"
 };
 
 async function build() {
@@ -24,14 +24,14 @@ async function build() {
     } = await bundle.generate(outputOptions);
 
     for (const chunkOrAsset of output) {
-        if (chunkOrAsset.type === 'asset') {
+        if (chunkOrAsset.type === "asset") {
             // For assets, this contains
             // {
             //   fileName: string,              // the asset file name
             //   source: string | Buffer        // the asset source
             //   type: 'asset'                  // signifies that this is an asset
             // }
-            console.log('Asset', chunkOrAsset);
+            console.log("Asset", chunkOrAsset);
         } else {
             // For chunks, this contains
             // {
@@ -55,7 +55,7 @@ async function build() {
             //   name: string                   // the name of this chunk as used in naming patterns
             //   type: 'chunk',                 // signifies that this is a chunk
             // }
-            console.log('Chunk', chunkOrAsset.modules);
+            console.log("Chunk", chunkOrAsset.modules);
         }
     }
 
