@@ -1,5 +1,6 @@
 const backslashRegEx = /\\/g;
 const parentUrl = getBaseurl();
+window.__webpack_public_path__ = parentUrl + "static/js/bundle/";
 
 function getBaseurl() {
     var jsPath = document.currentScript ? document.currentScript.src : function () {

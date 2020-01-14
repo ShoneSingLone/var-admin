@@ -7,9 +7,6 @@
 
 <script>
 import sub from "./Sub.vue";
-import a from "../../lib/antd/test/another.bundle.js";
-console.log("a",a);
-
 
 const testData = { a: "a", b: "b", c: 1 };
 export default {
@@ -17,6 +14,5 @@ export default {
   components: {
     subDiv: sub
   },
-  data: () => ({ ...testData })
-};
-</script>
+  data: () => ({ ...testData }),
+  };

@@ -33,12 +33,13 @@
 - [怎么使用 Service Worker](https://lavas.baidu.com/pwa/offline-and-cache-loading/service-worker/how-to-use-service-worker)
 - [Git-工具-子模块](https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97)
 - [webpack-visualizer](http://chrisbateman.github.io/webpack-visualizer/)
+- [webpack-lazy-loading](https://webpack.docschina.org/guides/lazy-loading/#%E6%A1%86%E6%9E%B6)
+- [code-splitting](https://webpack.docschina.org/guides/code-splitting/#%E5%85%A5%E5%8F%A3%E8%B5%B7%E7%82%B9-entry-points-)
+- [output :__webpack_public_path__](https://webpack.docschina.org/concepts/output/#%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6)
 
 ## 说明
 
 - 实际运行是public
-- 
-
 
 ## package
 

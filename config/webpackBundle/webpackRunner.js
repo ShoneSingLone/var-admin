@@ -3,22 +3,23 @@ const path = require("path");
 
 // see below for details on the options
 const entry = path.join(__dirname, "../..", "node_modules/ant-design-vue/es/input/index.js");
-const outputPath = path.join(__dirname, "../../public", "static/lib/antd", "test");
+const outputPath = path.join(__dirname, "../../public", "static/js/bundle");
 console.log("outputPath", outputPath);
 const webpackConfig = {
     entry: {
-        index: "./src/index.js",
-        another: "./src/another-module.js"
+        // index: "./src/index.js",
+        // another: "./src/another-module.js",
+        antdv: "./antdv.js"
     },
     externals: {
         vue: "Vue",
-        // lodash: "_"
+        lodash: "_"
     },
     /* 确保 bundle 是未压缩版本 */
-    mode: "production",
-    // mode: "development",
+    // mode: "production",
+    mode: "development",
     optimization: {
-        usedExports: false,
+        usedExports: true,
         splitChunks: {
             chunks: "all"
         }
@@ -26,8 +27,7 @@ const webpackConfig = {
     output: {
         path: outputPath,
         filename: "[name].bundle.js",
-        // library: "[name].library.js",
-        // libraryTarget: "umd"
+        chunkFilename: "[name].chunk.js",
     }
 
 };

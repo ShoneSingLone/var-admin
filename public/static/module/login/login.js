@@ -12,7 +12,16 @@ const {
 export default async (stopLoadingAnimation) => {
     try {
         await $loadJS($resolvePath("static/lib/vue-2.6.11.broswer.js"));
-        // await $loadJS($resolvePath("static/lib/antd/antd.js"));
+        await $loadJS($resolvePath("static/js/bundle/importlib.bundle.js"));
+
+        window.getComponent()
+            .then(component => {
+                return component();
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+
         const {
             antd
         } = window;
