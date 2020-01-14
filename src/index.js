@@ -76,7 +76,7 @@ setTimeout(() => startLoadingAnimation(_), 30);
         await loadJS(resolvePath("static/lib/systemjs/extras/transform.js"));
         await loadJS(resolvePath("static/lib/systemjs/babel-transform.js"));
     }
-    await loadJS(resolvePath("static/lib/less.min.js"));
+    // await loadJS(resolvePath("static/lib/less.min.js"));
     /* 基础的JS加载完毕之后加载entryjs */
     if (eleMain && eleMain.dataset && eleMain.dataset.entry) {
         window.$system = window[window.isOldBrowser ? "SystemJS" : "System"];

@@ -36,6 +36,7 @@
 - [webpack-lazy-loading](https://webpack.docschina.org/guides/lazy-loading/#%E6%A1%86%E6%9E%B6)
 - [code-splitting](https://webpack.docschina.org/guides/code-splitting/#%E5%85%A5%E5%8F%A3%E8%B5%B7%E7%82%B9-entry-points-)
 - [output :__webpack_public_path__](https://webpack.docschina.org/concepts/output/#%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6)
+- [MessageChannel](https://developer.mozilla.org/zh-CN/docs/Web/API/MessageChannel)
 
 ## 说明
 
@@ -80,6 +81,13 @@ md5
 resolvePath以static为前缀
 
 ## 基座开发
+
+应该更通用，`_`：
+
+### 通信系统
+
+管理应用机制
+通信机制 劫持 $iframe
 
 ### page 业务页面
 
@@ -158,3 +166,6 @@ ant
 ```
 
 ## 重定向问题
+
+## 页面Title
+

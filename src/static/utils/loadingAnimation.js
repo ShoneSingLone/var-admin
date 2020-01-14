@@ -12,7 +12,7 @@ export function startLoadingAnimation(_) {
     let body = document.body;
     let eleLoading = _.merge(h("div"), {
         id: "loading-placeholder",
-        innerHTML: '系统正在加载资源...'
+        innerHTML: "系统正在加载资源..."
     });
 
     eleLoading.appendChild(_.merge(h("canvas"), {
@@ -122,7 +122,7 @@ export function startLoadingAnimation(_) {
 
     function loop() {
         if (startLoadingAnimation.isStop) {
-            startLoadingAnimation = null
+            startLoadingAnimation = null;
         } else {
             // console.log('loop count', loop.count++);
             requestAnimationFrame(loop);

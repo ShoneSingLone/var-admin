@@ -20,14 +20,14 @@ const webpackConfig = {
         lodash: "_"
     },
     /* 确保 bundle 是未压缩版本 */
-    // mode: "development",
-    /* optimization: {
-        usedExports: true,
+    mode: "development",
+    optimization: {
+        usedExports: false,
         splitChunks: {
             chunks: "all",
         }
-    }, */
-    mode: "production",
+    },
+    // mode: "production",
     output: {
         path: outputPath,
         filename: "[name].bundle.js",
