@@ -1,10 +1,14 @@
 const webpack = require("webpack");
 const path = require("path");
+const webpackBaseConfig = require("../webpack.base.config.js");
+const {
+    merge
+} = require("lodash");
+
+
 
 // see below for details on the options
-const entry = path.join(__dirname, "../..", "node_modules/ant-design-vue/es/input/index.js");
-const outputPath = path.join(__dirname, "../../public", "static/js/bundle");
-console.log("outputPath", outputPath);
+const outputPath = path.join(__dirname, "../../public", "static/lib/bundle");
 const webpackConfig = {
     entry: {
         // index: "./src/index.js",
@@ -16,20 +20,19 @@ const webpackConfig = {
         lodash: "_"
     },
     /* 确保 bundle 是未压缩版本 */
-    // mode: "production",
-    mode: "development",
-    optimization: {
+    // mode: "development",
+    /* optimization: {
         usedExports: true,
         splitChunks: {
-            chunks: "all"
+            chunks: "all",
         }
-    },
+    }, */
+    mode: "production",
     output: {
         path: outputPath,
         filename: "[name].bundle.js",
         chunkFilename: "[name].chunk.js",
     }
-
 };
 
 webpack(webpackConfig, (err, stats) => { // Stats Object

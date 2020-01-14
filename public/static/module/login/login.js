@@ -12,10 +12,13 @@ const {
 export default async (stopLoadingAnimation) => {
     try {
         await $loadJS($resolvePath("static/lib/vue-2.6.11.broswer.js"));
-        await $loadJS($resolvePath("static/js/bundle/importlib.bundle.js"));
+        await $loadJS($resolvePath("static/lib/bundle/antdv.bundle.js"));
 
-        window.getComponent()
+        debugger;
+        console.log(window.ANT_D_V_COMPONENTS);
+        window.ANT_D_V_COMPONENTS()
             .then(component => {
+                debugger;
                 return component();
             })
             .catch(function (error) {
