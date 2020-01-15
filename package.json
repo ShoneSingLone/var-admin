@@ -1,5 +1,6 @@
 {
   "name": "var-admin",
+  "type": "module",
   "version": "0.0.1",
   "description": "CRM with Koa2, Webpack,Vue Angular React=>var",
   "main": "server.js",

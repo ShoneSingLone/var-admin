@@ -15,6 +15,7 @@ import {
 import lazyLoadComponent from "./static/utils/lazyLoadComponent.js";
 import EventBus from "./static/utils/EventBus.js";
 import loadJS from "./static/utils/loadJS.js";
+import loadCSS from "./static/utils/loadCSS.js";
 import {
     $log,
     $error
@@ -25,7 +26,8 @@ import {
 } from "./static/utils/loadJS.js";
 
 let IS_DEV = /localhost:80/g.test(location.href);
-
+/* for test */
+// IS_DEV = false;
 window.APP_CONFIGS = {
     IS_DEV,
     STATIC_RES_VERSION: IS_DEV ? Date.now() : "202001101753"
@@ -45,6 +47,7 @@ _.$localforage = localforage;
 _.$http = createHttpService(EventBus);
 /* add utils */
 _.$loadJS = loadJS;
+_.$loadCSS = loadCSS;
 _.$log = $log;
 _.$error = $error;
 

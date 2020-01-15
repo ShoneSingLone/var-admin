@@ -8,7 +8,7 @@ function sourceToCode(source) {
     (0, eval)(source);
 }
 
-function isCache(url) {
+function shouldCache(url) {
     /* 白名单，如果资源在白名单上，缓存 */
     let whiteListMap = {
         "systemjs": true,
@@ -16,14 +16,15 @@ function isCache(url) {
         "systemjsbabelbrowserjs": true,
         "babeltransformjs": true,
         "vue2611broswerjs": true,
+        "lodash41711js": true,
         "transformjs": true,
         "lessminjs": true,
     };
     // whiteList = [];
     const whiteListKey = camelCase(last(url.split("/"))).toLowerCase();
-    const _isCache = Boolean(whiteListMap[whiteListKey]);
-    console.log(`cache ${whiteListKey}?  ${_isCache}`);
-    return (_isCache);
+    const _shouldCache = Boolean(whiteListMap[whiteListKey]);
+    console.log(`should cache ${whiteListKey}?  ${_shouldCache}`);
+    return (_shouldCache);
 }
 
 function loadJSByAddScriptElement(url, _opts) {
@@ -78,8 +79,8 @@ export async function xhrFetchWithCache(url, authorization, integrity, asBuffer)
 
         /* 全局单例用于存储大体积静态资源的Store */
         _.$$STORE = _.$$STORE || store;
-        const _isCache = isCache(url);
-        if (_isCache) {
+        const _shouldCache = shouldCache(url);
+        if (_shouldCache) {
             try {
                 let _version = await store.getItem("VERSION");
                 /* 版本号不相同，需要更新，清除版本号， */
@@ -95,7 +96,7 @@ export async function xhrFetchWithCache(url, authorization, integrity, asBuffer)
         if (!source) {
             source = await xhrFetch(url, authorization, integrity, asBuffer);
         }
-        if (source && _isCache) {
+        if (source && _shouldCache) {
             await store.setItem(id, source);
         } else if (!source) {
             throw new Error("Unable to xhrFetchWithCache");
@@ -150,7 +151,7 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
             }
         };
         xhr.open("GET", `${url}?_t=${Date.now()}`, true);
-        
+
         if (xhr.setRequestHeader) {
             xhr.setRequestHeader("Accept", "application/x-es-module, */*");
             // can set "authorization: true" to enable withCredentials only
@@ -166,10 +167,12 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
 
 }
 
-
+const LoadedJS = {};
 export default function loadJS(url) {
-    return (isCache(url) ? cacheStaticResourceAndToCode(url) : loadJSByAddScriptElement(url))
+    if (LoadedJS[camelCase(url).toLowerCase()]) return Promise.resolve();
+    return (shouldCache(url) ? cacheStaticResourceAndToCode(url) : loadJSByAddScriptElement(url))
         .then(function (res) {
+            LoadedJS[camelCase(url).toLowerCase()] = true;
             console.log("loaded", url);
         })
         .catch(function (error) {

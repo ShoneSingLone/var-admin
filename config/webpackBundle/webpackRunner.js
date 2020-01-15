@@ -1,15 +1,12 @@
 const webpack = require("webpack");
 const path = require("path");
 const webpackBaseConfig = require("../webpack.base.config.js");
-const {
-    merge
-} = require("lodash");
-
-
+const merge = require("webpack-merge");
+// require("./makeAntdvFile");
 
 // see below for details on the options
 const outputPath = path.join(__dirname, "../../public", "static/lib/bundle");
-const webpackConfig = {
+const webpackConfig = merge({
     entry: {
         // index: "./src/index.js",
         // another: "./src/another-module.js",
@@ -20,20 +17,21 @@ const webpackConfig = {
         lodash: "_"
     },
     /* 确保 bundle 是未压缩版本 */
-    mode: "development",
+    // mode: "development",
     optimization: {
-        usedExports: false,
+        usedExports: true,
         splitChunks: {
             chunks: "all",
+            minSize: 60000
         }
     },
-    // mode: "production",
+    mode: "production",
     output: {
         path: outputPath,
         filename: "[name].bundle.js",
         chunkFilename: "[name].chunk.js",
     }
-};
+});
 
 webpack(webpackConfig, (err, stats) => { // Stats Object
     if (err || stats.hasErrors()) {

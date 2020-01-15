@@ -14,6 +14,8 @@
 - 支持IE11；
 - 使用Koa2+webpack实现基座HRM开发。
 
+关键 > DOM.replace("#app",ApplicationInstance)=》先占位模块再替换（web开发基本操作）
+
 ## 参考
 
 - [rollupjs](https://rollupjs.org/guide/en/#using-config-files)
@@ -55,13 +57,19 @@ yarn add -D stylus stylus-loader confman vue-loader vue-template-compiler stylus
 
 ![middlewareerror.png](./doc/middlewareerror.png)
 
-~~node-sass sass-loader~~安装失败神烦
+~~node-sass sass-loader~~安装失败神烦，弃之
 
 ## 生成vue组件的vs code插件
 
 ~~[generatevuecomponent](https://marketplace.visualstudio.com/items?itemName=ShoneSingLone.generatevuecomponent)~~
 
+## （瘦）基座开发
+
+应该更通用，`_`：
+
 ## Utils
+
+## 约定
 
 - [ ] loadJS的作用是加载js使之运行
   - 从remote获取 add script
@@ -75,14 +83,9 @@ yarn add -D stylus stylus-loader confman vue-loader vue-template-compiler stylus
 
 md5
 
-## 约定
-
 在相同的目录下
 resolvePath以static为前缀
 
-## 基座开发
-
-应该更通用，`_`：
 
 ### 通信系统
 

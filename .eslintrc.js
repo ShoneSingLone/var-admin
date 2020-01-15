@@ -1,7 +1,6 @@
 module.exports = {
-    extends: [
-        'plugin:vue/recommended'
-    ],
+    //extends: ["plugin:vue/essential", "@vue/prettier"],
+    extends: ['plugin:vue/recommended'],
     "env": {
         "browser": true,
         "commonjs": true,
@@ -15,25 +14,10 @@ module.exports = {
     },
     "rules": {
         "no-undef": "error",
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "no-console": [
-            "error",
-            {
-                "allow": [
-                    "warn",
-                    "error",
-                    "log",
-                    "dev"
-                ]
-            }
-        ]
-
+        "quotes": ["error", "double"],
+        "semi": ["error", "always"],
+        "no-console": ["error", {
+            "allow": ["warn", "error", "log", "dev"]
+        }]
     }
 };

@@ -1,2 +1,4 @@
 node_modules/
 public/static/lib/systemjs
+public/static/lib/vue-2.6.11.broswer.js
+public/static/lib/lodash-4.17.11.js

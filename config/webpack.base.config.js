@@ -16,7 +16,8 @@ module.exports = {
         test: /\.vue$/,
         loader: "vue-loader"
       },
-      /*  {
+      /*
+      {
          test: /\.(scss|sass)$/,
          use: ['style-loader', 'css-loader', {
            loader: "postcss-loader",
@@ -27,18 +28,29 @@ module.exports = {
              }
            }
          }, 'sass-loader'],
-       }, */
+       },
+      */
       {
         test: /\.less$/,
-        loader: ["style-loader", "css-loader", {
-          loader: "postcss-loader",
-          options: {
-            sourceMap: false,
-            config: {
-              path: "postcss.config.js"
+        loader: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              sourceMap: false,
+              config: {
+                path: "postcss.config.js"
+              }
+            }
+          },
+          {
+            loader: "less-loader",
+            options: {
+              javascriptEnabled: true,
             }
           }
-        }, "less-loader"] // 将 Less 编译为 CSS
+        ] // 将 Less 编译为 CSS
       },
       {
         test: /\.styl$/,
