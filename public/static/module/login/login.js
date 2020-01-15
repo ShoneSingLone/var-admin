@@ -3,21 +3,26 @@ const {
         $loadJS,
         $resolvePath,
         $lazyLoadComponent,
-        merge
+        merge,
+        $axios
     },
     IS_DEV
 } = window;
+
 export default async (stopLoadingAnimation) => {
     try {
+        /* $loadJS($resolvePath())加载的代码不经过systemjs转码 */
         await $loadJS($resolvePath("static/lib/vue-2.6.11.broswer.js"));
         /* 获取完整lodash */
         await $loadJS($resolvePath("static/lib/lodash-4.17.11.js"));
         window._ = merge(window._.noConflict(), window._);
+        debugger;
+        // await $loadJS($resolvePath("static/lib/bundle/antdv.bundle.js"));
         const {
             Vue
         } = window;
-        await $loadJS($resolvePath("static/lib/bundle/antdv.bundle.js"));
-        console.log(Vue.ANT_D_V_COMPONENTS, window._.forEach);
+        Vue.prototype.$http = $axios;
+
         new Vue({
             el: "#app",
             components: {
@@ -27,7 +32,6 @@ export default async (stopLoadingAnimation) => {
                 currentComponent: "appvue"
             }),
             mounted() {
-                this.currentComponent = "appvue";
                 stopLoadingAnimation();
             },
         });

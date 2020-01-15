@@ -68,19 +68,25 @@ const antdMap = {
 var temp = `
 /* eslint-disable */
 __webpack_public_path__ = window.__webpack_public_path__;
-Vue.ANT_D_V_COMPONENTS={};
-import base from "ant-design-vue/es/base";
-Vue.use(base);
 
-(function(){
+window.LAZY_LOADER.antdv=async () => {
+    import base from "ant-design-vue/es/base";
     const {
         _: {
             $loadCSS,
             $resolvePath,
-        }
+        },
+        Vue
     } = window;
+    Vue.ANT_D_V_COMPONENTS = {};
+    $loadCSS($resolvePath("static/lib/antdv/es/style/index.css"))
+    .catch(function (error) {
+        console.error(error);
+    });
+    Vue.use(base);
+
     ${loadComponent(antdMap).join("")}
-})();
+};
 `;
 
 function loadComponent(antdMap) {

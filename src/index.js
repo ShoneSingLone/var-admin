@@ -9,9 +9,7 @@ import {
     startLoadingAnimation,
     stopLoadingAnimation
 } from "./static/utils/loadingAnimation.js";
-import {
-    createHttpService
-} from "./static/utils/httpRequest.js";
+import axios from "axios";
 import lazyLoadComponent from "./static/utils/lazyLoadComponent.js";
 import EventBus from "./static/utils/EventBus.js";
 import loadJS from "./static/utils/loadJS.js";
@@ -28,10 +26,12 @@ import {
 let IS_DEV = /localhost:80/g.test(location.href);
 /* for test */
 // IS_DEV = false;
+debugger;
 window.APP_CONFIGS = {
     IS_DEV,
     STATIC_RES_VERSION: IS_DEV ? Date.now() : "202001101753"
 };
+window.LAZY_LOADER = {};
 
 window._ = _;
 /* 懒加载Vue组件 */
@@ -44,7 +44,7 @@ _.$VueLoader = VueLoader;
 _.$md5 = md5;
 /* indexedDB key-val 操作库 */
 _.$localforage = localforage;
-_.$http = createHttpService(EventBus);
+_.$axios = axios;
 /* add utils */
 _.$loadJS = loadJS;
 _.$loadCSS = loadCSS;
