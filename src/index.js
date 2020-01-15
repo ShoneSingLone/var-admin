@@ -26,7 +26,6 @@ import {
 let IS_DEV = /localhost:80/g.test(location.href);
 /* for test */
 // IS_DEV = false;
-debugger;
 window.APP_CONFIGS = {
     IS_DEV,
     STATIC_RES_VERSION: IS_DEV ? Date.now() : "202001101753"

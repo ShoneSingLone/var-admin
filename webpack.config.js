@@ -3,6 +3,10 @@ const merge = require("webpack-merge");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const webpackBaseConfig = require("./config/webpack.base.config");
 const paths = require("./config/paths");
+const MiniCssExtractPlugin=require("mini-css-extract-plugin");
+const {
+  BundleAnalyzerPlugin
+} = require("webpack-bundle-analyzer");
 
 module.exports = merge(webpackBaseConfig, {
   mode: "production",
@@ -10,10 +14,13 @@ module.exports = merge(webpackBaseConfig, {
   entry: [
     "babel-polyfill",
     "./index",
+    "../config/webpackBundle/antdv.js"
   ],
   output: {
     path: paths.output,
+    // filename: "static/js/[name].js",
     filename: "static/js/[name].js",
+    chunkFilename: "static/js/[name].chunk.js"
   },
   optimization: {
     minimizer: [
@@ -24,19 +31,28 @@ module.exports = merge(webpackBaseConfig, {
       }),
     ],
     splitChunks: {
-      cacheGroups: {
-        default: false,
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "main",
-          chunks: "all",
-          minChunks: 2
-        },
-      },
+      chunks: "all",
+      minSize: 30000
+      /*       cacheGroups: {
+              default: false,
+              commons: {
+                test: /[\\/]node_modules[\\/]/,
+                name: "main",
+                chunks: "all",
+                minChunks: 2
+              },
+            },
+       */
     },
 
   },
   plugins: [
+    new BundleAnalyzerPlugin({
+      analyzerPort: 8083
+    }),
+    new MiniCssExtractPlugin({ //提取css
+      filename: "css/main.css"
+    }),
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("production"),

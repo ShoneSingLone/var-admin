@@ -69,8 +69,7 @@ var temp = `
 /* eslint-disable */
 __webpack_public_path__ = window.__webpack_public_path__;
 
-window.LAZY_LOADER.antdv=async () => {
-    import base from "ant-design-vue/es/base";
+window.LAZY_LOADER.antdv = () => {
     const {
         _: {
             $loadCSS,
@@ -79,11 +78,17 @@ window.LAZY_LOADER.antdv=async () => {
         Vue
     } = window;
     Vue.ANT_D_V_COMPONENTS = {};
-    $loadCSS($resolvePath("static/lib/antdv/es/style/index.css"))
-    .catch(function (error) {
-        console.error(error);
-    });
-    Vue.use(base);
+    Promise.all([
+            $loadCSS($resolvePath("static/lib/antdv/es/style/index.css")),
+            import("ant-design-vue/es/base"),
+        ])
+        .then(function (res) {
+            Vue.ANT_D_V_COMPONENTS.base = true;
+            Vue.use(res[1].default);
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
 
     ${loadComponent(antdMap).join("")}
 };
@@ -92,16 +97,20 @@ window.LAZY_LOADER.antdv=async () => {
 function loadComponent(antdMap) {
     return _.map(antdMap, (path, key) => `
     Vue.ANT_D_V_COMPONENTS.${antdv[key].name}=false;
-    window.Vue.component("${antdv[key].name}", function (resolve,reject) {
-        Promise.all([
-            $loadCSS($resolvePath("static/lib/antdv/es/${path}/style/index.css")),
-            import( /* webpackChunkName: "${antdv[key].name}" */ "ant-design-vue/es/${path}")
-        ])
-        .then(function (res) {
-            Vue.ANT_D_V_COMPONENTS.${antdv[key].name}=true;
-            resolve(res[1].default);
-        })
-        .catch(reject);
+    window.Vue.component("${antdv[key].name}", (resolve,reject) => {
+        (async () => {
+            try {
+                const res = await Promise.all([
+                    $loadCSS($resolvePath("static/lib/antdv/es/${path}/style/index.css")),
+                    import( /* webpackChunkName: "${antdv[key].name}" */ "ant-design-vue/es/${path}")
+                ]);
+
+                Vue.ANT_D_V_COMPONENTS.${antdv[key].name}=true;
+                resolve(res[1].default);
+            } catch (error) {
+                reject(error)
+            }
+        })();
     });
     `);
 }

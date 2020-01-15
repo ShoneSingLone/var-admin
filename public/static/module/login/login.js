@@ -6,7 +6,8 @@ const {
         merge,
         $axios
     },
-    IS_DEV
+    IS_DEV,
+    LAZY_LOADER
 } = window;
 
 export default async (stopLoadingAnimation) => {
@@ -16,7 +17,7 @@ export default async (stopLoadingAnimation) => {
         /* 获取完整lodash */
         await $loadJS($resolvePath("static/lib/lodash-4.17.11.js"));
         window._ = merge(window._.noConflict(), window._);
-        debugger;
+        await LAZY_LOADER.antdv();
         // await $loadJS($resolvePath("static/lib/bundle/antdv.bundle.js"));
         const {
             Vue

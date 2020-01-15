@@ -72,6 +72,9 @@ module.exports = {
       },
     ],
   },
+  externals: {
+    vue: "Vue",
+  },
   plugins: [
     new CleanWebpackPlugin([paths.output]),
     new HtmlWebpackPlugin({
