@@ -16,6 +16,7 @@ function shouldCache(url) {
         "systemjsbabelbrowserjs": true,
         "babeltransformjs": true,
         "vue2611broswerjs": true,
+        "antdminjs": true,
         "lodash41711js": true,
         "transformjs": true,
         "lessminjs": true,

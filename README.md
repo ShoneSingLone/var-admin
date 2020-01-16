@@ -39,13 +39,14 @@
 - [code-splitting](https://webpack.docschina.org/guides/code-splitting/#%E5%85%A5%E5%8F%A3%E8%B5%B7%E7%82%B9-entry-points-)
 - [output :__webpack_public_path__](https://webpack.docschina.org/concepts/output/#%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6)
 - [MessageChannel](https://developer.mozilla.org/zh-CN/docs/Web/API/MessageChannel)
-- [MessageChannel](https://developer.mozilla.org/zh-CN/docs/Web/API/MessageChannel)
+- [rollup plugins](https://www.codercto.com/a/40178.html)
 
 ## Error
 
 - [rollup : 无法加载文件 ******rollup.ps1。](https://developer.mozilla.org/zh-CN/docs/Web/API/MessageChannel)
   - Restricted 执行策略不允许任何脚本运行。
   - AllSigned 和 RemoteSigned 执行策略可防止 Windows PowerShell 运行没有数字签名的脚本。
+- [less javascriptEnable](https://juejin.im/post/5ca99f4e6fb9a05e6668ae85)
 
 ```js
 set-executionpolicy remotesigned

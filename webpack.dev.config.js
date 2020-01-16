@@ -9,7 +9,6 @@ module.exports = merge(webpackBaseConfig, {
   entry: [
     "babel-polyfill",
     "./index",
-    "../config/webpackBundle/antdv.js",
     "webpack-hot-middleware/client?path=/__webpack_hmr&reload=true",
   ],
   output: {

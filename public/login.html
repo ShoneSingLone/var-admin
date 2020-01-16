@@ -9,10 +9,19 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <title>Document</title>
+    <link rel="stylesheet" href="static/lib/antdv/antd.css">
 </head>
 
 <body>
     <div id="app">
+        <a-anchor>
+            <a-anchor-link href="#components-anchor-demo-basic" title="Basic demo" />
+            <a-anchor-link href="#components-anchor-demo-static" title="Static demo" />
+            <a-anchor-link href="#API" title="API">
+                <a-anchor-link href="#Anchor-Props" title="Anchor Props" />
+                <a-anchor-link href="#Link-Props" title="Link Props" />
+            </a-anchor-link>
+        </a-anchor>
         <a-input></a-input>
         <div :is="currentComponent">hehehe</div>
     </div>
@@ -20,7 +29,7 @@
         <script
             id="script-main"
             src="static/js/main.js"
-            data-entry="static/module/login/login.js">
+            data-entry="static/module/user/login/index.mjs">
         </script>
     </div>
 </body>

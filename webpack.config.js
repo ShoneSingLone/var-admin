@@ -3,7 +3,7 @@ const merge = require("webpack-merge");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const webpackBaseConfig = require("./config/webpack.base.config");
 const paths = require("./config/paths");
-const MiniCssExtractPlugin=require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const {
   BundleAnalyzerPlugin
 } = require("webpack-bundle-analyzer");
@@ -14,15 +14,13 @@ module.exports = merge(webpackBaseConfig, {
   entry: [
     "babel-polyfill",
     "./index",
-    "../config/webpackBundle/antdv.js"
   ],
   output: {
     path: paths.output,
-    // filename: "static/js/[name].js",
     filename: "static/js/[name].js",
-    chunkFilename: "static/js/[name].chunk.js"
   },
   optimization: {
+
     minimizer: [
       new UglifyJsPlugin({
         sourceMap: false,
@@ -31,18 +29,15 @@ module.exports = merge(webpackBaseConfig, {
       }),
     ],
     splitChunks: {
-      chunks: "all",
-      minSize: 30000
-      /*       cacheGroups: {
-              default: false,
-              commons: {
-                test: /[\\/]node_modules[\\/]/,
-                name: "main",
-                chunks: "all",
-                minChunks: 2
-              },
-            },
-       */
+      cacheGroups: {
+        default: false,
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "main",
+          chunks: "all",
+          minChunks: 2
+        },
+      },
     },
 
   },

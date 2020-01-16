@@ -1,4 +1,4 @@
-import "./styles/main.styl";
+import "./styles/main.less";
 import _ from "./static/utils/tree-shaking/lodash.js";
 /* 以key-val方式方便操作indexedDB */
 import localforage from "localforage";
@@ -28,7 +28,7 @@ let IS_DEV = /localhost:80/g.test(location.href);
 // IS_DEV = false;
 window.APP_CONFIGS = {
     IS_DEV,
-    STATIC_RES_VERSION: IS_DEV ? Date.now() : "202001101753"
+    STATIC_RES_VERSION: IS_DEV ? Date.now() : "202001162637"
 };
 window.LAZY_LOADER = {};
 
@@ -78,7 +78,7 @@ setTimeout(() => startLoadingAnimation(_), 30);
         await loadJS(resolvePath("static/lib/systemjs/extras/transform.js"));
         await loadJS(resolvePath("static/lib/systemjs/babel-transform.js"));
     }
-    // await loadJS(resolvePath("static/lib/less.min.js"));
+    await loadJS(resolvePath("static/lib/less.min.js"));
     /* 基础的JS加载完毕之后加载entryjs */
     if (eleMain && eleMain.dataset && eleMain.dataset.entry) {
         window.$system = window[window.isOldBrowser ? "SystemJS" : "System"];
