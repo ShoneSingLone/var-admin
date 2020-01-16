@@ -1,11 +1,11 @@
 (function (lodash) {
     "use strict";
 
-    // src/foo.js
-    var foo = "hello world!";
+    var foo = "foo.js";
 
     // src/main.js
-    function main () {
+
+    function main() {
         console.log(lodash.merge(foo, {
             main: "main"
         }));

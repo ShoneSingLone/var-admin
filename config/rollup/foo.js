@@ -1,2 +1,1 @@
-// src/foo.js
-export default "hello world!";
+export default "foo.js";

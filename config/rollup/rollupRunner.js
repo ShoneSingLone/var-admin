@@ -1,17 +1,19 @@
 const rollup = require("rollup");
 const path = require("path");
+const RollupPluginNodeResolve = require("rollup-plugin-node-resolve");
 
 // see below for details on the options
 const input = path.join(__dirname, "../..", "node_modules/ant-design-vue/es/input/index.js");
 const inputOptions = {
-    // input: "./main.js",
-    input
+    input: "./main.js",
+    // input
+    plugins: [RollupPluginNodeResolve()]
 };
 const outputOptions = {
+    // name:"main",//exports of an IIFE bundle.
     file: "bundle.js",
     format: "iife"
 };
-
 async function build() {
     // create a bundle
     const bundle = await rollup.rollup(inputOptions);
@@ -58,7 +60,6 @@ async function build() {
             console.log("Chunk", chunkOrAsset.modules);
         }
     }
-
     // or write the bundle to disk
     await bundle.write(outputOptions);
 }
