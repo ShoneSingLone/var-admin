@@ -5,7 +5,7 @@ const RollupPluginNodeResolve = require("rollup-plugin-node-resolve");
 // see below for details on the options
 const input = path.join(__dirname, "../..", "node_modules/ant-design-vue/es/input/index.js");
 const inputOptions = {
-    input: "./main.js",
+    input: "./src/main.js",
     // input
     plugins: [RollupPluginNodeResolve()]
 };
