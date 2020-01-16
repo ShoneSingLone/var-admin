@@ -8,12 +8,20 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>Document</title>
+    <title>登录</title>
     <link rel="stylesheet" href="static/lib/antdv/antd.css">
 </head>
 
 <body>
     <div id="app">
+        <p>
+            <!-- 使用 router-link 组件来导航. -->
+            <!-- 通过传入 `to` 属性指定链接. -->
+            <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+            <router-link to="/foo">Go to Foo</router-link>
+            <router-link to="/bar">Go to Bar</router-link>
+        </p>
+        <router-view></router-view>
         <a-anchor>
             <a-anchor-link href="#components-anchor-demo-basic" title="Basic demo" />
             <a-anchor-link href="#components-anchor-demo-static" title="Static demo" />

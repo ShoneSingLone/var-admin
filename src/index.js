@@ -68,12 +68,23 @@ setTimeout(() => startLoadingAnimation(_), 30);
         } = window;
         SystemJS.config({
             map: {
+                "vue-router": resolvePath("static/lib/vue-router.esm.browser.js"),
+                "vuex": resolvePath("static/lib/vuex.esm.browserjs"),
                 "plugin-babel": resolvePath("static/lib/plugin-babel.js"),
                 "systemjs-babel-build": resolvePath("static/lib/systemjs-babel-browser.js")
             },
             transpiler: "plugin-babel"
         });
     } else {
+        const {
+            System
+        } = window;
+        System.config({
+            map: {
+                "vue-router": resolvePath("static/lib/vue-router.esm.browser.js"),
+                "vuex": resolvePath("static/lib/vuex.esm.browserjs"),
+            },
+        });
         await loadJS(resolvePath("static/lib/systemjs/system.js"));
         await loadJS(resolvePath("static/lib/systemjs/extras/transform.js"));
         await loadJS(resolvePath("static/lib/systemjs/babel-transform.js"));
