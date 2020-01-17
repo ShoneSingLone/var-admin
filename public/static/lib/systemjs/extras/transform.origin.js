@@ -10,6 +10,7 @@
       return instantiate.call(this, url, parent);
 
     const loader = this;
+    debugger;
     return fetch(url, {
         credentials: 'same-origin'
       })
@@ -22,6 +23,7 @@
         return loader.transform.call(this, url, source);
       })
       .then(function (source) {
+        /* TODO:cache */
         (0, eval)(source + '\n//# sourceURL=' + url);
         return loader.getRegister();
       });

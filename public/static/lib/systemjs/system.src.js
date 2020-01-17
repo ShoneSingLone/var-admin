@@ -268,15 +268,25 @@
       throw new TypeError('Loader import method must be passed a module key string');
     // custom resolveInstantiate combined hook for better perf
     var loader = this;
-    return resolvedPromise$1
-      .then(function () {
-        return loader[RESOLVE_INSTANTIATE](key, parent);
-      })
-      .then(ensureInstantiated)
-      //.then(Module.evaluate)
+    return window._.$$STORE
+      .getCache(key)
+      .then(function (res) {
+        if (res) {
+          (0, eval)(res);
+          debugger;
+          return Promise.resolve()
+        } else {
+          return resolvedPromise$1
+            .then(function () {
+              return loader[RESOLVE_INSTANTIATE](key, parent);
+            })
+            .then(ensureInstantiated);
+        }
+      }) //.then(Module.evaluate)
       .catch(function (err) {
         throw LoaderError__Check_error_message_for_loader_stack(err, 'Loading ' + key + (parent ? ' from ' + parent : ''));
       });
+
   };
   // 3.3.3
   var RESOLVE = Loader.resolve = createSymbol('resolve');
@@ -1441,12 +1451,10 @@
    * Source loading
    */
   function fetchFetch(url, authorization, integrity, asBuffer) {
-    // console.log('fetchFetch');
     return xhrFetch(url, authorization, integrity, asBuffer);
   }
 
   function xhrFetch(url, authorization, integrity, asBuffer) {
-    // console.log('xhrFetch', url);
     return window._.$xhrFetchWithCache(url, authorization, integrity, asBuffer);
   }
 
@@ -2739,9 +2747,14 @@
           filename: address + (sourceMap ? '!transpiled' : '')
         });
       else {
-        /* TODO: modify */
-        /* debugger; */
-        (0, eval)(getSource(source, sourceMap, address, !noWrap));
+        var _source = getSource(source, sourceMap, address, !noWrap);
+        (0, eval)(_source);
+        /* TODO:cache */
+        window._.$$STORE
+          .setCache(address, _source)
+          .catch(function (error) {
+            console.error(error);
+          });
       }
       postExec();
     } catch (e) {
@@ -3177,13 +3190,13 @@
     var loader = this;
     var config = this[CONFIG];
     // first do bundles and depCache
+
     return (loadBundlesAndDepCache(config, this, key) || resolvedPromise)
       .then(function () {
         if (processAnonRegister())
           return;
 
         var metadata = loader[METADATA][key];
-        /* debugger; */
 
         // node module loading
         if (key.substr(0, 6) === '@node/') {
@@ -3393,13 +3406,13 @@
         if (metadata.load.format !== 'esm' && (metadata.load.format || !source.match(esmRegEx))) {
           return source;
         }
-        /* debugger; */
         metadata.load.format = 'esm';
         return transpile(loader, source, key, metadata, processAnonRegister);
       })
 
       // instantiate
       .then(function (translated) {
+        /* TODO:cache */
         if (typeof translated !== 'string' || !metadata.pluginModule || !metadata.pluginModule.instantiate)
           return translated;
 
@@ -3427,7 +3440,6 @@
           metadata.load.format = detectLegacyFormat(source);
 
         var registered = false;
-        /* debugger; */
         switch (metadata.load.format) {
           case 'esm':
           case 'register':
@@ -3758,6 +3770,7 @@
   }
 
   function SystemJSLoader$1() {
+
     RegisterLoader$1.call(this);
 
     // NB deprecate

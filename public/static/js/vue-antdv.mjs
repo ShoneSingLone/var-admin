@@ -18,7 +18,6 @@ export default async () => {
 
     /* message使用ant-design */
     window.Vue.prototype.$http = $axios;
-    debugger;
 
     return Promise.resolve(window.Vue);
 };

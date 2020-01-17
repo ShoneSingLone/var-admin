@@ -8,12 +8,10 @@ export default function (url, code) {
     }
 
     function splitCode() {
-        var template = getSource(code, "template");
-        var script = getSource(code, "script").replace(
+        return getSource(code, "script").replace(
             /TEMPLATE_PLACEHOLDER/,
-            "template:`" + template + "`"
+            `template: \`${getSource(code, "template")}\``
         );
-        return script;
     }
     return splitCode();
 }

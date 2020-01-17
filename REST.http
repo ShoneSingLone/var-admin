@@ -1,0 +1,2 @@
+### localhost
+GET http://localhost:8082/a/api HTTP/1.1

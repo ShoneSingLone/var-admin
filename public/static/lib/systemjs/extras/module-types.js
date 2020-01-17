@@ -73,7 +73,10 @@
       const contentType = res.headers.get('content-type');
       // if the resource is sent as application/javascript, support eval-based execution
       if (contentType && contentType.match(/^application\/javascript(;|$)/)) {
+        debugger;
         return res.text().then(function (source) {
+          /* TODO:cache */
+          debugger;
           (0, eval)(source);
           return loader.getRegister();
         });
@@ -82,6 +85,7 @@
 
     function loadDynamicModule(createExec) {
       return getSourceRes().then(function (res) {
+        debugger;
         return maybeJSFallback(res) || res.text().then(function (source) {
           return [
             [],

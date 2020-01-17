@@ -77,7 +77,15 @@ yarn add -D stylus stylus-loader confman vue-loader vue-template-compiler stylus
 
 ## （瘦）基座开发
 
+全局变量
+main whiteList version isloadMain
+_main
+
 应该更通用，`_`：
+
+## 路由分发
+
+md5路径
 
 ## Utils
 
@@ -183,4 +191,3 @@ ant
 ## 重定向问题
 
 ## 页面Title
-

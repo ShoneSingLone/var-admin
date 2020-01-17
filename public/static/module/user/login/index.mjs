@@ -1,18 +1,23 @@
 import setDefaultVueAntdvJS from "../../../js/vue-antdv.mjs";
+import VueRouter from "vue-router";
+// import VueRouter from "../../../lib/vue-router.esm.browser.js";
+// import VueX from "../../../lib/vuex.esm.browser.js";
+
 const {
     _: {
         $resolvePath,
         $lazyLoadComponent,
     },
-    $system
 } = window;
-export default async (stopLoadingAnimation) => {
+
+(async (stopLoadingAnimation) => {
     try {
         const Vue = await setDefaultVueAntdvJS();
-        const { default: VueRouter } = await $system.import("vue-router");
         Vue.use(VueRouter);
+        var res = Vue.compile("<h1>Login Sub View</h1>");
+        var render = res.render;
         const Foo = {
-            template: "<div>foo</div>"
+            render
         };
         const Bar = {
             template: "<div>bar</div>"
@@ -54,4 +59,4 @@ export default async (stopLoadingAnimation) => {
     } catch (error) {
         console.error(error);
     }
-};
+})();
