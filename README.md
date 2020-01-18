@@ -52,6 +52,8 @@
 set-executionpolicy remotesigned
 ```
 
+- 缓存开发版本的main.js HRM导致重复刷新
+
 ## 说明
 
 - 实际运行是public

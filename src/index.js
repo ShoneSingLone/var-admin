@@ -55,7 +55,8 @@ setTimeout(() => startLoadingAnimation(_), 30);
 
 (async (eleMain) => {
     try {
-        await checkResourceCache(window.APP_CONFIGS.STATIC_RES_VERSION, _);
+        /* 根据策略清除缓存 */
+        await checkResourceCache(window.APP_CONFIGS.resource.exclude, _);
         /* 加载JS */
         if (window.APP_CONFIGS.IS_OLD_BROWSER) {
             await loadJS(resolvePath("static/lib/systemjs/system.src.js"));
@@ -90,8 +91,7 @@ setTimeout(() => startLoadingAnimation(_), 30);
         let _res = await _.$$STORE.getItem("httptest8082staticmoduleuserloginindexmjs");
         if (eleMain && eleMain.dataset && eleMain.dataset.entry) {
             window.$system = window[window.APP_CONFIGS.IS_OLD_BROWSER ? "SystemJS" : "System"];
-            window.$system
-                .import(resolvePath(eleMain.dataset.entry))
+            window.$system.import(resolvePath(eleMain.dataset.entry))
                 .then(() => stopLoadingAnimation())
                 .catch(console.error.bind(console))
                 /* stopLoadingAnimation调用之后会stopLoadingAnimation=null */

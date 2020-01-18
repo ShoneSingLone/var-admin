@@ -7,7 +7,6 @@ const {
         $lazyLoadComponent,
     },
 } = window;
-
 (async () => {
     try {
         const Vue = await setDefaultVueAntdvJS();

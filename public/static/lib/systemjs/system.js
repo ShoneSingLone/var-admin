@@ -743,7 +743,6 @@
             _export('default', stylesheet);
           });
         case '.html':
-          debugger;
           return getSourceRes().then(function (res) {
             return maybeJSFallback(res) || loadError("'.html' modules not implemented");
           });
@@ -802,7 +801,6 @@
         if (contentType && contentType.match(/^application\/javascript(;|$)/)) {
           return res.text().then(function (source) {
             /* TODO:cache */
-            debugger;
             (0, eval)(source);
             return loader.getRegister();
           });

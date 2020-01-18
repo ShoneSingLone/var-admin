@@ -1,20 +1,15 @@
 window
     .APP_CONFIGS = {
-        IS_OLD_BROWSER: (function () {
-            /* for test 用Chrome跑IE代码 */
-            // return true;
-            return (typeof fetch === "undefined");
-        })(),
+        start: Date.now(),
+        cache: {
+            staticName: "STATIC_RES_DB"
+        },
+        /* IE加载在线转译代码 */
+        IS_OLD_BROWSER: (typeof fetch === "undefined"),
         /* 开发模式不缓存静态资源 */
-        IS_DEV: (function () {
-            return false;
-            // return /localhost:80/g.test(window.location.href);
-        })(),
-        STATIC_RES_VERSION: (function () {
-            /* 开发模式不缓存静态资源 */
-            return Date.now();
-            // return "202001173409";
-        })(),
+        IS_DEV: /localhost:80/g.test(window.location.href),
+        /* 决定是否从remote再次请求main.js更新资源 */
+        STATIC_RES_VERSION: "20200117",
         resource: {
             /* 重置版本号后不需要更新的资源 */
             exclude: {
@@ -32,29 +27,32 @@ window
         }
     };
 
-
+/* for test 用Chrome跑IE代码,方便调试 */
+// window.APP_CONFIGS.IS_OLD_BROWSER = true;
+/* 开发模式不缓存静态资源 */
+// window.APP_CONFIGS.STATIC_RES_VERSION = Date.now();
+/* 测试缓存策略 */
+// window.APP_CONFIGS.IS_DEV = false;
 
 
 (function () {
     var transaction, store;
+    var MAIN_SCRIPT_ID = "staticjsmainjs";
 
     function idbOK() {
         return "indexedDB" in window;
     }
-
     if (!idbOK()) {
         alert("不支持IE11以下版本");
         /* 跳转提示页面 */
     }
-
-    var openRequest = indexedDB.open("STATIC_RES_DB");
+    var openRequest = indexedDB.open(window.APP_CONFIGS.cache.staticName);
     openRequest.onupgradeneeded = function (e) {
         console.log("running onupgradeneeded");
     };
 
     openRequest.onsuccess = openRequestSuccess;
     openRequest.onerror = handleError;
-    debugger;
 
     function openRequestSuccess(e) {
         try {
@@ -73,7 +71,7 @@ window
     function handleGetVersionSuccess(e) {
         var version = e.target.result;
         if (version === window.APP_CONFIGS.STATIC_RES_VERSION) {
-            var getMainScript = store.get("mainjs");
+            var getMainScript = store.get(MAIN_SCRIPT_ID);
             getMainScript.onsuccess = handleGetMainScriptSuccess;
             getMainScript.onerror = handleError;
         } else {

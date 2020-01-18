@@ -135,5 +135,5 @@ export function startLoadingAnimation(_) {
         }
     }
     loop.count = 0;
-    loop();
+    // loop();
 }

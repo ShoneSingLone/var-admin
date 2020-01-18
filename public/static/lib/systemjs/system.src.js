@@ -268,21 +268,14 @@
       throw new TypeError('Loader import method must be passed a module key string');
     // custom resolveInstantiate combined hook for better perf
     var loader = this;
-    return window._.$$STORE
-      .getCache(key)
+    return resolvedPromise$1
+      .then(function () {
+        return loader[RESOLVE_INSTANTIATE](key, parent);
+      })
       .then(function (res) {
-        if (res) {
-          (0, eval)(res);
-          debugger;
-          return Promise.resolve()
-        } else {
-          return resolvedPromise$1
-            .then(function () {
-              return loader[RESOLVE_INSTANTIATE](key, parent);
-            })
-            .then(ensureInstantiated);
-        }
-      }) //.then(Module.evaluate)
+        return ensureInstantiated(res);
+      })
+      //.then(Module.evaluate)
       .catch(function (err) {
         throw LoaderError__Check_error_message_for_loader_stack(err, 'Loading ' + key + (parent ? ' from ' + parent : ''));
       });
@@ -594,6 +587,7 @@
   }
 
   RegisterLoader$1.prototype[Loader.resolveInstantiate] = function (key, parentKey) {
+    /* TODO:cache */
     var loader = this;
     var state = this[REGISTER_INTERNAL];
     var registry = this.registry[REGISTRY];
@@ -615,7 +609,8 @@
 
         return deepInstantiateDeps(loader, instantiated, link, registry, state)
           .then(function () {
-            return ensureEvaluate(loader, instantiated, link, registry, state, undefined);
+            var res = ensureEvaluate(loader, instantiated, link, registry, state, undefined);
+            return res
           });
       });
   };
@@ -1005,7 +1000,6 @@
     var err = doEvaluate(loader, load, link, registry, state, link.setters ? [] : seen || []);
     if (err)
       throw err;
-
     return load.module;
   }
 
@@ -2731,6 +2725,7 @@
   }
 
   function evaluate(loader, source, sourceMap, address, integrity, nonce, noWrap) {
+    /*     debugger; */
     if (!source)
       return;
     if (nonce && supportsScriptExec)
@@ -2750,11 +2745,11 @@
         var _source = getSource(source, sourceMap, address, !noWrap);
         (0, eval)(_source);
         /* TODO:cache */
-        window._.$$STORE
-          .setCache(address, _source)
-          .catch(function (error) {
-            console.error(error);
-          });
+        /*  window._.$$STORE
+           .setCache(address, _source)
+           .catch(function (error) {
+             console.error(error);
+           }); */
       }
       postExec();
     } catch (e) {
@@ -3310,9 +3305,9 @@
   }
 
   function runFetchPipeline(loader, key, metadata, processAnonRegister, wasm) {
+    /*     debugger; */
     if (metadata.load.exports && !metadata.load.format)
       metadata.load.format = 'global';
-
     return resolvedPromise
 
       // locate
@@ -3343,6 +3338,7 @@
       })
 
       .then(function (fetched) {
+        /*     debugger; */
         // fetch is already a utf-8 string if not doing wasm detection
         if (!wasm || typeof fetched === 'string')
           return translateAndInstantiate(loader, key, fetched, metadata, processAnonRegister);
@@ -3409,16 +3405,17 @@
         metadata.load.format = 'esm';
         return transpile(loader, source, key, metadata, processAnonRegister);
       })
-
       // instantiate
       .then(function (translated) {
+        /*     debugger; */
         /* TODO:cache */
-        if (typeof translated !== 'string' || !metadata.pluginModule || !metadata.pluginModule.instantiate)
+        if (typeof translated !== 'string' || !metadata.pluginModule || !metadata.pluginModule.instantiate) {
           return translated;
-
+        }
         var calledInstantiate = false;
         metadata.pluginLoad.source = translated;
-        return Promise.resolve(metadata.pluginModule.instantiate.call(loader, metadata.pluginLoad, function (load) {
+        return Promise
+          .resolve(metadata.pluginModule.instantiate.call(loader, metadata.pluginLoad, function (load) {
             translated = load.source;
             metadata.load = load.metadata;
             if (calledInstantiate)
@@ -3436,8 +3433,10 @@
         if (typeof source !== 'string')
           return source;
 
-        if (!metadata.load.format)
+        if (!metadata.load.format) {
+          /* 根据正则匹配 */
           metadata.load.format = detectLegacyFormat(source);
+        }
 
         var registered = false;
         switch (metadata.load.format) {
@@ -3858,7 +3857,12 @@
   SystemJSLoader$1.prototype.import = function () {
     return RegisterLoader$1.prototype.import.apply(this, arguments)
       .then(function (m) {
-        return '__useDefault' in m ? m.__useDefault : m;
+        try {
+          return '__useDefault' in m ? m.__useDefault : m;
+        } catch (error) {
+          console.error(error);
+          return m;
+        }
       });
   };
 
