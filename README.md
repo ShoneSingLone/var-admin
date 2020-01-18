@@ -152,6 +152,12 @@ EventBus 全局通信：messageBox not
 
 ## 缓存
 
+缓存逻辑
+mini是每次访问页面都需要更新的，绝对没有缓存；
+mini版本号没有变动，直接读取缓存
+版本号有变动，除了白名单上的全部清除；
+白名单的版本号对比，不一致的也清除；
+白名单上的是版本号 `systemjs_version`
 如果有耕细粒度的缓存，可以配置映射表，为每一个需要缓存的文件单独设置版本号
 
 fetch是否有兼容性问题？=>XMLHttpRequest
@@ -191,3 +197,7 @@ ant
 ## 重定向问题
 
 ## 页面Title
+
+```js
+window.__webpack_public_path__ = parentUrl + "static/lib/bundle/";
+```

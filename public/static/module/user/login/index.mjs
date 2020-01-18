@@ -1,7 +1,5 @@
 import setDefaultVueAntdvJS from "../../../js/vue-antdv.mjs";
 import VueRouter from "vue-router";
-// import VueRouter from "../../../lib/vue-router.esm.browser.js";
-// import VueX from "../../../lib/vuex.esm.browser.js";
 
 const {
     _: {
@@ -10,7 +8,7 @@ const {
     },
 } = window;
 
-(async (stopLoadingAnimation) => {
+(async () => {
     try {
         const Vue = await setDefaultVueAntdvJS();
         Vue.use(VueRouter);
@@ -49,11 +47,10 @@ const {
             components: {
                 appvue: $lazyLoadComponent($resolvePath("static/module/user/login/Login.vue"))
             },
-            data: () => ({
-                currentComponent: "appvue"
-            }),
-            mounted() {
-                stopLoadingAnimation();
+            data() {
+                return {
+                    currentComponent: "appvue"
+                };
             },
         });
     } catch (error) {

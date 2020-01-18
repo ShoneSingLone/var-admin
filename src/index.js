@@ -4,7 +4,10 @@ import _ from "./static/utils/tree-shaking/lodash.js";
 window._ = _;
 /* 以key-val方式方便操作indexedDB */
 import localforage from "localforage";
-import resolvePath from "./static/utils/resolvePath.js";
+import {
+    resolvePath,
+    getIDFromURL
+} from "./static/utils/resolvePath.js";
 import VueLoader from "./static/utils/VueLoader.js";
 import md5 from "md5";
 import {
@@ -32,6 +35,7 @@ import {
 _.$lazyLoadComponent = lazyLoadComponent;
 /* 处理资源路径 */
 _.$xhrFetchWithCache = xhrFetchWithCache;
+_.$getIDFromURL = getIDFromURL;
 _.$resolvePath = resolvePath;
 /* system.src.js transform.js loader Vue 单文件 */
 _.$VueLoader = VueLoader;

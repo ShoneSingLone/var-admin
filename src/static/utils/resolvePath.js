@@ -1,6 +1,11 @@
+import camelCase from "lodash/camelCase";
+import last from "lodash/last";
 const backslashRegEx = /\\/g;
 const parentUrl = getBaseurl();
 window.__webpack_public_path__ = parentUrl + "static/lib/bundle/";
+export function getIDFromURL(url) {
+    return camelCase(url.substring(url.lastIndexOf("/static"))).toLowerCase();
+}
 
 function getBaseurl() {
     var jsPath = document.currentScript ? document.currentScript.src : function () {
@@ -96,6 +101,6 @@ function resolveIfNotPlainOrUrl(relUrl, parentUrl) {
     }
 }
 
-export default function resolvePath(relUrl) {
+export function resolvePath(relUrl) {
     return resolveIfNotPlainOrUrl(relUrl, parentUrl) || (relUrl.indexOf(":") !== -1 ? relUrl : resolveIfNotPlainOrUrl("./" + relUrl, parentUrl));
 }

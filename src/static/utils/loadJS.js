@@ -1,38 +1,29 @@
 import camelCase from "lodash/camelCase";
 import merge from "lodash/merge";
-import last from "lodash/last";
 import localforage from "localforage";
 
 
-const store = localforage.createInstance({
+const store_StaticResource = localforage.createInstance({
     name: "STATIC_RES_DB"
 });
 
+/* 加载mian.js意味需要重新缓存数据，checkResourceCache调用用来检查静态资源 */
 export async function checkResourceCache(STATIC_RES_VERSION, _) {
     /* 全局单例用于存储大体积静态资源的Store */
-    _.$$STORE = store;
-    _.$$STORE.setCache = async function (url, source) {
-        try {
-            const id = _.camelCase(url).toLowerCase();
-            await this.setItem(id, source);
-            return true;
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    };
-    _.$$STORE.getCache = async function (url, source) {
-        const id = _.camelCase(url).toLowerCase();
-        return await this.getItem(id);
-    };
-    let _version = await store.getItem("VERSION");
+    _.$$STORE = store_StaticResource;
+    _.$$STORE.setCache = async (url, source) => await store_StaticResource.setItem(_.$getIDFromURL(url), source);;
+    _.$$STORE.getCache = async url => await store_StaticResource.getItem(_.$getIDFromURL(url));
+
+    let _version = await store_StaticResource.getItem("VERSION");
     /* 版本号不相同，需要更新，清除版本号， */
     if (String(_version) !== String(STATIC_RES_VERSION)) {
-        await store.clear();
-        await store.setItem("VERSION", STATIC_RES_VERSION);
+        debugger;
+        await store_StaticResource.clear();
+        await store_StaticResource.setItem("VERSION", STATIC_RES_VERSION);
         const getMainScript = await xhrFetchWithCache(_.$resolvePath("static/js/main.js"));
         setTimeout(async () => {
             try {
-                await store.setItem("mainjs", getMainScript);
+                await store_StaticResource.setItem("mainjs", getMainScript);
             } catch (error) {
                 console.log(error);
             }
@@ -47,22 +38,17 @@ function sourceToCode(source) {
 
 function shouldCache(url) {
     /* 白名单，如果资源在白名单上，缓存 */
-    let whiteListMap = {
-        "systemjs": true,
-        "systemsrcjs": true,
-        "systemjsbabelbrowserjs": true,
-        "babeltransformjs": true,
-        "vue2611broswerjs": true,
-        "antdminjs": true,
-        "lodash41711js": true,
-        "transformjs": true,
-        "lessminjs": true,
-    };
-    // whiteList = [];
-    const whiteListKey = camelCase(last(url.split("/"))).toLowerCase();
+    const {
+        APP_CONFIGS: {
+            resource: {
+                exclude: whiteListMap
+            }
+        }
+    } = window;
+    const whiteListKey = _.$getIDFromURL(url);
     const _shouldCache = Boolean(whiteListMap[whiteListKey]);
-    console.log(`should cache ${whiteListKey}?  ${_shouldCache}`);
-    return (true);
+    console.log(`should cache {${whiteListKey}}?  ${_shouldCache}`);
+    return true;
 }
 
 function loadJSByAddScriptElement(url, _opts) {
@@ -110,7 +96,7 @@ export async function xhrFetchWithCache(url, authorization, integrity, asBuffer)
         let source = "";
         const _shouldCache = shouldCache(url);
         if (_shouldCache) {
-            source = await store.getItem(id);
+            source = await store_StaticResource.getItem(id);
         }
         if (!source) {
             source = await xhrFetch(url, authorization, integrity, asBuffer);

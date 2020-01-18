@@ -1,6 +1,5 @@
 {
   "name": "var-admin",
-  "type": "module",
   "version": "0.0.1",
   "description": "CRM with Koa2, Webpack,Vue Angular React=>var",
   "main": "server.js",
@@ -52,6 +51,7 @@
     "koa": "^2.5.1",
     "koa-mount": "^3.0.0",
     "koa-static": "^4.0.3",
+    "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.9.0",
     "postcss-flexbugs-fixes": "^4.1.0",

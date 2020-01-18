@@ -4,7 +4,7 @@
 (function (global) {
   var systemJSPrototype = global.System.constructor.prototype;
   var instantiate = systemJSPrototype.instantiate;
-
+  
   systemJSPrototype.instantiate = function (url, parent) {
     if (url.slice(-5) === ".wasm") {
       return instantiate.call(this, url, parent);
@@ -13,6 +13,7 @@
     return window._.$$STORE
       .getCache(url)
       .then(function (res) {
+        debugger;
         if (res) {
           return Promise.resolve(res);
         } else {
@@ -35,6 +36,7 @@
       })
       .then(function (source) {
         source = source + "\n//# sourceURL=" + url;
+        console.log('\t', source);
         return window._.$$STORE
           .setCache(url, source)
           .then(function () {

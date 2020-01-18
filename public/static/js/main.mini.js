@@ -2,32 +2,33 @@ window
     .APP_CONFIGS = {
         IS_OLD_BROWSER: (function () {
             /* for test 用Chrome跑IE代码 */
-            return true;
-            // return (typeof fetch === "undefined");
+            // return true;
+            return (typeof fetch === "undefined");
         })(),
         /* 开发模式不缓存静态资源 */
         IS_DEV: (function () {
-            return /localhost:80/g.test(window.location.href);
+            return false;
+            // return /localhost:80/g.test(window.location.href);
         })(),
         STATIC_RES_VERSION: (function () {
             /* 开发模式不缓存静态资源 */
-            // return Date.now();
-            return "202001173409";
+            return Date.now();
+            // return "202001173409";
         })(),
         resource: {
             /* 重置版本号后不需要更新的资源 */
-            exclude: [
-                "babeltransformjs",
-                "systemjs",
-                "systemsrcjs",
-                "systemjsbabelbrowserjs",
-                "babeltransformjs",
-                "vue2611broswerjs",
-                "antdminjs",
-                "lodash41711js",
-                "transformjs",
-                "lessminjs"
-            ]
+            exclude: {
+                "babeltransformjs": "2020_1_18_13_59_49",
+                "systemjs": "2020_1_18_13_59_49",
+                "systemsrcjs": "2020_1_18_13_59_49",
+                "systemjsbabelbrowserjs": "2020_1_18_13_59_49",
+                "babeltransformjs": "2020_1_18_13_59_49",
+                "vue2611broswerjs": "2020_1_18_13_59_49",
+                "antdminjs": "2020_1_18_13_59_49",
+                "lodash41711js": "2020_1_18_13_59_49",
+                "transformjs": "2020_1_18_13_59_49",
+                "lessminjs": "2020_1_18_13_59_49"
+            }
         }
     };
 
@@ -53,6 +54,7 @@ window
 
     openRequest.onsuccess = openRequestSuccess;
     openRequest.onerror = handleError;
+    debugger;
 
     function openRequestSuccess(e) {
         try {
@@ -87,6 +89,7 @@ window
             } catch (error) {
                 console.log(error);
             }
+            closeIndexedDB();
         } else {
             loadMainScript();
         }
@@ -96,11 +99,17 @@ window
         console.log("Error", e);
     };
 
+    function closeIndexedDB() {
+        openRequest.result.close();
+        console.log("IndexedDB closed");
+    };
+
     function loadMainScript(e) {
         var mainjsScriptEle = document.createElement("script");
         mainjsScriptEle.id = "script-main";
         mainjsScriptEle.src = getBaseURL() + "static/js/main.js";
         document.body.appendChild(mainjsScriptEle);
+        closeIndexedDB();
     };
 
     function getBaseURL() {
