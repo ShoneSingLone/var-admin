@@ -12,7 +12,7 @@ window
         /* 开发模式不缓存静态资源 */
         IS_DEV: /localhost:80/g.test(window.location.href),
         /* 决定是否从remote 更新 .vue之类的资源 */
-        STATIC_RES_VERSION: "202001194305",
+        STATIC_RES_VERSION: "202001194534",
         resource: {
             /* 重置版本号后不需要更新的资源，第三方库，size相对较且不容易变化 */
             exclude: {
@@ -98,8 +98,9 @@ window
         }
     }
 
-    function handleError(e) {
-        console.log("Error", e);
+    function handleError() {
+        debugger;
+        window.location.reload();
     };
 
     function closeIndexedDB() {
