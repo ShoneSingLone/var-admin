@@ -13,10 +13,12 @@
         credentials: 'same-origin'
       })
       .then(function (source) {
+        console.time(window._.$getIDFromURL(url))
         return loader.transform.call(this, url, source);
       })
       .then(function (source) {
         (0, eval)(source + '\n//# sourceURL=' + url);
+        console.timeEnd(window._.$getIDFromURL(url))
         return loader.getRegister();
       });
   };

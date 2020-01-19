@@ -264,18 +264,24 @@
 
   // 3.3.2
   Loader.prototype.import = function (key, parent) {
-    if (typeof key !== 'string')
+    if (typeof key !== 'string') {
       throw new TypeError('Loader import method must be passed a module key string');
-    // custom resolveInstantiate combined hook for better perf
+    }
+    // custom resolveInstantiate combined hook for better performace
     var loader = this;
     return resolvedPromise$1
       .then(function () {
         return loader[RESOLVE_INSTANTIATE](key, parent);
       })
       .then(function (res) {
-        return ensureInstantiated(res);
+        debugger;
+        var res = ensureInstantiated(res);
+        /* modele */
+        debugger;
+        return res;
       })
       //.then(Module.evaluate)
+      /* 模块 */
       .catch(function (err) {
         throw LoaderError__Check_error_message_for_loader_stack(err, 'Loading ' + key + (parent ? ' from ' + parent : ''));
       });
@@ -312,6 +318,8 @@
   }
 
   Loader.prototype.resolve = function (key, parent) {
+    console.time(window._.$getIDFromURL(key));
+
     var loader = this;
     return resolvedPromise$1
       .then(function () {
@@ -588,6 +596,7 @@
 
   RegisterLoader$1.prototype[Loader.resolveInstantiate] = function (key, parentKey) {
     /* TODO:cache */
+    debugger;
     var loader = this;
     var state = this[REGISTER_INTERNAL];
     var registry = this.registry[REGISTRY];
@@ -616,6 +625,7 @@
   };
 
   function resolveInstantiate(loader, key, parentKey, registry, state) {
+    debugger;
     // normalization shortpath for already-normalized key
     // could add a plain name filter, but doesn't yet seem necessary for perf
     var module = registry[key];
@@ -633,26 +643,33 @@
 
     return loader.resolve(key, parentKey)
       .then(function (resolvedKey) {
+        debugger;
         // main loader registry always takes preference
         module = registry[resolvedKey];
-        if (module)
+        if (module) {
           return module;
+        }
 
         load = state.records[resolvedKey];
 
-        // already has a module value but not already in the registry (load.module)
-        // means it was removed by registry.delete, so we should
-        // disgard the current load record creating a new one over it
-        // but keep any existing registration
-        if (!load || load.module)
+        /* 
+         * already has a module value but not already in the registry (load.module)
+         * means it was removed by registry.delete, so we should
+         * disgard the current load record creating a new one over it
+         * but keep any existing registration 
+         */
+        debugger;
+        if (!load || load.module) {
           load = createLoadRecord(state, resolvedKey, load && load.registration);
-
-        if (load.loadError)
+        }
+        if (load.loadError) {
           return Promise.reject(load.loadError);
+        }
 
         var link = load.linkRecord;
-        if (!link)
+        if (!link) {
           return load;
+        }
 
         return instantiate(loader, load, link, registry, state);
       });
@@ -695,22 +712,22 @@
         var registration = load.registration;
         // clear to allow new registrations for future loads (combined with registry delete)
         load.registration = undefined;
-        if (!registration)
+        if (!registration) {
           throw new TypeError('Module instantiation did not call an anonymous or correctly named System.register.');
+        }
 
         link.dependencies = registration[0];
 
         load.importerSetters = [];
 
         link.moduleObj = {};
-
+        debugger;
         // process System.registerDynamic declaration
         if (registration[2]) {
           link.moduleObj.default = link.moduleObj.__useDefault = {};
           link.executingRequire = registration[1];
           link.execute = registration[2];
         }
-
         // process System.register declaration
         else {
           registerDeclarative(loader, load, link, registration[1]);
@@ -2744,6 +2761,7 @@
       else {
         var _source = getSource(source, sourceMap, address, !noWrap);
         (0, eval)(_source);
+        console.timeEnd(window._.$getIDFromURL(address))
         /* TODO:cache */
         /*  window._.$$STORE
            .setCache(address, _source)
@@ -3220,7 +3238,16 @@
         if (!metadata.load.scriptLoad)
           return initializePlugin(loader, key, metadata)
             .then(function () {
-              return runFetchPipeline(loader, key, metadata, processAnonRegister, config.wasm);
+              debugger;
+
+              return runFetchPipeline(loader, key, metadata, processAnonRegister, config.wasm)
+                .then(function (res) {
+                  debugger;
+                  return Promise.resolve(res);
+                })
+                .catch(function (error) {
+                  console.error(error);
+                });;
             })
 
         // just script loading
@@ -3305,38 +3332,36 @@
   }
 
   function runFetchPipeline(loader, key, metadata, processAnonRegister, wasm) {
-    /*     debugger; */
-    if (metadata.load.exports && !metadata.load.format)
+    if (metadata.load.exports && !metadata.load.format) {
       metadata.load.format = 'global';
+    }
     return resolvedPromise
-
       // locate
       .then(function () {
-        if (!metadata.pluginModule || !metadata.pluginModule.locate)
+        if (!metadata.pluginModule || !metadata.pluginModule.locate) {
           return;
-
+        }
         return Promise.resolve(metadata.pluginModule.locate.call(loader, metadata.pluginLoad))
           .then(function (address) {
             if (address)
               metadata.pluginLoad.address = address;
           });
       })
-
       // fetch
       .then(function () {
-        if (!metadata.pluginModule)
+        if (!metadata.pluginModule) {
           return fetch$1(key, metadata.load.authorization, metadata.load.integrity, wasm);
-
+        }
         wasm = false;
 
-        if (!metadata.pluginModule.fetch)
+        if (!metadata.pluginModule.fetch) {
           return fetch$1(metadata.pluginLoad.address, metadata.load.authorization, metadata.load.integrity, false);
+        }
 
         return metadata.pluginModule.fetch.call(loader, metadata.pluginLoad, function (load) {
           return fetch$1(load.address, metadata.load.authorization, metadata.load.integrity, false);
         });
       })
-
       .then(function (fetched) {
         /*     debugger; */
         // fetch is already a utf-8 string if not doing wasm detection
@@ -3855,15 +3880,17 @@
   SystemJSLoader$1.prototype.global = envGlobal;
 
   SystemJSLoader$1.prototype.import = function () {
-    return RegisterLoader$1.prototype.import.apply(this, arguments)
+    debugger;
+    var step1 = RegisterLoader$1.prototype.import.apply(this, arguments);
+    debugger;
+    return step1
       .then(function (m) {
-        try {
-          return '__useDefault' in m ? m.__useDefault : m;
-        } catch (error) {
-          console.error(error);
-          return m;
-        }
-      });
+        debugger;
+        return '__useDefault' in m ? m.__useDefault : m;
+      })
+      .catch(function (error) {
+        console.error(error);
+      });;
   };
 
   var configNames = ['baseURL', 'map', 'paths', 'packages', 'packageConfigPaths', 'depCache', 'meta', 'bundles', 'transpiler', 'warnings', 'pluginFirst', 'production', 'wasm'];

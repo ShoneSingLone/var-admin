@@ -1,8 +1,9 @@
 # vue-admin
 
-- [github 国内访问速度慢](https://shonesinglone.github.io/var-admin/)
-- [gitee 免费版不能自动部署](https://shonesinglone.gitee.io/var-admin/)
-- [coding 能自动部署，但是访问地址是随机码 jz0a27.coding-pages.com](https://jz0a27.coding-pages.com/public/login.html)
+- [readme](https://shonesinglone.github.io/var-admin)
+  - [github](https://shonesinglone.github.io/var-admin/public/dev.html)
+  - [gitee 免费版不能自动部署](https://shonesinglone.gitee.io/var-admin/)
+  - [coding 能自动部署，但是访问地址是随机码 jz0a27.coding-pages.com](https://jz0a27.coding-pages.com/public/login.html)
 
 基于SystemJS，使用VueJS编写基座的微前端Demo。
 
@@ -165,7 +166,9 @@ mini版本号没有变动，直接读取缓存
 fetch是否有兼容性问题？=>XMLHttpRequest
 
 除了main.js
-静态资源缓存=》手动维护？！(毕竟)
+静态资源缓存=》手动维护？！
+
+[system.src.js](https://github.com/ShoneSingLone/var-admin/blob/master/public/static/lib/systemjs/system.src.js#L3861)
 
 - _.$$STORE
 - [localForage](https://github.com/localForage/localForage)

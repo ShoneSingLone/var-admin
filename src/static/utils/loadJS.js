@@ -39,18 +39,7 @@ function sourceToCode(source) {
 }
 
 function shouldCache(url) {
-    /* 白名单，如果资源在白名单上，缓存 */
-    const {
-        APP_CONFIGS: {
-            resource: {
-                exclude: whiteListMap
-            }
-        }
-    } = window;
-    const whiteListKey = _.$getIDFromURL(url);
-    const version = Boolean(whiteListMap[whiteListKey]);
-    console.log(`{${whiteListKey}}?  version ${version}`);
-    return true;
+    return window.APP_CONFIGS.cache.isCacheAll;
 }
 
 function loadJSByAddScriptElement(url, _opts) {
@@ -77,7 +66,6 @@ export async function cacheStaticResourceAndToCode(url, _opts) {
     try {
         let source = await xhrFetchWithCache(url);
         if (source) {
-            console.log("url", url);
             return sourceToCode(source);
         }
         throw new Error("Unable to cacheStaticResourceAndToCode");
@@ -191,13 +179,12 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
 
 }
 
-const LoadedJS = {};
+const LOADED_JS = {};
 export function loadJS(url) {
-    if (LoadedJS[camelCase(url).toLowerCase()]) return Promise.resolve();
+    if (LOADED_JS[camelCase(url).toLowerCase()]) return Promise.resolve();
     return (shouldCache(url) ? cacheStaticResourceAndToCode(url) : loadJSByAddScriptElement(url))
         .then(function (res) {
-            LoadedJS[camelCase(url).toLowerCase()] = true;
-            console.log("loaded", url);
+            LOADED_JS[camelCase(url).toLowerCase()] = true;
         })
         .catch(function (error) {
             console.error(error);
