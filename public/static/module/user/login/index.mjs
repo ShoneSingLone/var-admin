@@ -11,22 +11,15 @@ const {
     try {
         const Vue = await setDefaultVueAntdvJS();
         Vue.use(VueRouter);
-        var res = Vue.compile("<h1>Login Sub View</h1>");
-        var render = res.render;
-        const Foo = {
-            render
-        };
-        const Bar = {
-            template: "<div>bar</div>"
-        };
-
         const routes = [{
                 path: "/foo",
-                component: Foo
+                component: $lazyLoadComponent($resolvePath("static/module/user/login/Login.vue"))
             },
             {
                 path: "/bar",
-                component: Bar
+                component: {
+                    template: "<div>bar</div>"
+                }
             }
         ];
 

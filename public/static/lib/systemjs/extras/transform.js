@@ -17,26 +17,28 @@
         if (sourceFormCache) {
           return Promise.resolve(sourceFormCache);
         } else {
+          /* fetch */
           return window._.$xhrFetchWithCache(url, {
               credentials: 'same-origin'
             })
+            /* translate */
             .then(function (source) {
               return loader.transform.call(this, url, source);
             })
+            /* cache */
+            .then(function (source) {
+              return window._.$$STORE_T
+                .setCache(url, source)
+                .then(function () {
+                  return Promise.resolve(source);
+                })
+            });
         }
       })
       .then(function (source) {
-        /* TODO:cache */
-        return window._.$$STORE_T
-          .setCache(url, source)
-          .then(function () {
-            (0, eval)(source + '\n//# sourceURL=' + url);
-            console.timeEnd(window._.$getIDFromURL(url))
-            return Promise.resolve();
-          })
-          .catch(function (error) {
-            console.error(error);
-          });
+        (0, eval)(source + '\n//# sourceURL=' + url);
+        console.timeEnd(window._.$getIDFromURL(url))
+        return Promise.resolve();
       })
       .then(function () {
         return loader.getRegister();

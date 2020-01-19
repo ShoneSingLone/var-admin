@@ -2,37 +2,80 @@ import camelCase from "lodash/camelCase";
 import merge from "lodash/merge";
 import localforage from "localforage";
 
-const store_StaticResource = localforage.createInstance({
+/* 缓存fetch之后的静态资源 */
+const store_src = localforage.createInstance({
     name: window.APP_CONFIGS.cache.staticName
 });
-const store_StaticResourceTranslated = localforage.createInstance({
+/* 缓存systemjs translated 的静态资源 */
+const store_src_translated = localforage.createInstance({
     name: window.APP_CONFIGS.cache.staticNameTranslated
+});
+/* 缓存白名单上的静态资源 */
+const store_src_version = localforage.createInstance({
+    name: window.APP_CONFIGS.cache.staticNameVersion
 });
 
 /* 加载mian.js意味需要重新缓存数据，checkResourceCache调用用来检查静态资源 */
-export async function checkResourceCache(exclude, _) {
-    /* 全局单例用于存储大体积静态资源的Store */
-    _.$$STORE = store_StaticResource;
-    _.$$STORE.setCache = async (url, source) => await store_StaticResource.setItem(_.$getIDFromURL(url), source);;
-    _.$$STORE.getCache = async url => await store_StaticResource.getItem(_.$getIDFromURL(url));
-    /* 专门用来存储转换后的静态资源 */
-    _.$$STORE_T = store_StaticResourceTranslated;
-    _.$$STORE_T.setCache = async (url, source) => await store_StaticResourceTranslated.setItem(_.$getIDFromURL(url), source);;
-    _.$$STORE_T.getCache = async url => await store_StaticResourceTranslated.getItem(_.$getIDFromURL(url));
+export async function checkResourceCache(exclude = {}, _) {
+    console.time("checkResourceCache");
+    /* 缓存白名单上的静态资源 */
+    _.$$STORE_V = store_src_version;
+    _.$$STORE_V.setCache = async (url, source) => await store_src_version.setItem(_.$getIDFromURL(url), source);
+    _.$$STORE_V.getCache = async url => await store_src_version.getItem(_.$getIDFromURL(url));
 
-    let _version = await store_StaticResource.getItem("VERSION");
+    /* 缓存fetch之后的静态资源 */
+    _.$$STORE = store_src;
+
+    _.$$STORE.setCache = async (url, source) => await store_src.setItem(_.$getIDFromURL(url), source);
+    _.$$STORE.getCache = async url => await store_src.getItem(_.$getIDFromURL(url));
+
+    /* 缓存systemjs translated 的静态资源 */
+    _.$$STORE_T = store_src_translated;
+    _.$$STORE_T.setCache = async (url, source) => await store_src_translated.setItem(_.$getIDFromURL(url), source);
+    _.$$STORE_T.getCache = async url => await store_src_translated.getItem(_.$getIDFromURL(url));
+
+    let _version = await store_src.getItem("VERSION");
     /* 版本号不相同，需要更新，清除版本号， */
+
+    async function clear(store, exclude) {
+        const keys = await store.keys();
+
+        return Promise
+            .all(keys
+                /* 不相同的就清除 */
+                .filter((srcID) => !exclude[srcID])
+                .map(async (srcID) => await store.removeItem(srcID))
+            );
+    }
+
     if (String(_version) !== String(window.APP_CONFIGS.STATIC_RES_VERSION)) {
-        /* TODO: 按exclude清除缓存*/
+        let oldExclude = await store_src.getItem("EXCLUDE");
+
+        if (_.isObject(oldExclude)) {
+            const newExclude = {};
+            /* 过滤出相同的 */
+            _.forIn(exclude, (version, srcID) => {
+                if (String(oldExclude[srcID]) === String(version)) {
+                    newExclude[srcID] = true;
+                }
+            });
+
+            await Promise.all([
+                await clear(store_src, newExclude),
+                await clear(store_src_translated, newExclude)
+            ]);
+        }
+
         await Promise.all([
-            store_StaticResource.clear(),
-            store_StaticResourceTranslated.clear(),
+            await store_src.setItem("EXCLUDE", exclude),
+            await store_src.setItem("VERSION", window.APP_CONFIGS.STATIC_RES_VERSION)
         ]);
-        await store_StaticResource.setItem("VERSION", window.APP_CONFIGS.STATIC_RES_VERSION);
+
         setTimeout(async () => {
+            console.timeEnd("checkResourceCache");
             try {
                 const getMainScript = await xhrFetchWithCache(_.$resolvePath("static/js/main.js"));
-                await store_StaticResource.setItem("staticjsmainjs", getMainScript);
+                await store_src.setItem("staticjsmainjs", getMainScript);
             } catch (error) {
                 console.log(error);
             }
@@ -97,7 +140,7 @@ export async function xhrFetchWithCache(url, authorization, integrity, asBuffer)
         let source = "";
         const _shouldCache = shouldCache(url);
         if (_shouldCache) {
-            source = await store_StaticResource.getItem(id);
+            source = await store_src.getItem(id);
         }
         if (!source) {
             source = await xhrFetch(url, authorization, integrity, asBuffer);
@@ -121,6 +164,7 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
             if (res) {
                 return Promise.resolve(res);
             } else {
+                console.log("xhrFetch", window._.$getIDFromURL(url));
                 return new Promise(function (resolve, reject) {
                     // percent encode just "#" for HTTP requests
                     url = url.replace(/#/g, "%23");

@@ -5,6 +5,8 @@ import isFunction from "lodash/isFunction";
 import isObject from "lodash/isObject";
 import last from "lodash/last";
 import concat from "lodash/concat";
+import forIn from "lodash/forIn";
+import map from "lodash/map";
 
 /* tree-shaking */
 export default {
@@ -14,5 +16,7 @@ export default {
     isFunction,
     isObject,
     last,
-    concat
+    concat,
+    forIn,
+    map
 };
