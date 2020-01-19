@@ -2,9 +2,11 @@ import camelCase from "lodash/camelCase";
 import merge from "lodash/merge";
 import localforage from "localforage";
 
-
 const store_StaticResource = localforage.createInstance({
     name: window.APP_CONFIGS.cache.staticName
+});
+const store_StaticResourceTranslated = localforage.createInstance({
+    name: window.APP_CONFIGS.cache.staticNameTranslated
 });
 
 /* 加载mian.js意味需要重新缓存数据，checkResourceCache调用用来检查静态资源 */
@@ -13,11 +15,19 @@ export async function checkResourceCache(exclude, _) {
     _.$$STORE = store_StaticResource;
     _.$$STORE.setCache = async (url, source) => await store_StaticResource.setItem(_.$getIDFromURL(url), source);;
     _.$$STORE.getCache = async url => await store_StaticResource.getItem(_.$getIDFromURL(url));
+    /* 专门用来存储转换后的静态资源 */
+    _.$$STORE_T = store_StaticResourceTranslated;
+    _.$$STORE_T.setCache = async (url, source) => await store_StaticResourceTranslated.setItem(_.$getIDFromURL(url), source);;
+    _.$$STORE_T.getCache = async url => await store_StaticResourceTranslated.getItem(_.$getIDFromURL(url));
+
     let _version = await store_StaticResource.getItem("VERSION");
     /* 版本号不相同，需要更新，清除版本号， */
     if (String(_version) !== String(window.APP_CONFIGS.STATIC_RES_VERSION)) {
         /* TODO: 按exclude清除缓存*/
-        await store_StaticResource.clear();
+        await Promise.all([
+            store_StaticResource.clear(),
+            store_StaticResourceTranslated.clear(),
+        ]);
         await store_StaticResource.setItem("VERSION", window.APP_CONFIGS.STATIC_RES_VERSION);
         setTimeout(async () => {
             try {

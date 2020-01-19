@@ -273,13 +273,7 @@
       .then(function () {
         return loader[RESOLVE_INSTANTIATE](key, parent);
       })
-      .then(function (res) {
-        debugger;
-        var res = ensureInstantiated(res);
-        /* modele */
-        debugger;
-        return res;
-      })
+      .then(ensureInstantiated)
       //.then(Module.evaluate)
       /* 模块 */
       .catch(function (err) {
@@ -318,8 +312,6 @@
   }
 
   Loader.prototype.resolve = function (key, parent) {
-    console.time(window._.$getIDFromURL(key));
-
     var loader = this;
     return resolvedPromise$1
       .then(function () {
@@ -596,7 +588,6 @@
 
   RegisterLoader$1.prototype[Loader.resolveInstantiate] = function (key, parentKey) {
     /* TODO:cache */
-    debugger;
     var loader = this;
     var state = this[REGISTER_INTERNAL];
     var registry = this.registry[REGISTRY];
@@ -625,7 +616,6 @@
   };
 
   function resolveInstantiate(loader, key, parentKey, registry, state) {
-    debugger;
     // normalization shortpath for already-normalized key
     // could add a plain name filter, but doesn't yet seem necessary for perf
     var module = registry[key];
@@ -643,7 +633,6 @@
 
     return loader.resolve(key, parentKey)
       .then(function (resolvedKey) {
-        debugger;
         // main loader registry always takes preference
         module = registry[resolvedKey];
         if (module) {
@@ -658,7 +647,6 @@
          * disgard the current load record creating a new one over it
          * but keep any existing registration 
          */
-        debugger;
         if (!load || load.module) {
           load = createLoadRecord(state, resolvedKey, load && load.registration);
         }
@@ -721,7 +709,6 @@
         load.importerSetters = [];
 
         link.moduleObj = {};
-        debugger;
         // process System.registerDynamic declaration
         if (registration[2]) {
           link.moduleObj.default = link.moduleObj.__useDefault = {};
@@ -2742,7 +2729,6 @@
   }
 
   function evaluate(loader, source, sourceMap, address, integrity, nonce, noWrap) {
-    /*     debugger; */
     if (!source)
       return;
     if (nonce && supportsScriptExec)
@@ -2761,13 +2747,12 @@
       else {
         var _source = getSource(source, sourceMap, address, !noWrap);
         (0, eval)(_source);
-        console.timeEnd(window._.$getIDFromURL(address))
         /* TODO:cache */
-        /*  window._.$$STORE
-           .setCache(address, _source)
-           .catch(function (error) {
-             console.error(error);
-           }); */
+        window._.$$STORE_T
+          .setCache(address, _source)
+          .catch(function (error) {
+            console.error(error);
+          });
       }
       postExec();
     } catch (e) {
@@ -3238,16 +3223,10 @@
         if (!metadata.load.scriptLoad)
           return initializePlugin(loader, key, metadata)
             .then(function () {
-              debugger;
-
               return runFetchPipeline(loader, key, metadata, processAnonRegister, config.wasm)
                 .then(function (res) {
-                  debugger;
                   return Promise.resolve(res);
-                })
-                .catch(function (error) {
-                  console.error(error);
-                });;
+                });
             })
 
         // just script loading
@@ -3335,6 +3314,7 @@
     if (metadata.load.exports && !metadata.load.format) {
       metadata.load.format = 'global';
     }
+    console.time(window._.$getIDFromURL(key));
     return resolvedPromise
       // locate
       .then(function () {
@@ -3363,11 +3343,13 @@
         });
       })
       .then(function (fetched) {
-        /*     debugger; */
         // fetch is already a utf-8 string if not doing wasm detection
-        if (!wasm || typeof fetched === 'string')
-          return translateAndInstantiate(loader, key, fetched, metadata, processAnonRegister);
-
+        if (!wasm || typeof fetched === 'string') {
+          return translateAndInstantiate(loader, key, fetched, metadata, processAnonRegister)
+            .then(function (res) {
+              return res;
+            });
+        }
         return checkInstantiateWasm(loader, fetched, processAnonRegister)
           .then(function (wasmInstantiated) {
             if (wasmInstantiated)
@@ -3379,7 +3361,15 @@
             var stringSource = isBrowser ? new TextDecoder('utf-8').decode(new Uint8Array(fetched)) : fetched.toString();
             return translateAndInstantiate(loader, key, stringSource, metadata, processAnonRegister);
           });
+      })
+      .then(function (res) {
+        console.timeEnd(window._.$getIDFromURL(key));
+        return res
       });
+  }
+
+  function translateAndInstantiateWithCache(loader, key, source, metadata, processAnonRegister) {
+
   }
 
   function translateAndInstantiate(loader, key, source, metadata, processAnonRegister) {
@@ -3428,11 +3418,13 @@
           return source;
         }
         metadata.load.format = 'esm';
-        return transpile(loader, source, key, metadata, processAnonRegister);
+        return transpile(loader, source, key, metadata, processAnonRegister)
+          .then(function (res) {
+            return Promise.resolve(res);
+          });
       })
       // instantiate
       .then(function (translated) {
-        /*     debugger; */
         /* TODO:cache */
         if (typeof translated !== 'string' || !metadata.pluginModule || !metadata.pluginModule.instantiate) {
           return translated;
@@ -3651,9 +3643,11 @@
       sourceMap.sources = [originalName];
   }
 
+
   function transpile(loader, source, key, metadata, processAnonRegister) {
-    if (!loader.transpiler)
+    if (!loader.transpiler) {
       throw new TypeError('Unable to dynamically transpile ES module\n   A loader plugin needs to be configured via `SystemJS.config({ transpiler: \'transpiler-module\' })`.');
+    }
 
     // deps support for es transpile
     if (metadata.load.deps) {
@@ -3662,47 +3656,56 @@
         depsPrefix += 'import "' + metadata.load.deps[i] + '"; ';
       source = depsPrefix + source;
     }
-
     // do transpilation
-    return loader.import.call(loader, loader.transpiler)
-      .then(function (transpiler) {
-        transpiler = transpiler.__useDefault || transpiler;
+    return window._.$$STORE_T.getCache(key)
+      .then(function (sourceFormCache) {
+        if (sourceFormCache) {
+          return Promise.resolve(sourceFormCache);
+        } else {
+          return loader.import.call(loader, loader.transpiler)
+            .then(function (transpiler) {
+              transpiler = transpiler.__useDefault || transpiler;
+              // translate hooks means this is a transpiler plugin instead of a raw implementation
+              if (!transpiler.translate)
+                throw new Error(loader.transpiler + ' is not a valid transpiler plugin.');
 
-        // translate hooks means this is a transpiler plugin instead of a raw implementation
-        if (!transpiler.translate)
-          throw new Error(loader.transpiler + ' is not a valid transpiler plugin.');
+              // if transpiler is the same as the plugin loader, then don't run twice
+              if (transpiler === metadata.pluginModule)
+                return source;
 
-        // if transpiler is the same as the plugin loader, then don't run twice
-        if (transpiler === metadata.pluginModule)
-          return source;
+              // convert the source map into an object for transpilation chaining
+              if (typeof metadata.load.sourceMap === 'string')
+                metadata.load.sourceMap = JSON.parse(metadata.load.sourceMap);
 
-        // convert the source map into an object for transpilation chaining
-        if (typeof metadata.load.sourceMap === 'string')
-          metadata.load.sourceMap = JSON.parse(metadata.load.sourceMap);
-
-        metadata.pluginLoad = metadata.pluginLoad || {
-          name: key,
-          address: key,
-          source: source,
-          metadata: metadata.load
-        };
-        metadata.load.deps = metadata.load.deps || [];
-
-        return Promise.resolve(transpiler.translate.call(loader, metadata.pluginLoad, metadata.traceOpts))
-          .then(function (source) {
-            // sanitize sourceMap if an object not a JSON string
-            var sourceMap = metadata.load.sourceMap;
-            if (sourceMap && typeof sourceMap === 'object')
-              sanitizeSourceMap(key, sourceMap);
-
-            if (metadata.load.format === 'esm' && detectRegisterFormat(source))
-              metadata.load.format = 'register';
-
-            return source;
-          });
-      }, function (err) {
+              metadata.pluginLoad = metadata.pluginLoad || {
+                name: key,
+                address: key,
+                source: source,
+                metadata: metadata.load
+              };
+              metadata.load.deps = metadata.load.deps || [];
+              return Promise
+                .resolve(transpiler.translate.call(loader, metadata.pluginLoad, metadata.traceOpts))
+                .then(function (source) {
+                  // sanitize sourceMap if an object not a JSON string
+                  var sourceMap = metadata.load.sourceMap;
+                  if (sourceMap && typeof sourceMap === 'object') {
+                    sanitizeSourceMap(key, sourceMap);
+                  }
+                  if (metadata.load.format === 'esm' && detectRegisterFormat(source)) {
+                    metadata.load.format = 'register';
+                  }
+                  return source;
+                });
+            })
+            .then(function (res) {
+              return Promise.resolve(res);
+            });
+        }
+      }).catch(function (err) {
         throw LoaderError__Check_error_message_for_loader_stack(err, 'Unable to load transpiler to transpile ' + key);
-      });
+      });;
+
   }
 
   // detect any meta header syntax
@@ -3880,12 +3883,9 @@
   SystemJSLoader$1.prototype.global = envGlobal;
 
   SystemJSLoader$1.prototype.import = function () {
-    debugger;
     var step1 = RegisterLoader$1.prototype.import.apply(this, arguments);
-    debugger;
     return step1
       .then(function (m) {
-        debugger;
         return '__useDefault' in m ? m.__useDefault : m;
       })
       .catch(function (error) {
