@@ -1,8 +1,10 @@
-# vue-admin
+# VAR-ADMIN
+
+Vue\Angular\React
 
 - [readme](https://shonesinglone.github.io/var-admin)
-  - [github](https://shonesinglone.github.io/var-admin/public/dev.html)
-  - [gitee 免费版不能自动部署](https://shonesinglone.gitee.io/var-admin/)
+  - [github](https://shonesinglone.github.io/var-admin/public/login.html)
+  - [gitee 免费版不能自动部署](https://shonesinglone.gitee.io/var-admin/login.html)
   - [coding 能自动部署，但是访问地址是随机码 jz0a27.coding-pages.com](https://jz0a27.coding-pages.com/public/login.html)
 
 基于SystemJS，使用VueJS编写基座的微前端Demo。
