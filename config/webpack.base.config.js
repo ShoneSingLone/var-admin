@@ -1,6 +1,11 @@
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const paths = require("./paths");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const {
+  isProd
+} = require("./phases");
 
 module.exports = {
   context: paths.context,
@@ -32,8 +37,13 @@ module.exports = {
       */
       {
         test: /\.less$/,
-        loader: [
-          "style-loader",
+        loader: [isProd ? {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              sourceMap: false,
+              publicPath: "../../"
+            }
+          } : "style-loader",
           "css-loader",
           {
             loader: "postcss-loader",
@@ -54,15 +64,18 @@ module.exports = {
       },
       {
         test: /\.styl$/,
-        use: ["style-loader", "css-loader", {
-          loader: "postcss-loader",
-          options: {
-            sourceMap: false,
-            config: {
-              path: "postcss.config.js"
+        use: [
+          isProd ? MiniCssExtractPlugin.loader : "style-loader",
+          "css-loader", {
+            loader: "postcss-loader",
+            options: {
+              sourceMap: false,
+              config: {
+                path: "postcss.config.js"
+              }
             }
-          }
-        }, "stylus-loader"]
+          }, "stylus-loader"
+        ]
       }, {
         test: /\.(png|svg|jpg|gif)$/,
         loader: "file-loader",
@@ -77,8 +90,6 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin([paths.output]),
-    new HtmlWebpackPlugin({
-      title: "Hot Module Reload",
-    }),
+    new HtmlWebpackPlugin(),
   ],
 };

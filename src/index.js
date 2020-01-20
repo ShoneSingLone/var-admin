@@ -68,7 +68,7 @@ setTimeout(() => startLoadingAnimation(_), 30);
             SystemJS.config({
                 map: {
                     "vue-router": resolvePath("static/lib/vue-router.esm.browser.js"),
-                    "vuex": resolvePath("static/lib/vuex.esm.browserjs"),
+                    "vuex": resolvePath("static/lib/vuex.esm.browser.js"),
                     "plugin-babel": resolvePath("static/lib/plugin-babel.js"),
                     "systemjs-babel-build": resolvePath("static/lib/systemjs-babel-browser.js")
                 },
@@ -79,7 +79,7 @@ setTimeout(() => startLoadingAnimation(_), 30);
             window.SYSTEM_IMPORT_MAP_IMPORTS = {
                 imports: {
                     "vue-router": resolvePath("static/lib/vue-router.esm.browser.js"),
-                    "vuex": resolvePath("static/lib/vuex.esm.browserjs")
+                    "vuex": resolvePath("static/lib/vuex.esm.browser.js")
                 }
             };
 
@@ -88,7 +88,6 @@ setTimeout(() => startLoadingAnimation(_), 30);
         }
         await loadJS(resolvePath("static/lib/less.min.js"));
         /* 基础的JS加载完毕之后加载entryjs */
-        let _res = await _.$$STORE.getItem("httptest8082staticmoduleuserloginindexmjs");
         if (eleMain && eleMain.dataset && eleMain.dataset.entry) {
             window.$system = window[window.APP_CONFIGS.IS_OLD_BROWSER ? "SystemJS" : "System"];
             window.$system.import(resolvePath(eleMain.dataset.entry))

@@ -1,0 +1,13 @@
+/* 一个块注释
+ * style comment! */
+.main-container {
+  width: 100%;
+  min-height: 100%;
+  padding: 110px 0 144px;
+  position: relative;
+  height: 100vh;
+  background: #f0f2f5 url(../../static/media/background.svg) center center / cover no-repeat;
+}
+
+
+/*# sourceMappingURL=main.css.map*/

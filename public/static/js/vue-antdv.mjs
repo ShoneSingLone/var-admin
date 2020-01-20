@@ -14,8 +14,8 @@ export default async () => {
     await $loadJS($resolvePath("static/lib/lodash-4.17.11.js"));
     window._ = merge(window._.noConflict(), window._);
     await $loadJS($resolvePath("static/lib/antdv/antd.min.js"));
+    await $loadJS($resolvePath("static/lib/enquire.min.js"));
     /* axios 拦截配置 */
-
     /* message使用ant-design */
     window.Vue.prototype.$http = $axios;
 

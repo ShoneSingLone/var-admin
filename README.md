@@ -7,7 +7,7 @@ Vue\Angular\React
   - [gitee 免费版不能自动部署](https://shonesinglone.gitee.io/var-admin/login.html)
   - [coding 能自动部署，但是访问地址是随机码 jz0a27.coding-pages.com](https://jz0a27.coding-pages.com/public/login.html)
 
-基于SystemJS，使用VueJS编写基座的微前端Demo。
+基于SystemJS，使用VueJS编写基座的微前端Demo。如果是内部使用的中后台系统，第一次加载资源的时间漫长是可以忍受的，而且内部网络速度按常理是比较快的。并且如果确实有需要，也是可以优化。
 
 - 以微件为单位构建应用；
 - 无须webpack打包；
@@ -59,7 +59,7 @@ set-executionpolicy remotesigned
 
 ## 说明
 
-- 实际运行是public
+- 实际运行是public下的文件，部署所需
 
 ## package
 
@@ -161,6 +161,8 @@ EventBus 全局通信：messageBox not
 
 ## 缓存
 
+- [] 懒加载CDN路径问题??
+
 缓存逻辑
 mini是每次访问页面都需要更新的，绝对没有缓存；
 mini版本号没有变动，直接读取缓存
@@ -219,3 +221,13 @@ ant
 ```js
 window.__webpack_public_path__ = parentUrl + "static/lib/bundle/";
 ```
+
+
+## 媒体查询
+
+
+##
+
+$loadCSS($resolvePath("static/css/css.css"))
+
+零碎不可复用的补丁式样式

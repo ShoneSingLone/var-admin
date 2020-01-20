@@ -4,9 +4,6 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const webpackBaseConfig = require("./config/webpack.base.config");
 const paths = require("./config/paths");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const {
-  BundleAnalyzerPlugin
-} = require("webpack-bundle-analyzer");
 
 module.exports = merge(webpackBaseConfig, {
   mode: "production",
@@ -20,7 +17,6 @@ module.exports = merge(webpackBaseConfig, {
     filename: "static/js/[name].js",
   },
   optimization: {
-
     minimizer: [
       new UglifyJsPlugin({
         sourceMap: false,
@@ -42,11 +38,11 @@ module.exports = merge(webpackBaseConfig, {
 
   },
   plugins: [
-    new BundleAnalyzerPlugin({
-      analyzerPort: 8083
-    }),
+    /*  new BundleAnalyzerPlugin({
+       analyzerPort: 8083
+     }),*/
     new MiniCssExtractPlugin({ //提取css
-      filename: "css/main.css"
+      filename: "static/css/main.css"
     }),
     new webpack.DefinePlugin({
       "process.env": {

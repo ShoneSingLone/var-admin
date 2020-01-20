@@ -13,12 +13,12 @@ window
         /* 开发模式不缓存静态资源 */
         IS_DEV: /localhost:80/g.test(window.location.href),
         /* 版本号不一致就从remote更新 .vue之类的资源 */
-        STATIC_RES_VERSION: "202001195020",
+        STATIC_RES_VERSION: /localhost:80/g.test(window.location.href) ? Date.now() : "202001195020",
         resource: {
-            /* 重置版本号后不需要更新的资源，第三方库，size相对较且不容易变化 */
+            /* 重置版本号后不需要更新的资源，第三方库，size相对较大且不容易变化 */
             exclude: {
                 "staticjsmainjs": "202001195029",
-                "staticjsvueantdvmjs": "202001195029",
+                // "staticjsvueantdvmjs": "202001204708",
                 "staticlibantdvantdminjs": "202001195029",
                 "staticliblessminjs": "202001195029",
                 "staticliblodash41711js": "202001195029",
@@ -26,6 +26,7 @@ window
                 "staticlibsystemjsextrastransformjs": "202001195029",
                 "staticlibsystemjssystemjs": "202001195029",
                 "staticlibvue2611broswerjs": "202001195029",
+                "staticlibvuexesmbrowserjs": "202001195029",
                 "staticlibvuerouteresmbrowserjs": "202001195029"
             }
         }
@@ -33,8 +34,8 @@ window
 
 /* for test 用Chrome跑IE代码,方便调试 */
 // window.APP_CONFIGS.IS_OLD_BROWSER = true;
-/* 开发模式不缓存静态资源 */
-// window.APP_CONFIGS.STATIC_RES_VERSION = Date.now();
+/* 开发模式缓存静态资源 */
+// window.APP_CONFIGS.STATIC_RES_VERSION = "202001195020";
 /* 测试缓存策略 */
 // window.APP_CONFIGS.IS_DEV = false;
 /* 不缓存任何一个资源并且全部使用正常的fetch和script加载方式 */
@@ -91,7 +92,7 @@ window
             try {
                 (0, eval)(mainJSScriptString);
             } catch (error) {
-                console.log(error);
+                handleError(error);
             }
             closeIndexedDB();
         } else {
