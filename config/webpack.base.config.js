@@ -1,6 +1,7 @@
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+// const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const paths = require("./paths");
+const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const {
@@ -89,7 +90,11 @@ module.exports = {
     vue: "Vue",
   },
   plugins: [
-    new CleanWebpackPlugin([paths.output]),
-    new HtmlWebpackPlugin(),
+    // new CleanWebpackPlugin([paths.output]),
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      template: path.resolve(__dirname, "../public/tml/index.html"),
+      inject: true,
+    }),
   ],
 };

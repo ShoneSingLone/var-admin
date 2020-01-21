@@ -231,3 +231,7 @@ window.__webpack_public_path__ = parentUrl + "static/lib/bundle/";
 $loadCSS($resolvePath("static/css/css.css"))
 
 零碎不可复用的补丁式样式
+
+
+## localStorage Event
+登入登出通信，同一个域下的统一处理 监听EventBus localStorage通知监听

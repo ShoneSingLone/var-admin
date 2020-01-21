@@ -13,7 +13,7 @@ window
         /* 开发模式不缓存静态资源 */
         IS_DEV: /localhost:80/g.test(window.location.href),
         /* 版本号不一致就从remote更新 .vue之类的资源 */
-        STATIC_RES_VERSION: /localhost:80/g.test(window.location.href) ? Date.now() : "20200121183216",
+        STATIC_RES_VERSION: /localhost:80/g.test(window.location.href) ? Date.now() : "20200121215347",
         resource: {
             /* 重置版本号后不需要更新的资源，第三方库，size相对较大且不容易变化 */
             exclude: {

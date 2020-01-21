@@ -121,8 +121,7 @@
         </a-checkbox>
         <router-link
           :to="{ name: 'recover', params: { user: 'aaa'} }"
-          class="forge-password"
-          style="float: right;"
+          class="forge-password float-r"
         >
           忘记密码
         </router-link>
