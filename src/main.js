@@ -2,7 +2,8 @@
 import "./index.config";
 import "./index.tools";
 import "./main.vuedev.js";
-import App from "@@/static/module/user/login/Login.vue";
+// import App from "@@/static/module/user/login/Login.vue";
+import App from "@@/static/module/layout/shell/Shell.vue";
 import Antd from "ant-design-vue";
 const {
     Vue

@@ -4,14 +4,18 @@ export default (path) => {
         Vue,
         $system,
         _: {
-            camelCase
+            $getIDFromURL
         }
     } = window;
 
-    return Vue.component(camelCase(path).toLowerCase() /* id */ , (resolve, reject) => {
+    const id = $getIDFromURL(path);
+    return Vue.component(id /* id */ , (resolve, reject) => {
         $system
             .import(path)
-            .then((res) => resolve(Vue.extend(res.default)))
+            .then((res) => {
+                res.default.name = id;
+                resolve(Vue.extend(res.default));
+            })
             .catch(reject);
     });
 

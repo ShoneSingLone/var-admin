@@ -3,27 +3,35 @@ import setDefaultVueAntdvJS from "../../../js/vue-antdv.mjs";
     try {
         const Vue = await setDefaultVueAntdvJS();
         const {
-            _
+            _,
         } = window;
         const {
             $loadCSS,
             $resolvePath,
             $lazyLoadComponent,
             $md5: md5,
-            merge
+            merge,
+            camelCase,
+            $getIDFromURL,
+            $loadComponentByURL
         } = _;
 
-        $loadCSS($resolvePath("static/css/css.css"));
+        $loadCSS($resolvePath("static/module/layout/shell/shell.css"));
+
         const APP_STATE = Vue.observable({
             count: 0
         });
-
         window.APP_STATE = APP_STATE;
         const app = new Vue({
-            components: {
-                app: $lazyLoadComponent($resolvePath("static/module/user/login/Login.vue"))
+            data() {
+                return {
+                    componentName: "div"
+                };
             },
-            template: "<app/>"
+            async mounted() {
+                this.componentName = await $loadComponentByURL("static/module/layout/shell/Shell.vue");
+            },
+            template: "<div :is=\"componentName\">waiting import</div>"
         }).$mount("#app");
     } catch (error) {
         console.error(error);

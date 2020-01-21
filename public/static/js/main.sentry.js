@@ -17,17 +17,17 @@ window
         resource: {
             /* 重置版本号后不需要更新的资源，第三方库，size相对较大且不容易变化 */
             exclude: {
-                "staticjsmainjs": "20200121183917",
-                "staticjsvueantdvmjs": "20200121183917",
-                "staticlibantdvantdminjs": "20200121183917",
-                "staticliblessminjs": "20200121183917",
-                "staticliblodash41711js": "20200121183917",
-                "staticlibsystemjsbabeltransformjs": "20200121183917",
-                "staticlibsystemjsextrastransformjs": "20200121183917",
-                "staticlibsystemjssystemjs": "20200121183917",
-                "staticlibvue2611broswerjs": "20200121183917",
-                "staticlibvuexesmbrowserjs": "20200121183917",
-                "staticlibvuerouteresmbrowserjs": "20200121183917"
+                "staticjsmainjs": "20200122003640",
+                "staticjsvueantdvmjs": "20200122003640",
+                "staticlibantdvantdminjs": "20200122003640",
+                "staticliblessminjs": "20200122003640",
+                "staticliblodash41711js": "20200122003640",
+                "staticlibsystemjsbabeltransformjs": "20200122003640",
+                "staticlibsystemjsextrastransformjs": "20200122003640",
+                "staticlibsystemjssystemjs": "20200122003640",
+                "staticlibvue2611broswerjs": "20200122003640",
+                "staticlibvuexesmbrowserjs": "20200122003640",
+                "staticlibvuerouteresmbrowserjs": "20200122003640"
             }
         }
     };
