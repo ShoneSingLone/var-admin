@@ -1,12 +1,12 @@
-export function stopLoadingAnimation() {
+export function stopLoadingAnimation() {/* 
     let ele = document.getElementById("loading-placeholder");
     if (ele && ele.parentNode) {
         ele.parentNode.removeChild(ele);
     }
     startLoadingAnimation.isStop = true;
     stopLoadingAnimation = null;
-}
-export function startLoadingAnimation(_) {
+ */}
+export function startLoadingAnimation(_) {/* 
 
     const h = document.createElement.bind(document);
     let body = document.body;
@@ -136,4 +136,4 @@ export function startLoadingAnimation(_) {
     }
     loop.count = 0;
     // loop();
-}
+ */}
