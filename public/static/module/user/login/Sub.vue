@@ -1,5 +1,8 @@
 <template>
-  <h1>spend time{{ time }}</h1>
+  <div>
+    <p>sub this is sub</p>
+    <h1>spend time{{ time }}</h1>
+  </div>
 </template>
 
 <script>

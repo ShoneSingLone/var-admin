@@ -35,7 +35,7 @@ window
 /* for test 用Chrome跑IE代码,方便调试 */
 // window.APP_CONFIGS.IS_OLD_BROWSER = true;
 /* 开发模式缓存静态资源 */
-// window.APP_CONFIGS.STATIC_RES_VERSION = "202001195020";
+window.APP_CONFIGS.STATIC_RES_VERSION = "202001195020";
 /* 测试缓存策略 */
 // window.APP_CONFIGS.IS_DEV = false;
 /* 不缓存任何一个资源并且全部使用正常的fetch和script加载方式 */
@@ -100,7 +100,8 @@ window
         }
     }
 
-    function handleError() {
+    function handleError(e) {
+        console.error(e);
         debugger;
         window.location.reload();
     };

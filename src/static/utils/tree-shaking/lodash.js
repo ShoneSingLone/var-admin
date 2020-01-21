@@ -18,5 +18,8 @@ export default {
     last,
     concat,
     forIn,
-    map
+    map,
+    $$regex: {
+        email: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
+    }
 };

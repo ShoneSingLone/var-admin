@@ -20,7 +20,6 @@ pipeline {
       steps {
         sh 'curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -'
         sh 'apt install -y nodejs'
-        sh 'npm install'
       }
     }
     stage('单元测试') {
