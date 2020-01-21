@@ -132,6 +132,6 @@ window
             }
             return src || js[last].src;
         }();
-        return jsPath.substring(0, jsPath.lastIndexOf("static/js/main.mini.js")) || "/";
+        return jsPath.substring(0, jsPath.lastIndexOf("static/js/main.sentry.js")) || "/";
     }
 })();
