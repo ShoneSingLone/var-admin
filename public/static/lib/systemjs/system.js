@@ -537,6 +537,12 @@
 
   systemJSPrototype.resolve = function (id, parentUrl) {
     parentUrl = parentUrl || baseUrl;
+    
+    if (/^@@\/static/g.test(id)) {
+      id = id.substring(3);
+      return baseUrl + id;
+    }
+
     return resolveImportMap(importMap, resolveIfNotPlainOrUrl(id, parentUrl) || id, parentUrl) || throwUnresolved(id, parentUrl);
   };
 

@@ -19,7 +19,7 @@ window
             /* 重置版本号后不需要更新的资源，第三方库，size相对较大且不容易变化 */
             exclude: {
                 // "staticjsmainjs": "20200122003640",
-                "staticjsvueantdvmjs": "20200122003640",
+               /*  "staticjsvueantdvmjs": "20200122003640",
                 "staticlibantdvantdminjs": "20200122003640",
                 "staticliblessminjs": "20200122003640",
                 "staticliblodash41711js": "20200122003640",
@@ -28,19 +28,19 @@ window
                 "staticlibsystemjssystemjs": "20200122003640",
                 "staticlibvue2611broswerjs": "20200122003640",
                 "staticlibvuexesmbrowserjs": "20200122003640",
-                "staticlibvuerouteresmbrowserjs": "20200122003640"
+                "staticlibvuerouteresmbrowserjs": "20200122003640" */
             }
         }
     };
 
 /* for test 用Chrome跑IE代码,方便调试 */
-window.APP_CONFIGS.IS_OLD_BROWSER = true;
+// window.APP_CONFIGS.IS_OLD_BROWSER = true;
 /* 开发模式缓存静态资源 */
 // window.APP_CONFIGS.STATIC_RES_VERSION = "202001195020";
 /* 测试缓存策略 */
 // window.APP_CONFIGS.IS_DEV = false;
 /* 不缓存任何一个资源并且全部使用正常的fetch和script加载方式 */
-// window.APP_CONFIGS.cache.isCacheAll = false;
+window.APP_CONFIGS.cache.isCacheAll = false;
 
 
 (function () {

@@ -106,6 +106,9 @@
     var firstChar = relUrl[0];
     var secondChar = relUrl[1];
 
+    if (/^@@\/static/g.test(relUrl)) {
+      return relUrl.substring(3);
+    }
     // protocol-relative
     if (firstChar === '/' && secondChar === '/') {
       if (!parentProtocol)

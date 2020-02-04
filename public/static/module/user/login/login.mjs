@@ -1,4 +1,4 @@
-import setDefaultVueAntdvJS from "../../../js/vue-antdv.mjs";
+import setDefaultVueAntdvJS from "@@/static/js/vue-antdv.mjs";
 
 (async () => {
     try {

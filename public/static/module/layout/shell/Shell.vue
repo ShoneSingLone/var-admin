@@ -3,7 +3,8 @@
     style="height:100vh;"
     :class="['layout', device]"
   >
-    testasdf
+    test
+    {{ device }}
   </a-layout>
 </template>
 <script>
