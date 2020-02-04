@@ -20,11 +20,10 @@ export default async (eleMain) => {
             await loadJS(resolvePath("static/lib/systemjs/system.src.js"));
             await loadJS(resolvePath("static/lib/systemjs/extras/transform.js"));
             await loadJS(resolvePath("static/lib/systemjs/babel-transform.js"));
+            // await loadJS("https://unpkg.com/@ventose/var@0.0.1/static/lib/systemjs/babel-transform.js");
             const {
                 SystemJS
             } = window;
-
-
             SystemJS.config({
                 map: {
                     ...systemjsMap,

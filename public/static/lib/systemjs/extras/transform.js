@@ -44,7 +44,6 @@
         return loader.getRegister();
       });
   };
-
   // Hookable transform function!
   systemJSPrototype.transform = function (_id, source) {
     return source;

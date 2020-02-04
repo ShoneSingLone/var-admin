@@ -242,3 +242,5 @@ $loadCSS($resolvePath("static/css/css.css"))
     _.$loadComponentByURL = url => {
         
     };
+
+    [vue-ls](https://github.com/RobinCK/vue-ls#readme)

@@ -10,14 +10,15 @@ window
         },
         /* IE加载在线转译代码 */
         IS_OLD_BROWSER: (typeof fetch === "undefined"),
-        /* 开发模式不缓存静态资源 */
+        /* 开发模式不缓存
+        静态资源 */
         IS_DEV: /localhost:80/g.test(window.location.href),
         /* 版本号不一致就从remote更新 .vue之类的资源 */
         STATIC_RES_VERSION: /localhost:80/g.test(window.location.href) ? Date.now() : "20200121215347",
         resource: {
             /* 重置版本号后不需要更新的资源，第三方库，size相对较大且不容易变化 */
             exclude: {
-                "staticjsmainjs": "20200122003640",
+                // "staticjsmainjs": "20200122003640",
                 "staticjsvueantdvmjs": "20200122003640",
                 "staticlibantdvantdminjs": "20200122003640",
                 "staticliblessminjs": "20200122003640",
@@ -33,7 +34,7 @@ window
     };
 
 /* for test 用Chrome跑IE代码,方便调试 */
-// window.APP_CONFIGS.IS_OLD_BROWSER = true;
+window.APP_CONFIGS.IS_OLD_BROWSER = true;
 /* 开发模式缓存静态资源 */
 // window.APP_CONFIGS.STATIC_RES_VERSION = "202001195020";
 /* 测试缓存策略 */

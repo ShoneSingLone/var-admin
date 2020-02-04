@@ -1,4 +1,5 @@
 import setDefaultVueAntdvJS from "../../../js/vue-antdv.mjs";
+
 (async () => {
     try {
         const Vue = await setDefaultVueAntdvJS();

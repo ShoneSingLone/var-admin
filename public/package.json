@@ -1,0 +1,13 @@
+{
+  "name": "@ventose/var",
+  "version": "0.0.1",
+  "description": "base on systemjs",
+  "Keywords": "Micro-frontend scaffold",
+  "unpkg": "./static/js/main.js",
+  "author": "https://github.com/ShoneSingLone",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShoneSingLone/var-admin.git"
+  },
+  "license": "MIT"
+}

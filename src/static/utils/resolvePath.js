@@ -4,6 +4,7 @@ const backslashRegEx = /\\/g;
 const parentUrl = getBaseurl();
 window.__webpack_public_path__ = parentUrl + "static/lib/bundle/";
 export function getIDFromURL(url) {
+    console.log(url);
     return camelCase(url.substring(url.lastIndexOf("/static"))).toLowerCase();
 }
 

@@ -5,7 +5,14 @@ function resolve(dir) {
 }
 
 module.exports = {
-    lintOnSave:false,
+    lintOnSave: false,
+    devServer: {
+        proxy: {
+            "/api": {
+                target: "http://localhost:3000"
+            }
+        }
+    },
     chainWebpack: (config) => {
         config.resolve.alias
             .set("@@", resolve("public"));

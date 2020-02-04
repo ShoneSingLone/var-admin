@@ -513,6 +513,7 @@
   }
 
   systemJSPrototype.prepareImport = function () {
+    /* 加载map */
     if (window.SYSTEM_IMPORT_MAP_IMPORTS) {
       importMap = resolveAndComposeImportMap(window.SYSTEM_IMPORT_MAP_IMPORTS, baseUrl, importMap);
     }
