@@ -28,17 +28,32 @@ export default async () => {
                 window.Vue.component(id, app);
                 return id;
             };
+            /* localStorage */
         })
     ]);
     /*  */
     await Promise.all([
         await $loadJS($resolvePath("static/lib/antdv/antd.min.js")),
-        await $loadJS($resolvePath("static/lib/enquire.min.js"))
+        await $loadJS($resolvePath("static/lib/enquire.min.js")),
+        await $loadJS($resolvePath("static/js/app/github/http-axios.js")),
+        await $system.import($resolvePath("static/js/app/github/utils.mjs")),
+        await (() => {
+            try {
+                /* URL & URLSearchParams*/
+                if (URLSearchParams) {
+                    return Promise.resolve();
+                }
+            } catch (error) {
+                return $loadJS($resolvePath("static/js/polyfill/api/url-polyfill.js"));
+            }
+        })()
     ]);
-
     /* axios 拦截配置 */
+
     /* message使用ant-design */
     window.Vue.prototype.$http = $axios;
-
+    window.Vue.prototype.$http.newtab = (url) => {
+        window.open(url, "_blank");
+    };
     return Promise.resolve(window.Vue);
 };

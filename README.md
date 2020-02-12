@@ -244,3 +244,21 @@ $loadCSS($resolvePath("static/css/css.css"))
     };
 
     [vue-ls](https://github.com/RobinCK/vue-ls#readme)
+
+
+
+别名@@ 路径
+```js
+    var PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
+    var regEx = new RegExp("^@@/" + PATH_PREFIX, "g");
+    if (regEx.test(relUrl)) {
+      return relUrl.substring(3);
+    }
+
+```
+
+路径的处理
+绝对
+相对
+远程
+文件//存疑

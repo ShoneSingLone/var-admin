@@ -1,37 +1,31 @@
 import camelCase from "lodash/camelCase";
-import last from "lodash/last";
+const PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
 const backslashRegEx = /\\/g;
 const parentUrl = getBaseurl();
-window.__webpack_public_path__ = parentUrl + "static/lib/bundle/";
+window.__webpack_public_path__ = `${parentUrl}${PATH_PREFIX}/lib/bundle/`;
 export function getIDFromURL(url) {
     // console.log(url);
-    return camelCase(url.substring(url.lastIndexOf("/static"))).toLowerCase();
+    return camelCase(url.substring(url.lastIndexOf(`/${PATH_PREFIX}`))).toLowerCase();
 }
 
 function getBaseurl() {
-    var jsPath = document.currentScript ? document.currentScript.src : function () {
-        var js = document.scripts,
-            last = js.length - 1,
-            src;
-        for (var i = last; i > 0; i--) {
-            if (js[i].readyState === "interactive") {
-                src = js[i].src;
-                break;
-            }
-        }
-        return src || js[last].src;
-    }();
-    return jsPath.substring(0, jsPath.lastIndexOf("static/js/main.js")) || "/";
+    var scriptMainSentryEle = document.getElementById("script-main-sentry");
+    var jsPath = scriptMainSentryEle.src;
+    var _baseURL = jsPath.substring(0, jsPath.lastIndexOf(PATH_PREFIX + "/js/main.sentry.js")) || "/";
+    /* 带有完成协议与域名的基本路径 */
+    return _baseURL;
 }
 
 /* system.js line:27 */
 function resolveIfNotPlainOrUrl(relUrl, parentUrl) {
     if (relUrl.indexOf("\\") !== -1)
         relUrl = relUrl.replace(backslashRegEx, "/");
+    /* 协议 */
     // protocol-relative
     if (relUrl[0] === "/" && relUrl[1] === "/") {
         return parentUrl.slice(0, parentUrl.indexOf(":") + 1) + relUrl;
     }
+    /* 相对 */
     // relative-url
     else if (relUrl[0] === "." && (relUrl[1] === "/" || relUrl[1] === "." && (relUrl[2] === "/" || relUrl.length === 2 && (relUrl += "/")) ||
             relUrl.length === 1 && (relUrl += "/")) ||

@@ -9,6 +9,7 @@
   const envGlobal = hasSelf ? self : global;
 
   let baseUrl;
+  let PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
 
   if (hasDocument) {
     const baseEl = document.querySelector('base[href]');
@@ -537,8 +538,9 @@
 
   systemJSPrototype.resolve = function (id, parentUrl) {
     parentUrl = parentUrl || baseUrl;
-    
-    if (/^@@\/static/g.test(id)) {
+
+    var regEx = new RegExp("^@@/" + PATH_PREFIX, "g");
+    if (regEx.test(id)) {
       id = id.substring(3);
       return baseUrl + id;
     }

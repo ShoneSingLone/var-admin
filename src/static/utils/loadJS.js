@@ -47,8 +47,8 @@ export async function checkResourceCache(exclude = {}, _) {
                 .map(async (srcID) => await store.removeItem(srcID))
             );
     }
-
     if (String(_version) !== String(window.APP_CONFIGS.STATIC_RES_VERSION)) {
+        console.log("_version", _version);
         let oldExclude = await store_src.getItem("EXCLUDE");
 
         if (_.isObject(oldExclude)) {
@@ -80,6 +80,8 @@ export async function checkResourceCache(exclude = {}, _) {
                 console.log(error);
             }
         }, 1000);
+    } else {
+        console.timeEnd("checkResourceCache");
     }
 }
 
@@ -228,9 +230,6 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
 
             }
         });
-
-
-
 }
 
 const LOADED_JS = {};

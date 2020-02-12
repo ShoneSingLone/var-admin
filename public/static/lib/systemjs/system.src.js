@@ -106,7 +106,9 @@
     var firstChar = relUrl[0];
     var secondChar = relUrl[1];
 
-    if (/^@@\/static/g.test(relUrl)) {
+    var PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
+    var regEx = new RegExp("^@@/" + PATH_PREFIX, "g");
+    if (regEx.test(relUrl)) {
       return relUrl.substring(3);
     }
     // protocol-relative

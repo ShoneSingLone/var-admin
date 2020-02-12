@@ -23,6 +23,7 @@ router.get("/a/api", async (ctx, next) => {
   ctx.response.body = "hello";
   next();
 });
+
 app.use(mount("/", serve(staticPath)));
 if (isProd) {
   const indexHtml = path.resolve(__dirname, "./public/index.html");
