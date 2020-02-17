@@ -1,0 +1,75 @@
+@mixin sidebarToggle {
+    transition: width 0.15s linear;
+    width: $sidebar--width;
+
+    &.fold {
+        width: $sidebar--width-fold;
+    }
+}
+
+*{
+    // outline: 1px solid red;
+}
+
+.shell {
+    height: 100vh;
+
+    > .navbar {
+        height: $navbar--height;
+        
+        > .system-title {
+            background-color: $--color-primary;
+            height: 100%;
+            overflow: hidden;
+            
+            @include sidebarToggle;
+        }
+        
+        > .navbar-content {
+            flex:1;
+            height: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            align-items: center;
+
+
+            .toggle-btn {
+
+                width: $navbar--height;
+                padding: 0 24px;
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                > .el-icon-s-unfold {
+                    transition: transform 0.15s linear;
+
+                    &.fold {
+                        transform: scaleX(-1);
+                    }
+                }
+            }
+            .nav-options-wrapper{
+                height: 100%;
+                overflow: hidden;
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+                padding:0 24px;
+            }
+        }
+    }
+
+    > .main {
+        height: calc(100vh - #{$navbar--height});
+
+        > .sidebar {
+            @include sidebarToggle;
+        }
+
+        > .content {}
+    }
+}

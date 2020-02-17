@@ -1,14 +1,8 @@
 <template>
-  <div>
-    <div :is="mainNavbarName">
-      main-navbar
-    </div>
-    <div :is="mainSidebarName">
-      main-sidebar
-    </div>
-    <div :is="mainContentName">
-      main-content
-    </div>
+  <div
+    class="main-content"
+  >
+    main-content
   </div>
 </template>
 <script>
