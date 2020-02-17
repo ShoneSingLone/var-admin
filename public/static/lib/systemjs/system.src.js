@@ -29,6 +29,14 @@
    * Environment baseURI
    */
   var baseURI;
+  var PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
+  var aliasBaseUrl = (function () {
+    var scriptMainSentryEle = document.getElementById("script-main-sentry");
+    var jsPath = scriptMainSentryEle.src;
+    var _baseURL = jsPath.substring(0, jsPath.lastIndexOf(PATH_PREFIX + "/js/main.sentry.js")) || "/";
+    return _baseURL;
+  })();
+
 
   // environent baseURI detection
   if (typeof document != 'undefined' && document.getElementsByTagName) {
@@ -109,7 +117,8 @@
     var PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
     var regEx = new RegExp("^@@/" + PATH_PREFIX, "g");
     if (regEx.test(relUrl)) {
-      return relUrl.substring(3);
+      var _url = relUrl.substring(3);
+      return aliasBaseUrl + _url;
     }
     // protocol-relative
     if (firstChar === '/' && secondChar === '/') {

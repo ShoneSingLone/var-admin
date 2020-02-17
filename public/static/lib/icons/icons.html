@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../plugins/vue-2.6.10/vue.js"></script>
+    <script src="../plugins/lodash-4.17.10/lodash.js"></script>
+    <script src="./iconfont.js"></script>
+    <style lang="css">
+        li {
+            display: inline-block;
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(icon, index) in icons" :key="index">
+                <div>
+                    <label for="">{{icon}}</label>
+                </div>
+                <div>
+                    <svg class="icon-svg aui-navbar__icon-menu aui-navbar__icon-menu--refresh" aria-hidden="true">
+                        <use :xlink:href="'#icon-'+icon"></use>
+                    </svg>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                let icons = ["check", "CI", "Dollar", "compass", "close", "frown", "info", "left", "down",
+                    "EURO", "copyright", "minus", "meh", "plus", "play", "question", "Pound", "right",
+                    "smile", "trademark", "time", "timeout", "earth", "YUAN", "up", "warning", "sync",
+                    "transaction", "undo", "redo", "reload", "reloadtime", "message", "dashboard",
+                    "issuesclose", "poweroff", "logout", "login", "piechart", "setting", "eye", "location",
+                    "edit", "export", "save", "Import", "appstore", "layout", "control", "codelibrary",
+                    "detail", "project", "wallet", "calculator", "interation", "border", "radius",
+                    "adduser", "deleteteam", "deleteuser", "addteam", "user", "team", "areachart",
+                    "linechart", "barchart", "pointmap", "container", "database", "sever", "mobile",
+                    "tablet", "redenvelope", "book", "filedone", "reconciliation", "file", "filesync",
+                    "filesearch", "solution", "fileprotect", "snippets", "audit", "diff", "Batchfolding",
+                    "securityscan", "propertysafety", "safetycertificate", "insurance", "alert", "delete",
+                    "hourglass", "bulb", "experiment", "bell", "trophy", "rest", "USB", "skin", "home",
+                    "bank", "filter", "funnelplot", "like", "unlike", "unlock", "lock", "customerservice",
+                    "flag", "moneycollect", "medicinebox", "shop", "rocket", "shopping", "folder",
+                    "deploymentunit", "accountbook", "contacts", "carryout", "calendar", "scan", "select",
+                    "boxplot", "build", "sliders", "laptop", "barcode", "camera", "cluster", "gateway",
+                    "car", "printer", "read", "cloud", "video", "notification", "sound", "radarchart",
+                    "qrcode", "fund", "image", "mail", "table", "idcard", "creditcard", "heart", "block",
+                    "error", "star", "gold", "heatmap", "wifi", "attachment", "key", "api", "disconnect",
+                    "highlight", "monitor", "link", "man", "percentage", "search", "pushpin", "phone",
+                    "shake", "tag", "wrench", "woman", "tags", "scissor", "mr", "share", "branches", "fork",
+                    "shrink", "arrawsalt", "verticalright", "verticalleft", "fullscreen", "doubleleft",
+                    "doubleright", "arrowright", "arrowup", "arrowleft", "arrowdown", "upload", "colum",
+                    "vertical", "totop", "download", "sort", "fall", "swap", "stock", "rise", "indent",
+                    "outdent", "menu", "unorderedlist", "orderedlist", "align", "pic", "bold", "font",
+                    "exclaimination", "infomation", "line", "strikethrough", "underline", "number",
+                    "italic", "code", "column", "ellipsis", "dash", "enter", "rollback", "small", "pause",
+                    "bg", "crown", "drag", "desktop", "gift", "stop", "fire", "thunderbolt", "batchfolding",
+                    "golden", "alibaba", "alibabacloud", "antdesign", "ant", "behance", "googleplus",
+                    "medium", "google", "IE", "amazon", "slack", "alipay", "taobao", "zhihu", "HTML",
+                    "linkedin", "yahoo", "facebook", "skype", "CodeSandbox", "chrome", "codepen",
+                    "aliwangwang", "apple", "android", "sketch", "Gitlab", "dribbble", "instagram",
+                    "reddit", "windows", "yuque", "Youtube", "dropbox", "dingtalk", "QQ", "twitter",
+                    "weibo", "wechat", "github", "zoomout", "apartment", "audio", "robot", "zoomin"
+                ];
+                return {
+                    icons
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>

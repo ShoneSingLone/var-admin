@@ -14,8 +14,8 @@ module.exports = {
         }
     },
     chainWebpack: (config) => {
-        config.resolve.alias
-            .set("@@", resolve("public"));
+        console.log("alias");
+        config.resolve.alias.set("@@", resolve("public"));
     },
     pages: {
         index: {

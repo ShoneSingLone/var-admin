@@ -10,6 +10,9 @@ export function getIDFromURL(url) {
 
 function getBaseurl() {
     var scriptMainSentryEle = document.getElementById("script-main-sentry");
+    if (!scriptMainSentryEle) {
+        return alert("入口页面未设置script-main-sentry");
+    }
     var jsPath = scriptMainSentryEle.src;
     var _baseURL = jsPath.substring(0, jsPath.lastIndexOf(PATH_PREFIX + "/js/main.sentry.js")) || "/";
     /* 带有完成协议与域名的基本路径 */

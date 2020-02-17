@@ -262,3 +262,6 @@ $loadCSS($resolvePath("static/css/css.css"))
 相对
 远程
 文件//存疑
+
+
+Route change tab之间的跳转

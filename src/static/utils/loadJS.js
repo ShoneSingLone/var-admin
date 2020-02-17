@@ -2,6 +2,7 @@ import camelCase from "lodash/camelCase";
 import merge from "lodash/merge";
 import localforage from "localforage";
 
+
 /* 缓存fetch之后的静态资源 */
 const store_src = localforage.createInstance({
     name: window.APP_CONFIGS.cache.staticName
@@ -14,6 +15,18 @@ const store_src_translated = localforage.createInstance({
 const store_src_version = localforage.createInstance({
     name: window.APP_CONFIGS.cache.staticNameVersion
 });
+
+(async () => {
+    if (!window.APP_CONFIGS.cache.isCacheAll) {
+        console.time("clear cache");
+        await Promise.all([
+            await store_src.clear(),
+            await store_src_translated.clear(),
+            await store_src_version.clear()
+        ]);
+        console.timeEnd("clear cache");
+    }
+})();
 
 /* 加载mian.js意味需要重新缓存数据，checkResourceCache调用用来检查静态资源 */
 export async function checkResourceCache(exclude = {}, _) {
@@ -72,9 +85,16 @@ export async function checkResourceCache(exclude = {}, _) {
         ]);
 
         setTimeout(async () => {
+            const {
+                APP_CONFIGS
+            } = window;
+            const {
+                PATH_PREFIX
+            } = APP_CONFIGS;
+
             console.timeEnd("checkResourceCache");
             try {
-                const getMainScript = await xhrFetchWithCache(_.$resolvePath("static/js/main.js"));
+                const getMainScript = await xhrFetchWithCache(_.$resolvePath(PATH_PREFIX + "/js/main.js"));
                 await store_src.setItem("staticjsmainjs", getMainScript);
             } catch (error) {
                 console.log(error);

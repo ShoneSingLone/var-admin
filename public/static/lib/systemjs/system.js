@@ -10,6 +10,13 @@
 
   let baseUrl;
   let PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
+  let aliasBaseUrl = (function () {
+    var scriptMainSentryEle = document.getElementById("script-main-sentry");
+    var jsPath = scriptMainSentryEle.src;
+    var _baseURL = jsPath.substring(0, jsPath.lastIndexOf(PATH_PREFIX + "/js/main.sentry.js")) || "/";
+    return _baseURL;
+  })();
+
 
   if (hasDocument) {
     const baseEl = document.querySelector('base[href]');
@@ -542,7 +549,7 @@
     var regEx = new RegExp("^@@/" + PATH_PREFIX, "g");
     if (regEx.test(id)) {
       id = id.substring(3);
-      return baseUrl + id;
+      return aliasBaseUrl + id;
     }
 
     return resolveImportMap(importMap, resolveIfNotPlainOrUrl(id, parentUrl) || id, parentUrl) || throwUnresolved(id, parentUrl);
