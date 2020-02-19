@@ -265,3 +265,8 @@ $loadCSS($resolvePath("static/css/css.css"))
 
 
 Route change tab之间的跳转
+
+SHELL 全局 root 实例
+
+PAGE_*单例
+

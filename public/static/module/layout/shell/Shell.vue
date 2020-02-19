@@ -1,5 +1,13 @@
 <template>
   <div class="shell">
+    
+    <el-input-number
+      :value="value"
+      :precision="2"
+      :step="1"
+      @input="handleChange"
+    />
+    {{ num }}
     <div
       :is="componentNavbar"
       class="navbar elevation7"
@@ -14,7 +22,6 @@
       >
         sidebar
       </div>
-    
       <div
         :is="componentContent"
         class="content flex1"
@@ -40,6 +47,7 @@ export default {
     },
     data() {
         return {
+          num:0,
             isSidebarFold: false,
             sysNavTitle: "var adminasdfasdfsdf",
             /*  */
@@ -59,6 +67,12 @@ export default {
       }, 1);
     },
     methods: {
+      handleChange(value) {
+        console.log(value);
+      },
+      handleInput(value) {
+        console.log(value);
+      },
         toggleSidebarFold() {
             this.isSidebarFold = !this.isSidebarFold;
         }
