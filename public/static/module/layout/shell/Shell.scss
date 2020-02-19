@@ -7,7 +7,7 @@
     }
 }
 
-*{
+* {
     // outline: 1px solid red;
 }
 
@@ -16,26 +16,25 @@
 
     > .navbar {
         height: $navbar--height;
-        
+
         > .system-title {
             background-color: $--color-primary;
             height: 100%;
             overflow: hidden;
-            
+            color: white;
+
             @include sidebarToggle;
         }
-        
+
         > .navbar-content {
-            flex:1;
+            flex: 1;
             height: 100%;
             display: flex;
             flex-flow: row nowrap;
             justify-content: space-between;
             align-items: center;
 
-
             .toggle-btn {
-
                 width: $navbar--height;
                 padding: 0 24px;
 
@@ -51,14 +50,15 @@
                     }
                 }
             }
-            .nav-options-wrapper{
+
+            .nav-options-wrapper {
                 height: 100%;
                 overflow: hidden;
                 display: flex;
                 flex-flow: row nowrap;
                 justify-content: center;
                 align-items: center;
-                padding:0 24px;
+                padding: 0 24px;
             }
         }
     }
@@ -68,6 +68,49 @@
 
         > .sidebar {
             @include sidebarToggle;
+
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+
+            > .search-wrapper {
+                overflow: hidden;
+                transition: all 0.15s linear;
+                width: 100%;
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                > input {
+                    flex: 1;
+                }
+
+                > .icon.suffix.no-words {
+                    > i {
+                        color: transparent;
+                    }
+                }
+
+                &.fold {
+                    width: 0;
+                    height: 0;
+                }
+            }
+
+            > .sidebar__inner {
+                margin-top: 10px;
+                padding-top:-10px;
+                flex: 1;
+                width: 100%;
+                padding-bottom: 0;
+                overflow-y: hidden;
+
+                .el-scrollbar__wrap {
+                    overflow-x: hidden;
+                }
+            }
         }
 
         > .content {}

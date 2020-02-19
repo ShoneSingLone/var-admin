@@ -1,13 +1,5 @@
 <template>
   <div class="shell">
-    
-    <el-input-number
-      :value="value"
-      :precision="2"
-      :step="1"
-      @input="handleChange"
-    />
-    {{ num }}
     <div
       :is="componentNavbar"
       class="navbar elevation7"
@@ -57,7 +49,7 @@ export default {
             // mainSidebarStyle: { width: "230px" }
         };
     },
-    mounted() {
+     mounted() {
       setTimeout(() => {
         
         this.componentNavbar = mainNavbar;
@@ -65,7 +57,7 @@ export default {
         this.componentContent = mainContent;
     
       }, 1);
-    },
+    },   
     methods: {
       handleChange(value) {
         console.log(value);
@@ -76,7 +68,8 @@ export default {
         toggleSidebarFold() {
             this.isSidebarFold = !this.isSidebarFold;
         }
-    }
+    },
+
 };
 </script>
 

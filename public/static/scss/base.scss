@@ -238,7 +238,7 @@ html, body, #app {
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity .5s;
+    transition: opacity 5s linear;
 }
 
 .fade-enter,
@@ -273,6 +273,10 @@ html, body, #app {
 .flex-vertical {
     display: flex;
     flex-flow: column nowrap;
+}
+.flex-horizon {
+    display: flex;
+    flex-flow: row nowrap;
 }
 
 .align-items-center {
@@ -363,10 +367,6 @@ html, body, #app {
     line-height: $base--line-height !important;
 }
 
-.flex-horizon {
-    display: flex;
-    flex-flow: row nowrap;
-}
 
 @for $i from 1 through 10 {
     .flex#{$i} {

@@ -1,7 +1,9 @@
 <template>
   <div class="flex-horizon align-items-center">
-    <div :class="['system-title',{fold:SHELL.isSidebarFold} ]">
-      <slot />
+    <div :class="['system-title flex-horizon justify-center align-items-center',{fold:SHELL.isSidebarFold} ]">
+      <div class="system-title-content">
+        <slot />
+      </div>
     </div>
     
     <div class="navbar-content overflow-hidden">

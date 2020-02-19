@@ -11,6 +11,7 @@ import "element-ui/lib/theme-chalk/index.css";
 const {
     Vue
 } = window;
+
 Vue.use(Element);
 // Vue.use(Antd);
 Vue.config.productionTip = false;
