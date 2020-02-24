@@ -16,24 +16,28 @@ export default async () => {
     await Promise.all([await $loadJS($resolvePath("static/lib/lodash-4.17.11.js"))
         .then(function () {
             window._ = merge(window._.noConflict(), window._);
-            /* Vue 特有 */
-            /* @return id */
+
+            /* 
+             * Vue 特有 
+             * @return VueComponent
+             */
             window._.$loadComponentByURL = async url => {
                 url = $resolvePath(url);
-                const {
-                    default: app
-                } = await $system.import(url);
                 const id = $getIDFromURL(url);
-                app.name = id;
-                window.Vue.component(id, app);
-                return id;
+                if (window.Vue.component(id)) return id;
+                const {
+                    default: component
+                } = await $system.import(url);
+                component.name = id;
+                window.Vue.component(id, component);
+                return component;
             };
             /* localStorage */
         })
     ]);
     /*  */
     await Promise.all([
-        await $loadJS($resolvePath("static/lib/antdv/antd.min.js")),
+        await $loadJS($resolvePath("static/lib/element/index.js")),
         await $loadJS($resolvePath("static/lib/enquire.min.js")),
         await $loadJS($resolvePath("static/js/app/github/http-axios.js")),
         await $system.import($resolvePath("static/js/app/github/utils.mjs")),

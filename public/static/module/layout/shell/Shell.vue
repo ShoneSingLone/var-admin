@@ -1,21 +1,22 @@
 <template>
   <div class="shell">
     <div
-      :is="componentNavbar"
+      :is="APP_STATE.componentNavbar"
       class="navbar elevation7"
+      @click-toggle="toggleSidebarFold"
     >
-      {{ sysNavTitle }}
+      {{ APP_STATE.sysNavTitle }}
     </div>
-    
+
     <div class="main flex-horizon">
       <div
-        :is="componentSidbar"
-        :class="['sidebar elevation6',{fold:isSidebarFold}]"
+        :is="APP_STATE.componentSidbar"
+        :class="['sidebar elevation6',{fold:APP_STATE.isSidebarFold}]"
       >
         sidebar
       </div>
       <div
-        :is="componentContent"
+        :is="APP_STATE.componentContent"
         class="content flex1"
       >
         content
@@ -23,56 +24,41 @@
     </div>
   </div>
 </template>
-<script>
 
-import mainNavbar from "@@/static/module/layout/shell/MainNavbar.vue";
-import mainSidebar from "@@/static/module/layout/shell/MainSidebar.vue";
-import mainContent from "@@/static/module/layout/shell/MainContent.vue";
+<script>
+import mainNavbar from "./MainNavbar.vue";
+import mainSidebar from "./MainSidebar.vue";
+import mainContent from "./MainContent.vue";
+const { APP_STATE } = window;
 
 export default {
-    TEMPLATE_PLACEHOLDER,
-    components: { mainNavbar, mainSidebar, mainContent },
-    provide() {
-        return {
-            SHELL: this
-        };
+  TEMPLATE_PLACEHOLDER,
+  components: { mainNavbar, mainSidebar, mainContent },
+  provide() {
+    return {
+      SHELL: this
+    };
+  },
+  data() {
+    return { APP_STATE };
+  },
+  mounted() {
+    setTimeout(() => {
+      APP_STATE.componentNavbar = mainNavbar;
+      APP_STATE.componentSidbar = mainSidebar;
+      APP_STATE.componentContent = mainContent;
+    }, 1);
+  },
+  methods: {
+    handleChange(value) {
+      console.log(value);
     },
-    data() {
-        return {
-          num:0,
-            isSidebarFold: false,
-            sysNavTitle: "var adminasdfasdfsdf",
-            /*  */
-            componentNavbar: "div",
-            componentSidbar: "div",
-            componentContent: "div",
-            // mainSidebarStyle: { width: "230px" }
-        };
+    handleInput(value) {
+      console.log(value);
     },
-     mounted() {
-      setTimeout(() => {
-        
-        this.componentNavbar = mainNavbar;
-        this.componentSidbar = mainSidebar;
-        this.componentContent = mainContent;
-    
-      }, 1);
-    },   
-    methods: {
-      handleChange(value) {
-        console.log(value);
-      },
-      handleInput(value) {
-        console.log(value);
-      },
-        toggleSidebarFold() {
-            this.isSidebarFold = !this.isSidebarFold;
-        }
-    },
-
+    toggleSidebarFold() {
+      APP_STATE.isSidebarFold = !APP_STATE.isSidebarFold;
+    }
+  }
 };
 </script>
-
-<style lang="scss" src="../../../scss/main.scss">
-
-</style>

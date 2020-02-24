@@ -1,4 +1,5 @@
-import setDefaultVueAntdvJS from "../../../js/vue-antdv.mjs";
+import setDefaultVueAntdvJS from "@@/static/js/vue-element.mjs";
+
 (async () => {
     try {
         const Vue = await setDefaultVueAntdvJS();
@@ -17,19 +18,38 @@ import setDefaultVueAntdvJS from "../../../js/vue-antdv.mjs";
         } = _;
 
         $loadCSS($resolvePath("static/module/layout/shell/shell.css"));
-
         const APP_STATE = Vue.observable({
-            count: 0
+            num: 0,
+            isSidebarFold: false,
+            sysNavTitle: "var adminasdfasdfsdf",
+            /*  */
+            componentNavbar: "div",
+            componentSidbar: "div",
+            componentContent: "div"
+            // mainSidebarStyle: { width: "230px" }
         });
+
         window.APP_STATE = APP_STATE;
-        const app = new Vue({
+
+        new Vue({
             data() {
                 return {
+                    APP_STATE,
                     componentName: "div"
                 };
             },
+            watch: {
+                APP_STATE: {
+                    deep: true,
+                    handler(newValue, oldValue) {
+                        console.log(newValue, oldValue);
+                    }
+                }
+            },
             async mounted() {
-                this.componentName = await $loadComponentByURL("static/module/layout/shell/Shell.vue");
+                const shellComponent = await $loadComponentByURL("static/module/layout/shell/Shell.vue");
+                console.log(shellComponent, shellComponent.name);
+                this.componentName = shellComponent;
             },
             template: "<div :is=\"componentName\">waiting import</div>"
         }).$mount("#app");

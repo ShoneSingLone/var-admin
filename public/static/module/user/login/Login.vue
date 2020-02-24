@@ -203,7 +203,7 @@ export default {
     };
   },
   methods: {
-    handleUsernameOrEmail(rule, value, callback) {
+    async handleUsernameOrEmail(rule, value, callback) {
       const { state } = this;
       if (_.$$regex.email.test(value)) {
         state.loginType = 0;
@@ -212,7 +212,6 @@ export default {
       }
       callback();
     },
-
     handleTabClick(key) {
       this.customActiveKey = key;
       // this.form.resetFields()

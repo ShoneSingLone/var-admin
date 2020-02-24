@@ -34,6 +34,7 @@
             justify-content: space-between;
             align-items: center;
 
+            /* 触发菜单折叠按钮 */
             .toggle-btn {
                 width: $navbar--height;
                 padding: 0 24px;
@@ -101,7 +102,7 @@
 
             > .sidebar__inner {
                 margin-top: 10px;
-                padding-top:-10px;
+                padding-top: -10px;
                 flex: 1;
                 width: 100%;
                 padding-bottom: 0;

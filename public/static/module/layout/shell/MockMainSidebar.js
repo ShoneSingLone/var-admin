@@ -15,7 +15,99 @@ export default {
                     "permissions": null,
                     "sort": 0,
                     "createDate": "2019-10-28 10:11:01",
-                    "parentName": null
+                    "parentName": null,
+                    "children": [{
+                            "id": "1188636976026107906",
+                            "pid": "1067246875800000002",
+                            "children": [],
+                            "name": "日志管理",
+                            "url": "/statics/base/page.html?page=logmanagement.lm01.PageLm01",
+                            "type": 0,
+                            "icon": "icon-desktop",
+                            "permissions": null,
+                            "sort": 0,
+                            "createDate": "2019-10-28 10:11:01",
+                            "parentName": null
+                        },
+                        {
+                            "id": "1186900294626656258",
+                            "pid": "1067246875800000002",
+                            "children": [],
+                            "name": "项目信息",
+                            "url": "/statics/base/page.html?page=project.pj.PagePj01",
+                            "type": 0,
+                            "icon": "icon-desktop",
+                            "permissions": null,
+                            "sort": 0,
+                            "createDate": "2019-10-23 15:08:19",
+                            "parentName": null
+                        },
+                        {
+                            "id": "1186900295218053121",
+                            "pid": "1067246875800000002",
+                            "children": [],
+                            "name": "员工信息表",
+                            "url": "/statics/base/page.html?page=personnel.ps01.PagePs01",
+                            "type": 0,
+                            "icon": "icon-desktop",
+                            "permissions": null,
+                            "sort": 0,
+                            "createDate": "2019-10-23 15:06:01",
+                            "parentName": null
+                        },
+                        {
+                            "id": "1067246875800000055",
+                            "pid": "1067246875800000002",
+                            "children": [],
+                            "name": "用户管理",
+                            "url": "sys/user",
+                            "type": 0,
+                            "icon": "icon-user",
+                            "permissions": null,
+                            "sort": 0,
+                            "createDate": "2019-08-14 16:34:39",
+                            "parentName": null
+                        },
+                        {
+                            "id": "1188733141967138817",
+                            "pid": "1067246875800000002",
+                            "children": [],
+                            "name": "周报管理",
+                            "url": "/statics/base/page.html?page=logmanagement.lm02.PageLm02",
+                            "type": 0,
+                            "icon": "icon-desktop",
+                            "permissions": null,
+                            "sort": 0,
+                            "createDate": "2019-10-28 17:02:40",
+                            "parentName": null
+                        },
+                        {
+                            "id": "1067246875800000012",
+                            "pid": "1067246875800000002",
+                            "children": [],
+                            "name": "部门管理",
+                            "url": "sys/dept",
+                            "type": 0,
+                            "icon": "icon-apartment",
+                            "permissions": null,
+                            "sort": 1,
+                            "createDate": "2019-08-14 16:34:36",
+                            "parentName": null
+                        },
+                        {
+                            "id": "1067246875800000007",
+                            "pid": "1067246875800000002",
+                            "children": [],
+                            "name": "角色管理",
+                            "url": "sys/role",
+                            "type": 0,
+                            "icon": "icon-team",
+                            "permissions": null,
+                            "sort": 2,
+                            "createDate": "2019-08-14 16:34:36",
+                            "parentName": null
+                        }
+                    ],
                 },
                 {
                     "id": "1186900294626656258",
@@ -572,4 +664,4 @@ export default {
             "parentName": null
         }
     ]
-}
+};

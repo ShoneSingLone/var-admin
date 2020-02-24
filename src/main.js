@@ -7,6 +7,7 @@ import App from "@@/static/module/layout/shell/Shell.vue";
 // import Antd from "ant-design-vue";
 import Element from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
+import "@@/static/scss/main.scss";
 
 const {
     Vue

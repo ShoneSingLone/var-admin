@@ -1,6 +1,6 @@
 <template>
   <aside :class="[]">
-    <div :class="['search-wrapper elevation2',{'fold':SHELL.isSidebarFold}]">
+    <div :class="['search-wrapper elevation2',{'fold':APP_STATE.isSidebarFold}]">
       <span class="icon prefix">
         <i class="el-input__icon el-icon-search" />
       </span>
@@ -21,7 +21,7 @@
     <el-scrollbar class="sidebar__inner">
       <el-menu
         :default-active="sidebarMenuActiveName"
-        :collapse="SHELL.isSidebarFold"
+        :collapse="APP_STATE.isSidebarFold"
         :unique-opened="true"
         :collapse-transition="false"
         class="sidebar__menu"
@@ -39,14 +39,14 @@
 import menuRes from "./MockMainSidebar.js";
 import MainSidebarSubmenu from "./MainSidebarSubmenu.vue";
 console.log(menuRes);
-const { Vue } = window;
+const { Vue, APP_STATE } = window;
 Vue.component("MainSidebarSubmenu", MainSidebarSubmenu);
 export default {
   TEMPLATE_PLACEHOLDER,
-  inject: ["SHELL"],
   // components:{ Test },
   data() {
     return {
+      APP_STATE,
       searchKeyWord: "",
       sidebarMenuActiveName: "",
       privateSidebarMenuList: menuRes.data
