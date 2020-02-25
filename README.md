@@ -272,3 +272,6 @@ PAGE_*单例
 
 
 字典懒加载模块
+
+
+[var-router](./readme.router.md)

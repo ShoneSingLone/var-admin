@@ -29,6 +29,7 @@
 import mainNavbar from "./MainNavbar.vue";
 import mainSidebar from "./MainSidebar.vue";
 import mainContent from "./MainContent.vue";
+import {VarRouter} from "./VarRouter.mjs";
 const { APP_STATE } = window;
 
 export default {

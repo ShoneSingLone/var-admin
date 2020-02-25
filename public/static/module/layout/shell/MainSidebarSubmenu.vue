@@ -1,7 +1,7 @@
 <template>
   <!-- 有子节点 -->
   <el-submenu
-    v-if="isShow"
+    v-if="haveChild"
     :index="menu.id"
   >
     <template slot="title">
@@ -18,7 +18,7 @@
   <el-menu-item
     v-else
     :index="menu.id"
-    @click="gotoRouteHandle(menu.id,menu,true)"
+    @click="handleMenuItemClick(menu)"
   >
     <i class="el-icon-arrow-right" />
     <span>{{ menu.name }}</span>
@@ -36,11 +36,14 @@ export default {
     };
   },
   computed: {
-    isShow() {
-      var isShow = this.menu.children && this.menu.children.length >= 1;
-      return isShow;
+    haveChild() {
+      return this.menu.children && this.menu.children.length >= 1;
     }
   },
-  mounted() {}
+  methods: {
+    handleMenuItemClick(menuItem) {
+      console.log("menuItem", menuItem);
+    }
+  }
 };
 </script>

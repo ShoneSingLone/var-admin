@@ -20,7 +20,7 @@ export default {
                             "id": "1188636976026107906",
                             "pid": "1067246875800000002",
                             "children": [],
-                            "name": "日志管理",
+                            "name": "长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长篇大论",
                             "url": "/statics/base/page.html?page=logmanagement.lm01.PageLm01",
                             "type": 0,
                             "icon": "icon-desktop",

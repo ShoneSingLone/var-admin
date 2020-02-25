@@ -1,4 +1,7 @@
 import setDefaultVueAntdvJS from "@@/static/js/vue-element.mjs";
+import {
+    shellState
+} from "@@/static/js/app/github/state/index.mjs";
 
 (async () => {
     try {
@@ -18,17 +21,7 @@ import setDefaultVueAntdvJS from "@@/static/js/vue-element.mjs";
         } = _;
 
         $loadCSS($resolvePath("static/module/layout/shell/shell.css"));
-        const APP_STATE = Vue.observable({
-            num: 0,
-            isSidebarFold: false,
-            sysNavTitle: "var adminasdfasdfsdf",
-            /*  */
-            componentNavbar: "div",
-            componentSidbar: "div",
-            componentContent: "div"
-            // mainSidebarStyle: { width: "230px" }
-        });
-
+        const APP_STATE = Vue.observable(shellState);
         window.APP_STATE = APP_STATE;
 
         new Vue({
