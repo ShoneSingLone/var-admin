@@ -41,6 +41,10 @@ import MainSidebarSubmenu from "./MainSidebarSubmenu.vue";
 console.log(menuRes);
 const { Vue, APP_STATE } = window;
 Vue.component("MainSidebarSubmenu", MainSidebarSubmenu);
+
+import { VarRouter } from "./VarRouter.mjs";
+window.APP_ROUTER = new VarRouter({ routes: menuRes.data });
+
 export default {
   TEMPLATE_PLACEHOLDER,
   // components:{ Test },

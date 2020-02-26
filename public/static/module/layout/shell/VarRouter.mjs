@@ -288,18 +288,15 @@ function stringifyQuery(obj) {
 
 const trailingSlashRE = /\/?$/;
 
-function createRoute(
-    record,
-    location,
-    redirectedFrom,
-    router
-) {
+function createRoute(record, location, redirectedFrom, router) {
     const stringifyQuery = router && router.options.stringifyQuery;
 
     let query = location.query || {};
     try {
         query = clone(query);
-    } catch (e) {}
+    } catch (e) {
+        debugger;
+    }
 
     const route = {
         name: location.name || (record && record.name),
@@ -1476,10 +1473,7 @@ function normalizePath(
 
 
 
-function createMatcher(
-    routes,
-    router
-) {
+function createMatcher(routes, router) {
     const {
         pathList,
         pathMap,
@@ -1851,11 +1845,9 @@ function scrollToPosition(shouldScroll, position) {
 
 /*  */
 
-const supportsPushState =
-    inBrowser &&
-    (function () {
+const supportsPushState = inBrowser && (
+    function () {
         const ua = window.navigator.userAgent;
-
         if (
             (ua.indexOf("Android 2.") !== -1 || ua.indexOf("Android 4.0") !== -1) &&
             ua.indexOf("Mobile Safari") !== -1 &&
@@ -1864,7 +1856,6 @@ const supportsPushState =
         ) {
             return false;
         }
-
         return window.history && "pushState" in window.history;
     })();
 
@@ -2044,23 +2035,7 @@ NavigationDuplicated._name = "NavigationDuplicated";
 /*  */
 
 class History {
-
-
-
-
-
-
-
-
-
-
     // implemented by sub-classes
-
-
-
-
-
-
     constructor(router, base) {
         this.router = router;
         this.base = normalizeBase(base);
@@ -2384,74 +2359,6 @@ function poll(
 
 /*  */
 
-class HTML5History extends History {
-    constructor(router, base) {
-        super(router, base);
-
-        const expectScroll = router.options.scrollBehavior;
-        const supportsScroll = supportsPushState && expectScroll;
-
-        if (supportsScroll) {
-            setupScroll();
-        }
-
-        const initLocation = getLocation(this.base);
-        window.addEventListener("popstate", e => {
-            const current = this.current;
-
-            // Avoiding first `popstate` event dispatched in some browsers but first
-            // history route not updated since async guard at the same time.
-            const location = getLocation(this.base);
-            if (this.current === START && location === initLocation) {
-                return;
-            }
-
-            this.transitionTo(location, route => {
-                if (supportsScroll) {
-                    handleScroll(router, route, current, true);
-                }
-            });
-        });
-    }
-
-    go(n) {
-        window.history.go(n);
-    }
-
-    push(location, onComplete, onAbort) {
-        const {
-            current: fromRoute
-        } = this;
-        this.transitionTo(location, route => {
-            pushState(cleanPath(this.base + route.fullPath));
-            handleScroll(this.router, route, fromRoute, false);
-            onComplete && onComplete(route);
-        }, onAbort);
-    }
-
-    replace(location, onComplete, onAbort) {
-        const {
-            current: fromRoute
-        } = this;
-        this.transitionTo(location, route => {
-            replaceState(cleanPath(this.base + route.fullPath));
-            handleScroll(this.router, route, fromRoute, false);
-            onComplete && onComplete(route);
-        }, onAbort);
-    }
-
-    ensureURL(push) {
-        if (getLocation(this.base) !== this.current.fullPath) {
-            const current = cleanPath(this.base + this.current.fullPath);
-            push ? pushState(current) : replaceState(current);
-        }
-    }
-
-    getCurrentLocation() {
-        return getLocation(this.base);
-    }
-}
-
 function getLocation(base) {
     let path = decodeURI(window.location.pathname);
     if (base && path.indexOf(base) === 0) {
@@ -2483,23 +2390,20 @@ class HashHistory extends History {
             setupScroll();
         }
 
-        window.addEventListener(
-            supportsPushState ? "popstate" : "hashchange",
-            () => {
-                const current = this.current;
-                if (!ensureSlash()) {
-                    return;
-                }
-                this.transitionTo(getHash(), route => {
-                    if (supportsScroll) {
-                        handleScroll(this.router, route, current, true);
-                    }
-                    if (!supportsPushState) {
-                        replaceHash(route.fullPath);
-                    }
-                });
+        window.addEventListener(supportsPushState ? "popstate" : "hashchange", () => {
+            const current = this.current;
+            if (!ensureSlash()) {
+                return;
             }
-        );
+            this.transitionTo(getHash(), route => {
+                if (supportsScroll) {
+                    handleScroll(this.router, route, current, true);
+                }
+                if (!supportsPushState) {
+                    replaceHash(route.fullPath);
+                }
+            });
+        });
     }
 
     push(location, onComplete, onAbort) {
@@ -2613,109 +2517,31 @@ function replaceHash(path) {
     }
 }
 
-/*  */
 
-class AbstractHistory extends History {
-
-
-
-    constructor(router, base) {
-        super(router, base);
-        this.stack = [];
-        this.index = -1;
-    }
-
-    push(location, onComplete, onAbort) {
-        this.transitionTo(
-            location,
-            route => {
-                this.stack = this.stack.slice(0, this.index + 1).concat(route);
-                this.index++;
-                onComplete && onComplete(route);
-            },
-            onAbort
-        );
-    }
-
-    replace(location, onComplete, onAbort) {
-        this.transitionTo(
-            location,
-            route => {
-                this.stack = this.stack.slice(0, this.index).concat(route);
-                onComplete && onComplete(route);
-            },
-            onAbort
-        );
-    }
-
-    go(n) {
-        const targetIndex = this.index + n;
-        if (targetIndex < 0 || targetIndex >= this.stack.length) {
-            return;
-        }
-        const route = this.stack[targetIndex];
-        this.confirmTransition(
-            route,
-            () => {
-                this.index = targetIndex;
-                this.updateRoute(route);
-            },
-            err => {
-                if (isExtendedError(NavigationDuplicated, err)) {
-                    this.index = targetIndex;
-                }
-            }
-        );
-    }
-
-    getCurrentLocation() {
-        const current = this.stack[this.stack.length - 1];
-        return current ? current.fullPath : "/";
-    }
-
-    ensureURL() {
-        // noop
-    }
-}
-
-/*  */
-
-
-
-class VarRouter {
+export class VarRouter {
     constructor(options = {}) {
+        debugger;
+        /* 默认是hash模式 */
         this.app = null;
         this.apps = [];
         this.options = options;
         this.beforeHooks = [];
         this.resolveHooks = [];
         this.afterHooks = [];
+        this.dispatchHandler = {
+            /* VueComponent */
+            a: () => console.log("handleVueComponent")
+        };
+        /*  */
         this.matcher = createMatcher(options.routes || [], this);
 
-        let mode = options.mode || "hash";
+        let mode = "hash";
         this.fallback = mode === "history" && !supportsPushState && options.fallback !== false;
         if (this.fallback) {
             mode = "hash";
         }
-        if (!inBrowser) {
-            mode = "abstract";
-        }
         this.mode = mode;
-
-        switch (mode) {
-            case "history":
-                this.history = new HTML5History(this, options.base);
-                break;
-            case "hash":
-                this.history = new HashHistory(this, options.base, this.fallback);
-                break;
-            case "abstract":
-                this.history = new AbstractHistory(this, options.base);
-                break;
-            default: {
-                assert(false, `invalid mode: ${mode}`);
-            }
-        }
+        this.history = new HashHistory(this, options.base, this.fallback);
     }
 
     match(
@@ -2725,7 +2551,7 @@ class VarRouter {
     ) {
         return this.matcher.match(raw, current, redirectedFrom);
     }
-
+    /* 每次直接从window.location获取 纯函数 */
     get currentRoute() {
         return this.history && this.history.current;
     }
@@ -2760,17 +2586,10 @@ class VarRouter {
 
         const history = this.history;
 
-        if (history instanceof HTML5History) {
-            history.transitionTo(history.getCurrentLocation());
-        } else if (history instanceof HashHistory) {
-            const setupHashListener = () => {
-                history.setupListeners();
-            };
-            history.transitionTo(
-                history.getCurrentLocation(),
-                setupHashListener,
-                setupHashListener
-            );
+        /* 判断当前模式是Hash模式 */
+        if (history instanceof HashHistory) {
+            const setupHashListener = () => history.setupListeners();
+            history.transitionTo(history.getCurrentLocation(), setupHashListener, setupHashListener);
         }
 
         history.listen(route => {
