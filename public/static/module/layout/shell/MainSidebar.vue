@@ -38,16 +38,19 @@
 <script>
 import menuRes from "./MockMainSidebar.js";
 import MainSidebarSubmenu from "./MainSidebarSubmenu.vue";
-console.log(menuRes);
+import { VarRouter } from "@@/static/components/VarRouter/VarRouter.mjs";
+import VarViewRouterContainer from "@@/static/components/VarRouter/VarViewRouterContainer.vue";
 const { Vue, APP_STATE } = window;
 Vue.component("MainSidebarSubmenu", MainSidebarSubmenu);
 
-import { VarRouter } from "./VarRouter.mjs";
-window.APP_ROUTER = new VarRouter({ routes: menuRes.data });
+window.APP_ROUTER = new VarRouter({
+  routes: menuRes.data,
+  RouterContainer: VarViewRouterContainer,
+  RouterA: VarViewRouterContainer
+});
 
 export default {
   TEMPLATE_PLACEHOLDER,
-  // components:{ Test },
   data() {
     return {
       APP_STATE,

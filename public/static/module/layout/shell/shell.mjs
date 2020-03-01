@@ -23,8 +23,8 @@ import {
         $loadCSS($resolvePath("static/module/layout/shell/shell.css"));
         const APP_STATE = Vue.observable(shellState);
         window.APP_STATE = APP_STATE;
-
-        new Vue({
+        debugger;
+        window.app = new Vue({
             data() {
                 return {
                     APP_STATE,

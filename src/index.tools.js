@@ -51,6 +51,7 @@ _.$loadJS = loadJS;
 _.$loadCSS = loadCSS;
 _.$log = $log;
 _.$error = $error;
+
 /* 全局通信 */
 window.EventBus = EventBus;
 setTimeout(() => startLoadingAnimation(_), 30);

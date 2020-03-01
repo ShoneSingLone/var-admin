@@ -20,6 +20,7 @@ export default async (eleMain) => {
             "vue-router": resolvePath(`${PATH_PREFIX}/lib/vue-router.esm.browser.js`),
             "vuex": resolvePath(`${PATH_PREFIX}/lib/vuex.esm.browser.js`)
         };
+
         if (window.APP_CONFIGS.IS_OLD_BROWSER) {
             await loadJS(resolvePath(`${PATH_PREFIX}/lib/systemjs/system.src.js`));
             await loadJS(resolvePath(`${PATH_PREFIX}/lib/systemjs/extras/transform.js`));
@@ -28,6 +29,7 @@ export default async (eleMain) => {
             const {
                 SystemJS
             } = window;
+
             SystemJS.config({
                 map: {
                     ...systemjsMap,

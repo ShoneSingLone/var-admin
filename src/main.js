@@ -7,11 +7,14 @@ import "./main.vuedev.js";
 import Element from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import "@@/static/scss/main.scss";
-import { shellState } from "@@/static/js/app/github/state/index.mjs"
+import {
+    shellState
+} from "@@/static/js/app/github/state/index.mjs"
 
 const {
     Vue
 } = window;
+
 window.APP_STATE = Vue.observable(shellState);
 
 Vue.use(Element);
@@ -19,16 +22,16 @@ Vue.use(Element);
 Vue.config.productionTip = false;
 
 import("@@/static/module/layout/shell/Shell.vue")
-    .then(function ({
-        default: App
-    }) {
-        new Vue({
+    .then(({
+            default: App
+        }) =>
+        window.app = new Vue({
             el: "#app",
             render: function (h) {
                 return h(App);
             },
-        });
-    })
+        })
+    )
     .catch(function (error) {
         console.error(error);
     });

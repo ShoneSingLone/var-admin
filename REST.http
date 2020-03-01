@@ -1,2 +1,11 @@
 ### localhost
 GET http://localhost:8082/a/api HTTP/1.1
+
+### localhost
+POST http://218.88.215.207:9014 HTTP/1.1
+content-type: application/json
+
+{
+    "UID":"1155",
+    "DataType":"0"
+}

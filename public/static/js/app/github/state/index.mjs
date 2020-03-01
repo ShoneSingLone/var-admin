@@ -5,6 +5,8 @@ export const shellState = {
     /*  */
     componentNavbar: "div",
     componentSidbar: "div",
-    componentContent: "div"
+    componentContent: "div",
+    // 当前视图
+    currentview: ""
     // mainSidebarStyle: { width: "230px" }
 };

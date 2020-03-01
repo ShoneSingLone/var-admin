@@ -264,14 +264,15 @@ $loadCSS($resolvePath("static/css/css.css"))
 文件//存疑
 
 
+
 Route change tab之间的跳转
 
 SHELL 全局 root 实例
 
 PAGE_*单例
 
-
 字典懒加载模块
 
-
 [var-router](./readme.router.md)
+
+侧边栏展示信息只是用来管理

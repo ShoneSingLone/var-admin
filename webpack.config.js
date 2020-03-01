@@ -4,7 +4,9 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const webpackBaseConfig = require("./config/webpack.base.config");
 const paths = require("./config/paths");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const {BundleAnalyzerPlugin} = require("webpack-bundle-analyzer");
+const {
+  BundleAnalyzerPlugin
+} = require("webpack-bundle-analyzer");
 
 module.exports = merge(webpackBaseConfig, {
   mode: "production",
