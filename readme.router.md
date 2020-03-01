@@ -29,8 +29,12 @@ ViewRouter=>ViewContainer自己定位处于哪一级，prop：path
   permissions: null
 }
 
-ViewRouter是以a方式处理 daiyou 
+ViewRouter是以a方式处理  
+
 ```
+
 组件监听route变动
 当前 true =》响应
+
+对应的路由对应的显示
 

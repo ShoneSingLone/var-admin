@@ -89,13 +89,6 @@ function getLocation(base) {
     return (path || "/") + window.location.search + window.location.hash;
 }
 
-function checkFallback(base) {
-    const location = getLocation(base);
-    if (!/^\/#/.test(location)) {
-        window.location.replace(cleanPath(base + "/#" + location));
-        return true;
-    }
-}
 
 /* 确保斜杠 */
 function ensureSlash() {
@@ -116,13 +109,16 @@ function getUrl(path) {
 
 
 function pushHash(path) {
+    /* TODO:stack处理 */
     window.location.hash = path;
 }
 
 function replaceHash(path) {
+    /* TODO:stack处理 */
     window.location.replace(getUrl(path));
 }
 
+/* 基本路径标准化  */
 function normalizeBase(base) {
     if (!base) {
         if (inBrowser) {
@@ -210,6 +206,7 @@ class History {
 
     /* 路由转换 */
     transitionTo(location /* hash部分构成的location */ , onComplete, onAbort) {
+        debugger;
         const route = this.router.match(location, this.current);
 
         this.confirmTransition(route,
@@ -264,13 +261,13 @@ class History {
 
         /* 如果是相同的路径， */
         /* 万一动态添加了in the case the route map has been dynamically appended to */
+        debugger;
         if (isSameRoute(route, current) && route.matched.length === current.matched.length) {
             this.ensureURL();
             return abort(new NavigationDuplicated(route));
+        } else {
+            onComplete(route);
         }
-
-        debugger;
-
 
         this.pending = route;
     }
@@ -290,26 +287,21 @@ class History {
 
 
 class HashHistory extends History {
-    /* this.fallback 表示在浏览器不支持 history.pushState 的情况下，根据传入的 fallback 配置参数，决定是否回退到hash模式 */
-    constructor(router, base, fallback) {
+    constructor(router, base) {
         super(router, base);
-        // check history fallback deeplinking
-        if (fallback && checkFallback(this.base)) {
-            return;
-        }
         ensureSlash();
     }
-
     // this is delayed until the app mounts
     // to avoid the hashchange listener being fired too early
+    /* 并无大碍，不会与Vue组件强依赖 */
     setupListeners() {
+        debugger;
         window.addEventListener("hashchange", () => {
             if (!ensureSlash()) {
                 return;
             }
-            this.transitionTo(getHash(), route => {
-                replaceHash(route.fullPath);
-            });
+            debugger;
+            this.transitionTo(getHash(), route => replaceHash(route.fullPath));
         });
     }
 
@@ -337,6 +329,7 @@ class HashHistory extends History {
         window.history.go(n);
     }
 
+    /* 确保地址栏路径一致 */
     ensureURL(push) {
         const current = this.current.fullPath;
         if (getHash() !== current) {
@@ -1406,7 +1399,10 @@ export class VarRouter {
         /* 当前只有Hash模式 */
         const setupHashListener = () => history.setupListeners();
         history.transitionTo(history.getCurrentLocation(), setupHashListener, setupHashListener);
-        history.listen(route => {});
+        history.listen(route => {
+            debugger;
+            console.log("route", route);
+        });
         return this;
     }
 

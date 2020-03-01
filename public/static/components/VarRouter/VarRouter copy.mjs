@@ -1647,14 +1647,6 @@ class History {
         } = resolveQueue(this.current.matched, route.matched);
 
 
-
-
-
-
-
-
-
-
         const queue = [].concat(
             /* in-component leave guards  在失活的组件里调用离开守卫。 */
             extractLeaveGuards(deactivated),
