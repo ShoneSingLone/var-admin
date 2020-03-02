@@ -140,44 +140,21 @@ function normalizeBase(base) {
 }
 
 
-function isExtendedError(constructor, err) {
-    return (
-        err instanceof constructor ||
-        // _name is to support IE9 too
-        (err && (err.name === constructor.name || err._name === constructor._name))
-    );
-}
-
-
-
-class NavigationDuplicated extends Error {
-    constructor(normalizedLocation) {
-        super();
-        this.name = this._name = "NavigationDuplicated";
-        // passing the message to super() doesn't seem to work in the transpiled version
-        this.message = `Navigating to current location ("${ normalizedLocation.fullPath }") is not allowed`;
-        // add a stack property so services like Sentry can correctly display it
-        Object.defineProperty(this, "stack", {
-            value: new Error().stack,
-            writable: true,
-            configurable: true
-        });
-        // we could also have used
-        // Error.captureStackTrace(this, this.constructor)
-        // but it only exists on node and chrome
-    }
-}
-
-
-
-
 class History {
     // implemented by sub-classes
     constructor(router, base) {
         this.router = router;
         this.base = normalizeBase(base);
         // start with a route object that stands for "nowhere"
+        Object.defineProperty(this, "current", {
+            get: () => this._current || START,
+            set: (route) => {
+                this._current = route;
+                this.router.options.onChange && this.router.options.onChange(route);
+            }
+        });
         this.current = START;
+
         this.pending = null;
         this.ready = false;
         this.readyCbs = [];
@@ -185,8 +162,9 @@ class History {
         this.errorCbs = [];
     }
 
-    listen(cb) {
-        this.cb = cb;
+    /* hook */
+    listen(afterRouteChange) {
+        this.afterRouteChange = afterRouteChange;
     }
 
     onReady(cb, errorCb) {
@@ -206,12 +184,12 @@ class History {
 
     /* 路由转换 */
     transitionTo(location /* hash部分构成的location */ , onComplete, onAbort) {
-        debugger;
+        /* 获取将要跳转的route info */
         const route = this.router.match(location, this.current);
-
+        /* 判断是否需要跳转 */
         this.confirmTransition(route,
+            /* onComplete 需要 */
             () => {
-                debugger;
                 this.updateRoute(route);
                 onComplete && onComplete(route);
                 this.ensureURL();
@@ -224,16 +202,11 @@ class History {
                     });
                 }
             },
+            /* onAbort  不需要*/
             err => {
-                if (onAbort) {
-                    onAbort(err);
-                }
-                if (err && !this.ready) {
-                    this.ready = true;
-                    this.readyErrorCbs.forEach(cb => {
-                        cb(err);
-                    });
-                }
+                /* 原因 */
+                /* 1.404 */
+                console.log("err", err);
             }
         );
     }
@@ -242,41 +215,29 @@ class History {
     confirmTransition(route, onComplete, onAbort) {
         const current = this.current;
         const abort = err => {
-            // after merging https://github.com/vuejs/vue-router/pull/2771 we
-            // When the user navigates through history through back/forward buttons
-            // we do not want to throw the error. We only throw it if directly calling
-            // push/replace. That's why it's not included in isError
-            if (!isExtendedError(NavigationDuplicated, err) && isError(err)) {
-                if (this.errorCbs.length) {
-                    this.errorCbs.forEach(cb => {
-                        cb(err);
-                    });
-                } else {
-                    warn(false, "uncaught error during route navigation:");
-                    console.error(err);
-                }
-            }
             onAbort && onAbort(err);
         };
 
         /* 如果是相同的路径， */
         /* 万一动态添加了in the case the route map has been dynamically appended to */
-        debugger;
+        console.log("confirmTransition route", route);
         if (isSameRoute(route, current) && route.matched.length === current.matched.length) {
             this.ensureURL();
-            return abort(new NavigationDuplicated(route));
+            return abort("SAME_PATH");
+        } else if (isarray(route.matched) && route.matched.length === 0) {
+            this.ensureURL();
+            /* TODO:404 */
+            abort("NOT_FOUND");
         } else {
             onComplete(route);
         }
-
         this.pending = route;
     }
 
     updateRoute(route) {
-        debugger;
         const prev = this.current;
         this.current = route;
-        this.cb && this.cb(route);
+        this.afterRouteChange && this.afterRouteChange(route);
         this.router.afterHooks.forEach(hook => {
             hook && hook(route, prev);
         });
@@ -295,12 +256,10 @@ class HashHistory extends History {
     // to avoid the hashchange listener being fired too early
     /* 并无大碍，不会与Vue组件强依赖 */
     setupListeners() {
-        debugger;
         window.addEventListener("hashchange", () => {
             if (!ensureSlash()) {
                 return;
             }
-            debugger;
             this.transitionTo(getHash(), route => replaceHash(route.fullPath));
         });
     }
@@ -1215,6 +1174,7 @@ function createMatcher(routes /* 用户传入的路由配置 */ , router /* 当�
         createRouteMap(routes, pathList, pathMap, nameMap);
     }
 
+    /*  matched 表示匹配到的所有的 RouteRecord */
     function match(raw, currentRoute, redirectedFrom) {
         const location = normalizeLocation(raw, currentRoute, false, router);
 
@@ -1398,11 +1358,13 @@ export class VarRouter {
         const history = this.history;
         /* 当前只有Hash模式 */
         const setupHashListener = () => history.setupListeners();
-        history.transitionTo(history.getCurrentLocation(), setupHashListener, setupHashListener);
-        history.listen(route => {
-            debugger;
-            console.log("route", route);
-        });
+        const location = history.getCurrentLocation();
+        // this.current = history.router.match(location, this.current);
+        history.transitionTo(location, setupHashListener, setupHashListener);
+        /*   history.listen(route => {
+              this.options.onChange && this.options.onChange(route);
+              console.log("history listen routeChange", route);
+          }); */
         return this;
     }
 
@@ -1465,11 +1427,7 @@ export class VarRouter {
         }));
     }
 
-    resolve(
-        to,
-        current,
-        append
-    ) {
+    resolve(to, current, append) {
         current = current || this.history.current;
         const location = normalizeLocation(
             to,

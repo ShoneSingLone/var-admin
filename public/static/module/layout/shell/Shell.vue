@@ -29,6 +29,7 @@
 import mainNavbar from "./MainNavbar.vue";
 import mainSidebar from "./MainSidebar.vue";
 import mainContent from "./MainContent.vue";
+
 const { APP_STATE } = window;
 
 export default {

@@ -266,6 +266,10 @@ html, body, #app {
     overflow: auto;
 }
 
+.overflow-auto {
+    overflow: auto;
+}
+
 .overflow-hidden {
     overflow: hidden;
 }
@@ -274,6 +278,7 @@ html, body, #app {
     display: flex;
     flex-flow: column nowrap;
 }
+
 .flex-horizon {
     display: flex;
     flex-flow: row nowrap;
@@ -366,7 +371,6 @@ html, body, #app {
 .base-line-height {
     line-height: $base--line-height !important;
 }
-
 
 @for $i from 1 through 10 {
     .flex#{$i} {

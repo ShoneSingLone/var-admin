@@ -3,11 +3,11 @@ export default {
     "msg": "success",
     "data": [{
             "id": "1067246875800000002",
-            "path": "/shell",
+            "path": "/shell/:id",
             "pid": "0",
             "children": [{
                     "id": "1188636976026107906",
-                    "path": "1188636976026107906",
+                    "path": "user/:name",
                     "pid": "1067246875800000002",
                     "children": [],
                     "name": "日志管理",

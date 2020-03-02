@@ -1520,7 +1520,6 @@ function once(fn) {
         return fn.apply(this, args);
     };
 }
-
 class NavigationDuplicated extends Error {
     constructor(normalizedLocation) {
         super();

@@ -7,6 +7,6 @@ export const shellState = {
     componentSidbar: "div",
     componentContent: "div",
     // 当前视图
-    currentview: ""
+    currentRoute: "currentRoute"
     // mainSidebarStyle: { width: "230px" }
 };

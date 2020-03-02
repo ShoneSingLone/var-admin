@@ -23,14 +23,17 @@
     <i class="el-icon-arrow-right" />
     <span>{{ menu.name }}</span>
   </el-menu-item>
-</template> <script>
+</template> 
+
+
+<script>
+console.log("MainSidebarSubmenu");
 export default {
   TEMPLATE_PLACEHOLDER,
   components: {},
   props: { menu: { type: Object, required: true } },
   data() {
     return {
-      searchKeyWord: "",
       sidebarMenuActiveName: "",
       privateSidebarMenuList: ""
     };

@@ -10,12 +10,23 @@ import "@@/static/scss/main.scss";
 import {
     shellState
 } from "@@/static/js/app/github/state/index.mjs"
+import menuRes from "@@/static/module/layout/shell/MockMainSidebar.js";
+
+import {
+    VarRouter
+} from "@@/static/components/VarRouter/VarRouter.mjs";
 
 const {
     Vue
 } = window;
 
 window.APP_STATE = Vue.observable(shellState);
+window.APP_ROUTER = new VarRouter({
+    routes: menuRes.data,
+    onChange: route => {
+        APP_STATE.currentRoute = route
+    }
+});
 
 Vue.use(Element);
 // Vue.use(Antd);
