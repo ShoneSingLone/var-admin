@@ -14,6 +14,8 @@ ViewRouter=>ViewContainer自己定位处于哪一级，prop：path
 
 1. VarRouter.constructor 入口：处理基本的路由信息，系统加载时从服务端获取的aside navTree 
 
+id 的必要性
+
 ```js
 {
   id: "1067246875800000002"
@@ -44,3 +46,4 @@ ViewRouter是以a方式处理
 不匹配404
 
 
+单向触发 push

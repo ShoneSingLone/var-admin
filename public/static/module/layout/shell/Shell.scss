@@ -114,9 +114,29 @@
             }
         }
 
-        > .content {}
+        > .main-content {
+            > .tabs-tool-wrapper {
+                width: 100%;
+
+                > div.tabs-wrapper {
+                    width: 0;
+                }
+            }
+        }
     }
 }
 
 @import "../../../components/LoadingView.scss";
 @import "../../../components/VarRouter/VarViewRouterContainer.scss";
+
+.console202003045558 {
+    background-color: black;
+    color: green;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    height: 500px;
+    width: 600px;
+    overflow: auto;
+    z-index: 999;
+}

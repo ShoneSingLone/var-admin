@@ -38,6 +38,7 @@ export default async () => {
     /*  */
     await Promise.all([
         await $loadJS($resolvePath("static/lib/element/index.js")),
+        /* js媒体查询库 https://wicky.nillia.ms/enquire.js/*/
         await $loadJS($resolvePath("static/lib/enquire.min.js")),
         await $loadJS($resolvePath("static/js/app/github/http-axios.js")),
         await $system.import($resolvePath("static/js/app/github/utils.mjs")),
