@@ -1,4 +1,5 @@
 import setDefaultVueAntdvJS from "@@/static/js/vue-element.mjs";
+import LoadingView from "@@/static/components/LoadingView.vue";
 import {
     shellState
 } from "@@/static/js/app/github/state/index.mjs";
@@ -24,11 +25,12 @@ import {
         const APP_STATE = Vue.observable(shellState);
         window.APP_STATE = APP_STATE;
         debugger;
+        Vue.component("LoadingView", LoadingView);
         window.app = new Vue({
             data() {
                 return {
                     APP_STATE,
-                    componentName: "div"
+                    componentName: "LoadingView"
                 };
             },
             watch: {

@@ -3,9 +3,9 @@ export const shellState = {
     isSidebarFold: false,
     sysNavTitle: "var adminasdfasdfsdf",
     /*  */
-    componentNavbar: "div",
-    componentSidbar: "div",
-    componentContent: "div",
+    componentNavbar: "LoadingView",
+    componentSidbar: "LoadingView",
+    componentContent: "LoadingView",
     // 当前视图
     currentRoute: "currentRoute"
     // mainSidebarStyle: { width: "230px" }

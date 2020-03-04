@@ -54,10 +54,7 @@ export default {
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       avatarImgSrc: "/statics/img/avatar.png",
-      collapsed: false,
-      mainNavbarName: "div",
-      mainSidebarName: "div",
-      mainContentName: "div"
+      collapsed: false
     };
   },
   mounted() {},

@@ -27,13 +27,16 @@
 
 
 <script>
-console.log("MainSidebarSubmenu");
+const { APP_ROUTER } = window;
+console.log("MainSidebarSubmenu", APP_ROUTER);
+
 export default {
   TEMPLATE_PLACEHOLDER,
   components: {},
   props: { menu: { type: Object, required: true } },
   data() {
     return {
+      APP_ROUTER,
       sidebarMenuActiveName: "",
       privateSidebarMenuList: ""
     };
@@ -45,6 +48,7 @@ export default {
   },
   methods: {
     handleMenuItemClick(menuItem) {
+      APP_ROUTER.push({ path: menuItem.path, query: { name: menuItem.name } });
       console.log("menuItem", menuItem);
     }
   }

@@ -11,6 +11,7 @@ import {
     shellState
 } from "@@/static/js/app/github/state/index.mjs"
 import menuRes from "@@/static/module/layout/shell/MockMainSidebar.js";
+import LoadingView from "@@/static/components/LoadingView.vue";
 
 import {
     VarRouter
@@ -31,6 +32,8 @@ window.APP_ROUTER = new VarRouter({
 Vue.use(Element);
 // Vue.use(Antd);
 Vue.config.productionTip = false;
+Vue.component("LoadingView", LoadingView);
+
 
 import("@@/static/module/layout/shell/Shell.vue")
     .then(({

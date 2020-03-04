@@ -154,7 +154,6 @@ class History {
             }
         });
         this.current = START;
-
         this.pending = null;
         this.ready = false;
         this.readyCbs = [];
@@ -901,7 +900,7 @@ function addRouteRecord(pathList, pathMap, nameMap, route, parent, matchAs) {
         pathToRegexpOptions.sensitive = route.caseSensitive;
     }
 
-    const record = {
+    const record = extend({
         id: route.id,
         pid: route.pid,
         icon: route.icon,
@@ -921,7 +920,7 @@ function addRouteRecord(pathList, pathMap, nameMap, route, parent, matchAs) {
             route.props : {
                 default: route.props
             }
-    };
+    }, route);
 
     if (route.children && isarray(route.children) && route.children.length > 0) {
         // Warn if route is named, does not redirect and has a default child route.

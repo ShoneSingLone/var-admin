@@ -45,10 +45,14 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      APP_STATE.componentNavbar = mainNavbar;
-      APP_STATE.componentSidbar = mainSidebar;
       APP_STATE.componentContent = mainContent;
-    }, 1);
+    }, 1 * 3);
+    setTimeout(() => {
+      APP_STATE.componentSidbar = mainSidebar;
+    }, 1 * 2);
+    setTimeout(() => {
+      APP_STATE.componentNavbar = mainNavbar;
+    }, 1 * 1);
   },
   methods: {
     handleChange(value) {

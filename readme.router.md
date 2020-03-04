@@ -19,6 +19,8 @@ ViewRouter=>ViewContainer自己定位处于哪一级，prop：path
   id: "1067246875800000002"
   pid: "0"
   name: "权限管理"/*  */
+  /* 强制要求以/开头 */
+  /* 通过UI添加有校验 */
   path:"patha"/* 在地址栏显示的部分 */
   /*  */
   handler:"1"/* vueComponent */
