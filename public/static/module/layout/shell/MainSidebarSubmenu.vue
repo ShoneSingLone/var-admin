@@ -27,15 +27,15 @@
 
 
 <script>
-const { APP_ROUTER } = window;
+const { APP_ROUTER, APP_STATE } = window;
 console.log("MainSidebarSubmenu", APP_ROUTER);
-
 export default {
   TEMPLATE_PLACEHOLDER,
   components: {},
   props: { menu: { type: Object, required: true } },
   data() {
     return {
+      APP_STATE,
       APP_ROUTER,
       sidebarMenuActiveName: "",
       privateSidebarMenuList: ""
@@ -46,9 +46,24 @@ export default {
       return this.menu.children && this.menu.children.length >= 1;
     }
   },
+  mounted() {
+    console.log("MainSidebarSubmenu");
+  },
   methods: {
     handleMenuItemClick(menuItem) {
-      APP_ROUTER.push({ path: menuItem.path, query: { name: menuItem.name } });
+      const tagetTab = APP_STATE.contentTabsMap[menuItem.name];
+      if(tagetTab){
+
+      }
+      
+      menuItem = tagetTab ? tagetTab : menuItem;
+      /* 单向修改路由信息 */
+      /* TODO:如果是 */
+      APP_ROUTER.push({
+        path: menuItem.path,
+        query: menuItem.query,
+        id: menuItem.id
+      });
       console.log("menuItem", menuItem);
     }
   }

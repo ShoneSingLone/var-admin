@@ -185,6 +185,7 @@ class History {
     transitionTo(location /* hash部分构成的location */ , onComplete, onAbort) {
         /* 获取将要跳转的route info */
         const route = this.router.match(location, this.current);
+        console.log("transitionTo", route);
         /* 判断是否需要跳转 */
         this.confirmTransition(route,
             /* onComplete 需要 */
@@ -216,7 +217,6 @@ class History {
         const abort = err => {
             onAbort && onAbort(err);
         };
-
         /* 如果是相同的路径， */
         /* 万一动态添加了in the case the route map has been dynamically appended to */
         console.log("confirmTransition route", route);
@@ -1176,7 +1176,6 @@ function createMatcher(routes /* 用户传入的路由配置 */ , router /* 当�
     /*  matched 表示匹配到的所有的 RouteRecord */
     function match(raw, currentRoute, redirectedFrom) {
         const location = normalizeLocation(raw, currentRoute, false, router);
-
         const {
             name
         } = location;
@@ -1351,6 +1350,10 @@ export class VarRouter {
     /* 每次直接从window.location获取 纯函数 */
     get currentRoute() {
         return this.history && this.history.current;
+    }
+
+    get addRoutes() {
+        return this.matcher && this.matcher.router.addRoutes;
     }
 
     init() {

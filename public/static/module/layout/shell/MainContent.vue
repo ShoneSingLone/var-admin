@@ -1,58 +1,26 @@
 <template>
-  <div class="main-content overflow-auto">
-    <div class="tabs-tool-wrapper flex-horizon">
-      <div class="tabs-wrapper flex1">
-        <!-- Tab-Wrapper -->
-        <!-- tabs -->
-        <el-tabs
-          tab-position="top"
-          :value="APP_STATE.contentTabsActiveName"
-          style="height: 200px;"
-          @tab-click="setCurrentContentTab"
-          @tab-remove="handleTabRemove"
-        >
-          <el-tab-pane
-            v-for="tab in APP_STATE.contentTabs"
-            :id="tab.name"
-            :key="tab.name"
-            :label="tab.title"
-            :name="tab.name"
-            :closable="tab.name !== 'home'"
-          >
-            <template v-if="tab.name==='home'">
-              home
-            </template>
-            <template v-else>
-              <VarViewRouterContainer />
-            </template>
-          </el-tab-pane>
-        </el-tabs>
-      </div>
-
-      <!-- tab tools bar -->
-      <el-dropdown class="aui-content--tabs-tools">
-        <i class="el-icon-arrow-down" />
-        <el-dropdown-menu
-          slot="dropdown"
-          :show-timeout="0"
-        >
-          <el-dropdown-item
-            handle-tclick-native="tabRemove(APP_STATE.contentTabsActiveName)"
-          >
-            {{ $t('contentTabs.closeCurrent') }}
-          </el-dropdown-item>
-          <el-dropdown-item
-            @click.native="tabsCloseOtherHandle()"
-          >
-            {{ $t('contentTabs.closeOther') }}
-          </el-dropdown-item>
-          <el-dropdown-item @click.native="tabsCloseAllHandle()">
-            {{ $t('contentTabs.closeAll') }}
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-      <!-- Tab-Wrapper -->
-    </div>
+  <div
+    id="main-content202003053224"
+    class="main-content overflow-auto"
+  >
+    <el-tabs
+      class="content-tabs-wrapper"
+      tab-position="top"
+      :value="APP_STATE.contentTabsActiveName"
+      @tab-click="handleTabClick"
+      @tab-remove="handleTabRemove"
+    >
+      <el-tab-pane
+        v-for="tab in APP_STATE.contentTabs"
+        :id="tab.name"
+        :key="tab.name"
+        :label="tab.title"
+        :name="tab.name"
+        :closable="tab.name !== 'home'"
+      >
+        <VarViewRouterContainer :options="{tab:tab}" />
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
@@ -60,7 +28,6 @@
 <script>
 import VarViewRouterContainer from "@@/static/components/VarRouter/VarViewRouterContainer.vue";
 const { APP_STATE, APP_ROUTER, _ } = window;
-console.log("MainContent", APP_STATE, APP_ROUTER);
 
 export default {
   TEMPLATE_PLACEHOLDER,
@@ -79,35 +46,50 @@ export default {
     }
   },
   watch: {
-    ["APP_ROUTER.currentRoute"](route) {
+    /* 中间处理层 */
+    ["APP_ROUTER.currentRoute"](route, oldRoute) {
       const matched = _.last(route.matched);
       /* route 与 oldRoute 是否相同 ？*/
       const _currentTab = APP_STATE.contentTabsMap[matched.id];
       if (_currentTab) {
         /* 切换 */
-        APP_STATE.contentTabsActiveName = _currentTab.id;
+        APP_STATE.contentTabsActiveName = _currentTab.name /* route.id */;
       } else {
         /* 新增 */
         this.addTab(matched);
       }
     }
   },
+  mounted() {
+    console.log("MainContent mounted");
+    /* 页面初始加载，tab与浏览器地址栏保持一致 */
+    if (APP_ROUTER.currentRoute.path !== "/") {
+      /* TODO:matched 如何匹配到当前viewContainer的 id？ */
+      /* 添加 */
+      this.addTab(_.last(APP_ROUTER.currentRoute.matched));
+    }
+    /* 默认是home */
+  },
   methods: {
-    handleTabsClick(tab) {
-      debugger;
-    },
     addTab(currentRoute) {
-      APP_STATE.contentTabs.push({
+      if (!currentRoute.id) alert("传入的参数需是带id的route");
+      var currentTab = {
         title: currentRoute.name,
-        /* name=>id */
+        /* name as id */
         name: currentRoute.id,
         content: currentRoute
-      });
-      APP_STATE.contentTabsMap[currentRoute.id] = currentRoute;
+      };
+
+      APP_STATE.contentTabs.push(currentTab);
+      APP_STATE.contentTabsMap[currentRoute.id] = currentTab;
       APP_STATE.contentTabsActiveName = currentRoute.id;
+      console.log(
+        APP_STATE.contentTabs,
+        APP_STATE.contentTabsMap,
+        APP_STATE.contentTabsActiveName
+      );
     },
     handleTabsRemove(targetName) {
-      debugger;
       let tabs = this.editableTabs;
       let activeName = this.editableTabsValue;
       if (activeName === targetName) {
@@ -124,27 +106,34 @@ export default {
       this.editableTabsValue = activeName;
       this.editableTabs = tabs.filter(tab => tab.name !== targetName);
     },
-    handleTabRemove(currentRoute) {
-      if (currentRoute === "home") {
+    handleTabRemove(route) {
+      /* home 不能关闭 */
+      if (route === "home") {
         return false;
       }
-      var a = APP_STATE.contentTabsMap[currentRoute.id];
-      debugger;
-      if (self.selfContentTabs.length <= 0) {
-        self.selfSidebarMenuActiveName = "home";
-        self.APP_STATE.setContentTabsActiveName("home");
-        return false;
-      }
+      /* 获取rootRoute信息 */
+      const rootRoute = APP_STATE.contentTabsMap[route.id];
+
       // 当前选中tab被删除
-      if (currentRoute === self.APP_STATE.contentTabsActiveName) {
-        var lastTab = _.last(self.selfContentTabs);
+      if (route === APP_STATE.contentTabsActiveName) {
+        var lastTab = _.last(this.thisContentTabs);
+      }
+
+      /* 只剩下Home */
+      if (APP_STATE.contentTabs.length === 0) {
+        APP_STATE.contentTabsActiveName = "home";
+        return false;
       }
     },
-    setCurrentContentTab(tab) {
-      debugger;
-      const _currentTab = APP_STATE.contentTabsMap[tab.name];
+    handleTabClick(tab) {
+      const targetTab = APP_STATE.contentTabsMap[tab.name];
+      if (!targetTab) {
+        alert("Tab 没有必要的参数 ");
+        return false;
+      }
       /* 修正当前url */
-      APP_ROUTER.push(_currentTab);
+      console.log("targetTab.content.path", targetTab.content.path);
+      APP_ROUTER.push({ path: targetTab.content.path });
     }
   }
 };

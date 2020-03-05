@@ -1,11 +1,11 @@
 <template>
   <div class="shell">
-    <pre class="console202003045558 elevation12">
+    <!--     <pre class="console202003045558 elevation12">
 {{ JSON.stringify(APP_ROUTER.currentRoute ,null,2) }}
-    </pre>
+    </pre> -->
     <div
       :is="APP_STATE.componentNavbar"
-      class="navbar elevation7"
+      class="navbar elevation2"
       @click-toggle="toggleSidebarFold"
     >
       {{ APP_STATE.isSidebarFold?APP_STATE.sysNavSubTitle:APP_STATE.sysNavTitle }}

@@ -1,0 +1,16 @@
+#main-content202003053224 {
+    > .content-tabs-wrapper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        >.el-tabs__header{
+            // @include elevation2();
+            margin: 0;
+        }
+        >.el-tabs__content{
+            flex:1;
+            overflow: auto;
+        }
+    }
+}

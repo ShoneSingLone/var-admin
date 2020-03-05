@@ -21,13 +21,15 @@ const {
     Vue
 } = window;
 
-window.APP_STATE = Vue.observable(shellState);
-window.APP_ROUTER = new VarRouter({
+const APP_STATE = window.APP_STATE = Vue.observable(shellState);
+const APP_ROUTER = window.APP_ROUTER = new VarRouter({
     routes: menuRes.data,
     onChange: route => {
         APP_STATE.currentRoute = route
     }
 });
+
+APP_ROUTER.addRoutes(APP_STATE.contentTabs.map(tab => tab.content));
 
 Vue.use(Element);
 // Vue.use(Antd);
