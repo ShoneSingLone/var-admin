@@ -181,7 +181,7 @@ class History {
     }
 
     /* 路由转换 */
-    transitionTo(location /* hash部分构成的location */ , onComplete, onAbort) {
+    transitionTo(location /* hash部分构成的location */ , onComplete, reject) {
         /* 获取将要跳转的route info */
         const route = this.router.match(location, this.current);
         console.log("transitionTo", route);
@@ -202,18 +202,7 @@ class History {
                 }
             },
             /* onAbort  不需要*/
-            err => {
-                /* 原因 */
-                /* 1.404 */
-                console.info("err", err, typeof onAbort);
-                const fnType = typeof onAbort;
-                if (fnType !== "undefined") {
-                    if (fnType === "function") {
-                        debugger;
-                        return onAbort(err);
-                    };
-                }
-            }
+            err => (reject && reject(err))
         );
     }
 
@@ -268,13 +257,12 @@ class HashHistory extends History {
         });
     }
 
-    push(location, onComplete, onAbort) {
+    push(location, resolve, reject) {
         this.transitionTo(location, route => {
                 pushHash(route.fullPath);
-                onComplete && onComplete(route);
+                resolve && resolve(route);
             },
-            onAbort
-        );
+            reject);
     }
 
     replace(location, onComplete, onAbort) {
@@ -1384,8 +1372,11 @@ export class VarRouter {
         /*  */
         if (!onComplete && !onAbort && typeof Promise !== "undefined") {
             return new Promise((resolve, reject) => {
-                this.history.push(location, resolve, reject);
-            });
+                    this.history.push(location, resolve, reject);
+                })
+                .catch(reason => {
+                    console.log("catch:", reason);
+                });
         } else {
             this.history.push(location, onComplete, onAbort);
         }
