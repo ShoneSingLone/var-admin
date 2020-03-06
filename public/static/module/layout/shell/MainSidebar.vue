@@ -25,6 +25,9 @@
         :unique-opened="true"
         :collapse-transition="false"
         class="sidebar__menu"
+        @select="handleMenuSelect"
+        @open="handleMenuOpen"
+        @close="handleMenuClose"
       >
         <main-sidebar-submenu
           v-for="menu in privateSidebarMenuList"
@@ -52,6 +55,31 @@ export default {
       privateSidebarMenuList: menuRes.data
     };
   },
-  mounted() {}
+  methods: {
+    handleMenuSelect(index, indexPath) {
+      console.log(
+        "handleMenuSelect",
+        index,
+        indexPath,
+        APP_STATE.contentTabsActiveName
+      );
+    },
+    handleMenuOpen(index, indexPath) {
+      console.log(
+        "handleMenuOpen",
+        index,
+        indexPath,
+        APP_STATE.contentTabsActiveName
+      );
+    },
+    handleMenuClose(index, indexPath) {
+      console.log(
+        "handleMenuClose",
+        index,
+        indexPath,
+        APP_STATE.contentTabsActiveName
+      );
+    }
+  }
 };
 </script>

@@ -51,11 +51,11 @@ const on = (name, callback) => {
     }
 };
 
-const remove = (name, self) => {
+const off = (name, self) => {
     delete events[name];
 };
 
-const emit = (name, data) => {
+const trigger = (name, data) => {
     let callbacks = events[name];
     if (_.isArray(callbacks)) {
         callbacks.map(callback => {
@@ -67,7 +67,7 @@ const emit = (name, data) => {
 };
 
 export default {
-    on: on,
-    remove: remove,
-    emit: emit,
+    on,
+    off,
+    trigger
 };

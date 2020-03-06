@@ -154,7 +154,6 @@ class History {
             }
         });
         this.current = START;
-        this.pending = null;
         this.ready = false;
         this.readyCbs = [];
         this.readyErrorCbs = [];
@@ -206,7 +205,14 @@ class History {
             err => {
                 /* 原因 */
                 /* 1.404 */
-                console.log("err", err);
+                console.info("err", err, typeof onAbort);
+                const fnType = typeof onAbort;
+                if (fnType !== "undefined") {
+                    if (fnType === "function") {
+                        debugger;
+                        return onAbort(err);
+                    };
+                }
             }
         );
     }
@@ -226,11 +232,10 @@ class History {
         } else if (isarray(route.matched) && route.matched.length === 0) {
             this.ensureURL();
             /* TODO:404 */
-            abort("NOT_FOUND");
+            return abort("NOT_FOUND");
         } else {
-            onComplete(route);
+            return onComplete(route);
         }
-        this.pending = route;
     }
 
     updateRoute(route) {
@@ -1352,10 +1357,6 @@ export class VarRouter {
         return this.history && this.history.current;
     }
 
-    get addRoutes() {
-        return this.matcher && this.matcher.router.addRoutes;
-    }
-
     init() {
         const history = this.history;
         /* 当前只有Hash模式 */
@@ -1456,6 +1457,15 @@ export class VarRouter {
         if (this.history.current !== START) {
             this.history.transitionTo(this.history.getCurrentLocation());
         }
+    }
+
+    addSubRoutes(parentRoute, routes) {
+
+        routes = routes.map(route => {
+            route.path = `${parentRoute.path}/${route.path}`;
+            return route;
+        });
+        return this.addRoutes(routes);
     }
 }
 

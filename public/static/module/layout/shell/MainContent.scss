@@ -4,13 +4,19 @@
         height: 100%;
         display: flex;
         flex-flow: column nowrap;
-        >.el-tabs__header{
+
+        > .el-tabs__header {
             // @include elevation2();
             margin: 0;
         }
-        >.el-tabs__content{
-            flex:1;
+
+        > .el-tabs__content {
+            flex: 1;
             overflow: auto;
+
+            > .el-tab-pane {
+                height: 100%;
+            }
         }
     }
 }

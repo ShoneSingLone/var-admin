@@ -3,11 +3,11 @@ export const routHome = {
     name: "home",
     content: {
         "id": "home",
-        "path": "/",
+        "path": "/*",
         "pid": "1067246875800000035",
         "children": [],
         "name": "Home",
-        "url": "/sys/params",
+        "url": "static/module/dev/dev/Test.vue",
         "type": 0,
         "handler": 1,
         "icon": "icon-fileprotect",

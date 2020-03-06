@@ -1,14 +1,17 @@
 <template>
-  <div class="var-view-router-container">
-    <div>
+  <div class="var-view-router-container" v-show="APP_STATE.contentTabsActiveName===tab.id">
+    <div style="width:400px;position:absolute;top:10px;right:10px;background:white;padding:10px;" class="elevation2">
       <h6>{{ start }} options {{ (time-start)/1000 }}</h6>
-      <pre>
-{{ JSON.stringify(options.tab,null,2) }}  
-          </pre>
+      <h6>{{APP_STATE.contentTabsActiveName===tab.id}}</h6>
     </div>
+    <div :is="currentComponent" :options="tab"></div>
+    <!-- <pre> {{ JSON.stringify(options.tab,null,2) }} </pre> -->
   </div>
 </template>
 <script>
+const { _, APP_STATE } = window;
+// const { $system } = _;
+
 export default {
   name: "Demo",
   props: {
@@ -21,14 +24,36 @@ export default {
   },
   data() {
     return {
+      APP_STATE,
+      currentComponent: "LoadingView",
       start: Date.now(),
       time: ""
     };
   },
-  mounted() {
+  computed: {
+    tab() {
+      return (
+        (this.options && this.options.tab && this.options.tab.content) || {}
+      );
+    }
+  },
+  async mounted() {
     setInterval(() => {
       this.time = Date.now();
     }, 600);
+    const lazyLoadUrl = `@@/${this.tab.url}`;
+    try {
+      // const { default: component } = await import(lazyLoadUrl);
+      let res;
+      if (this.tab.id === "home") {
+        res = await import("@@/static/module/dev/dev/Iframe.vue");
+      } else {
+        res = await import("@@/static/module/dev/dev/Test.vue");
+      }
+      this.currentComponent = res.default;
+    } catch (error) {
+      console.error(error);
+    }
   }
 };
 </script>
