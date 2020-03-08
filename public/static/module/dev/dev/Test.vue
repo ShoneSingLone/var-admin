@@ -1,57 +1,66 @@
 <template>
   <div class="Demo">
-    <el-button @click="go(1)">
-      go
-    </el-button>
-    <el-button @click="go(2)">
-      go2
-    </el-button>
-    demo:{{ options }}
+    <h1>currentView:{{ currentView }}</h1>
+    <div v-show="currentView==='main'">
+      <el-button @click="go(1)">
+        add
+      </el-button>
+      <el-button @click="go(2)">
+        update
+      </el-button>
+    </div>
+    <div v-if="currentView==='add'">
+      <el-button @click="go(0)">
+        main
+      </el-button>
+      <pre>
+    {{ JSON.stringify( APP_ROUTER.currentRoute,null,2) }}
+    </pre>
+    </div>
+    <div v-if="currentView==='update'">
+      <el-button @click="go(0)">
+        main
+      </el-button>
+      <pre>
+    {{ JSON.stringify( options,null,2) }}
+    </pre>
+    </div>
   </div>
 </template>
-
-
 <script>
-const { APP_STATE, APP_ROUTER } = window;
+import baseMixin from "@@/static/js/app/github/mixin/baseMixin.mjs";
 export default {
-  name: "Demo",
+  TEMPLATE_PLACEHOLDER,
+  mixins: [baseMixin],
   props: {
     options: {
       type: Object,
       default: function() {
-        return { APP_ROUTER, APP_STATE };
+        return {};
       }
     }
   },
   data() {
     return {};
   },
-  created() {
-    /* 追加路由 */
-    APP_ROUTER.addSubRoutes(this.options, [
-      {
-        name: "新增",
-        path: this.options.path + "/add",
-        url: "/statics/base/page.html?page=logmanagement.lm01.PageLm01"
-      },
-      {
-        name: "修改",
-        path:  this.options.path + "/update/asdfasf",
-        url: "/statics/base/page.html?page=logmanagement.lm01.PageLm01"
-      }
-    ]);
-  },
-  mounted() {},
   methods: {
     go(type) {
+      if (type === 0) {
+        this.APP_ROUTER.push({});
+      }
       if (type === 1) {
-        APP_ROUTER.push({
-          path: this.options.path + "/add"
+        this.APP_ROUTER.push({
+          query: {
+            sub: "add"
+          }
         });
       }
       if (type === 2) {
-        APP_ROUTER.push({
-          path: this.options.path + "/update/asdfasf"
+        this.APP_ROUTER.push({
+          query: {
+            sub: "update",
+            pjdjdjd: "asd"
+          }
         });
       }
     }

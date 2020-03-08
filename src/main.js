@@ -12,20 +12,26 @@ import {
 } from "@@/static/js/app/github/state/index.mjs"
 import menuRes from "@@/static/module/layout/shell/MockMainSidebar.js";
 import LoadingView from "@@/static/components/LoadingView.vue";
-
+import lodash from "lodash";
 import {
     VarRouter
 } from "@@/static/components/VarRouter/VarRouter.mjs";
 
 const {
-    Vue
+    Vue,
+    _
 } = window;
+
+window._ = _.merge(_, lodash)
 
 const APP_STATE = window.APP_STATE = Vue.observable(shellState);
 const APP_ROUTER = window.APP_ROUTER = new VarRouter({
     routes: menuRes.data,
     onChange: route => {
-        APP_STATE.currentRoute = route
+        var match = _.last(route.matched);
+        if (match) {
+            APP_STATE.contentTabsRouteMap[match.id] = route
+        }
     }
 });
 

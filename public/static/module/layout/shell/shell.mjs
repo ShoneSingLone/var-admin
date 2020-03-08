@@ -24,7 +24,6 @@ import {
         $loadCSS($resolvePath("static/module/layout/shell/shell.css"));
         const APP_STATE = Vue.observable(shellState);
         window.APP_STATE = APP_STATE;
-        debugger;
         Vue.component("LoadingView", LoadingView);
         window.app = new Vue({
             data() {

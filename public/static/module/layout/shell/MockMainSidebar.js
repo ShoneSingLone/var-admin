@@ -20,8 +20,8 @@ export default {
                     "createDate": "2019-10-28 10:11:01",
                     "parentName": null,
                     "children": [{
-                        "id": "1188636976026107906",
-                        "path": "/shell/diary/longtitle/*",
+                        "id": "1188636976026107906a",
+                        "path": "/shell/diary/longtitle",
                         "pid": "1067246875800000002",
                         "children": [],
                         "name": "标题",
@@ -51,6 +51,37 @@ export default {
                     "createDate": "2019-10-23 15:08:19",
                     "parentName": null
                 },
+                {
+                    "id": "1188636976026107906b",
+                    "path": "/shell/diary/b",
+                    "pid": "1067246875800000002",
+                    "children": [],
+                    "name": "标题",
+                    // "name": "长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长篇大论",
+                    "url": "static/module/dev/dev/Test.vue",
+                    "type": 0,
+                    "handler": 1,
+                    "icon": "icon-desktop",
+                    "permissions": null,
+                    "sort": 0,
+                    "createDate": "2019-10-28 10:11:01",
+                    "parentName": null
+                },{
+                    "id": "1188636976026107906c",
+                    "path": "/shell/diary/c",
+                    "pid": "1067246875800000002",
+                    "children": [],
+                    "name": "标题",
+                    // "name": "长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长篇大论",
+                    "url": "static/module/dev/dev/Test.vue",
+                    "type": 0,
+                    "handler": 1,
+                    "icon": "icon-desktop",
+                    "permissions": null,
+                    "sort": 0,
+                    "createDate": "2019-10-28 10:11:01",
+                    "parentName": null
+                }
             ],
             "name": "权限管理",
             "url": null,

@@ -92,6 +92,7 @@ export default {
     handleTabsRemove(targetName) {
       let tabs = this.editableTabs;
       let activeName = this.editableTabsValue;
+      debugger;
       if (activeName === targetName) {
         tabs.forEach((tab, index) => {
           if (tab.name === targetName) {
@@ -106,34 +107,39 @@ export default {
       this.editableTabsValue = activeName;
       this.editableTabs = tabs.filter(tab => tab.name !== targetName);
     },
-    handleTabRemove(route) {
+    handleTabRemove(routeId) {
       /* home 不能关闭 */
-      if (route === "home") {
+      if (routeId === "home") {
         return false;
       }
       /* 获取rootRoute信息 */
-      const rootRoute = APP_STATE.contentTabsMap[route.id];
-
-      // 当前选中tab被删除
-      if (route === APP_STATE.contentTabsActiveName) {
-        var lastTab = _.last(this.thisContentTabs);
+      const rootRoute = APP_STATE.contentTabsMap[routeId];
+      let index = 1;
+      for (index; index < APP_STATE.contentTabs.length; index++) {
+        const _route = APP_STATE.contentTabs[index];
+        if (_route.content.id === rootRoute.content.id) break;
       }
-
-      /* 只剩下Home */
-      if (APP_STATE.contentTabs.length === 0) {
-        APP_STATE.contentTabsActiveName = "home";
-        return false;
+      APP_STATE.removeTab(rootRoute.content.id, index);
+      /* 当前选中tab被删除,当前展示切换为最后一个 */
+      if (routeId === APP_STATE.contentTabsActiveName) {
+        this.handleTabClick(_.last(APP_STATE.contentTabs));
       }
     },
     handleTabClick(tab) {
-      const targetTab = APP_STATE.contentTabsMap[tab.name];
+      const targetTab = APP_STATE.contentTabsRouteMap[tab.name];
       if (!targetTab) {
         alert("Tab 没有必要的参数 ");
         return false;
       }
       /* 修正当前url */
-      console.log("targetTab.content.path", targetTab.content.path);
-      APP_ROUTER.push({ path: targetTab.content.path });
+      const { name, meta, path, hash, query, params } = targetTab;
+      APP_ROUTER.push({
+        meta,
+        path,
+        hash,
+        query,
+        params
+      });
     }
   }
 };

@@ -9,9 +9,9 @@
     >
       Iframe:{{ options }}
     </div>
-
     <iframe
-      src="https://element.eleme.cn/#/zh-CN/component/menu"
+      ref="iframe"
+      :src="iframeSrc"
       style="width:100%;height:100%;"
       frameborder="0"
     />
@@ -31,7 +31,7 @@ export default {
     }
   },
   data() {
-    return {};
+    return { iframeSrc: "https://element.eleme.cn/#/zh-CN/component/menu" };
   },
   mounted() {},
   methods: {}

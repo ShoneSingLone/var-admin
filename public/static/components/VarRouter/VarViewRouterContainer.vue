@@ -1,6 +1,9 @@
 <template>
   <div class="var-view-router-container" v-show="APP_STATE.contentTabsActiveName===tab.id">
-    <div style="width:400px;position:absolute;top:10px;right:10px;background:white;padding:10px;" class="elevation2">
+    <div
+      style="width:400px;position:absolute;top:10px;right:10px;background:white;padding:10px;"
+      class="elevation2"
+    >
       <h6>{{ start }} options {{ (time-start)/1000 }}</h6>
       <h6>{{APP_STATE.contentTabsActiveName===tab.id}}</h6>
     </div>
@@ -9,11 +12,11 @@
   </div>
 </template>
 <script>
-const { _, APP_STATE } = window;
+const { _, APP_STATE, APP_ROUTER } = window;
 // const { $system } = _;
 
 export default {
-  name: "Demo",
+  TEMPLATE_PLACEHOLDER,
   props: {
     options: {
       type: Object,
@@ -25,6 +28,7 @@ export default {
   data() {
     return {
       APP_STATE,
+      APP_ROUTER,
       currentComponent: "LoadingView",
       start: Date.now(),
       time: ""
@@ -36,6 +40,10 @@ export default {
         (this.options && this.options.tab && this.options.tab.content) || {}
       );
     }
+  },
+  destroyed() {
+    console.log(arguments);
+    debugger;
   },
   async mounted() {
     setInterval(() => {

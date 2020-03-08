@@ -29,8 +29,8 @@ export const shellState = {
     componentSidbar: "LoadingView",
     componentContent: "LoadingView",
     /* 当前路由 */
-    currentRoute: {
-        home: routHome
+    contentTabsRouteMap: {
+        home: routHome.content
     },
     /* 界面Tab页相关 */
     contentTabs: [routHome],
@@ -38,6 +38,18 @@ export const shellState = {
     contentTabsMap: {
         /* id:route */
         home: routHome
+    },
+    addTab(route) {
+        this.contentTabs.push(route);
+        /*  */
+        this.contentTabsMap[route.content.id] = route;
+        this.contentTabsRouteMap[route.content.id] = route;
+    },
+    removeTab(routeId, index) {
+        this.contentTabs.splice(index, 1);
+        /*  */
+        delete this.contentTabsMap[routeId];
+        delete this.contentTabsRouteMap[routeId];
     },
     /* 当前 tab页*/
     contentTabsActiveName: "home",

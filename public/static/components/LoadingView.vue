@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-  name: "Demo",
+  TEMPLATE_PLACEHOLDER,
   data() {
     return {};
   },

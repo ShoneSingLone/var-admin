@@ -2,7 +2,7 @@
   <div class="shell">
     <!--     <pre class="console202003045558 elevation12">
 {{ JSON.stringify(APP_ROUTER.currentRoute ,null,2) }}
-    </pre> -->
+    </pre>-->
     <div
       :is="APP_STATE.componentNavbar"
       class="navbar elevation2"
