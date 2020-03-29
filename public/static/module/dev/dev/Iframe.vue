@@ -31,7 +31,7 @@ export default {
     }
   },
   data() {
-    return { iframeSrc: "https://element.eleme.cn/#/zh-CN/component/menu" };
+    return { iframeSrc: "/login.html" };
   },
   mounted() {},
   methods: {}

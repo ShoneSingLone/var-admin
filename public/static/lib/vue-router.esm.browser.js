@@ -1,56 +1,51 @@
 /*!
- * vue-router v3.1.5
- * (c) 2020 Evan You
- * @license MIT
- */
+  * vue-router v3.1.5
+  * (c) 2020 Evan You
+  * @license MIT
+  */
 /*  */
 
-function assert(condition, message) {
+function assert (condition, message) {
   if (!condition) {
-    throw new Error(`[vue-router] ${message}`);
+    throw new Error(`[vue-router] ${message}`)
   }
 }
 
-function warn(condition, message) {
-  if (!condition) {
-    typeof console !== "undefined" && console.warn(`[vue-router] ${message}`);
+function warn (condition, message) {
+  if ( !condition) {
+    typeof console !== 'undefined' && console.warn(`[vue-router] ${message}`);
   }
 }
 
-function isError(err) {
-  return Object.prototype.toString.call(err).indexOf("Error") > -1;
+function isError (err) {
+  return Object.prototype.toString.call(err).indexOf('Error') > -1
 }
 
-function isExtendedError(constructor, err) {
+function isExtendedError (constructor, err) {
   return (
     err instanceof constructor ||
     // _name is to support IE9 too
     (err && (err.name === constructor.name || err._name === constructor._name))
-  );
+  )
 }
 
-function extend(a, b) {
+function extend (a, b) {
   for (const key in b) {
     a[key] = b[key];
   }
-  return a;
+  return a
 }
 
 var View = {
-  name: "RouterView",
+  name: 'RouterView',
   functional: true,
   props: {
     name: {
       type: String,
-      default: "default"
+      default: 'default'
     }
   },
-  render(_, {
-    props,
-    children,
-    parent,
-    data
-  }) {
+  render (_, { props, children, parent, data }) {
     // used by devtools to display a router-view badge
     data.routerView = true;
 
@@ -87,10 +82,10 @@ var View = {
         if (cachedData.configProps) {
           fillPropsinData(cachedComponent, data, cachedData.route, cachedData.configProps);
         }
-        return h(cachedComponent, data, children);
+        return h(cachedComponent, data, children)
       } else {
         // render previous empty view
-        return h();
+        return h()
       }
     }
 
@@ -100,13 +95,11 @@ var View = {
     // render empty node if no matched route or no config component
     if (!matched || !component) {
       cache[name] = null;
-      return h();
+      return h()
     }
 
     // cache component
-    cache[name] = {
-      component
-    };
+    cache[name] = { component };
 
     // attach instance registration hook
     // this will be called in the instance's injected lifecycle hooks
@@ -123,8 +116,7 @@ var View = {
 
     // also register instance in prepatch hook
     // in case the same component instance is reused across different routes
-    ;
-    (data.hook || (data.hook = {})).prepatch = (_, vnode) => {
+    ;(data.hook || (data.hook = {})).prepatch = (_, vnode) => {
       matched.instances[name] = vnode.componentInstance;
     };
 
@@ -149,11 +141,11 @@ var View = {
       fillPropsinData(component, data, route, configProps);
     }
 
-    return h(component, data, children);
+    return h(component, data, children)
   }
 };
 
-function fillPropsinData(component, data, route, configProps) {
+function fillPropsinData (component, data, route, configProps) {
   // resolve props
   let propsToPass = data.props = resolveProps(route, configProps);
   if (propsToPass) {
@@ -170,30 +162,31 @@ function fillPropsinData(component, data, route, configProps) {
   }
 }
 
-function resolveProps(route, config) {
+function resolveProps (route, config) {
   switch (typeof config) {
-    case "undefined":
-      return;
-    case "object":
-      return config;
-    case "function":
-      return config(route);
-    case "boolean":
-      return config ? route.params : undefined;
-    default: {
-      warn(
-        false,
-        `props in "${route.path}" is a ${typeof config}, ` +
-        "expecting an object, function or boolean."
-      );
-    }
+    case 'undefined':
+      return
+    case 'object':
+      return config
+    case 'function':
+      return config(route)
+    case 'boolean':
+      return config ? route.params : undefined
+    default:
+      {
+        warn(
+          false,
+          `props in "${route.path}" is a ${typeof config}, ` +
+          `expecting an object, function or boolean.`
+        );
+      }
   }
 }
 
 /*  */
 
 const encodeReserveRE = /[!'()*]/g;
-const encodeReserveReplacer = c => "%" + c.charCodeAt(0).toString(16);
+const encodeReserveReplacer = c => '%' + c.charCodeAt(0).toString(16);
 const commaRE = /%2C/g;
 
 // fixed encodeURIComponent which is more conformant to RFC3986:
@@ -201,11 +194,11 @@ const commaRE = /%2C/g;
 // - preserve commas
 const encode = str => encodeURIComponent(str)
   .replace(encodeReserveRE, encodeReserveReplacer)
-  .replace(commaRE, ",");
+  .replace(commaRE, ',');
 
 const decode = decodeURIComponent;
 
-function resolveQuery(
+function resolveQuery (
   query,
   extraQuery = {},
   _parseQuery
@@ -213,32 +206,32 @@ function resolveQuery(
   const parse = _parseQuery || parseQuery;
   let parsedQuery;
   try {
-    parsedQuery = parse(query || "");
+    parsedQuery = parse(query || '');
   } catch (e) {
-    warn(false, e.message);
+     warn(false, e.message);
     parsedQuery = {};
   }
   for (const key in extraQuery) {
     parsedQuery[key] = extraQuery[key];
   }
-  return parsedQuery;
+  return parsedQuery
 }
 
-function parseQuery(query) {
+function parseQuery (query) {
   const res = {};
 
-  query = query.trim().replace(/^(\?|#|&)/, "");
+  query = query.trim().replace(/^(\?|#|&)/, '');
 
   if (!query) {
-    return res;
+    return res
   }
 
-  query.split("&").forEach(param => {
-    const parts = param.replace(/\+/g, " ").split("=");
+  query.split('&').forEach(param => {
+    const parts = param.replace(/\+/g, ' ').split('=');
     const key = decode(parts.shift());
-    const val = parts.length > 0 ?
-      decode(parts.join("=")) :
-      null;
+    const val = parts.length > 0
+      ? decode(parts.join('='))
+      : null;
 
     if (res[key] === undefined) {
       res[key] = val;
@@ -249,46 +242,46 @@ function parseQuery(query) {
     }
   });
 
-  return res;
+  return res
 }
 
-function stringifyQuery(obj) {
+function stringifyQuery (obj) {
   const res = obj ? Object.keys(obj).map(key => {
     const val = obj[key];
 
     if (val === undefined) {
-      return "";
+      return ''
     }
 
     if (val === null) {
-      return encode(key);
+      return encode(key)
     }
 
     if (Array.isArray(val)) {
       const result = [];
       val.forEach(val2 => {
         if (val2 === undefined) {
-          return;
+          return
         }
         if (val2 === null) {
           result.push(encode(key));
         } else {
-          result.push(encode(key) + "=" + encode(val2));
+          result.push(encode(key) + '=' + encode(val2));
         }
       });
-      return result.join("&");
+      return result.join('&')
     }
 
-    return encode(key) + "=" + encode(val);
-  }).filter(x => x.length > 0).join("&") : null;
-  return res ? `?${res}` : "";
+    return encode(key) + '=' + encode(val)
+  }).filter(x => x.length > 0).join('&') : null;
+  return res ? `?${res}` : ''
 }
 
 /*  */
 
 const trailingSlashRE = /\/?$/;
 
-function createRoute(
+function createRoute (
   record,
   location,
   redirectedFrom,
@@ -304,8 +297,8 @@ function createRoute(
   const route = {
     name: location.name || (record && record.name),
     meta: (record && record.meta) || {},
-    path: location.path || "/",
-    hash: location.hash || "",
+    path: location.path || '/',
+    hash: location.hash || '',
     query,
     params: location.params || {},
     fullPath: getFullPath(location, stringifyQuery),
@@ -314,126 +307,123 @@ function createRoute(
   if (redirectedFrom) {
     route.redirectedFrom = getFullPath(redirectedFrom, stringifyQuery);
   }
-  return Object.freeze(route);
+  return Object.freeze(route)
 }
 
-function clone(value) {
+function clone (value) {
   if (Array.isArray(value)) {
-    return value.map(clone);
-  } else if (value && typeof value === "object") {
+    return value.map(clone)
+  } else if (value && typeof value === 'object') {
     const res = {};
     for (const key in value) {
       res[key] = clone(value[key]);
     }
-    return res;
+    return res
   } else {
-    return value;
+    return value
   }
 }
 
 // the starting route that represents the initial state
 const START = createRoute(null, {
-  path: "/"
+  path: '/'
 });
 
-function formatMatch(record) {
+function formatMatch (record) {
   const res = [];
   while (record) {
     res.unshift(record);
     record = record.parent;
   }
-  return res;
+  return res
 }
 
-function getFullPath({
-    path,
-    query = {},
-    hash = ""
-  },
+function getFullPath (
+  { path, query = {}, hash = '' },
   _stringifyQuery
 ) {
   const stringify = _stringifyQuery || stringifyQuery;
-  return (path || "/") + stringify(query) + hash;
+  return (path || '/') + stringify(query) + hash
 }
 
-function isSameRoute(a, b) {
+function isSameRoute (a, b) {
   if (b === START) {
-    return a === b;
+    return a === b
   } else if (!b) {
-    return false;
+    return false
   } else if (a.path && b.path) {
     return (
-      a.path.replace(trailingSlashRE, "") === b.path.replace(trailingSlashRE, "") &&
+      a.path.replace(trailingSlashRE, '') === b.path.replace(trailingSlashRE, '') &&
       a.hash === b.hash &&
       isObjectEqual(a.query, b.query)
-    );
+    )
   } else if (a.name && b.name) {
     return (
       a.name === b.name &&
       a.hash === b.hash &&
       isObjectEqual(a.query, b.query) &&
       isObjectEqual(a.params, b.params)
-    );
+    )
   } else {
-    return false;
+    return false
   }
 }
 
-function isObjectEqual(a = {}, b = {}) {
+function isObjectEqual (a = {}, b = {}) {
   // handle null value #1566
-  if (!a || !b) return a === b;
+  if (!a || !b) return a === b
   const aKeys = Object.keys(a);
   const bKeys = Object.keys(b);
   if (aKeys.length !== bKeys.length) {
-    return false;
+    return false
   }
   return aKeys.every(key => {
     const aVal = a[key];
     const bVal = b[key];
     // check nested equality
-    if (typeof aVal === "object" && typeof bVal === "object") {
-      return isObjectEqual(aVal, bVal);
+    if (typeof aVal === 'object' && typeof bVal === 'object') {
+      return isObjectEqual(aVal, bVal)
     }
-    return String(aVal) === String(bVal);
-  });
+    return String(aVal) === String(bVal)
+  })
 }
 
-function isIncludedRoute(current, target) {
+function isIncludedRoute (current, target) {
   return (
-    current.path.replace(trailingSlashRE, "/").indexOf(
-      target.path.replace(trailingSlashRE, "/")
+    current.path.replace(trailingSlashRE, '/').indexOf(
+      target.path.replace(trailingSlashRE, '/')
     ) === 0 &&
     (!target.hash || current.hash === target.hash) &&
     queryIncludes(current.query, target.query)
-  );
+  )
 }
 
-function queryIncludes(current, target) {
+function queryIncludes (current, target) {
   for (const key in target) {
     if (!(key in current)) {
-      return false;
+      return false
     }
   }
-  return true;
+  return true
 }
 
 /*  */
 
-function resolvePath(
+function resolvePath (
   relative,
   base,
   append
 ) {
   const firstChar = relative.charAt(0);
-  if (firstChar === "/") {
-    return relative;
+  if (firstChar === '/') {
+    return relative
   }
 
-  if (firstChar === "?" || firstChar === "#") {
-    return base + relative;
+  if (firstChar === '?' || firstChar === '#') {
+    return base + relative
   }
 
-  const stack = base.split("/");
+  const stack = base.split('/');
 
   // remove trailing segment if:
   // - not appending
@@ -443,35 +433,35 @@ function resolvePath(
   }
 
   // resolve relative path
-  const segments = relative.replace(/^\//, "").split("/");
+  const segments = relative.replace(/^\//, '').split('/');
   for (let i = 0; i < segments.length; i++) {
     const segment = segments[i];
-    if (segment === "..") {
+    if (segment === '..') {
       stack.pop();
-    } else if (segment !== ".") {
+    } else if (segment !== '.') {
       stack.push(segment);
     }
   }
 
   // ensure leading slash
-  if (stack[0] !== "") {
-    stack.unshift("");
+  if (stack[0] !== '') {
+    stack.unshift('');
   }
 
-  return stack.join("/");
+  return stack.join('/')
 }
 
-function parsePath(path) {
-  let hash = "";
-  let query = "";
+function parsePath (path) {
+  let hash = '';
+  let query = '';
 
-  const hashIndex = path.indexOf("#");
+  const hashIndex = path.indexOf('#');
   if (hashIndex >= 0) {
     hash = path.slice(hashIndex);
     path = path.slice(0, hashIndex);
   }
 
-  const queryIndex = path.indexOf("?");
+  const queryIndex = path.indexOf('?');
   if (queryIndex >= 0) {
     query = path.slice(queryIndex + 1);
     path = path.slice(0, queryIndex);
@@ -481,15 +471,15 @@ function parsePath(path) {
     path,
     query,
     hash
-  };
+  }
 }
 
-function cleanPath(path) {
-  return path.replace(/\/\//g, "/");
+function cleanPath (path) {
+  return path.replace(/\/\//g, '/')
 }
 
 var isarray = Array.isArray || function (arr) {
-  return Object.prototype.toString.call(arr) == "[object Array]";
+  return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
 /**
@@ -509,15 +499,15 @@ var tokensToRegExp_1 = tokensToRegExp;
 var PATH_REGEXP = new RegExp([
   // Match escaped characters that would otherwise appear in future matches.
   // This allows the user to escape special characters that won't transform.
-  "(\\\\.)",
+  '(\\\\.)',
   // Match Express-style parameters and un-named parameters with a prefix
   // and optional suffixes. Matches appear as:
   //
   // "/:test(\\d+)?" => ["/", "test", "\d+", undefined, "?", undefined]
   // "/route(\\d+)"  => [undefined, undefined, undefined, "\d+", undefined, undefined]
   // "/*"            => ["/", undefined, undefined, undefined, undefined, "*"]
-  "([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?|(\\*))"
-].join("|"), "g");
+  '([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?|(\\*))'
+].join('|'), 'g');
 
 /**
  * Parse a string for the raw tokens.
@@ -526,12 +516,12 @@ var PATH_REGEXP = new RegExp([
  * @param  {Object=} options
  * @return {!Array}
  */
-function parse(str, options) {
+function parse (str, options) {
   var tokens = [];
   var key = 0;
   var index = 0;
-  var path = "";
-  var defaultDelimiter = options && options.delimiter || "/";
+  var path = '';
+  var defaultDelimiter = options && options.delimiter || '/';
   var res;
 
   while ((res = PATH_REGEXP.exec(str)) != null) {
@@ -544,7 +534,7 @@ function parse(str, options) {
     // Ignore already escaped sequences.
     if (escaped) {
       path += escaped[1];
-      continue;
+      continue
     }
 
     var next = str[index];
@@ -558,24 +548,24 @@ function parse(str, options) {
     // Push the current path onto the tokens.
     if (path) {
       tokens.push(path);
-      path = "";
+      path = '';
     }
 
     var partial = prefix != null && next != null && next !== prefix;
-    var repeat = modifier === "+" || modifier === "*";
-    var optional = modifier === "?" || modifier === "*";
+    var repeat = modifier === '+' || modifier === '*';
+    var optional = modifier === '?' || modifier === '*';
     var delimiter = res[2] || defaultDelimiter;
     var pattern = capture || group;
 
     tokens.push({
       name: name || key++,
-      prefix: prefix || "",
+      prefix: prefix || '',
       delimiter: delimiter,
       optional: optional,
       repeat: repeat,
       partial: partial,
       asterisk: !!asterisk,
-      pattern: pattern ? escapeGroup(pattern) : (asterisk ? ".*" : "[^" + escapeString(delimiter) + "]+?")
+      pattern: pattern ? escapeGroup(pattern) : (asterisk ? '.*' : '[^' + escapeString(delimiter) + ']+?')
     });
   }
 
@@ -589,7 +579,7 @@ function parse(str, options) {
     tokens.push(path);
   }
 
-  return tokens;
+  return tokens
 }
 
 /**
@@ -599,8 +589,8 @@ function parse(str, options) {
  * @param  {Object=}            options
  * @return {!function(Object=, Object=)}
  */
-function compile(str, options) {
-  return tokensToFunction(parse(str, options));
+function compile (str, options) {
+  return tokensToFunction(parse(str, options))
 }
 
 /**
@@ -609,10 +599,10 @@ function compile(str, options) {
  * @param  {string}
  * @return {string}
  */
-function encodeURIComponentPretty(str) {
+function encodeURIComponentPretty (str) {
   return encodeURI(str).replace(/[\/?#]/g, function (c) {
-    return "%" + c.charCodeAt(0).toString(16).toUpperCase();
-  });
+    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+  })
 }
 
 /**
@@ -621,28 +611,28 @@ function encodeURIComponentPretty(str) {
  * @param  {string}
  * @return {string}
  */
-function encodeAsterisk(str) {
+function encodeAsterisk (str) {
   return encodeURI(str).replace(/[?#]/g, function (c) {
-    return "%" + c.charCodeAt(0).toString(16).toUpperCase();
-  });
+    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+  })
 }
 
 /**
  * Expose a method for transforming tokens into the path function.
  */
-function tokensToFunction(tokens) {
+function tokensToFunction (tokens) {
   // Compile all the tokens into regexps.
   var matches = new Array(tokens.length);
 
   // Compile all the patterns before compilation.
   for (var i = 0; i < tokens.length; i++) {
-    if (typeof tokens[i] === "object") {
-      matches[i] = new RegExp("^(?:" + tokens[i].pattern + ")$");
+    if (typeof tokens[i] === 'object') {
+      matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$');
     }
   }
 
   return function (obj, opts) {
-    var path = "";
+    var path = '';
     var data = obj || {};
     var options = opts || {};
     var encode = options.pretty ? encodeURIComponentPretty : encodeURIComponent;
@@ -650,10 +640,10 @@ function tokensToFunction(tokens) {
     for (var i = 0; i < tokens.length; i++) {
       var token = tokens[i];
 
-      if (typeof token === "string") {
+      if (typeof token === 'string') {
         path += token;
 
-        continue;
+        continue
       }
 
       var value = data[token.name];
@@ -666,22 +656,22 @@ function tokensToFunction(tokens) {
             path += token.prefix;
           }
 
-          continue;
+          continue
         } else {
-          throw new TypeError("Expected \"" + token.name + "\" to be defined");
+          throw new TypeError('Expected "' + token.name + '" to be defined')
         }
       }
 
       if (isarray(value)) {
         if (!token.repeat) {
-          throw new TypeError("Expected \"" + token.name + "\" to not repeat, but received `" + JSON.stringify(value) + "`");
+          throw new TypeError('Expected "' + token.name + '" to not repeat, but received `' + JSON.stringify(value) + '`')
         }
 
         if (value.length === 0) {
           if (token.optional) {
-            continue;
+            continue
           } else {
-            throw new TypeError("Expected \"" + token.name + "\" to not be empty");
+            throw new TypeError('Expected "' + token.name + '" to not be empty')
           }
         }
 
@@ -689,26 +679,26 @@ function tokensToFunction(tokens) {
           segment = encode(value[j]);
 
           if (!matches[i].test(segment)) {
-            throw new TypeError("Expected all \"" + token.name + "\" to match \"" + token.pattern + "\", but received `" + JSON.stringify(segment) + "`");
+            throw new TypeError('Expected all "' + token.name + '" to match "' + token.pattern + '", but received `' + JSON.stringify(segment) + '`')
           }
 
           path += (j === 0 ? token.prefix : token.delimiter) + segment;
         }
 
-        continue;
+        continue
       }
 
       segment = token.asterisk ? encodeAsterisk(value) : encode(value);
 
       if (!matches[i].test(segment)) {
-        throw new TypeError("Expected \"" + token.name + "\" to match \"" + token.pattern + "\", but received \"" + segment + "\"");
+        throw new TypeError('Expected "' + token.name + '" to match "' + token.pattern + '", but received "' + segment + '"')
       }
 
       path += token.prefix + segment;
     }
 
-    return path;
-  };
+    return path
+  }
 }
 
 /**
@@ -717,8 +707,8 @@ function tokensToFunction(tokens) {
  * @param  {string} str
  * @return {string}
  */
-function escapeString(str) {
-  return str.replace(/([.+*?=^!:${}()[\]|\/\\])/g, "\\$1");
+function escapeString (str) {
+  return str.replace(/([.+*?=^!:${}()[\]|\/\\])/g, '\\$1')
 }
 
 /**
@@ -727,8 +717,8 @@ function escapeString(str) {
  * @param  {string} group
  * @return {string}
  */
-function escapeGroup(group) {
-  return group.replace(/([=!:$\/()])/g, "\\$1");
+function escapeGroup (group) {
+  return group.replace(/([=!:$\/()])/g, '\\$1')
 }
 
 /**
@@ -738,9 +728,9 @@ function escapeGroup(group) {
  * @param  {Array}   keys
  * @return {!RegExp}
  */
-function attachKeys(re, keys) {
+function attachKeys (re, keys) {
   re.keys = keys;
-  return re;
+  return re
 }
 
 /**
@@ -749,8 +739,8 @@ function attachKeys(re, keys) {
  * @param  {Object} options
  * @return {string}
  */
-function flags(options) {
-  return options.sensitive ? "" : "i";
+function flags (options) {
+  return options.sensitive ? '' : 'i'
 }
 
 /**
@@ -760,7 +750,7 @@ function flags(options) {
  * @param  {!Array}  keys
  * @return {!RegExp}
  */
-function regexpToRegexp(path, keys) {
+function regexpToRegexp (path, keys) {
   // Use a negative lookahead to match only capturing groups.
   var groups = path.source.match(/\((?!\?)/g);
 
@@ -779,7 +769,7 @@ function regexpToRegexp(path, keys) {
     }
   }
 
-  return attachKeys(path, keys);
+  return attachKeys(path, keys)
 }
 
 /**
@@ -790,16 +780,16 @@ function regexpToRegexp(path, keys) {
  * @param  {!Object} options
  * @return {!RegExp}
  */
-function arrayToRegexp(path, keys, options) {
+function arrayToRegexp (path, keys, options) {
   var parts = [];
 
   for (var i = 0; i < path.length; i++) {
     parts.push(pathToRegexp(path[i], keys, options).source);
   }
 
-  var regexp = new RegExp("(?:" + parts.join("|") + ")", flags(options));
+  var regexp = new RegExp('(?:' + parts.join('|') + ')', flags(options));
 
-  return attachKeys(regexp, keys);
+  return attachKeys(regexp, keys)
 }
 
 /**
@@ -810,8 +800,8 @@ function arrayToRegexp(path, keys, options) {
  * @param  {!Object} options
  * @return {!RegExp}
  */
-function stringToRegexp(path, keys, options) {
-  return tokensToRegExp(parse(path, options), keys, options);
+function stringToRegexp (path, keys, options) {
+  return tokensToRegExp(parse(path, options), keys, options)
 }
 
 /**
@@ -822,7 +812,7 @@ function stringToRegexp(path, keys, options) {
  * @param  {Object=}         options
  * @return {!RegExp}
  */
-function tokensToRegExp(tokens, keys, options) {
+function tokensToRegExp (tokens, keys, options) {
   if (!isarray(keys)) {
     options = /** @type {!Object} */ (keys || options);
     keys = [];
@@ -832,39 +822,39 @@ function tokensToRegExp(tokens, keys, options) {
 
   var strict = options.strict;
   var end = options.end !== false;
-  var route = "";
+  var route = '';
 
   // Iterate over the tokens and create our regexp string.
   for (var i = 0; i < tokens.length; i++) {
     var token = tokens[i];
 
-    if (typeof token === "string") {
+    if (typeof token === 'string') {
       route += escapeString(token);
     } else {
       var prefix = escapeString(token.prefix);
-      var capture = "(?:" + token.pattern + ")";
+      var capture = '(?:' + token.pattern + ')';
 
       keys.push(token);
 
       if (token.repeat) {
-        capture += "(?:" + prefix + capture + ")*";
+        capture += '(?:' + prefix + capture + ')*';
       }
 
       if (token.optional) {
         if (!token.partial) {
-          capture = "(?:" + prefix + "(" + capture + "))?";
+          capture = '(?:' + prefix + '(' + capture + '))?';
         } else {
-          capture = prefix + "(" + capture + ")?";
+          capture = prefix + '(' + capture + ')?';
         }
       } else {
-        capture = prefix + "(" + capture + ")";
+        capture = prefix + '(' + capture + ')';
       }
 
       route += capture;
     }
   }
 
-  var delimiter = escapeString(options.delimiter || "/");
+  var delimiter = escapeString(options.delimiter || '/');
   var endsWithDelimiter = route.slice(-delimiter.length) === delimiter;
 
   // In non-strict mode we allow a slash at the end of match. If the path to
@@ -872,18 +862,18 @@ function tokensToRegExp(tokens, keys, options) {
   // is valid at the end of a path match, not in the middle. This is important
   // in non-ending mode, where "/test/" shouldn't match "/test//route".
   if (!strict) {
-    route = (endsWithDelimiter ? route.slice(0, -delimiter.length) : route) + "(?:" + delimiter + "(?=$))?";
+    route = (endsWithDelimiter ? route.slice(0, -delimiter.length) : route) + '(?:' + delimiter + '(?=$))?';
   }
 
   if (end) {
-    route += "$";
+    route += '$';
   } else {
     // In non-ending mode, we need the capturing groups to match as much as
     // possible by using a positive lookahead to the end or next path segment.
-    route += strict && endsWithDelimiter ? "" : "(?=" + delimiter + "|$)";
+    route += strict && endsWithDelimiter ? '' : '(?=' + delimiter + '|$)';
   }
 
-  return attachKeys(new RegExp("^" + route, flags(options)), keys);
+  return attachKeys(new RegExp('^' + route, flags(options)), keys)
 }
 
 /**
@@ -898,7 +888,7 @@ function tokensToRegExp(tokens, keys, options) {
  * @param  {Object=}               options
  * @return {!RegExp}
  */
-function pathToRegexp(path, keys, options) {
+function pathToRegexp (path, keys, options) {
   if (!isarray(keys)) {
     options = /** @type {!Object} */ (keys || options);
     keys = [];
@@ -907,14 +897,14 @@ function pathToRegexp(path, keys, options) {
   options = options || {};
 
   if (path instanceof RegExp) {
-    return regexpToRegexp(path, /** @type {!Array} */ (keys));
+    return regexpToRegexp(path, /** @type {!Array} */ (keys))
   }
 
   if (isarray(path)) {
-    return arrayToRegexp( /** @type {!Array} */ (path), /** @type {!Array} */ (keys), options);
+    return arrayToRegexp(/** @type {!Array} */ (path), /** @type {!Array} */ (keys), options)
   }
 
-  return stringToRegexp( /** @type {string} */ (path), /** @type {!Array} */ (keys), options);
+  return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
 pathToRegexp_1.parse = parse_1;
 pathToRegexp_1.compile = compile_1;
@@ -926,7 +916,7 @@ pathToRegexp_1.tokensToRegExp = tokensToRegExp_1;
 // $flow-disable-line
 const regexpCompileCache = Object.create(null);
 
-function fillParams(
+function fillParams (
   path,
   params,
   routeMsg
@@ -940,15 +930,13 @@ function fillParams(
     // Fix #2505 resolving asterisk routes { name: 'not-found', params: { pathMatch: '/not-found' }}
     if (params.pathMatch) params[0] = params.pathMatch;
 
-    return filler(params, {
-      pretty: true
-    });
+    return filler(params, { pretty: true })
   } catch (e) {
     {
       // Fix #3072 no warn if `pathMatch` is string
-      warn(typeof params.pathMatch === "string", `missing param for ${routeMsg}: ${e.message}`);
+      warn(typeof params.pathMatch === 'string', `missing param for ${routeMsg}: ${e.message}`);
     }
-    return "";
+    return ''
   } finally {
     // delete the 0 if it was added
     delete params[0];
@@ -957,25 +945,23 @@ function fillParams(
 
 /*  */
 
-function normalizeLocation(
+function normalizeLocation (
   raw,
   current,
   append,
   router
 ) {
-  let next = typeof raw === "string" ? {
-    path: raw
-  } : raw;
+  let next = typeof raw === 'string' ? { path: raw } : raw;
   // named target
   if (next._normalized) {
-    return next;
+    return next
   } else if (next.name) {
     next = extend({}, raw);
     const params = next.params;
-    if (params && typeof params === "object") {
+    if (params && typeof params === 'object') {
       next.params = extend({}, params);
     }
-    return next;
+    return next
   }
 
   // relative params
@@ -990,16 +976,16 @@ function normalizeLocation(
       const rawPath = current.matched[current.matched.length - 1].path;
       next.path = fillParams(rawPath, params, `path ${current.path}`);
     } else {
-      warn(false, "relative params navigation requires a current route.");
+      warn(false, `relative params navigation requires a current route.`);
     }
-    return next;
+    return next
   }
 
-  const parsedPath = parsePath(next.path || "");
-  const basePath = (current && current.path) || "/";
-  const path = parsedPath.path ?
-    resolvePath(parsedPath.path, basePath, append || next.append) :
-    basePath;
+  const parsedPath = parsePath(next.path || '');
+  const basePath = (current && current.path) || '/';
+  const path = parsedPath.path
+    ? resolvePath(parsedPath.path, basePath, append || next.append)
+    : basePath;
 
   const query = resolveQuery(
     parsedPath.query,
@@ -1008,7 +994,7 @@ function normalizeLocation(
   );
 
   let hash = next.hash || parsedPath.hash;
-  if (hash && hash.charAt(0) !== "#") {
+  if (hash && hash.charAt(0) !== '#') {
     hash = `#${hash}`;
   }
 
@@ -1017,7 +1003,7 @@ function normalizeLocation(
     path,
     query,
     hash
-  };
+  }
 }
 
 /*  */
@@ -1029,7 +1015,7 @@ const eventTypes = [String, Array];
 const noop = () => {};
 
 var Link = {
-  name: "RouterLink",
+  name: 'RouterLink',
   props: {
     to: {
       type: toTypes,
@@ -1037,7 +1023,7 @@ var Link = {
     },
     tag: {
       type: String,
-      default: "a"
+      default: 'a'
     },
     exact: Boolean,
     append: Boolean,
@@ -1046,17 +1032,13 @@ var Link = {
     exactActiveClass: String,
     event: {
       type: eventTypes,
-      default: "click"
+      default: 'click'
     }
   },
-  render(h) {
+  render (h) {
     const router = this.$router;
     const current = this.$route;
-    const {
-      location,
-      route,
-      href
-    } = router.resolve(
+    const { location, route, href } = router.resolve(
       this.to,
       current,
       this.append
@@ -1067,26 +1049,26 @@ var Link = {
     const globalExactActiveClass = router.options.linkExactActiveClass;
     // Support global empty active class
     const activeClassFallback =
-      globalActiveClass == null ? "router-link-active" : globalActiveClass;
+      globalActiveClass == null ? 'router-link-active' : globalActiveClass;
     const exactActiveClassFallback =
-      globalExactActiveClass == null ?
-      "router-link-exact-active" :
-      globalExactActiveClass;
+      globalExactActiveClass == null
+        ? 'router-link-exact-active'
+        : globalExactActiveClass;
     const activeClass =
       this.activeClass == null ? activeClassFallback : this.activeClass;
     const exactActiveClass =
-      this.exactActiveClass == null ?
-      exactActiveClassFallback :
-      this.exactActiveClass;
+      this.exactActiveClass == null
+        ? exactActiveClassFallback
+        : this.exactActiveClass;
 
-    const compareTarget = route.redirectedFrom ?
-      createRoute(null, normalizeLocation(route.redirectedFrom), null, router) :
-      route;
+    const compareTarget = route.redirectedFrom
+      ? createRoute(null, normalizeLocation(route.redirectedFrom), null, router)
+      : route;
 
     classes[exactActiveClass] = isSameRoute(current, compareTarget);
-    classes[activeClass] = this.exact ?
-      classes[exactActiveClass] :
-      isIncludedRoute(current, compareTarget);
+    classes[activeClass] = this.exact
+      ? classes[exactActiveClass]
+      : isIncludedRoute(current, compareTarget);
 
     const handler = e => {
       if (guardEvent(e)) {
@@ -1098,9 +1080,7 @@ var Link = {
       }
     };
 
-    const on = {
-      click: guardEvent
-    };
+    const on = { click: guardEvent };
     if (Array.isArray(this.event)) {
       this.event.forEach(e => {
         on[e] = handler;
@@ -1109,11 +1089,10 @@ var Link = {
       on[this.event] = handler;
     }
 
-    const data = {
-      class: classes
-    };
+    const data = { class: classes };
 
-    const scopedSlot = !this.$scopedSlots.$hasNormal &&
+    const scopedSlot =
+      !this.$scopedSlots.$hasNormal &&
       this.$scopedSlots.default &&
       this.$scopedSlots.default({
         href,
@@ -1125,7 +1104,7 @@ var Link = {
 
     if (scopedSlot) {
       if (scopedSlot.length === 1) {
-        return scopedSlot[0];
+        return scopedSlot[0]
       } else if (scopedSlot.length > 1 || !scopedSlot.length) {
         {
           warn(
@@ -1135,15 +1114,13 @@ var Link = {
             }" is trying to use a scoped slot but it didn't provide exactly one child. Wrapping the content with a span element.`
           );
         }
-        return scopedSlot.length === 0 ? h() : h("span", {}, scopedSlot);
+        return scopedSlot.length === 0 ? h() : h('span', {}, scopedSlot)
       }
     }
 
-    if (this.tag === "a") {
+    if (this.tag === 'a') {
       data.on = on;
-      data.attrs = {
-        href
-      };
+      data.attrs = { href };
     } else {
       // find the first <a> child and apply listener and href
       const a = findAnchor(this.$slots.default);
@@ -1177,39 +1154,39 @@ var Link = {
       }
     }
 
-    return h(this.tag, data, this.$slots.default);
+    return h(this.tag, data, this.$slots.default)
   }
 };
 
-function guardEvent(e) {
+function guardEvent (e) {
   // don't redirect with control keys
-  if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) return;
+  if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) return
   // don't redirect when preventDefault called
-  if (e.defaultPrevented) return;
+  if (e.defaultPrevented) return
   // don't redirect on right click
-  if (e.button !== undefined && e.button !== 0) return;
+  if (e.button !== undefined && e.button !== 0) return
   // don't redirect if `target="_blank"`
   if (e.currentTarget && e.currentTarget.getAttribute) {
-    const target = e.currentTarget.getAttribute("target");
-    if (/\b_blank\b/i.test(target)) return;
+    const target = e.currentTarget.getAttribute('target');
+    if (/\b_blank\b/i.test(target)) return
   }
   // this may be a Weex event which doesn't have this method
   if (e.preventDefault) {
     e.preventDefault();
   }
-  return true;
+  return true
 }
 
-function findAnchor(children) {
+function findAnchor (children) {
   if (children) {
     let child;
     for (let i = 0; i < children.length; i++) {
       child = children[i];
-      if (child.tag === "a") {
-        return child;
+      if (child.tag === 'a') {
+        return child
       }
       if (child.children && (child = findAnchor(child.children))) {
-        return child;
+        return child
       }
     }
   }
@@ -1217,8 +1194,8 @@ function findAnchor(children) {
 
 let _Vue;
 
-function install(Vue) {
-  if (install.installed && _Vue === Vue) return;
+function install (Vue) {
+  if (install.installed && _Vue === Vue) return
   install.installed = true;
 
   _Vue = Vue;
@@ -1233,36 +1210,32 @@ function install(Vue) {
   };
 
   Vue.mixin({
-    beforeCreate() {
+    beforeCreate () {
       if (isDef(this.$options.router)) {
         this._routerRoot = this;
         this._router = this.$options.router;
         this._router.init(this);
-        Vue.util.defineReactive(this, "_route", this._router.history.current);
+        Vue.util.defineReactive(this, '_route', this._router.history.current);
       } else {
         this._routerRoot = (this.$parent && this.$parent._routerRoot) || this;
       }
       registerInstance(this, this);
     },
-    destroyed() {
+    destroyed () {
       registerInstance(this);
     }
   });
 
-  Object.defineProperty(Vue.prototype, "$router", {
-    get() {
-      return this._routerRoot._router;
-    }
+  Object.defineProperty(Vue.prototype, '$router', {
+    get () { return this._routerRoot._router }
   });
 
-  Object.defineProperty(Vue.prototype, "$route", {
-    get() {
-      return this._routerRoot._route;
-    }
+  Object.defineProperty(Vue.prototype, '$route', {
+    get () { return this._routerRoot._route }
   });
 
-  Vue.component("RouterView", View);
-  Vue.component("RouterLink", Link);
+  Vue.component('RouterView', View);
+  Vue.component('RouterLink', Link);
 
   const strats = Vue.config.optionMergeStrategies;
   // use the same hook merging strategy for route hooks
@@ -1271,11 +1244,11 @@ function install(Vue) {
 
 /*  */
 
-const inBrowser = typeof window !== "undefined";
+const inBrowser = typeof window !== 'undefined';
 
 /*  */
 
-function createRouteMap(
+function createRouteMap (
   routes,
   oldPathList,
   oldPathMap,
@@ -1294,7 +1267,7 @@ function createRouteMap(
 
   // ensure wildcard routes are always at the end
   for (let i = 0, l = pathList.length; i < l; i++) {
-    if (pathList[i] === "*") {
+    if (pathList[i] === '*') {
       pathList.push(pathList.splice(i, 1)[0]);
       l--;
       i--;
@@ -1304,11 +1277,11 @@ function createRouteMap(
   {
     // warn if routes do not include leading slashes
     const found = pathList
-      // check for missing leading slash
-      .filter(path => path && path.charAt(0) !== "*" && path.charAt(0) !== "/");
+    // check for missing leading slash
+      .filter(path => path && path.charAt(0) !== '*' && path.charAt(0) !== '/');
 
     if (found.length > 0) {
-      const pathNames = found.map(path => `- ${path}`).join("\n");
+      const pathNames = found.map(path => `- ${path}`).join('\n');
       warn(false, `Non-nested routes must include a leading slash character. Fix the following routes: \n${pathNames}`);
     }
   }
@@ -1317,10 +1290,10 @@ function createRouteMap(
     pathList,
     pathMap,
     nameMap
-  };
+  }
 }
 
-function addRouteRecord(
+function addRouteRecord (
   pathList,
   pathMap,
   nameMap,
@@ -1328,16 +1301,14 @@ function addRouteRecord(
   parent,
   matchAs
 ) {
-  const {
-    path,
-    name
-  } = route; {
-    assert(path != null, "\"path\" is required in a route configuration.");
+  const { path, name } = route;
+  {
+    assert(path != null, `"path" is required in a route configuration.`);
     assert(
-      typeof route.component !== "string",
+      typeof route.component !== 'string',
       `route config "component" for path: ${String(
         path || name
-      )} cannot be a ` + "string id. Use an actual component instead."
+      )} cannot be a ` + `string id. Use an actual component instead.`
     );
   }
 
@@ -1345,16 +1316,14 @@ function addRouteRecord(
     route.pathToRegexpOptions || {};
   const normalizedPath = normalizePath(path, parent, pathToRegexpOptions.strict);
 
-  if (typeof route.caseSensitive === "boolean") {
+  if (typeof route.caseSensitive === 'boolean') {
     pathToRegexpOptions.sensitive = route.caseSensitive;
   }
 
   const record = {
     path: normalizedPath,
     regex: compileRouteRegex(normalizedPath, pathToRegexpOptions),
-    components: route.components || {
-      default: route.component
-    },
+    components: route.components || { default: route.component },
     instances: {},
     name,
     parent,
@@ -1362,13 +1331,12 @@ function addRouteRecord(
     redirect: route.redirect,
     beforeEnter: route.beforeEnter,
     meta: route.meta || {},
-    props: route.props == null ?
-      {} :
-      route.components ?
-      route.props :
-      {
-        default: route.props
-      }
+    props:
+      route.props == null
+        ? {}
+        : route.components
+          ? route.props
+          : { default: route.props }
   };
 
   if (route.children) {
@@ -1384,19 +1352,19 @@ function addRouteRecord(
         warn(
           false,
           `Named Route '${route.name}' has a default child route. ` +
-          `When navigating to this named route (:to="{name: '${
+            `When navigating to this named route (:to="{name: '${
               route.name
             }'"), ` +
-          "the default child route will not be rendered. Remove the name from " +
-          "this route and use the name of the default child route for named " +
-          "links instead."
+            `the default child route will not be rendered. Remove the name from ` +
+            `this route and use the name of the default child route for named ` +
+            `links instead.`
         );
       }
     }
     route.children.forEach(child => {
-      const childMatchAs = matchAs ?
-        cleanPath(`${matchAs}/${child.path}`) :
-        undefined;
+      const childMatchAs = matchAs
+        ? cleanPath(`${matchAs}/${child.path}`)
+        : undefined;
       addRouteRecord(pathList, pathMap, nameMap, child, record, childMatchAs);
     });
   }
@@ -1410,13 +1378,13 @@ function addRouteRecord(
     const aliases = Array.isArray(route.alias) ? route.alias : [route.alias];
     for (let i = 0; i < aliases.length; ++i) {
       const alias = aliases[i];
-      if (alias === path) {
+      if ( alias === path) {
         warn(
           false,
           `Found an alias with the same value as the path: "${path}". You have to remove that alias. It will be ignored in development.`
         );
         // skip in dev to make it work
-        continue;
+        continue
       }
 
       const aliasRoute = {
@@ -1429,7 +1397,7 @@ function addRouteRecord(
         nameMap,
         aliasRoute,
         parent,
-        record.path || "/" // matchAs
+        record.path || '/' // matchAs
       );
     }
   }
@@ -1437,21 +1405,22 @@ function addRouteRecord(
   if (name) {
     if (!nameMap[name]) {
       nameMap[name] = record;
-    } else if (!matchAs) {
+    } else if ( !matchAs) {
       warn(
         false,
-        "Duplicate named routes definition: " +
-        `{ name: "${name}", path: "${record.path}" }`
+        `Duplicate named routes definition: ` +
+          `{ name: "${name}", path: "${record.path}" }`
       );
     }
   }
 }
 
-function compileRouteRegex(
+function compileRouteRegex (
   path,
   pathToRegexpOptions
 ) {
-  const regex = pathToRegexp_1(path, [], pathToRegexpOptions); {
+  const regex = pathToRegexp_1(path, [], pathToRegexpOptions);
+  {
     const keys = Object.create(null);
     regex.keys.forEach(key => {
       warn(
@@ -1461,62 +1430,57 @@ function compileRouteRegex(
       keys[key.name] = true;
     });
   }
-  return regex;
+  return regex
 }
 
-function normalizePath(
+function normalizePath (
   path,
   parent,
   strict
 ) {
-  if (!strict) path = path.replace(/\/$/, "");
-  if (path[0] === "/") return path;
-  if (parent == null) return path;
-  return cleanPath(`${parent.path}/${path}`);
+  if (!strict) path = path.replace(/\/$/, '');
+  if (path[0] === '/') return path
+  if (parent == null) return path
+  return cleanPath(`${parent.path}/${path}`)
 }
 
 /*  */
 
 
 
-function createMatcher(
+function createMatcher (
   routes,
   router
 ) {
-  const {
-    pathList,
-    pathMap,
-    nameMap
-  } = createRouteMap(routes);
+  const { pathList, pathMap, nameMap } = createRouteMap(routes);
 
-  function addRoutes(routes) {
+  function addRoutes (routes) {
     createRouteMap(routes, pathList, pathMap, nameMap);
   }
 
-  function match(
+  function match (
     raw,
     currentRoute,
     redirectedFrom
   ) {
     const location = normalizeLocation(raw, currentRoute, false, router);
-    const {
-      name
-    } = location;
+    const { name } = location;
 
     if (name) {
-      const record = nameMap[name]; {
+      const record = nameMap[name];
+      {
         warn(record, `Route with name '${name}' does not exist`);
       }
-      if (!record) return _createRoute(null, location);
+      if (!record) return _createRoute(null, location)
       const paramNames = record.regex.keys
         .filter(key => !key.optional)
         .map(key => key.name);
 
-      if (typeof location.params !== "object") {
+      if (typeof location.params !== 'object') {
         location.params = {};
       }
 
-      if (currentRoute && typeof currentRoute.params === "object") {
+      if (currentRoute && typeof currentRoute.params === 'object') {
         for (const key in currentRoute.params) {
           if (!(key in location.params) && paramNames.indexOf(key) > -1) {
             location.params[key] = currentRoute.params[key];
@@ -1525,62 +1489,54 @@ function createMatcher(
       }
 
       location.path = fillParams(record.path, location.params, `named route "${name}"`);
-      return _createRoute(record, location, redirectedFrom);
+      return _createRoute(record, location, redirectedFrom)
     } else if (location.path) {
       location.params = {};
       for (let i = 0; i < pathList.length; i++) {
         const path = pathList[i];
         const record = pathMap[path];
         if (matchRoute(record.regex, location.path, location.params)) {
-          return _createRoute(record, location, redirectedFrom);
+          return _createRoute(record, location, redirectedFrom)
         }
       }
     }
     // no match
-    return _createRoute(null, location);
+    return _createRoute(null, location)
   }
 
-  function redirect(
+  function redirect (
     record,
     location
   ) {
     const originalRedirect = record.redirect;
-    let redirect = typeof originalRedirect === "function" ?
-      originalRedirect(createRoute(record, location, null, router)) :
-      originalRedirect;
+    let redirect = typeof originalRedirect === 'function'
+      ? originalRedirect(createRoute(record, location, null, router))
+      : originalRedirect;
 
-    if (typeof redirect === "string") {
-      redirect = {
-        path: redirect
-      };
+    if (typeof redirect === 'string') {
+      redirect = { path: redirect };
     }
 
-    if (!redirect || typeof redirect !== "object") {
+    if (!redirect || typeof redirect !== 'object') {
       {
         warn(
           false, `invalid redirect option: ${JSON.stringify(redirect)}`
         );
       }
-      return _createRoute(null, location);
+      return _createRoute(null, location)
     }
 
     const re = redirect;
-    const {
-      name,
-      path
-    } = re;
-    let {
-      query,
-      hash,
-      params
-    } = location;
-    query = re.hasOwnProperty("query") ? re.query : query;
-    hash = re.hasOwnProperty("hash") ? re.hash : hash;
-    params = re.hasOwnProperty("params") ? re.params : params;
+    const { name, path } = re;
+    let { query, hash, params } = location;
+    query = re.hasOwnProperty('query') ? re.query : query;
+    hash = re.hasOwnProperty('hash') ? re.hash : hash;
+    params = re.hasOwnProperty('params') ? re.params : params;
 
     if (name) {
       // resolved named direct
-      const targetRecord = nameMap[name]; {
+      const targetRecord = nameMap[name];
+      {
         assert(targetRecord, `redirect failed: named route "${name}" not found.`);
       }
       return match({
@@ -1589,7 +1545,7 @@ function createMatcher(
         query,
         hash,
         params
-      }, undefined, location);
+      }, undefined, location)
     } else if (path) {
       // 1. resolve relative redirect
       const rawPath = resolveRecordPath(path, record);
@@ -1601,16 +1557,16 @@ function createMatcher(
         path: resolvedPath,
         query,
         hash
-      }, undefined, location);
+      }, undefined, location)
     } else {
       {
         warn(false, `invalid redirect option: ${JSON.stringify(redirect)}`);
       }
-      return _createRoute(null, location);
+      return _createRoute(null, location)
     }
   }
 
-  function alias(
+  function alias (
     record,
     location,
     matchAs
@@ -1624,32 +1580,32 @@ function createMatcher(
       const matched = aliasedMatch.matched;
       const aliasedRecord = matched[matched.length - 1];
       location.params = aliasedMatch.params;
-      return _createRoute(aliasedRecord, location);
+      return _createRoute(aliasedRecord, location)
     }
-    return _createRoute(null, location);
+    return _createRoute(null, location)
   }
 
-  function _createRoute(
+  function _createRoute (
     record,
     location,
     redirectedFrom
   ) {
     if (record && record.redirect) {
-      return redirect(record, redirectedFrom || location);
+      return redirect(record, redirectedFrom || location)
     }
     if (record && record.matchAs) {
-      return alias(record, location, record.matchAs);
+      return alias(record, location, record.matchAs)
     }
-    return createRoute(record, location, redirectedFrom, router);
+    return createRoute(record, location, redirectedFrom, router)
   }
 
   return {
     match,
     addRoutes
-  };
+  }
 }
 
-function matchRoute(
+function matchRoute (
   regex,
   path,
   params
@@ -1657,65 +1613,63 @@ function matchRoute(
   const m = path.match(regex);
 
   if (!m) {
-    return false;
+    return false
   } else if (!params) {
-    return true;
+    return true
   }
 
   for (let i = 1, len = m.length; i < len; ++i) {
     const key = regex.keys[i - 1];
-    const val = typeof m[i] === "string" ? decodeURIComponent(m[i]) : m[i];
+    const val = typeof m[i] === 'string' ? decodeURIComponent(m[i]) : m[i];
     if (key) {
       // Fix #1994: using * with props: true generates a param named 0
-      params[key.name || "pathMatch"] = val;
+      params[key.name || 'pathMatch'] = val;
     }
   }
 
-  return true;
+  return true
 }
 
-function resolveRecordPath(path, record) {
-  return resolvePath(path, record.parent ? record.parent.path : "/", true);
+function resolveRecordPath (path, record) {
+  return resolvePath(path, record.parent ? record.parent.path : '/', true)
 }
 
 /*  */
 
 // use User Timing api (if present) for more accurate key precision
 const Time =
-  inBrowser && window.performance && window.performance.now ?
-  window.performance :
-  Date;
+  inBrowser && window.performance && window.performance.now
+    ? window.performance
+    : Date;
 
-function genStateKey() {
-  return Time.now().toFixed(3);
+function genStateKey () {
+  return Time.now().toFixed(3)
 }
 
 let _key = genStateKey();
 
-function getStateKey() {
-  return _key;
+function getStateKey () {
+  return _key
 }
 
-function setStateKey(key) {
-  return (_key = key);
+function setStateKey (key) {
+  return (_key = key)
 }
 
 /*  */
 
 const positionStore = Object.create(null);
 
-function setupScroll() {
+function setupScroll () {
   // Fix for #1585 for Firefox
   // Fix for #2195 Add optional third attribute to workaround a bug in safari https://bugs.webkit.org/show_bug.cgi?id=182678
   // Fix for #2774 Support for apps loaded from Windows file shares not mapped to network drives: replaced location.origin with
   // window.location.protocol + '//' + window.location.host
   // location.host contains the port and location.hostname doesn't
-  const protocolAndPath = window.location.protocol + "//" + window.location.host;
-  const absolutePath = window.location.href.replace(protocolAndPath, "");
-  window.history.replaceState({
-    key: getStateKey()
-  }, "", absolutePath);
-  window.addEventListener("popstate", e => {
+  const protocolAndPath = window.location.protocol + '//' + window.location.host;
+  const absolutePath = window.location.href.replace(protocolAndPath, '');
+  window.history.replaceState({ key: getStateKey() }, '', absolutePath);
+  window.addEventListener('popstate', e => {
     saveScrollPosition();
     if (e.state && e.state.key) {
       setStateKey(e.state.key);
@@ -1723,23 +1677,23 @@ function setupScroll() {
   });
 }
 
-function handleScroll(
+function handleScroll (
   router,
   to,
   from,
   isPop
 ) {
   if (!router.app) {
-    return;
+    return
   }
 
   const behavior = router.options.scrollBehavior;
   if (!behavior) {
-    return;
+    return
   }
 
   {
-    assert(typeof behavior === "function", "scrollBehavior must be a function");
+    assert(typeof behavior === 'function', `scrollBehavior must be a function`);
   }
 
   // wait until re-render finishes before scrolling
@@ -1753,10 +1707,10 @@ function handleScroll(
     );
 
     if (!shouldScroll) {
-      return;
+      return
     }
 
-    if (typeof shouldScroll.then === "function") {
+    if (typeof shouldScroll.then === 'function') {
       shouldScroll
         .then(shouldScroll => {
           scrollToPosition((shouldScroll), position);
@@ -1772,7 +1726,7 @@ function handleScroll(
   });
 }
 
-function saveScrollPosition() {
+function saveScrollPosition () {
   const key = getStateKey();
   if (key) {
     positionStore[key] = {
@@ -1782,63 +1736,61 @@ function saveScrollPosition() {
   }
 }
 
-function getScrollPosition() {
+function getScrollPosition () {
   const key = getStateKey();
   if (key) {
-    return positionStore[key];
+    return positionStore[key]
   }
 }
 
-function getElementPosition(el, offset) {
+function getElementPosition (el, offset) {
   const docEl = document.documentElement;
   const docRect = docEl.getBoundingClientRect();
   const elRect = el.getBoundingClientRect();
   return {
     x: elRect.left - docRect.left - offset.x,
     y: elRect.top - docRect.top - offset.y
-  };
+  }
 }
 
-function isValidPosition(obj) {
-  return isNumber(obj.x) || isNumber(obj.y);
+function isValidPosition (obj) {
+  return isNumber(obj.x) || isNumber(obj.y)
 }
 
-function normalizePosition(obj) {
+function normalizePosition (obj) {
   return {
     x: isNumber(obj.x) ? obj.x : window.pageXOffset,
     y: isNumber(obj.y) ? obj.y : window.pageYOffset
-  };
+  }
 }
 
-function normalizeOffset(obj) {
+function normalizeOffset (obj) {
   return {
     x: isNumber(obj.x) ? obj.x : 0,
     y: isNumber(obj.y) ? obj.y : 0
-  };
+  }
 }
 
-function isNumber(v) {
-  return typeof v === "number";
+function isNumber (v) {
+  return typeof v === 'number'
 }
 
 const hashStartsWithNumberRE = /^#\d/;
 
-function scrollToPosition(shouldScroll, position) {
-  const isObject = typeof shouldScroll === "object";
-  if (isObject && typeof shouldScroll.selector === "string") {
+function scrollToPosition (shouldScroll, position) {
+  const isObject = typeof shouldScroll === 'object';
+  if (isObject && typeof shouldScroll.selector === 'string') {
     // getElementById would still fail if the selector contains a more complicated query like #main[data-attr]
     // but at the same time, it doesn't make much sense to select an element with an id and an extra selector
     const el = hashStartsWithNumberRE.test(shouldScroll.selector) // $flow-disable-line
-      ?
-      document.getElementById(shouldScroll.selector.slice(1)) // $flow-disable-line
-      :
-      document.querySelector(shouldScroll.selector);
+      ? document.getElementById(shouldScroll.selector.slice(1)) // $flow-disable-line
+      : document.querySelector(shouldScroll.selector);
 
     if (el) {
       let offset =
-        shouldScroll.offset && typeof shouldScroll.offset === "object" ?
-        shouldScroll.offset :
-        {};
+        shouldScroll.offset && typeof shouldScroll.offset === 'object'
+          ? shouldScroll.offset
+          : {};
       offset = normalizeOffset(offset);
       position = getElementPosition(el, offset);
     } else if (isValidPosition(shouldScroll)) {
@@ -1861,18 +1813,18 @@ const supportsPushState =
     const ua = window.navigator.userAgent;
 
     if (
-      (ua.indexOf("Android 2.") !== -1 || ua.indexOf("Android 4.0") !== -1) &&
-      ua.indexOf("Mobile Safari") !== -1 &&
-      ua.indexOf("Chrome") === -1 &&
-      ua.indexOf("Windows Phone") === -1
+      (ua.indexOf('Android 2.') !== -1 || ua.indexOf('Android 4.0') !== -1) &&
+      ua.indexOf('Mobile Safari') !== -1 &&
+      ua.indexOf('Chrome') === -1 &&
+      ua.indexOf('Windows Phone') === -1
     ) {
-      return false;
+      return false
     }
 
-    return window.history && "pushState" in window.history;
+    return window.history && 'pushState' in window.history
   })();
 
-function pushState(url, replace) {
+function pushState (url, replace) {
   saveScrollPosition();
   // try...catch the pushState call to get around Safari
   // DOM Exception 18 where it limits to 100 pushState calls
@@ -1882,24 +1834,22 @@ function pushState(url, replace) {
       // preserve existing history state as it could be overriden by the user
       const stateCopy = extend({}, history.state);
       stateCopy.key = getStateKey();
-      history.replaceState(stateCopy, "", url);
+      history.replaceState(stateCopy, '', url);
     } else {
-      history.pushState({
-        key: setStateKey(genStateKey())
-      }, "", url);
+      history.pushState({ key: setStateKey(genStateKey()) }, '', url);
     }
   } catch (e) {
-    window.location[replace ? "replace" : "assign"](url);
+    window.location[replace ? 'replace' : 'assign'](url);
   }
 }
 
-function replaceState(url) {
+function replaceState (url) {
   pushState(url, true);
 }
 
 /*  */
 
-function runQueue(queue, fn, cb) {
+function runQueue (queue, fn, cb) {
   const step = index => {
     if (index >= queue.length) {
       cb();
@@ -1918,7 +1868,7 @@ function runQueue(queue, fn, cb) {
 
 /*  */
 
-function resolveAsyncComponents(matched) {
+function resolveAsyncComponents (matched) {
   return (to, from, next) => {
     let hasAsync = false;
     let pending = 0;
@@ -1930,7 +1880,7 @@ function resolveAsyncComponents(matched) {
       // we are not using Vue's default async resolving mechanism because
       // we want to halt the navigation until the incoming component has been
       // resolved.
-      if (typeof def === "function" && def.cid === undefined) {
+      if (typeof def === 'function' && def.cid === undefined) {
         hasAsync = true;
         pending++;
 
@@ -1939,9 +1889,9 @@ function resolveAsyncComponents(matched) {
             resolvedDef = resolvedDef.default;
           }
           // save resolved on async factory in case it's used elsewhere
-          def.resolved = typeof resolvedDef === "function" ?
-            resolvedDef :
-            _Vue.extend(resolvedDef);
+          def.resolved = typeof resolvedDef === 'function'
+            ? resolvedDef
+            : _Vue.extend(resolvedDef);
           match.components[key] = resolvedDef;
           pending--;
           if (pending <= 0) {
@@ -1951,11 +1901,11 @@ function resolveAsyncComponents(matched) {
 
         const reject = once(reason => {
           const msg = `Failed to resolve async component ${key}: ${reason}`;
-          warn(false, msg);
+           warn(false, msg);
           if (!error) {
-            error = isError(reason) ?
-              reason :
-              new Error(msg);
+            error = isError(reason)
+              ? reason
+              : new Error(msg);
             next(error);
           }
         });
@@ -1967,12 +1917,12 @@ function resolveAsyncComponents(matched) {
           reject(e);
         }
         if (res) {
-          if (typeof res.then === "function") {
+          if (typeof res.then === 'function') {
             res.then(resolve, reject);
           } else {
             // new syntax in Vue 2.3
             const comp = res.component;
-            if (comp && typeof comp.then === "function") {
+            if (comp && typeof comp.then === 'function') {
               comp.then(resolve, reject);
             }
           }
@@ -1981,10 +1931,10 @@ function resolveAsyncComponents(matched) {
     });
 
     if (!hasAsync) next();
-  };
+  }
 }
 
-function flatMapComponents(
+function flatMapComponents (
   matched,
   fn
 ) {
@@ -1993,45 +1943,45 @@ function flatMapComponents(
       m.components[key],
       m.instances[key],
       m, key
-    ));
-  }));
+    ))
+  }))
 }
 
-function flatten(arr) {
-  return Array.prototype.concat.apply([], arr);
+function flatten (arr) {
+  return Array.prototype.concat.apply([], arr)
 }
 
 const hasSymbol =
-  typeof Symbol === "function" &&
-  typeof Symbol.toStringTag === "symbol";
+  typeof Symbol === 'function' &&
+  typeof Symbol.toStringTag === 'symbol';
 
-function isESModule(obj) {
-  return obj.__esModule || (hasSymbol && obj[Symbol.toStringTag] === "Module");
+function isESModule (obj) {
+  return obj.__esModule || (hasSymbol && obj[Symbol.toStringTag] === 'Module')
 }
 
 // in Webpack 2, require.ensure now also returns a Promise
 // so the resolve/reject functions may get called an extra time
 // if the user uses an arrow function shorthand that happens to
 // return that Promise.
-function once(fn) {
+function once (fn) {
   let called = false;
   return function (...args) {
-    if (called) return;
+    if (called) return
     called = true;
-    return fn.apply(this, args);
-  };
+    return fn.apply(this, args)
+  }
 }
 
 class NavigationDuplicated extends Error {
-  constructor(normalizedLocation) {
+  constructor (normalizedLocation) {
     super();
-    this.name = this._name = "NavigationDuplicated";
+    this.name = this._name = 'NavigationDuplicated';
     // passing the message to super() doesn't seem to work in the transpiled version
     this.message = `Navigating to current location ("${
       normalizedLocation.fullPath
     }") is not allowed`;
     // add a stack property so services like Sentry can correctly display it
-    Object.defineProperty(this, "stack", {
+    Object.defineProperty(this, 'stack', {
       value: new Error().stack,
       writable: true,
       configurable: true
@@ -2043,29 +1993,29 @@ class NavigationDuplicated extends Error {
 }
 
 // support IE9
-NavigationDuplicated._name = "NavigationDuplicated";
+NavigationDuplicated._name = 'NavigationDuplicated';
 
 /*  */
 
 class History {
-
-
-
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   // implemented by sub-classes
+  
+  
+  
+  
+  
 
-
-
-
-
-
-  constructor(router, base) {
+  constructor (router, base) {
     this.router = router;
     this.base = normalizeBase(base);
     // start with a route object that stands for "nowhere"
@@ -2077,11 +2027,11 @@ class History {
     this.errorCbs = [];
   }
 
-  listen(cb) {
+  listen (cb) {
     this.cb = cb;
   }
 
-  onReady(cb, errorCb) {
+  onReady (cb, errorCb) {
     if (this.ready) {
       cb();
     } else {
@@ -2092,11 +2042,11 @@ class History {
     }
   }
 
-  onError(errorCb) {
+  onError (errorCb) {
     this.errorCbs.push(errorCb);
   }
 
-  transitionTo(
+  transitionTo (
     location,
     onComplete,
     onAbort
@@ -2131,7 +2081,7 @@ class History {
     );
   }
 
-  confirmTransition(route, onComplete, onAbort) {
+  confirmTransition (route, onComplete, onAbort) {
     const current = this.current;
     const abort = err => {
       // after merging https://github.com/vuejs/vue-router/pull/2771 we
@@ -2144,7 +2094,7 @@ class History {
             cb(err);
           });
         } else {
-          warn(false, "uncaught error during route navigation:");
+          warn(false, 'uncaught error during route navigation:');
           console.error(err);
         }
       }
@@ -2156,14 +2106,10 @@ class History {
       route.matched.length === current.matched.length
     ) {
       this.ensureURL();
-      return abort(new NavigationDuplicated(route));
+      return abort(new NavigationDuplicated(route))
     }
 
-    const {
-      updated,
-      deactivated,
-      activated
-    } = resolveQueue(
+    const { updated, deactivated, activated } = resolveQueue(
       this.current.matched,
       route.matched
     );
@@ -2184,7 +2130,7 @@ class History {
     this.pending = route;
     const iterator = (hook, next) => {
       if (this.pending !== route) {
-        return abort();
+        return abort()
       }
       try {
         hook(route, current, (to) => {
@@ -2193,13 +2139,13 @@ class History {
             this.ensureURL(true);
             abort(to);
           } else if (
-            typeof to === "string" ||
-            (typeof to === "object" &&
-              (typeof to.path === "string" || typeof to.name === "string"))
+            typeof to === 'string' ||
+            (typeof to === 'object' &&
+              (typeof to.path === 'string' || typeof to.name === 'string'))
           ) {
             // next('/') or next({ path: '/' }) -> redirect
             abort();
-            if (typeof to === "object" && to.replace) {
+            if (typeof to === 'object' && to.replace) {
               this.replace(to);
             } else {
               this.push(to);
@@ -2223,7 +2169,7 @@ class History {
       const queue = enterGuards.concat(this.router.resolveHooks);
       runQueue(queue, iterator, () => {
         if (this.pending !== route) {
-          return abort();
+          return abort()
         }
         this.pending = null;
         onComplete(route);
@@ -2238,7 +2184,7 @@ class History {
     });
   }
 
-  updateRoute(route) {
+  updateRoute (route) {
     const prev = this.current;
     this.current = route;
     this.cb && this.cb(route);
@@ -2248,27 +2194,27 @@ class History {
   }
 }
 
-function normalizeBase(base) {
+function normalizeBase (base) {
   if (!base) {
     if (inBrowser) {
       // respect <base> tag
-      const baseEl = document.querySelector("base");
-      base = (baseEl && baseEl.getAttribute("href")) || "/";
+      const baseEl = document.querySelector('base');
+      base = (baseEl && baseEl.getAttribute('href')) || '/';
       // strip full URL origin
-      base = base.replace(/^https?:\/\/[^\/]+/, "");
+      base = base.replace(/^https?:\/\/[^\/]+/, '');
     } else {
-      base = "/";
+      base = '/';
     }
   }
   // make sure there's the starting slash
-  if (base.charAt(0) !== "/") {
-    base = "/" + base;
+  if (base.charAt(0) !== '/') {
+    base = '/' + base;
   }
   // remove trailing slash
-  return base.replace(/\/$/, "");
+  return base.replace(/\/$/, '')
 }
 
-function resolveQueue(
+function resolveQueue (
   current,
   next
 ) {
@@ -2276,17 +2222,17 @@ function resolveQueue(
   const max = Math.max(current.length, next.length);
   for (i = 0; i < max; i++) {
     if (current[i] !== next[i]) {
-      break;
+      break
     }
   }
   return {
     updated: next.slice(0, i),
     activated: next.slice(i),
     deactivated: current.slice(i)
-  };
+  }
 }
 
-function extractGuards(
+function extractGuards (
   records,
   name,
   bind,
@@ -2295,65 +2241,65 @@ function extractGuards(
   const guards = flatMapComponents(records, (def, instance, match, key) => {
     const guard = extractGuard(def, name);
     if (guard) {
-      return Array.isArray(guard) ?
-        guard.map(guard => bind(guard, instance, match, key)) :
-        bind(guard, instance, match, key);
+      return Array.isArray(guard)
+        ? guard.map(guard => bind(guard, instance, match, key))
+        : bind(guard, instance, match, key)
     }
   });
-  return flatten(reverse ? guards.reverse() : guards);
+  return flatten(reverse ? guards.reverse() : guards)
 }
 
-function extractGuard(
+function extractGuard (
   def,
   key
 ) {
-  if (typeof def !== "function") {
+  if (typeof def !== 'function') {
     // extend now so that global mixins are applied.
     def = _Vue.extend(def);
   }
-  return def.options[key];
+  return def.options[key]
 }
 
-function extractLeaveGuards(deactivated) {
-  return extractGuards(deactivated, "beforeRouteLeave", bindGuard, true);
+function extractLeaveGuards (deactivated) {
+  return extractGuards(deactivated, 'beforeRouteLeave', bindGuard, true)
 }
 
-function extractUpdateHooks(updated) {
-  return extractGuards(updated, "beforeRouteUpdate", bindGuard);
+function extractUpdateHooks (updated) {
+  return extractGuards(updated, 'beforeRouteUpdate', bindGuard)
 }
 
-function bindGuard(guard, instance) {
+function bindGuard (guard, instance) {
   if (instance) {
-    return function boundRouteGuard() {
-      return guard.apply(instance, arguments);
-    };
+    return function boundRouteGuard () {
+      return guard.apply(instance, arguments)
+    }
   }
 }
 
-function extractEnterGuards(
+function extractEnterGuards (
   activated,
   cbs,
   isValid
 ) {
   return extractGuards(
     activated,
-    "beforeRouteEnter",
+    'beforeRouteEnter',
     (guard, _, match, key) => {
-      return bindEnterGuard(guard, match, key, cbs, isValid);
+      return bindEnterGuard(guard, match, key, cbs, isValid)
     }
-  );
+  )
 }
 
-function bindEnterGuard(
+function bindEnterGuard (
   guard,
   match,
   key,
   cbs,
   isValid
 ) {
-  return function routeEnterGuard(to, from, next) {
+  return function routeEnterGuard (to, from, next) {
     return guard(to, from, cb => {
-      if (typeof cb === "function") {
+      if (typeof cb === 'function') {
         cbs.push(() => {
           // #750
           // if a router-view is wrapped with an out-in transition,
@@ -2364,11 +2310,11 @@ function bindEnterGuard(
         });
       }
       next(cb);
-    });
-  };
+    })
+  }
 }
 
-function poll(
+function poll (
   cb, // somehow flow cannot infer this is a function
   instances,
   key,
@@ -2389,7 +2335,7 @@ function poll(
 /*  */
 
 class HTML5History extends History {
-  constructor(router, base) {
+  constructor (router, base) {
     super(router, base);
 
     const expectScroll = router.options.scrollBehavior;
@@ -2400,14 +2346,14 @@ class HTML5History extends History {
     }
 
     const initLocation = getLocation(this.base);
-    window.addEventListener("popstate", e => {
+    window.addEventListener('popstate', e => {
       const current = this.current;
 
       // Avoiding first `popstate` event dispatched in some browsers but first
       // history route not updated since async guard at the same time.
       const location = getLocation(this.base);
       if (this.current === START && location === initLocation) {
-        return;
+        return
       }
 
       this.transitionTo(location, route => {
@@ -2418,14 +2364,12 @@ class HTML5History extends History {
     });
   }
 
-  go(n) {
+  go (n) {
     window.history.go(n);
   }
 
-  push(location, onComplete, onAbort) {
-    const {
-      current: fromRoute
-    } = this;
+  push (location, onComplete, onAbort) {
+    const { current: fromRoute } = this;
     this.transitionTo(location, route => {
       pushState(cleanPath(this.base + route.fullPath));
       handleScroll(this.router, route, fromRoute, false);
@@ -2433,10 +2377,8 @@ class HTML5History extends History {
     }, onAbort);
   }
 
-  replace(location, onComplete, onAbort) {
-    const {
-      current: fromRoute
-    } = this;
+  replace (location, onComplete, onAbort) {
+    const { current: fromRoute } = this;
     this.transitionTo(location, route => {
       replaceState(cleanPath(this.base + route.fullPath));
       handleScroll(this.router, route, fromRoute, false);
@@ -2444,41 +2386,41 @@ class HTML5History extends History {
     }, onAbort);
   }
 
-  ensureURL(push) {
+  ensureURL (push) {
     if (getLocation(this.base) !== this.current.fullPath) {
       const current = cleanPath(this.base + this.current.fullPath);
       push ? pushState(current) : replaceState(current);
     }
   }
 
-  getCurrentLocation() {
-    return getLocation(this.base);
+  getCurrentLocation () {
+    return getLocation(this.base)
   }
 }
 
-function getLocation(base) {
+function getLocation (base) {
   let path = decodeURI(window.location.pathname);
   if (base && path.indexOf(base) === 0) {
     path = path.slice(base.length);
   }
-  return (path || "/") + window.location.search + window.location.hash;
+  return (path || '/') + window.location.search + window.location.hash
 }
 
 /*  */
 
 class HashHistory extends History {
-  constructor(router, base, fallback) {
+  constructor (router, base, fallback) {
     super(router, base);
     // check history fallback deeplinking
     if (fallback && checkFallback(this.base)) {
-      return;
+      return
     }
     ensureSlash();
   }
 
   // this is delayed until the app mounts
   // to avoid the hashchange listener being fired too early
-  setupListeners() {
+  setupListeners () {
     const router = this.router;
     const expectScroll = router.options.scrollBehavior;
     const supportsScroll = supportsPushState && expectScroll;
@@ -2488,11 +2430,11 @@ class HashHistory extends History {
     }
 
     window.addEventListener(
-      supportsPushState ? "popstate" : "hashchange",
+      supportsPushState ? 'popstate' : 'hashchange',
       () => {
         const current = this.current;
         if (!ensureSlash()) {
-          return;
+          return
         }
         this.transitionTo(getHash(), route => {
           if (supportsScroll) {
@@ -2506,10 +2448,8 @@ class HashHistory extends History {
     );
   }
 
-  push(location, onComplete, onAbort) {
-    const {
-      current: fromRoute
-    } = this;
+  push (location, onComplete, onAbort) {
+    const { current: fromRoute } = this;
     this.transitionTo(
       location,
       route => {
@@ -2521,10 +2461,8 @@ class HashHistory extends History {
     );
   }
 
-  replace(location, onComplete, onAbort) {
-    const {
-      current: fromRoute
-    } = this;
+  replace (location, onComplete, onAbort) {
+    const { current: fromRoute } = this;
     this.transitionTo(
       location,
       route => {
@@ -2536,54 +2474,54 @@ class HashHistory extends History {
     );
   }
 
-  go(n) {
+  go (n) {
     window.history.go(n);
   }
 
-  ensureURL(push) {
+  ensureURL (push) {
     const current = this.current.fullPath;
     if (getHash() !== current) {
       push ? pushHash(current) : replaceHash(current);
     }
   }
 
-  getCurrentLocation() {
-    return getHash();
+  getCurrentLocation () {
+    return getHash()
   }
 }
 
-function checkFallback(base) {
+function checkFallback (base) {
   const location = getLocation(base);
   if (!/^\/#/.test(location)) {
-    window.location.replace(cleanPath(base + "/#" + location));
-    return true;
+    window.location.replace(cleanPath(base + '/#' + location));
+    return true
   }
 }
 
-function ensureSlash() {
+function ensureSlash () {
   const path = getHash();
-  if (path.charAt(0) === "/") {
-    return true;
+  if (path.charAt(0) === '/') {
+    return true
   }
-  replaceHash("/" + path);
-  return false;
+  replaceHash('/' + path);
+  return false
 }
 
-function getHash() {
+function getHash () {
   // We can't use window.location.hash here because it's not
   // consistent across browsers - Firefox will pre-decode it!
   let href = window.location.href;
-  const index = href.indexOf("#");
+  const index = href.indexOf('#');
   // empty path
-  if (index < 0) return "";
+  if (index < 0) return ''
 
   href = href.slice(index + 1);
   // decode the hash but not the search or hash
   // as search(query) is already decoded
   // https://github.com/vuejs/vue-router/issues/2708
-  const searchIndex = href.indexOf("?");
+  const searchIndex = href.indexOf('?');
   if (searchIndex < 0) {
-    const hashIndex = href.indexOf("#");
+    const hashIndex = href.indexOf('#');
     if (hashIndex > -1) {
       href = decodeURI(href.slice(0, hashIndex)) + href.slice(hashIndex);
     } else href = decodeURI(href);
@@ -2591,17 +2529,17 @@ function getHash() {
     href = decodeURI(href.slice(0, searchIndex)) + href.slice(searchIndex);
   }
 
-  return href;
+  return href
 }
 
-function getUrl(path) {
+function getUrl (path) {
   const href = window.location.href;
-  const i = href.indexOf("#");
+  const i = href.indexOf('#');
   const base = i >= 0 ? href.slice(0, i) : href;
-  return `${base}#${path}`;
+  return `${base}#${path}`
 }
 
-function pushHash(path) {
+function pushHash (path) {
   if (supportsPushState) {
     pushState(getUrl(path));
   } else {
@@ -2609,7 +2547,7 @@ function pushHash(path) {
   }
 }
 
-function replaceHash(path) {
+function replaceHash (path) {
   if (supportsPushState) {
     replaceState(getUrl(path));
   } else {
@@ -2620,16 +2558,16 @@ function replaceHash(path) {
 /*  */
 
 class AbstractHistory extends History {
+  
+  
 
-
-
-  constructor(router, base) {
+  constructor (router, base) {
     super(router, base);
     this.stack = [];
     this.index = -1;
   }
 
-  push(location, onComplete, onAbort) {
+  push (location, onComplete, onAbort) {
     this.transitionTo(
       location,
       route => {
@@ -2641,7 +2579,7 @@ class AbstractHistory extends History {
     );
   }
 
-  replace(location, onComplete, onAbort) {
+  replace (location, onComplete, onAbort) {
     this.transitionTo(
       location,
       route => {
@@ -2652,10 +2590,10 @@ class AbstractHistory extends History {
     );
   }
 
-  go(n) {
+  go (n) {
     const targetIndex = this.index + n;
     if (targetIndex < 0 || targetIndex >= this.stack.length) {
-      return;
+      return
     }
     const route = this.stack[targetIndex];
     this.confirmTransition(
@@ -2672,12 +2610,12 @@ class AbstractHistory extends History {
     );
   }
 
-  getCurrentLocation() {
+  getCurrentLocation () {
     const current = this.stack[this.stack.length - 1];
-    return current ? current.fullPath : "/";
+    return current ? current.fullPath : '/'
   }
 
-  ensureURL() {
+  ensureURL () {
     // noop
   }
 }
@@ -2687,23 +2625,23 @@ class AbstractHistory extends History {
 
 
 class VueRouter {
+  
+  
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  constructor(options = {}) {
+  constructor (options = {}) {
     this.app = null;
     this.apps = [];
     this.options = options;
@@ -2712,56 +2650,57 @@ class VueRouter {
     this.afterHooks = [];
     this.matcher = createMatcher(options.routes || [], this);
 
-    let mode = options.mode || "hash";
-    this.fallback = mode === "history" && !supportsPushState && options.fallback !== false;
+    let mode = options.mode || 'hash';
+    this.fallback = mode === 'history' && !supportsPushState && options.fallback !== false;
     if (this.fallback) {
-      mode = "hash";
+      mode = 'hash';
     }
     if (!inBrowser) {
-      mode = "abstract";
+      mode = 'abstract';
     }
     this.mode = mode;
 
     switch (mode) {
-      case "history":
+      case 'history':
         this.history = new HTML5History(this, options.base);
-        break;
-      case "hash":
+        break
+      case 'hash':
         this.history = new HashHistory(this, options.base, this.fallback);
-        break;
-      case "abstract":
+        break
+      case 'abstract':
         this.history = new AbstractHistory(this, options.base);
-        break;
-      default: {
-        assert(false, `invalid mode: ${mode}`);
-      }
+        break
+      default:
+        {
+          assert(false, `invalid mode: ${mode}`);
+        }
     }
   }
 
-  match(
+  match (
     raw,
     current,
     redirectedFrom
   ) {
-    return this.matcher.match(raw, current, redirectedFrom);
+    return this.matcher.match(raw, current, redirectedFrom)
   }
 
-  get currentRoute() {
-    return this.history && this.history.current;
+  get currentRoute () {
+    return this.history && this.history.current
   }
 
-  init(app /* Vue component instance */ ) {
-    assert(
+  init (app /* Vue component instance */) {
+     assert(
       install.installed,
-      "not installed. Make sure to call `Vue.use(VueRouter)` " +
-      "before creating root instance."
+      `not installed. Make sure to call \`Vue.use(VueRouter)\` ` +
+      `before creating root instance.`
     );
 
     this.apps.push(app);
 
     // set up app destroyed handler
     // https://github.com/vuejs/vue-router/issues/2639
-    app.$once("hook:destroyed", () => {
+    app.$once('hook:destroyed', () => {
       // clean out app from this.apps array once destroyed
       const index = this.apps.indexOf(app);
       if (index > -1) this.apps.splice(index, 1);
@@ -2773,7 +2712,7 @@ class VueRouter {
     // main app previously initialized
     // return as we don't need to set up new history listener
     if (this.app) {
-      return;
+      return
     }
 
     this.app = app;
@@ -2800,77 +2739,77 @@ class VueRouter {
     });
   }
 
-  beforeEach(fn) {
-    return registerHook(this.beforeHooks, fn);
+  beforeEach (fn) {
+    return registerHook(this.beforeHooks, fn)
   }
 
-  beforeResolve(fn) {
-    return registerHook(this.resolveHooks, fn);
+  beforeResolve (fn) {
+    return registerHook(this.resolveHooks, fn)
   }
 
-  afterEach(fn) {
-    return registerHook(this.afterHooks, fn);
+  afterEach (fn) {
+    return registerHook(this.afterHooks, fn)
   }
 
-  onReady(cb, errorCb) {
+  onReady (cb, errorCb) {
     this.history.onReady(cb, errorCb);
   }
 
-  onError(errorCb) {
+  onError (errorCb) {
     this.history.onError(errorCb);
   }
 
-  push(location, onComplete, onAbort) {
+  push (location, onComplete, onAbort) {
     // $flow-disable-line
-    if (!onComplete && !onAbort && typeof Promise !== "undefined") {
+    if (!onComplete && !onAbort && typeof Promise !== 'undefined') {
       return new Promise((resolve, reject) => {
         this.history.push(location, resolve, reject);
-      });
+      })
     } else {
       this.history.push(location, onComplete, onAbort);
     }
   }
 
-  replace(location, onComplete, onAbort) {
+  replace (location, onComplete, onAbort) {
     // $flow-disable-line
-    if (!onComplete && !onAbort && typeof Promise !== "undefined") {
+    if (!onComplete && !onAbort && typeof Promise !== 'undefined') {
       return new Promise((resolve, reject) => {
         this.history.replace(location, resolve, reject);
-      });
+      })
     } else {
       this.history.replace(location, onComplete, onAbort);
     }
   }
 
-  go(n) {
+  go (n) {
     this.history.go(n);
   }
 
-  back() {
+  back () {
     this.go(-1);
   }
 
-  forward() {
+  forward () {
     this.go(1);
   }
 
-  getMatchedComponents(to) {
-    const route = to ?
-      to.matched ?
-      to :
-      this.resolve(to).route :
-      this.currentRoute;
+  getMatchedComponents (to) {
+    const route = to
+      ? to.matched
+        ? to
+        : this.resolve(to).route
+      : this.currentRoute;
     if (!route) {
-      return [];
+      return []
     }
     return [].concat.apply([], route.matched.map(m => {
       return Object.keys(m.components).map(key => {
-        return m.components[key];
-      });
-    }));
+        return m.components[key]
+      })
+    }))
   }
 
-  resolve(
+  resolve (
     to,
     current,
     append
@@ -2893,10 +2832,10 @@ class VueRouter {
       // for backwards compat
       normalizedTo: location,
       resolved: route
-    };
+    }
   }
 
-  addRoutes(routes) {
+  addRoutes (routes) {
     this.matcher.addRoutes(routes);
     if (this.history.current !== START) {
       this.history.transitionTo(this.history.getCurrentLocation());
@@ -2904,21 +2843,21 @@ class VueRouter {
   }
 }
 
-function registerHook(list, fn) {
+function registerHook (list, fn) {
   list.push(fn);
   return () => {
     const i = list.indexOf(fn);
     if (i > -1) list.splice(i, 1);
-  };
+  }
 }
 
-function createHref(base, fullPath, mode) {
-  var path = mode === "hash" ? "#" + fullPath : fullPath;
-  return base ? cleanPath(base + "/" + path) : path;
+function createHref (base, fullPath, mode) {
+  var path = mode === 'hash' ? '#' + fullPath : fullPath;
+  return base ? cleanPath(base + '/' + path) : path
 }
 
 VueRouter.install = install;
-VueRouter.version = "3.1.5";
+VueRouter.version = '3.1.5';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);

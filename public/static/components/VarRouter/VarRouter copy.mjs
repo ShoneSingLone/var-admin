@@ -1584,7 +1584,6 @@ class History {
 
         this.confirmTransition(route,
             () => {
-                debugger;
                 this.updateRoute(route);
                 onComplete && onComplete(route);
                 this.ensureURL();
@@ -1690,7 +1689,6 @@ class History {
                 abort(e);
             }
         };
-        debugger;
         runQueue(queue, iterator, () => {
             const postEnterCbs = [];
             const isValid = () => this.current === route;
@@ -1716,7 +1714,6 @@ class History {
     }
 
     updateRoute(route) {
-        debugger;
         const prev = this.current;
         this.current = route;
         this.cb && this.cb(route);

@@ -36,34 +36,22 @@ export default {
     emit: emit,
 }; */
 
-
-const {
-    _
-} = window;
-
 const events = {};
+
 const on = (name, callback) => {
-    let callbacks = events[name];
-    if (_.isArray(callbacks)) {
-        callbacks.push(callback);
-    } else {
-        events[name] = callback;
-    }
+    events[name] = events[name] || [];
+    events[name].push(callback);
 };
 
-const off = (name, self) => {
+const off = (name) => {
     delete events[name];
 };
 
 const trigger = (name, data) => {
-    let callbacks = events[name];
-    if (_.isArray(callbacks)) {
-        callbacks.map(callback => {
-            callback(data);
-        });
-    } else if (_.isFunction(callbacks)) {
-        callbacks(data);
-    }
+    let callbacks = events[name] || [];
+    callbacks.map(callback => {
+        callback(data);
+    });
 };
 
 export default {

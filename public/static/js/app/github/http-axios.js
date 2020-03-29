@@ -1,22 +1,24 @@
-(function (axios, _) {
+(function (axios, _, Cookies) {
     var service = axios.create({
         baseURL: window.APP_CONFIGS.BASE_URL,
         timeout: 1000 * 180,
         headers: {
             Accept: "application/json"
-        }
+        },
+        withCredentials: true
     });
-    /****** request拦截器==>对请求参数做处理 ******/
 
+    /****** request拦截器==>对请求参数做处理 ******/
     service.interceptors.request.use(
         function (config) {
+            config.headers = config.headers || {};
             // app.$vux.loading.show({});
             var token = _.$ls.get("access_token");
             if (token) {
-                config.headers = {
-                    Authorization: "token  " + token
-                };
+                config.headers["Authorization"] = "token  " + token;
             }
+            /* 菜单显示的语言，如果没有则为null */
+            config.headers["Accept-Language"] = Cookies.get("language") || "zh-CN";
             return config;
         },
         function (error) {
@@ -44,7 +46,6 @@
             console.log("error");
             console.log(error);
             console.log(JSON.stringify(error));
-            debugger;
             // let text = JSON.parse(JSON.stringify(error)).response.status === 404 ?
             //     "404" :
             //     "网络异常，请重试";
@@ -57,4 +58,4 @@
         }
     );
     window._.$axios = service;
-})(window._.$axios, window._);
+})(window._.$axios, window._, window.Cookies);

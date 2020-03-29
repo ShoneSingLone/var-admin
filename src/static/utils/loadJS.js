@@ -113,9 +113,7 @@ function sourceToCode(source) {
     }
 }
 
-function shouldCache(url) {
-    return window.APP_CONFIGS.cache.isCacheAll;
-}
+const shouldCache = url => window.APP_CONFIGS.cache.isCacheAll;
 
 function loadJSByAddScriptElement(url, _opts) {
     return new Promise((resolve, reject) => {
@@ -234,7 +232,6 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
                         }
                     };
                     xhr.open("GET", `${url}?_t=${Date.now()}`, true);
-
                     if (xhr.setRequestHeader) {
                         xhr.setRequestHeader("Accept", "application/x-es-module, */*");
                         // can set "authorization: true" to enable withCredentials only
@@ -244,7 +241,6 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
                             xhr.withCredentials = true;
                         }
                     }
-
                     xhr.send(null);
                 });
 

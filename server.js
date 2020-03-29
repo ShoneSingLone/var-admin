@@ -41,7 +41,6 @@ if (isProd) {
     heartbeat: 10 * 1000,
   }));
 }
-
 const port = process.env.PORT || 8082;
 app.listen(port, () => {
   // eslint-disable-next-line no-console

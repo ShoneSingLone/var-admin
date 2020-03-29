@@ -13,9 +13,7 @@ import {
 import menuRes from "@@/static/module/layout/shell/MockMainSidebar.js";
 import LoadingView from "@@/static/components/LoadingView.vue";
 import lodash from "lodash";
-import {
-    VarRouter
-} from "@@/static/components/VarRouter/VarRouter.mjs";
+import { VarRouter } from "@@/static/components/VarRouter/VarRouter.mjs";
 
 const {
     Vue,

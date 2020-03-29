@@ -83,6 +83,8 @@ export default {
       APP_STATE.contentTabs.push(currentTab);
       APP_STATE.contentTabsMap[currentRoute.id] = currentTab;
       APP_STATE.contentTabsActiveName = currentRoute.id;
+      APP_STATE.sidebarMenuActiveName = currentRoute.id;
+
       console.log(
         APP_STATE.contentTabs,
         APP_STATE.contentTabsMap,
@@ -92,9 +94,8 @@ export default {
     handleTabsRemove(targetName) {
       let tabs = this.editableTabs;
       let activeName = this.editableTabsValue;
-      debugger;
       if (activeName === targetName) {
-        tabs.forEach((tab, index) => {
+        _.each(tabs, (tab, index) => {
           if (tab.name === targetName) {
             let nextTab = tabs[index + 1] || tabs[index - 1];
             if (nextTab) {
@@ -112,6 +113,7 @@ export default {
       if (routeId === "home") {
         return false;
       }
+      debugger;
       /* 获取rootRoute信息 */
       const rootRoute = APP_STATE.contentTabsMap[routeId];
       let index = 1;
@@ -128,11 +130,12 @@ export default {
     handleTabClick(tab) {
       const targetTab = APP_STATE.contentTabsRouteMap[tab.name];
       if (!targetTab) {
-        alert("Tab 没有必要的参数 ");
+        alert("Tab 没有必要的参数");
         return false;
       }
       /* 修正当前url */
-      const { name, meta, path, hash, query, params } = targetTab;
+      const { name, meta, path, hash, query, params, id } = targetTab;
+      APP_STATE.sidebarMenuActiveName = tab.id;
       APP_ROUTER.push({
         meta,
         path,

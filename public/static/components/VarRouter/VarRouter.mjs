@@ -869,7 +869,7 @@ function compileRouteRegex(path, pathToRegexpOptions) {
 function normalizePath(path, parent, strict) {
     if (!strict) path = path.replace(/\/$/, "");
     if (path[0] === "/") return path;
-    if (parent == null) return path;
+    if (!parent) return path;
     return cleanPath(`${parent.path}/${path}`);
 }
 
@@ -880,11 +880,20 @@ function cleanPath(path) {
 
 /* 将route添加到pathList pathMap  */
 function addRouteRecord(pathList, pathMap, nameMap, route, parent, matchAs) {
-    const {
+    let {
         path,
         name
     } = route;
+    path = path || "";
+    name = name || "";
 
+    if (!path || !name) {
+        path = (function (url) {
+            return /^\//g.test(url) ? url : url ? "/" + url : "/";
+        })(route.url);
+        console.warn(route, "非标准路由配置");
+    }
+    path = /^\//g.test(path) ? path : path ? "/" + path : "/";
     const pathToRegexpOptions = route.pathToRegexpOptions || {};
     const normalizedPath = normalizePath(path, parent, pathToRegexpOptions.strict);
 
@@ -1159,6 +1168,9 @@ function createMatcher(routes /* 用户传入的路由配置 */ , router /* 当�
         pathMap,
         nameMap
     } = createRouteMap(routes);
+    router.pathList = pathList;
+    router.pathMap = pathMap;
+    router.nameMap = nameMap;
 
     /* 动态添加路由与侧边栏展示信息无关 */
     function addRoutes(routes) {

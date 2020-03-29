@@ -1,61 +1,69 @@
 <template>
   <div class="shell">
-    <!--     <pre class="console202003045558 elevation12">
+    <!--
+      <pre class="console202003045558 elevation12">
 {{ JSON.stringify(APP_ROUTER.currentRoute ,null,2) }}
-    </pre>-->
-    <div
+      </pre>
+    -->
+    <LoadingView
       :is="APP_STATE.componentNavbar"
       class="navbar elevation2"
       @click-toggle="toggleSidebarFold"
     >
       {{ APP_STATE.isSidebarFold?APP_STATE.sysNavSubTitle:APP_STATE.sysNavTitle }}
-    </div>
+    </LoadingView>
 
     <div class="main flex-horizon">
-      <div
+      <LoadingView
         :is="APP_STATE.componentSidbar"
-        :class="['sidebar elevation2',{fold:APP_STATE.isSidebarFold}]"
+        :class="['sidebar elevation6',{fold:APP_STATE.isSidebarFold}]"
       >
         sidebar
-      </div>
-      <div
+      </LoadingView>
+      <LoadingView
         :is="APP_STATE.componentContent"
         class="content flex1"
       >
         content
-      </div>
+      </LoadingView>
     </div>
   </div>
 </template>
 
 <script>
-import mainNavbar from "./MainNavbar.vue";
-import mainSidebar from "./MainSidebar.vue";
-import mainContent from "./MainContent.vue";
-
-const { APP_STATE, APP_ROUTER } = window;
+const {
+  APP_STATE,
+  EventBus,
+  _: { $lazyLoadComponent, $resolvePath }
+} = window;
 
 export default {
   TEMPLATE_PLACEHOLDER,
-  components: { mainNavbar, mainSidebar, mainContent },
+  components: {
+    mainNavbar: $lazyLoadComponent(
+      $resolvePath("static/module/layout/shell/MainNavbar.vue")
+    ),
+    mainSidebar: $lazyLoadComponent(
+      $resolvePath("static/module/layout/shell/MainSidebar.vue")
+    ),
+    mainContent: $lazyLoadComponent(
+      $resolvePath("static/module/layout/shell/MainContent.vue")
+    )
+  },
   provide() {
     return {
       SHELL: this
     };
   },
   data() {
-    return { APP_STATE, APP_ROUTER };
+    return { APP_STATE };
   },
   mounted() {
-    setTimeout(() => {
-      APP_STATE.componentContent = mainContent;
-    }, 1 * 3);
-    setTimeout(() => {
-      APP_STATE.componentSidbar = mainSidebar;
-    }, 1 * 2);
-    setTimeout(() => {
-      APP_STATE.componentNavbar = mainNavbar;
-    }, 1 * 1);
+    /* MainSidebarSubmenu.vue 路由加载完成之后再加载内容 */
+    EventBus.on("menus-loaded", () => {
+      /* 默认是loading */
+      APP_STATE.componentContent = "mainContent";
+    });
   },
   methods: {
     handleChange(value) {

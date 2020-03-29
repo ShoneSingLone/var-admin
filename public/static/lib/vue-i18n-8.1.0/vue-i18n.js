@@ -4,11 +4,11 @@
  * Released under the MIT License.
  */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define(factory) :
+  typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() :
+    typeof define === "function" && define.amd ? define(factory) :
     (global.VueI18n = factory());
 }(this, (function () {
-  'use strict';
+  "use strict";
 
   /*  */
 
@@ -17,8 +17,8 @@
    */
 
   function warn(msg, err) {
-    if (typeof console !== 'undefined') {
-      console.warn('[vue-i18n] ' + msg);
+    if (typeof console !== "undefined") {
+      console.warn("[vue-i18n] " + msg);
       /* istanbul ignore if */
       if (err) {
         console.warn(err.stack);
@@ -27,18 +27,18 @@
   }
 
   function isObject(obj) {
-    return obj !== null && typeof obj === 'object'
+    return obj !== null && typeof obj === "object";
   }
 
   var toString = Object.prototype.toString;
-  var OBJECT_STRING = '[object Object]';
+  var OBJECT_STRING = "[object Object]";
 
   function isPlainObject(obj) {
-    return toString.call(obj) === OBJECT_STRING
+    return toString.call(obj) === OBJECT_STRING;
   }
 
   function isNull(val) {
-    return val === null || val === undefined
+    return val === null || val === undefined;
   }
 
   function parseArgs() {
@@ -51,11 +51,11 @@
     if (args.length === 1) {
       if (isObject(args[0]) || Array.isArray(args[0])) {
         params = args[0];
-      } else if (typeof args[0] === 'string') {
+      } else if (typeof args[0] === "string") {
         locale = args[0];
       }
     } else if (args.length === 2) {
-      if (typeof args[0] === 'string') {
+      if (typeof args[0] === "string") {
         locale = args[0];
       }
       /* istanbul ignore if */
@@ -67,7 +67,7 @@
     return {
       locale: locale,
       params: params
-    }
+    };
   }
 
   function getOldChoiceIndexFixed(choice) {
@@ -75,42 +75,42 @@
       choice > 1 ?
       1 :
       0 :
-      1
+      1;
   }
 
   function getChoiceIndex(choice, choicesLength) {
     choice = Math.abs(choice);
 
     if (choicesLength === 2) {
-      return getOldChoiceIndexFixed(choice)
+      return getOldChoiceIndexFixed(choice);
     }
 
-    return choice ? Math.min(choice, 2) : 0
+    return choice ? Math.min(choice, 2) : 0;
   }
 
   function fetchChoice(message, choice) {
     /* istanbul ignore if */
-    if (!message && typeof message !== 'string') {
-      return null
+    if (!message && typeof message !== "string") {
+      return null;
     }
-    var choices = message.split('|');
+    var choices = message.split("|");
 
     choice = getChoiceIndex(choice, choices.length);
     if (!choices[choice]) {
-      return message
+      return message;
     }
-    return choices[choice].trim()
+    return choices[choice].trim();
   }
 
   function looseClone(obj) {
-    return JSON.parse(JSON.stringify(obj))
+    return JSON.parse(JSON.stringify(obj));
   }
 
   function remove(arr, item) {
     if (arr.length) {
       var index = arr.indexOf(item);
       if (index > -1) {
-        return arr.splice(index, 1)
+        return arr.splice(index, 1);
       }
     }
   }
@@ -118,7 +118,7 @@
   var hasOwnProperty = Object.prototype.hasOwnProperty;
 
   function hasOwn(obj, key) {
-    return hasOwnProperty.call(obj, key)
+    return hasOwnProperty.call(obj, key);
   }
 
   function merge(target) {
@@ -140,12 +140,12 @@
         }
       }
     }
-    return output
+    return output;
   }
 
   function looseEqual(a, b) {
     if (a === b) {
-      return true
+      return true;
     }
     var isObjectA = isObject(a);
     var isObjectB = isObject(b);
@@ -155,42 +155,42 @@
         var isArrayB = Array.isArray(b);
         if (isArrayA && isArrayB) {
           return a.length === b.length && a.every(function (e, i) {
-            return looseEqual(e, b[i])
-          })
+            return looseEqual(e, b[i]);
+          });
         } else if (!isArrayA && !isArrayB) {
           var keysA = Object.keys(a);
           var keysB = Object.keys(b);
           return keysA.length === keysB.length && keysA.every(function (key) {
-            return looseEqual(a[key], b[key])
-          })
+            return looseEqual(a[key], b[key]);
+          });
         } else {
           /* istanbul ignore next */
-          return false
+          return false;
         }
       } catch (e) {
         /* istanbul ignore next */
-        return false
+        return false;
       }
     } else if (!isObjectA && !isObjectB) {
-      return String(a) === String(b)
+      return String(a) === String(b);
     } else {
-      return false
+      return false;
     }
   }
 
   var canUseDateTimeFormat =
-    typeof Intl !== 'undefined' && typeof Intl.DateTimeFormat !== 'undefined';
+    typeof Intl !== "undefined" && typeof Intl.DateTimeFormat !== "undefined";
 
   var canUseNumberFormat =
-    typeof Intl !== 'undefined' && typeof Intl.NumberFormat !== 'undefined';
+    typeof Intl !== "undefined" && typeof Intl.NumberFormat !== "undefined";
 
   /*  */
 
   function extend(Vue) {
     // $FlowFixMe
-    Object.defineProperty(Vue.prototype, '$i18n', {
+    Object.defineProperty(Vue.prototype, "$i18n", {
       get: function get() {
-        return this._i18n
+        return this._i18n;
       }
     });
 
@@ -200,7 +200,7 @@
       while (len-- > 0) values[len] = arguments[len + 1];
 
       var i18n = this.$i18n;
-      return i18n._t.apply(i18n, [key, i18n.locale, i18n._getMessages(), this].concat(values))
+      return i18n._t.apply(i18n, [key, i18n.locale, i18n._getMessages(), this].concat(values));
     };
 
     Vue.prototype.$tc = function (key, choice) {
@@ -209,12 +209,12 @@
       while (len-- > 0) values[len] = arguments[len + 2];
 
       var i18n = this.$i18n;
-      return i18n._tc.apply(i18n, [key, i18n.locale, i18n._getMessages(), this, choice].concat(values))
+      return i18n._tc.apply(i18n, [key, i18n.locale, i18n._getMessages(), this, choice].concat(values));
     };
 
     Vue.prototype.$te = function (key, locale) {
       var i18n = this.$i18n;
-      return i18n._te(key, i18n.locale, i18n._getMessages(), locale)
+      return i18n._te(key, i18n.locale, i18n._getMessages(), locale);
     };
 
     Vue.prototype.$d = function (value) {
@@ -223,7 +223,7 @@
       var args = [],
         len = arguments.length - 1;
       while (len-- > 0) args[len] = arguments[len + 1];
-      return (ref = this.$i18n).d.apply(ref, [value].concat(args))
+      return (ref = this.$i18n).d.apply(ref, [value].concat(args));
     };
 
     Vue.prototype.$n = function (value) {
@@ -232,7 +232,7 @@
       var args = [],
         len = arguments.length - 1;
       while (len-- > 0) args[len] = arguments[len + 1];
-      return (ref = this.$i18n).n.apply(ref, [value].concat(args))
+      return (ref = this.$i18n).n.apply(ref, [value].concat(args));
     };
   }
 
@@ -317,7 +317,7 @@
 
     beforeDestroy: function beforeDestroy() {
       if (!this._i18n) {
-        return
+        return;
       }
 
       if (this._subscribing) {
@@ -337,17 +337,17 @@
 
       this._i18n = null;
     }
-  }
+  };
 
   /*  */
 
   var component = {
-    name: 'i18n',
+    name: "i18n",
     functional: true,
     props: {
       tag: {
         type: String,
-        default: 'span'
+        default: "span"
       },
       path: {
         type: String,
@@ -369,14 +369,14 @@
       var i18n = parent.$i18n;
 
       children = (children || []).filter(function (child) {
-        return child.tag || (child.text = child.text.trim())
+        return child.tag || (child.text = child.text.trim());
       });
 
       if (!i18n) {
         {
-          warn('Cannot find VueI18n instance!');
+          warn("Cannot find VueI18n instance!");
         }
-        return children
+        return children;
       }
 
       var path = props.path;
@@ -392,12 +392,12 @@
       var everyPlace = children.every(function (child) {
         if (child.data && child.data.attrs) {
           var place = child.data.attrs.place;
-          return (typeof place !== 'undefined') && place !== ''
+          return (typeof place !== "undefined") && place !== "";
         }
       });
 
       if (hasPlaces && children.length > 0 && !everyPlace) {
-        warn('If places prop is set, all child elements must have place prop set.');
+        warn("If places prop is set, all child elements must have place prop set.");
       }
 
       if (Array.isArray(places)) {
@@ -417,15 +417,15 @@
         params[key] = child;
       });
 
-      return h(props.tag, data, i18n.i(path, locale, params))
+      return h(props.tag, data, i18n.i(path, locale, params));
     }
-  }
+  };
 
   /*  */
 
   function bind(el, binding, vnode) {
     if (!assert(el, vnode)) {
-      return
+      return;
     }
 
     t(el, binding, vnode);
@@ -433,11 +433,11 @@
 
   function update(el, binding, vnode, oldVNode) {
     if (!assert(el, vnode)) {
-      return
+      return;
     }
 
     if (localeEqual(el, vnode) && looseEqual(binding.value, binding.oldValue)) {
-      return
+      return;
     }
 
     t(el, binding, vnode);
@@ -446,35 +446,35 @@
   function unbind(el, binding, vnode, oldVNode) {
     var vm = vnode.context;
     if (!vm) {
-      warn('Vue instance does not exists in VNode context');
-      return
+      warn("Vue instance does not exists in VNode context");
+      return;
     }
 
-    el.textContent = '';
+    el.textContent = "";
     el._vt = undefined;
-    delete el['_vt'];
+    delete el["_vt"];
     el._locale = undefined;
-    delete el['_locale'];
+    delete el["_locale"];
   }
 
   function assert(el, vnode) {
     var vm = vnode.context;
     if (!vm) {
-      warn('Vue instance doest not exists in VNode context');
-      return false
+      warn("Vue instance doest not exists in VNode context");
+      return false;
     }
 
     if (!vm.$i18n) {
-      warn('VueI18n instance does not exists in Vue instance');
-      return false
+      warn("VueI18n instance does not exists in Vue instance");
+      return false;
     }
 
-    return true
+    return true;
   }
 
   function localeEqual(el, vnode) {
     var vm = vnode.context;
-    return el._locale === vm.$i18n.locale
+    return el._locale === vm.$i18n.locale;
   }
 
   function t(el, binding, vnode) {
@@ -488,13 +488,13 @@
     var args = ref.args;
     var choice = ref.choice;
     if (!path && !locale && !args) {
-      warn('value type not supported');
-      return
+      warn("value type not supported");
+      return;
     }
 
     if (!path) {
-      warn('`path` is required in v-t directive');
-      return
+      warn("`path` is required in v-t directive");
+      return;
     }
 
     var vm = vnode.context;
@@ -512,7 +512,7 @@
     var args;
     var choice;
 
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       path = value;
     } else if (isPlainObject(value)) {
       path = value.path;
@@ -526,7 +526,7 @@
       locale: locale,
       args: args,
       choice: choice
-    }
+    };
   }
 
   function makeParams(locale, args) {
@@ -537,32 +537,31 @@
       params.push(args);
     }
 
-    return params
+    return params;
   }
 
   var Vue;
 
   function install(_Vue) {
-    debugger;
     Vue = _Vue;
 
-    var version = (Vue.version && Number(Vue.version.split('.')[0])) || -1;
+    var version = (Vue.version && Number(Vue.version.split(".")[0])) || -1;
     /* istanbul ignore if */
     if (install.installed) {
-      warn('already installed.');
-      return
+      warn("already installed.");
+      return;
     }
     install.installed = true;
 
     /* istanbul ignore if */
     if (version < 2) {
       warn(("vue-i18n (" + (install.version) + ") need to use Vue 2.0 or later (Vue: " + (Vue.version) + ")."));
-      return
+      return;
     }
 
     extend(Vue);
     Vue.mixin(mixin);
-    Vue.directive('t', {
+    Vue.directive("t", {
       bind: bind,
       update: update,
       unbind: unbind
@@ -574,7 +573,7 @@
     strats.i18n = function (parentVal, childVal) {
       return childVal === undefined ?
         parentVal :
-        childVal
+        childVal;
     };
   }
 
@@ -586,14 +585,14 @@
 
   BaseFormatter.prototype.interpolate = function interpolate(message, values) {
     if (!values) {
-      return [message]
+      return [message];
     }
     var tokens = this._caches[message];
     if (!tokens) {
       tokens = parse(message);
       this._caches[message] = tokens;
     }
-    return compile(tokens, values)
+    return compile(tokens, values);
   };
 
 
@@ -605,37 +604,37 @@
     var tokens = [];
     var position = 0;
 
-    var text = '';
+    var text = "";
     while (position < format.length) {
       var char = format[position++];
-      if (char === '{') {
+      if (char === "{") {
         if (text) {
           tokens.push({
-            type: 'text',
+            type: "text",
             value: text
           });
         }
 
-        text = '';
-        var sub = '';
+        text = "";
+        var sub = "";
         char = format[position++];
-        while (char !== '}') {
+        while (char !== "}") {
           sub += char;
           char = format[position++];
         }
 
         var type = RE_TOKEN_LIST_VALUE.test(sub) ?
-          'list' :
+          "list" :
           RE_TOKEN_NAMED_VALUE.test(sub) ?
-          'named' :
-          'unknown';
+          "named" :
+          "unknown";
         tokens.push({
           value: sub,
           type: type
         });
-      } else if (char === '%') {
+      } else if (char === "%") {
         // when found rails i18n syntax, skip text capture
-        if (format[(position)] !== '{') {
+        if (format[(position)] !== "{") {
           text += char;
         }
       } else {
@@ -644,11 +643,11 @@
     }
 
     text && tokens.push({
-      type: 'text',
+      type: "text",
       value: text
     });
 
-    return tokens
+    return tokens;
   }
 
   function compile(tokens, values) {
@@ -656,41 +655,41 @@
     var index = 0;
 
     var mode = Array.isArray(values) ?
-      'list' :
+      "list" :
       isObject(values) ?
-      'named' :
-      'unknown';
-    if (mode === 'unknown') {
-      return compiled
+      "named" :
+      "unknown";
+    if (mode === "unknown") {
+      return compiled;
     }
 
     while (index < tokens.length) {
       var token = tokens[index];
       switch (token.type) {
-        case 'text':
+        case "text":
           compiled.push(token.value);
-          break
-        case 'list':
+          break;
+        case "list":
           compiled.push(values[parseInt(token.value, 10)]);
-          break
-        case 'named':
-          if (mode === 'named') {
+          break;
+        case "named":
+          if (mode === "named") {
             compiled.push((values)[token.value]);
           } else {
             {
               warn(("Type of token '" + (token.type) + "' and format of value '" + mode + "' don't match!"));
             }
           }
-          break
-        case 'unknown': {
+          break;
+        case "unknown": {
           warn("Detect 'unknown' type of token!");
         }
-        break
+        break;
       }
       index++;
     }
 
-    return compiled
+    return compiled;
   }
 
   /*  */
@@ -721,55 +720,55 @@
   var pathStateMachine = [];
 
   pathStateMachine[BEFORE_PATH] = {
-    'ws': [BEFORE_PATH],
-    'ident': [IN_IDENT, APPEND],
-    '[': [IN_SUB_PATH],
-    'eof': [AFTER_PATH]
+    "ws": [BEFORE_PATH],
+    "ident": [IN_IDENT, APPEND],
+    "[": [IN_SUB_PATH],
+    "eof": [AFTER_PATH]
   };
 
   pathStateMachine[IN_PATH] = {
-    'ws': [IN_PATH],
-    '.': [BEFORE_IDENT],
-    '[': [IN_SUB_PATH],
-    'eof': [AFTER_PATH]
+    "ws": [IN_PATH],
+    ".": [BEFORE_IDENT],
+    "[": [IN_SUB_PATH],
+    "eof": [AFTER_PATH]
   };
 
   pathStateMachine[BEFORE_IDENT] = {
-    'ws': [BEFORE_IDENT],
-    'ident': [IN_IDENT, APPEND],
-    '0': [IN_IDENT, APPEND],
-    'number': [IN_IDENT, APPEND]
+    "ws": [BEFORE_IDENT],
+    "ident": [IN_IDENT, APPEND],
+    "0": [IN_IDENT, APPEND],
+    "number": [IN_IDENT, APPEND]
   };
 
   pathStateMachine[IN_IDENT] = {
-    'ident': [IN_IDENT, APPEND],
-    '0': [IN_IDENT, APPEND],
-    'number': [IN_IDENT, APPEND],
-    'ws': [IN_PATH, PUSH],
-    '.': [BEFORE_IDENT, PUSH],
-    '[': [IN_SUB_PATH, PUSH],
-    'eof': [AFTER_PATH, PUSH]
+    "ident": [IN_IDENT, APPEND],
+    "0": [IN_IDENT, APPEND],
+    "number": [IN_IDENT, APPEND],
+    "ws": [IN_PATH, PUSH],
+    ".": [BEFORE_IDENT, PUSH],
+    "[": [IN_SUB_PATH, PUSH],
+    "eof": [AFTER_PATH, PUSH]
   };
 
   pathStateMachine[IN_SUB_PATH] = {
     "'": [IN_SINGLE_QUOTE, APPEND],
-    '"': [IN_DOUBLE_QUOTE, APPEND],
-    '[': [IN_SUB_PATH, INC_SUB_PATH_DEPTH],
-    ']': [IN_PATH, PUSH_SUB_PATH],
-    'eof': ERROR,
-    'else': [IN_SUB_PATH, APPEND]
+    "\"": [IN_DOUBLE_QUOTE, APPEND],
+    "[": [IN_SUB_PATH, INC_SUB_PATH_DEPTH],
+    "]": [IN_PATH, PUSH_SUB_PATH],
+    "eof": ERROR,
+    "else": [IN_SUB_PATH, APPEND]
   };
 
   pathStateMachine[IN_SINGLE_QUOTE] = {
     "'": [IN_SUB_PATH, APPEND],
-    'eof': ERROR,
-    'else': [IN_SINGLE_QUOTE, APPEND]
+    "eof": ERROR,
+    "else": [IN_SINGLE_QUOTE, APPEND]
   };
 
   pathStateMachine[IN_DOUBLE_QUOTE] = {
-    '"': [IN_SUB_PATH, APPEND],
-    'eof': ERROR,
-    'else': [IN_DOUBLE_QUOTE, APPEND]
+    "\"": [IN_SUB_PATH, APPEND],
+    "eof": ERROR,
+    "else": [IN_DOUBLE_QUOTE, APPEND]
   };
 
   /**
@@ -779,7 +778,7 @@
   var literalValueRE = /^\s?(true|false|-?[\d.]+|'[^']*'|"[^"]*")\s?$/;
 
   function isLiteral(exp) {
-    return literalValueRE.test(exp)
+    return literalValueRE.test(exp);
   }
 
   /**
@@ -791,7 +790,7 @@
     var b = str.charCodeAt(str.length - 1);
     return a === b && (a === 0x22 || a === 0x27) ?
       str.slice(1, -1) :
-      str
+      str;
   }
 
   /**
@@ -800,7 +799,7 @@
 
   function getPathCharType(ch) {
     if (ch === undefined || ch === null) {
-      return 'eof'
+      return "eof";
     }
 
     var code = ch.charCodeAt(0);
@@ -812,12 +811,12 @@
       case 0x22: // "
       case 0x27: // '
       case 0x30: // 0
-        return ch
+        return ch;
 
       case 0x5F: // _
       case 0x24: // $
       case 0x2D: // -
-        return 'ident'
+        return "ident";
 
       case 0x20: // Space
       case 0x09: // Tab
@@ -827,20 +826,20 @@
       case 0xFEFF: // Byte Order Mark
       case 0x2028: // Line Separator
       case 0x2029: // Paragraph Separator
-        return 'ws'
+        return "ws";
     }
 
     // a-z, A-Z
     if ((code >= 0x61 && code <= 0x7A) || (code >= 0x41 && code <= 0x5A)) {
-      return 'ident'
+      return "ident";
     }
 
     // 1-9
     if (code >= 0x31 && code <= 0x39) {
-      return 'number'
+      return "number";
     }
 
-    return 'else'
+    return "else";
   }
 
   /**
@@ -852,11 +851,11 @@
   function formatSubPath(path) {
     var trimmed = path.trim();
     // invalid leading 0
-    if (path.charAt(0) === '0' && isNaN(path)) {
-      return false
+    if (path.charAt(0) === "0" && isNaN(path)) {
+      return false;
     }
 
-    return isLiteral(trimmed) ? stripQuotes(trimmed) : '*' + trimmed
+    return isLiteral(trimmed) ? stripQuotes(trimmed) : "*" + trimmed;
   }
 
   /**
@@ -906,7 +905,7 @@
         subPathDepth = 0;
         key = formatSubPath(key);
         if (key === false) {
-          return false
+          return false;
         } else {
           actions[PUSH]();
         }
@@ -916,11 +915,11 @@
     function maybeUnescapeQuote() {
       var nextChar = path[index + 1];
       if ((mode === IN_SINGLE_QUOTE && nextChar === "'") ||
-        (mode === IN_DOUBLE_QUOTE && nextChar === '"')) {
+        (mode === IN_DOUBLE_QUOTE && nextChar === "\"")) {
         index++;
-        newChar = '\\' + nextChar;
+        newChar = "\\" + nextChar;
         actions[APPEND]();
-        return true
+        return true;
       }
     }
 
@@ -928,16 +927,16 @@
       index++;
       c = path[index];
 
-      if (c === '\\' && maybeUnescapeQuote()) {
-        continue
+      if (c === "\\" && maybeUnescapeQuote()) {
+        continue;
       }
 
       type = getPathCharType(c);
       typeMap = pathStateMachine[mode];
-      transition = typeMap[type] || typeMap['else'] || ERROR;
+      transition = typeMap[type] || typeMap["else"] || ERROR;
 
       if (transition === ERROR) {
-        return // parse error
+        return; // parse error
       }
 
       mode = transition[0];
@@ -948,12 +947,12 @@
           c :
           newChar;
         if (action() === false) {
-          return
+          return;
         }
       }
 
       if (mode === AFTER_PATH) {
-        return keys
+        return keys;
       }
     }
   }
@@ -965,9 +964,9 @@
   function empty(target) {
     /* istanbul ignore else */
     if (Array.isArray(target)) {
-      return target.length === 0
+      return target.length === 0;
     } else {
-      return false
+      return false;
     }
   }
 
@@ -986,7 +985,7 @@
         this._cache[path] = hit;
       }
     }
-    return hit || []
+    return hit || [];
   };
 
   /**
@@ -994,12 +993,12 @@
    */
   I18nPath.prototype.getPathValue = function getPathValue(obj, path) {
     if (!isObject(obj)) {
-      return null
+      return null;
     }
 
     var paths = this.parsePath(path);
     if (empty(paths)) {
-      return null
+      return null;
     } else {
       var length = paths.length;
       var ret = null;
@@ -1009,14 +1008,14 @@
         var value = last[paths[i]];
         if (value === undefined) {
           last = null;
-          break
+          break;
         }
         last = value;
         i++;
       }
 
       ret = last;
-      return ret
+      return ret;
     }
   };
 
@@ -1025,17 +1024,17 @@
 
 
   var numberFormatKeys = [
-    'style',
-    'currency',
-    'currencyDisplay',
-    'useGrouping',
-    'minimumIntegerDigits',
-    'minimumFractionDigits',
-    'maximumFractionDigits',
-    'minimumSignificantDigits',
-    'maximumSignificantDigits',
-    'localeMatcher',
-    'formatMatcher'
+    "style",
+    "currency",
+    "currencyDisplay",
+    "useGrouping",
+    "minimumIntegerDigits",
+    "minimumFractionDigits",
+    "maximumFractionDigits",
+    "minimumSignificantDigits",
+    "maximumSignificantDigits",
+    "localeMatcher",
+    "formatMatcher"
   ];
 
   var VueI18n = function VueI18n(options) {
@@ -1046,12 +1045,12 @@
     // To allow users to avoid auto-installation in some cases,
     // this code should be placed here. See #290
     /* istanbul ignore if */
-    if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    if (!Vue && typeof window !== "undefined" && window.Vue) {
       install(window.Vue);
     }
 
-    var locale = options.locale || 'en-US';
-    var fallbackLocale = options.fallbackLocale || 'en-US';
+    var locale = options.locale || "en-US";
+    var fallbackLocale = options.fallbackLocale || "en-US";
     var messages = options.messages || {};
     var dateTimeFormats = options.dateTimeFormats || {};
     var numberFormats = options.numberFormats || {};
@@ -1074,9 +1073,9 @@
 
     this._exist = function (message, key) {
       if (!message || !key) {
-        return false
+        return false;
       }
-      return !isNull(this$1._path.getPathValue(message, key))
+      return !isNull(this$1._path.getPathValue(message, key));
     };
 
     this._initVM({
@@ -1137,7 +1136,7 @@
 
   VueI18n.prototype.watchI18nData = function watchI18nData() {
     var self = this;
-    return this._vm.$watch('$data', function () {
+    return this._vm.$watch("$data", function () {
       var i = self._dataListeners.length;
       while (i--) {
         Vue.nextTick(function () {
@@ -1146,104 +1145,104 @@
       }
     }, {
       deep: true
-    })
+    });
   };
 
   VueI18n.prototype.watchLocale = function watchLocale() {
     /* istanbul ignore if */
     if (!this._sync || !this._root) {
-      return null
+      return null;
     }
     var target = this._vm;
-    return this._root.vm.$watch('locale', function (val) {
-      target.$set(target, 'locale', val);
+    return this._root.vm.$watch("locale", function (val) {
+      target.$set(target, "locale", val);
       target.$forceUpdate();
     }, {
       immediate: true
-    })
+    });
   };
 
   prototypeAccessors.vm.get = function () {
-    return this._vm
+    return this._vm;
   };
 
   prototypeAccessors.messages.get = function () {
-    return looseClone(this._getMessages())
+    return looseClone(this._getMessages());
   };
   prototypeAccessors.dateTimeFormats.get = function () {
-    return looseClone(this._getDateTimeFormats())
+    return looseClone(this._getDateTimeFormats());
   };
   prototypeAccessors.numberFormats.get = function () {
-    return looseClone(this._getNumberFormats())
+    return looseClone(this._getNumberFormats());
   };
 
   prototypeAccessors.locale.get = function () {
-    return this._vm.locale
+    return this._vm.locale;
   };
   prototypeAccessors.locale.set = function (locale) {
-    this._vm.$set(this._vm, 'locale', locale);
+    this._vm.$set(this._vm, "locale", locale);
   };
 
   prototypeAccessors.fallbackLocale.get = function () {
-    return this._vm.fallbackLocale
+    return this._vm.fallbackLocale;
   };
   prototypeAccessors.fallbackLocale.set = function (locale) {
-    this._vm.$set(this._vm, 'fallbackLocale', locale);
+    this._vm.$set(this._vm, "fallbackLocale", locale);
   };
 
   prototypeAccessors.missing.get = function () {
-    return this._missing
+    return this._missing;
   };
   prototypeAccessors.missing.set = function (handler) {
     this._missing = handler;
   };
 
   prototypeAccessors.formatter.get = function () {
-    return this._formatter
+    return this._formatter;
   };
   prototypeAccessors.formatter.set = function (formatter) {
     this._formatter = formatter;
   };
 
   prototypeAccessors.silentTranslationWarn.get = function () {
-    return this._silentTranslationWarn
+    return this._silentTranslationWarn;
   };
   prototypeAccessors.silentTranslationWarn.set = function (silent) {
     this._silentTranslationWarn = silent;
   };
 
   VueI18n.prototype._getMessages = function _getMessages() {
-    return this._vm.messages
+    return this._vm.messages;
   };
   VueI18n.prototype._getDateTimeFormats = function _getDateTimeFormats() {
-    return this._vm.dateTimeFormats
+    return this._vm.dateTimeFormats;
   };
   VueI18n.prototype._getNumberFormats = function _getNumberFormats() {
-    return this._vm.numberFormats
+    return this._vm.numberFormats;
   };
 
   VueI18n.prototype._warnDefault = function _warnDefault(locale, key, result, vm, values) {
     if (!isNull(result)) {
-      return result
+      return result;
     }
     if (this._missing) {
       var missingRet = this._missing.apply(null, [locale, key, vm, values]);
-      if (typeof missingRet === 'string') {
-        return missingRet
+      if (typeof missingRet === "string") {
+        return missingRet;
       }
     } else {
       if (!this._silentTranslationWarn) {
         warn(
           "Cannot translate the value of keypath '" + key + "'. " +
-          'Use the value of keypath as default.'
+          "Use the value of keypath as default."
         );
       }
     }
-    return key
+    return key;
   };
 
   VueI18n.prototype._isFallbackRoot = function _isFallbackRoot(val) {
-    return !val && !isNull(this._root) && this._fallbackRoot
+    return !val && !isNull(this._root) && this._fallbackRoot;
   };
 
   VueI18n.prototype._interpolate = function _interpolate(
@@ -1255,12 +1254,12 @@
     values
   ) {
     if (!message) {
-      return null
+      return null;
     }
 
     var pathRet = this._path.getPathValue(message, key);
     if (Array.isArray(pathRet) || isPlainObject(pathRet)) {
-      return pathRet
+      return pathRet;
     }
 
     var ret;
@@ -1268,33 +1267,33 @@
       /* istanbul ignore else */
       if (isPlainObject(message)) {
         ret = message[key];
-        if (typeof ret !== 'string') {
+        if (typeof ret !== "string") {
           if (!this._silentTranslationWarn) {
             warn(("Value of key '" + key + "' is not a string!"));
           }
-          return null
+          return null;
         }
       } else {
-        return null
+        return null;
       }
     } else {
       /* istanbul ignore else */
-      if (typeof pathRet === 'string') {
+      if (typeof pathRet === "string") {
         ret = pathRet;
       } else {
         if (!this._silentTranslationWarn) {
           warn(("Value of key '" + key + "' is not a string!"));
         }
-        return null
+        return null;
       }
     }
 
     // Check for the existance of links within the translated string
-    if (ret.indexOf('@:') >= 0) {
+    if (ret.indexOf("@:") >= 0) {
       ret = this._link(locale, message, ret, host, interpolateMode, values);
     }
 
-    return this._render(ret, interpolateMode, values)
+    return this._render(ret, interpolateMode, values);
   };
 
   VueI18n.prototype._link = function _link(
@@ -1317,7 +1316,7 @@
       // ie compatible: filter custom array
       // prototype method
       if (!matches.hasOwnProperty(idx)) {
-        continue
+        continue;
       }
       var link = matches[idx];
       // Remove the leading @:
@@ -1325,8 +1324,8 @@
       // Translate the link
       var translated = this$1._interpolate(
         locale, message, linkPlaceholder, host,
-        interpolateMode === 'raw' ? 'string' : interpolateMode,
-        interpolateMode === 'raw' ? undefined : values
+        interpolateMode === "raw" ? "string" : interpolateMode,
+        interpolateMode === "raw" ? undefined : values
       );
 
       if (this$1._isFallbackRoot(translated)) {
@@ -1335,7 +1334,7 @@
         }
         /* istanbul ignore if */
         if (!this$1._root) {
-          throw Error('unexpected error')
+          throw Error("unexpected error");
         }
         var root = this$1._root;
         translated = root._translate(
@@ -1352,14 +1351,14 @@
       ret = !translated ? ret : ret.replace(link, translated);
     }
 
-    return ret
+    return ret;
   };
 
   VueI18n.prototype._render = function _render(message, interpolateMode, values) {
     var ret = this._formatter.interpolate(message, values);
     // if interpolateMode is **not** 'string' ('row'),
     // return the compiled data (e.g. ['foo', VNode, 'bar']) with formatter
-    return interpolateMode === 'string' ? ret.join('') : ret
+    return interpolateMode === "string" ? ret.join("") : ret;
   };
 
   VueI18n.prototype._translate = function _translate(
@@ -1374,7 +1373,7 @@
     var res =
       this._interpolate(locale, messages[locale], key, host, interpolateMode, args);
     if (!isNull(res)) {
-      return res
+      return res;
     }
 
     res = this._interpolate(fallback, messages[fallback], key, host, interpolateMode, args);
@@ -1382,9 +1381,9 @@
       if (!this._silentTranslationWarn) {
         warn(("Fall back to translate the keypath '" + key + "' with '" + fallback + "' locale."));
       }
-      return res
+      return res;
     } else {
-      return null
+      return null;
     }
   };
 
@@ -1395,7 +1394,7 @@
       len = arguments.length - 4;
     while (len-- > 0) values[len] = arguments[len + 4];
     if (!key) {
-      return ''
+      return "";
     }
 
     var parsedArgs = parseArgs.apply(void 0, values);
@@ -1403,7 +1402,7 @@
 
     var ret = this._translate(
       messages, locale, this.fallbackLocale, key,
-      host, 'string', parsedArgs.params
+      host, "string", parsedArgs.params
     );
     if (this._isFallbackRoot(ret)) {
       if (!this._silentTranslationWarn) {
@@ -1411,11 +1410,11 @@
       }
       /* istanbul ignore if */
       if (!this._root) {
-        throw Error('unexpected error')
+        throw Error("unexpected error");
       }
-      return (ref = this._root).t.apply(ref, [key].concat(values))
+      return (ref = this._root).t.apply(ref, [key].concat(values));
     } else {
-      return this._warnDefault(locale, key, ret, host, values)
+      return this._warnDefault(locale, key, ret, host, values);
     }
   };
 
@@ -1425,36 +1424,36 @@
     var values = [],
       len = arguments.length - 1;
     while (len-- > 0) values[len] = arguments[len + 1];
-    return (ref = this)._t.apply(ref, [key, this.locale, this._getMessages(), null].concat(values))
+    return (ref = this)._t.apply(ref, [key, this.locale, this._getMessages(), null].concat(values));
   };
 
   VueI18n.prototype._i = function _i(key, locale, messages, host, values) {
     var ret =
-      this._translate(messages, locale, this.fallbackLocale, key, host, 'raw', values);
+      this._translate(messages, locale, this.fallbackLocale, key, host, "raw", values);
     if (this._isFallbackRoot(ret)) {
       if (!this._silentTranslationWarn) {
         warn(("Fall back to interpolate the keypath '" + key + "' with root locale."));
       }
       if (!this._root) {
-        throw Error('unexpected error')
+        throw Error("unexpected error");
       }
-      return this._root.i(key, locale, values)
+      return this._root.i(key, locale, values);
     } else {
-      return this._warnDefault(locale, key, ret, host, [values])
+      return this._warnDefault(locale, key, ret, host, [values]);
     }
   };
 
   VueI18n.prototype.i = function i(key, locale, values) {
     /* istanbul ignore if */
     if (!key) {
-      return ''
+      return "";
     }
 
-    if (typeof locale !== 'string') {
+    if (typeof locale !== "string") {
       locale = this.locale;
     }
 
-    return this._i(key, locale, this._getMessages(), null, values)
+    return this._i(key, locale, this._getMessages(), null, values);
   };
 
   VueI18n.prototype._tc = function _tc(
@@ -1470,12 +1469,12 @@
       len = arguments.length - 5;
     while (len-- > 0) values[len] = arguments[len + 5];
     if (!key) {
-      return ''
+      return "";
     }
     if (choice === undefined) {
       choice = 1;
     }
-    return fetchChoice((ref = this)._t.apply(ref, [key, _locale, messages, host].concat(values)), choice)
+    return fetchChoice((ref = this)._t.apply(ref, [key, _locale, messages, host].concat(values)), choice);
   };
 
   VueI18n.prototype.tc = function tc(key, choice) {
@@ -1484,7 +1483,7 @@
     var values = [],
       len = arguments.length - 2;
     while (len-- > 0) values[len] = arguments[len + 2];
-    return (ref = this)._tc.apply(ref, [key, this.locale, this._getMessages(), null, choice].concat(values))
+    return (ref = this)._tc.apply(ref, [key, this.locale, this._getMessages(), null, choice].concat(values));
   };
 
   VueI18n.prototype._te = function _te(key, locale, messages) {
@@ -1493,15 +1492,15 @@
     while (len-- > 0) args[len] = arguments[len + 3];
 
     var _locale = parseArgs.apply(void 0, args).locale || locale;
-    return this._exist(messages[_locale], key)
+    return this._exist(messages[_locale], key);
   };
 
   VueI18n.prototype.te = function te(key, locale) {
-    return this._te(key, this.locale, this._getMessages(), locale)
+    return this._te(key, this.locale, this._getMessages(), locale);
   };
 
   VueI18n.prototype.getLocaleMessage = function getLocaleMessage(locale) {
-    return looseClone(this._vm.messages[locale] || {})
+    return looseClone(this._vm.messages[locale] || {});
   };
 
   VueI18n.prototype.setLocaleMessage = function setLocaleMessage(locale, message) {
@@ -1513,7 +1512,7 @@
   };
 
   VueI18n.prototype.getDateTimeFormat = function getDateTimeFormat(locale) {
-    return looseClone(this._vm.dateTimeFormats[locale] || {})
+    return looseClone(this._vm.dateTimeFormats[locale] || {});
   };
 
   VueI18n.prototype.setDateTimeFormat = function setDateTimeFormat(locale, format) {
@@ -1544,7 +1543,7 @@
     }
 
     if (isNull(formats) || isNull(formats[key])) {
-      return null
+      return null;
     } else {
       var format = formats[key];
       var id = _locale + "__" + key;
@@ -1552,19 +1551,19 @@
       if (!formatter) {
         formatter = this._dateTimeFormatters[id] = new Intl.DateTimeFormat(_locale, format);
       }
-      return formatter.format(value)
+      return formatter.format(value);
     }
   };
 
   VueI18n.prototype._d = function _d(value, locale, key) {
     /* istanbul ignore if */
     if (!VueI18n.availabilities.dateTimeFormat) {
-      warn('Cannot format a Date value due to not supported Intl.DateTimeFormat.');
-      return ''
+      warn("Cannot format a Date value due to not supported Intl.DateTimeFormat.");
+      return "";
     }
 
     if (!key) {
-      return new Intl.DateTimeFormat(locale).format(value)
+      return new Intl.DateTimeFormat(locale).format(value);
     }
 
     var ret =
@@ -1575,11 +1574,11 @@
       }
       /* istanbul ignore if */
       if (!this._root) {
-        throw Error('unexpected error')
+        throw Error("unexpected error");
       }
-      return this._root.d(value, key, locale)
+      return this._root.d(value, key, locale);
     } else {
-      return ret || ''
+      return ret || "";
     }
   };
 
@@ -1592,7 +1591,7 @@
     var key = null;
 
     if (args.length === 1) {
-      if (typeof args[0] === 'string') {
+      if (typeof args[0] === "string") {
         key = args[0];
       } else if (isObject(args[0])) {
         if (args[0].locale) {
@@ -1603,19 +1602,19 @@
         }
       }
     } else if (args.length === 2) {
-      if (typeof args[0] === 'string') {
+      if (typeof args[0] === "string") {
         key = args[0];
       }
-      if (typeof args[1] === 'string') {
+      if (typeof args[1] === "string") {
         locale = args[1];
       }
     }
 
-    return this._d(value, locale, key)
+    return this._d(value, locale, key);
   };
 
   VueI18n.prototype.getNumberFormat = function getNumberFormat(locale) {
-    return looseClone(this._vm.numberFormats[locale] || {})
+    return looseClone(this._vm.numberFormats[locale] || {});
   };
 
   VueI18n.prototype.setNumberFormat = function setNumberFormat(locale, format) {
@@ -1647,7 +1646,7 @@
     }
 
     if (isNull(formats) || isNull(formats[key])) {
-      return null
+      return null;
     } else {
       var format = formats[key];
 
@@ -1662,20 +1661,20 @@
           formatter = this._numberFormatters[id] = new Intl.NumberFormat(_locale, format);
         }
       }
-      return formatter.format(value)
+      return formatter.format(value);
     }
   };
 
   VueI18n.prototype._n = function _n(value, locale, key, options) {
     /* istanbul ignore if */
     if (!VueI18n.availabilities.numberFormat) {
-      warn('Cannot format a Number value due to not supported Intl.NumberFormat.');
-      return ''
+      warn("Cannot format a Number value due to not supported Intl.NumberFormat.");
+      return "";
     }
 
     if (!key) {
       var nf = !options ? new Intl.NumberFormat(locale) : new Intl.NumberFormat(locale, options);
-      return nf.format(value)
+      return nf.format(value);
     }
 
     var ret =
@@ -1686,14 +1685,14 @@
       }
       /* istanbul ignore if */
       if (!this._root) {
-        throw Error('unexpected error')
+        throw Error("unexpected error");
       }
       return this._root.n(value, Object.assign({}, {
         key: key,
         locale: locale
-      }, options))
+      }, options));
     } else {
-      return ret || ''
+      return ret || "";
     }
   };
 
@@ -1707,7 +1706,7 @@
     var options = null;
 
     if (args.length === 1) {
-      if (typeof args[0] === 'string') {
+      if (typeof args[0] === "string") {
         key = args[0];
       } else if (isObject(args[0])) {
         if (args[0].locale) {
@@ -1722,21 +1721,21 @@
           var obj;
 
           if (numberFormatKeys.includes(key)) {
-            return Object.assign({}, acc, (obj = {}, obj[key] = args[0][key], obj))
+            return Object.assign({}, acc, (obj = {}, obj[key] = args[0][key], obj));
           }
-          return acc
+          return acc;
         }, null);
       }
     } else if (args.length === 2) {
-      if (typeof args[0] === 'string') {
+      if (typeof args[0] === "string") {
         key = args[0];
       }
-      if (typeof args[1] === 'string') {
+      if (typeof args[1] === "string") {
         locale = args[1];
       }
     }
 
-    return this._n(value, locale, key, options)
+    return this._n(value, locale, key, options);
   };
 
   Object.defineProperties(VueI18n.prototype, prototypeAccessors);
@@ -1746,7 +1745,7 @@
     numberFormat: canUseNumberFormat
   };
   VueI18n.install = install;
-  VueI18n.version = '8.1.0';
+  VueI18n.version = "8.1.0";
 
   return VueI18n;
 

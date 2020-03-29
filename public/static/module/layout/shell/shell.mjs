@@ -7,6 +7,7 @@ import {
 (async () => {
     try {
         const Vue = await setDefaultVueAntdvJS();
+        const APP_STATE = window.APP_STATE = Vue.observable(shellState);
         const {
             _,
         } = window;
@@ -22,8 +23,7 @@ import {
         } = _;
 
         $loadCSS($resolvePath("static/module/layout/shell/shell.css"));
-        const APP_STATE = Vue.observable(shellState);
-        window.APP_STATE = APP_STATE;
+
         Vue.component("LoadingView", LoadingView);
         window.app = new Vue({
             data() {
@@ -42,7 +42,6 @@ import {
             },
             async mounted() {
                 const shellComponent = await $loadComponentByURL("static/module/layout/shell/Shell.vue");
-                console.log(shellComponent, shellComponent.name);
                 this.componentName = shellComponent;
             },
             template: "<div :is=\"componentName\">waiting import</div>"

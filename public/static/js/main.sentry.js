@@ -75,7 +75,7 @@ window.APP_CONFIGS.cache.isCacheAll = false;
             loadMainScript();
             console.error(error);
         }
-    };
+    }
 
     function handleGetVersionSuccess(e) {
         var version = e.target.result;
@@ -104,14 +104,13 @@ window.APP_CONFIGS.cache.isCacheAll = false;
 
     function handleError(e) {
         console.error(e);
-        debugger;
         window.location.reload();
-    };
+    }
 
     function closeIndexedDB() {
         openRequest.result.close();
         console.log("IndexedDB closed");
-    };
+    }
 
     function loadMainScript(e) {
         var mainjsScriptEle = document.createElement("script");

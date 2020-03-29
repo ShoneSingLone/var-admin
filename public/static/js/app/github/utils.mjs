@@ -1,4 +1,40 @@
-export default (() => {
+const {
+    _: {
+        $loadJS,
+        $resolvePath
+    }
+} = window;
+
+function addLoderHandler() {
+    const jsCollection = {};
+    const pathMap = {
+        /* key 与三方库暴露的访问器名字相同*/
+        $: "static/lib/jquery/jquery-3.4.1.min.js",
+        dayjs: "static/lib/dayjs.min.js"
+    };
+    /*懒加载第三方库，accessID是第三方库暴露的访问器名字比如 jQuery=》$ 需要在在pathMap里面预先配置加载地址*/
+    window._lib = (accessId) => {
+        if (jsCollection[accessId]) {
+            return Promise.resolve(window[accessId]);
+        } else {
+            const jsPath = $resolvePath(pathMap[accessId]);
+            return new Promise((resolve, reject) => {
+                $loadJS(jsPath).then(() => {
+                    if (window[accessId]) {
+                        jsCollection[accessId] = true;
+                        resolve(window[accessId]);
+                    } else {
+                        reject("?????");
+                    }
+                }).catch(reject);
+            });
+        }
+
+    };
+
+}
+
+function addLocalStorageHandler() {
     const deps = {};
     window._.$ls = {
         _deps: deps,
@@ -40,7 +76,6 @@ export default (() => {
         unwatch(key, index) {
             delete deps[key][index];
         }
-
     };
 
     window.addEventListener("storage", ({
@@ -58,5 +93,10 @@ export default (() => {
 
         }
     });
+}
+
+export default (() => {
+    addLocalStorageHandler();
+    addLoderHandler();
     return "done";
 })();

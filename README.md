@@ -276,3 +276,9 @@ PAGE_*单例
 [var-router](./readme.router.md)
 
 侧边栏展示信息只是用来管理
+
+1. Shell.vue mounted
+1. MainSideBar getMenu trigger "menus-loaded"
+1. MainSidebarSubmenu created
+
+      EventBus.off("menus-loaded");
