@@ -1,6 +1,6 @@
 <template>
   <aside :class="[]">
-    <div :class="['search-wrapper elevation2',{'fold':APP_STATE.isSidebarFold}]">
+    <div :class="['search-wrapper elevation3',{'fold':APP_STATE.isSidebarFold}]">
       <span class="icon prefix">
         <i class="el-input__icon el-icon-search" />
       </span>

@@ -14,7 +14,7 @@
     <div class="main flex-horizon">
       <div
         :is="APP_STATE.componentSidbar"
-        :class="['sidebar elevation6',{fold:APP_STATE.isSidebarFold}]"
+        :class="['sidebar elevation2',{fold:APP_STATE.isSidebarFold}]"
       >
         sidebar
       </div>
