@@ -59,8 +59,14 @@ export default {
     return { APP_STATE };
   },
   async mounted() {
-    const res = await $axios.get("http://api.singlone.top/api/movieinfo");
-    debugger;
+  
+  try{
+      const res = await $axios.get("http://api.singlone.top/api/movieinfo");
+    
+  }catch(error){
+    console.error(error);
+debugger;
+  }
     /* MainSidebarSubmenu.vue 路由加载完成之后再加载内容 */
     EventBus.on("menus-loaded", () => {
       /* 默认是loading */
