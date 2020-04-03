@@ -3,7 +3,6 @@ export default [{
     "path": "/system",
     "pid": "0",
     "name": "系统设置",
-    "url": null,
     "type": 0,
     "handler": 1,
     "icon": "icon-setting",
@@ -23,7 +22,6 @@ export default [{
         "icon": "icon-unorderedlist",
         "permissions": null,
         "sort": 0,
-        "createDate": "2019-08-14 16:34:37",
         "parentName": null
     }]
 }];
