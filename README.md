@@ -282,3 +282,7 @@ PAGE_*单例
 1. MainSidebarSubmenu created
 
       EventBus.off("menus-loaded");
+
+
+[x] less 在线加载
+[x] babel jsx扩展

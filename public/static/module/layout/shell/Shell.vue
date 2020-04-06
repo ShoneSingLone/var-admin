@@ -58,19 +58,22 @@ export default {
   data() {
     return { APP_STATE };
   },
+  created() {
+    /* MainSidebarSubmenu.vue 路由加载完成之后再加载内容 */
+    debugger;
+    EventBus.on("menus-loaded", () => {
+      debugger;
+      /* 默认是loading */
+      APP_STATE.componentContent = "mainContent";
+    });
+  },
   async mounted() {
     try {
       const res = await $axios.get("https://www.singlone.top/api/movieinfo");
       console.table(res);
     } catch (error) {
       console.error(error);
-      debugger;
     }
-    /* MainSidebarSubmenu.vue 路由加载完成之后再加载内容 */
-    EventBus.on("menus-loaded", () => {
-      /* 默认是loading */
-      APP_STATE.componentContent = "mainContent";
-    });
   },
   methods: {
     handleChange(value) {

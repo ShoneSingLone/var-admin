@@ -43,7 +43,7 @@ window
 /* 测试缓存策略 */
 // window.APP_CONFIGS.IS_DEV = false;
 /* 不缓存任何一个资源并且全部使用正常的fetch和script加载方式 */
-window.APP_CONFIGS.cache.isCacheAll = true;
+window.APP_CONFIGS.cache.isCacheAll = false;
 
 (function (PATH_PREFIX) {
     var transaction, store;

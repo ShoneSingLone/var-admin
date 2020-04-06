@@ -66,7 +66,6 @@ export default {
   },
   methods: {
     checkShouldShowTips(name) {
-      debugger;
       return name.length > 6;
     },
     handleMenuItemClick(menuItem) {

@@ -62,6 +62,7 @@ export default {
   },
   mounted() {
     console.log("MainContent mounted");
+    debugger;
     /* 页面初始加载，tab与浏览器地址栏保持一致 */
     if (APP_ROUTER.currentRoute.path !== "/") {
       /* TODO:matched 如何匹配到当前viewContainer的 id？ */
