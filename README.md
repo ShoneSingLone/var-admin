@@ -164,7 +164,7 @@ EventBus 全局通信：messageBox not
 - [] 懒加载CDN路径问题??
 
 缓存逻辑
-mini是每次访问页面都需要更新的，绝对没有缓存；
+mini是每次访问页面都需要更新的，要求绝对没有缓存；
 mini版本号没有变动，直接读取缓存
 版本号有变动，除了白名单上的全部清除；
 （全部清除，白名单版本号没有变动再恢复回来）
@@ -174,11 +174,9 @@ mini版本号没有变动，直接读取缓存
   - `systemjs`
   - `systemjs_translated`
 
-
-
 如果有耕细粒度的缓存，可以配置映射表，为每一个需要缓存的文件单独设置版本号
 
-fetch是否有兼容性问题？=>XMLHttpRequest
+fetch是否有兼容性问题？=>XMLHttpRequest 回退到ajax版本
 
 除了main.js
 静态资源缓存=》手动维护？！
@@ -284,5 +282,12 @@ PAGE_*单例
       EventBus.off("menus-loaded");
 
 
+[x] zong
+[x] 首屏加载资源的进度
 [x] less 在线加载
 [x] babel jsx扩展
+
+
+## 码表的缓存
+
+[zangodb](https://github.com/erikolson186/zangodb)

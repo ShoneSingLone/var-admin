@@ -14,7 +14,7 @@ import menuRes from "@@/static/module/layout/shell/MockMainSidebar.js";
 import LoadingView from "@@/static/components/LoadingView.vue";
 import lodash from "lodash";
 import { VarRouter } from "@@/static/components/VarRouter/VarRouter.mjs";
-
+import zango from "zangodb";
 const {
     Vue,
     _
@@ -41,6 +41,7 @@ Vue.config.productionTip = false;
 Vue.component("LoadingView", LoadingView);
 
 
+
 import("@@/static/module/layout/shell/Shell.vue")
     .then(({
             default: App
@@ -55,3 +56,31 @@ import("@@/static/module/layout/shell/Shell.vue")
     .catch(function (error) {
         console.error(error);
     });
+
+
+    let db = new zango.Db('mydb', { people: ['age'] });
+let people = db.collection('people');
+
+let docs = [
+    { name: 'Frank', age: 20 },
+    { name: 'Thomas', age: 33 },
+    { name: 'Todd', age: 33 },
+    { name: 'John', age: 28 },
+    { name: 'Peter', age: 33 },
+    { name: 'George', age: 28 }
+];
+
+people.insert(docs).then(() => {
+    return people.find({
+        name: { $ne: 'John' },
+        age: { $gt: 20 }
+    }).group({
+        _id: { age: '$age' },
+        count: { $sum: 1 }
+    }).project({
+        _id: 0,
+        age: '$_id.age'
+    }).sort({
+        age: -1
+    }).forEach(doc => console.log('doc:', doc));
+}).catch(error => console.error(error));
