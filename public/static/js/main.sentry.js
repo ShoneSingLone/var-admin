@@ -9,7 +9,7 @@
                 staticNameTranslated: "STATIC_RES_DB_TRANSLATED",
                 staticNameVersion: "STATIC_RES_DB_VERSION",
                 /* 是否缓存所有能缓存的静态资源 */
-                isCacheAll: IS_DEV
+                isCacheAll: IS_DEV ? false : true
             },
             /* IE加载在线转译代码 */
             IS_OLD_BROWSER: (typeof fetch === "undefined"),
