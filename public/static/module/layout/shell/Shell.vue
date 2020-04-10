@@ -60,9 +60,7 @@ export default {
   },
   created() {
     /* MainSidebarSubmenu.vue 路由加载完成之后再加载内容 */
-    debugger;
     EventBus.on("menus-loaded", () => {
-      debugger;
       /* 默认是loading */
       APP_STATE.componentContent = "mainContent";
     });

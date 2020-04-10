@@ -106,7 +106,6 @@ export default {
           }
         }));
         APP_ROUTER.addRoutes(APP_STATE.contentTabs.map(tab => tab.content));
-        debugger;
         /* 通知MainContent可以加载了 */
         EventBus.trigger("menus-loaded");
         EventBus.off("menus-loaded");

@@ -114,7 +114,10 @@ function sourceToCode(source) {
     }
 }
 
-const shouldCache = url => window.APP_CONFIGS.cache.isCacheAll;
+function shouldCache(url) {
+
+    return window.APP_CONFIGS.cache.isCacheAll;
+}
 
 function loadJSByAddScriptElement(url, _opts) {
     return new Promise((resolve, reject) => {
@@ -250,7 +253,9 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
 }
 
 const LOADED_JS = {};
+debugger;
 export function loadJS(url) {
+    debugger;
     if (LOADED_JS[camelCase(url).toLowerCase()]) return Promise.resolve();
     return (shouldCache(url) ? cacheStaticResourceAndToCode(url) : loadJSByAddScriptElement(url))
         .then(function (res) {

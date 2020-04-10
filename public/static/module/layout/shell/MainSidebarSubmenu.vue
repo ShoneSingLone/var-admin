@@ -54,7 +54,7 @@ export default {
         _menu.children,
         subMunu => subMunu.whether === "1"
       );
-      debugger; */
+       */
       return JSON.parse(JSON.stringify(this.menu));
     },
     isShow() {
