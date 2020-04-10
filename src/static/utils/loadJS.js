@@ -253,7 +253,6 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
 }
 
 const LOADED_JS = {};
-debugger;
 export function loadJS(url) {
     debugger;
     if (LOADED_JS[camelCase(url).toLowerCase()]) return Promise.resolve();

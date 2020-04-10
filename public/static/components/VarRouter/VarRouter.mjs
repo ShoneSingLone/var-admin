@@ -181,7 +181,7 @@ class History {
     }
 
     /* 路由转换 */
-    transitionTo(location /* hash部分构成的location */ , onComplete, reject) {
+    transitionTo(location /* hash部分构成的location */, onComplete, reject) {
         /* 获取将要跳转的route info */
         const route = this.router.match(location, this.current);
         console.log("transitionTo", route);
@@ -238,13 +238,12 @@ class History {
 }
 
 
-
-
 class HashHistory extends History {
     constructor(router, base) {
         super(router, base);
         ensureSlash();
     }
+
     // this is delayed until the app mounts
     // to avoid the hashchange listener being fired too early
     /* 并无大碍，不会与Vue组件强依赖 */
@@ -292,7 +291,6 @@ class HashHistory extends History {
         return getHash();
     }
 }
-
 
 
 function resolveRecordPath(path, record) {
@@ -715,7 +713,6 @@ function fillParams(path, params, routeMsg) {
 }
 
 
-
 function extend(a, b) {
     for (const key in b) {
         a[key] = b[key];
@@ -853,7 +850,8 @@ function normalizeLocation(raw, current, append, router) {
 
 
 function compileRouteRegex(path, pathToRegexpOptions) {
-    const regex = pathToRegexp_1(path, [], pathToRegexpOptions); {
+    const regex = pathToRegexp_1(path, [], pathToRegexpOptions);
+    {
         const keys = Object.create(null);
         regex.keys.forEach(key => {
             warn(
@@ -938,8 +936,8 @@ function addRouteRecord(pathList, pathMap, nameMap, route, parent, matchAs) {
                     false,
                     `Named Route '${route.name}' has a default child route. ` +
                     `When navigating to this named route (:to="{name: '${
-                route.name
-              }'"), ` +
+                        route.name
+                    }'"), ` +
                     "the default child route will not be rendered. Remove the name from " +
                     "this route and use the name of the default child route for named " +
                     "links instead."
@@ -1005,8 +1003,7 @@ function warn(condition, message) {
 }
 
 
-
-/* 
+/*
 createRouteMap 函数的目标是把用户的路由配置转换成一张路由映射表，
 它包含 3 个部分，
     pathList 存储所有的 path，
@@ -1117,10 +1114,10 @@ function stringifyQuery(obj) {
 
 
 function getFullPath({
-    path,
-    query = {},
-    hash = ""
-}, _stringifyQuery) {
+                         path,
+                         query = {},
+                         hash = ""
+                     }, _stringifyQuery) {
     const stringify = _stringifyQuery || stringifyQuery;
     return (path || "/") + stringify(query) + hash;
 }
@@ -1145,7 +1142,8 @@ function createRoute(record, location, redirectedFrom, router) {
     let query = location.query || {};
     try {
         query = clone(query);
-    } catch (e) {}
+    } catch (e) {
+    }
     const route = {
         name: location.name || (record && record.name),
         meta: (record && record.meta) || {},
@@ -1162,7 +1160,7 @@ function createRoute(record, location, redirectedFrom, router) {
     return Object.freeze(route);
 }
 
-function createMatcher(routes /* 用户传入的路由配置 */ , router /* 当前VarRouter实例 */ ) /* :{ match, addRoutes } */ {
+function createMatcher(routes /* 用户传入的路由配置 */, router /* 当前VarRouter实例 */) /* :{ match, addRoutes } */ {
     const {
         pathList,
         pathMap,
@@ -1186,7 +1184,8 @@ function createMatcher(routes /* 用户传入的路由配置 */ , router /* 当�
         } = location;
 
         if (name) {
-            const record = nameMap[name]; {
+            const record = nameMap[name];
+            {
                 warn(record, `Route with name '${name}' does not exist`);
             }
             if (!record) return _createRoute(null, location);
@@ -1263,7 +1262,8 @@ function createMatcher(routes /* 用户传入的路由配置 */ , router /* 当�
 
         if (name) {
             // resolved named direct
-            const targetRecord = nameMap[name]; {
+            const targetRecord = nameMap[name];
+            {
                 assert(targetRecord, `redirect failed: named route "${name}" not found.`);
             }
             return match({
@@ -1341,7 +1341,7 @@ export class VarRouter {
             "1": () => console.log("handleVueComponent")
         };
         /* routers key-val map扁平化  */
-        this.matcher = createMatcher(options.routes /* 用户传入的路由配置 */ || [], this /* 当前VarRouter实例 */ );
+        this.matcher = createMatcher(options.routes /* 用户传入的路由配置 */ || [], this /* 当前VarRouter实例 */);
         /* 目前是考虑hash模式 */
         this.mode = "hash";
         this.history = new HashHistory(this, options.base);
@@ -1384,8 +1384,8 @@ export class VarRouter {
         /*  */
         if (!onComplete && !onAbort && typeof Promise !== "undefined") {
             return new Promise((resolve, reject) => {
-                    this.history.push(location, resolve, reject);
-                })
+                this.history.push(location, resolve, reject);
+            })
                 .catch(reason => {
                     console.log("catch:", reason);
                 });
@@ -1420,8 +1420,8 @@ export class VarRouter {
     getMatchedComponents(to) {
         const route = to ?
             to.matched ?
-            to :
-            this.resolve(to).route :
+                to :
+                this.resolve(to).route :
             this.currentRoute;
         if (!route) {
             return [];
