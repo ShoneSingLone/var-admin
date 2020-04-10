@@ -1,3 +1,4 @@
 declare var APP_STATE: {
-  currentRoute: Object
+  currentRoute: Object,
+  contentTabsRouteMap: Object
 }

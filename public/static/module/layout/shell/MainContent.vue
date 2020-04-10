@@ -127,7 +127,8 @@ export default {
       }
     },
     handleTabClick(tab) {
-      const targetTab = APP_STATE.contentTabsRouteMap[tab.name];
+      debugger;
+      const targetTab = APP_STATE.contentTabsRouteMap[tab.id];
       if (!targetTab) {
         alert("Tab 没有必要的参数");
         return false;

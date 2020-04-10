@@ -42,7 +42,6 @@
 
 <script>
 // import menuRes from "./MockMainSidebar.js";
-
 export default {
   TEMPLATE_PLACEHOLDER,
   components: {},
@@ -69,11 +68,11 @@ export default {
       return name.length > 6;
     },
     handleMenuItemClick(menuItem) {
-      const tagetTab = window.APP_STATE.contentTabsMap[menuItem.name];
+      console.info("在路由改变的时候缓存，切换时根据id取出");
+      const tagetTab = window.APP_STATE.contentTabsRouteMap[menuItem.id];
       menuItem = tagetTab ? tagetTab : menuItem;
       /* 单向修改路由信息 */
       console.log("menuItem", menuItem);
-
       const HANDLER_MAP = {
         "0": () => {
           /* TODO:如果是 iframe */
@@ -95,6 +94,7 @@ export default {
           });
         }
       };
+      debugger;
       const fn = HANDLER_MAP[menuItem.handler]
         ? HANDLER_MAP[menuItem.handler]
         : HANDLER_MAP[0];

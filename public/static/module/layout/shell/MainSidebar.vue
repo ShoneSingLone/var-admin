@@ -2,7 +2,7 @@
   <aside v-if="sidebarMenuList.length>0">
     <!-- <pre>
           {{ JSON.stringify(_sidebarMenuList,null,2) }}
-    </pre> -->
+    </pre>-->
     <div :class="['search-wrapper elevation2',{'fold':APP_STATE.isSidebarFold}]">
       <span class="icon prefix">
         <i class="el-input__icon el-icon-search" />
@@ -99,6 +99,7 @@ export default {
         const APP_ROUTER = (window.APP_ROUTER = new VarRouter({
           routes: data,
           onChange: route => {
+            console.log("route onChange",route);
             var match = _.last(route.matched);
             if (match) {
               APP_STATE.contentTabsRouteMap[match.id] = route;
