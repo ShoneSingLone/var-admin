@@ -60,3 +60,5 @@ ViewRouter是以a方式处理
     1. 侧边栏
     1. 记录当前的根路由信息 rootRoute
 1. 自己推送
+
+- [ ] tab切换之后是否能够保持keep-alive?

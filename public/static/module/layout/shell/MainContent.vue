@@ -123,11 +123,12 @@ export default {
       APP_STATE.removeTab(rootRoute.content.id, index);
       /* 当前选中tab被删除,当前展示切换为最后一个 */
       if (routeId === APP_STATE.contentTabsActiveName) {
-        this.handleTabClick(_.last(APP_STATE.contentTabs));
+        this.handleTabClick(
+          _.last(APP_STATE.contentTabs) && _.last(APP_STATE.contentTabs).content
+        );
       }
     },
     handleTabClick(tab) {
-      debugger;
       const targetTab = APP_STATE.contentTabsRouteMap[tab.id];
       if (!targetTab) {
         alert("Tab 没有必要的参数");

@@ -27,7 +27,6 @@ const store_src_version = localforage.createInstance({
         console.timeEnd("clear cache");
     }
 })();
-
 /* 加载mian.js意味需要重新缓存数据，checkResourceCache调用用来检查静态资源 */
 export async function checkResourceCache(exclude = {}, _) {
     console.time("checkResourceCache");
@@ -254,7 +253,6 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
 
 const LOADED_JS = {};
 export function loadJS(url) {
-    debugger;
     if (LOADED_JS[camelCase(url).toLowerCase()]) return Promise.resolve();
     return (shouldCache(url) ? cacheStaticResourceAndToCode(url) : loadJSByAddScriptElement(url))
         .then(function (res) {

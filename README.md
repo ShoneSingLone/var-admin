@@ -291,3 +291,5 @@ PAGE_*单例
 ## 码表的缓存
 
 [zangodb](https://github.com/erikolson186/zangodb)
+
+window.__webpack_public_path__ = `${parentUrl}${PATH_PREFIX}/lib/bundle/`;

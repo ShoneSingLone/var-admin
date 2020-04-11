@@ -25,6 +25,20 @@
         "permissions": null,
         "sort": 0,
         "parentName": null
+      },
+      {
+        "id": "test1",
+        "path": "/system/test",
+        "pid": "sys1",
+        "children": [],
+        "name": "测试页面",
+        "url": "static/module/dev/dev/Test.vue",
+        "type": 0,
+        "handler": 1,
+        "icon": "icon-unorderedlist",
+        "permissions": null,
+        "sort": 0,
+        "parentName": null
       }
     ]
   }

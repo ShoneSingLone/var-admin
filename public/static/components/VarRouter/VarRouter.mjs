@@ -899,7 +899,6 @@ function addRouteRecord(pathList, pathMap, nameMap, route, parent, matchAs) {
     if (typeof route.caseSensitive === "boolean") {
         pathToRegexpOptions.sensitive = route.caseSensitive;
     }
-
     const record = extend({
         id: route.id,
         pid: route.pid,

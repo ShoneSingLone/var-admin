@@ -28,6 +28,7 @@
     "babel-polyfill": "^6.26.0",
     "element-ui": "^2.13.0",
     "jquery": "^3.4.1",
+    "koa-bodyparser": "^4.3.0",
     "koa-router": "^7.4.0",
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",

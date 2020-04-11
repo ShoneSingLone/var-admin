@@ -32,11 +32,10 @@
 
 <script>
 const {
-  APP_STATE,
   EventBus,
   _: { $lazyLoadComponent, $resolvePath, $axios }
 } = window;
-
+let APP_STATE = window.APP_STATE;
 export default {
   TEMPLATE_PLACEHOLDER,
   components: {
@@ -56,6 +55,7 @@ export default {
     };
   },
   data() {
+    APP_STATE = APP_STATE || window.APP_STATE;
     return { APP_STATE };
   },
   created() {

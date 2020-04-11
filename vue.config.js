@@ -6,10 +6,11 @@ function resolve(dir) {
 
 module.exports = {
     lintOnSave: false,
+    runtimeCompiler: true,
     devServer: {
         proxy: {
             "/api": {
-                target: "http://localhost:8080"
+                target: "http://localhost:8082"
             }
         }
     },
