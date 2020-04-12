@@ -61,4 +61,16 @@ ViewRouter是以a方式处理
     1. 记录当前的根路由信息 rootRoute
 1. 自己推送
 
-- [ ] tab切换之后是否能够保持keep-alive?
+- [x] tab切换之后是否能够保持keep-alive?
+
+```css
+> .el-tabs__content {
+            flex: 1;
+            overflow: hidden;
+
+            > .el-tab-pane {
+                height: 100%;
+                overflow: auto;
+            }
+        }
+```

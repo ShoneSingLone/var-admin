@@ -12,10 +12,11 @@
 
         > .el-tabs__content {
             flex: 1;
-            overflow: auto;
+            overflow: hidden;
 
             > .el-tab-pane {
                 height: 100%;
+                overflow: auto;
             }
         }
     }
