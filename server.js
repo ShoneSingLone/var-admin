@@ -14,6 +14,7 @@ const {
     isProd
 } = require("./config/phases");
 
+console.log("isProd",isProd);
 const webpackCompiler = webpack(webpackDevConfig);
 
 const app = new Koa();
