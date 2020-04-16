@@ -63,12 +63,12 @@ export default async () => {
   ]);
   /*  */
   let res = await Promise.all([
-    await $loadJS($resolvePath("static/lib/element/index.js")).
-    then(() => Promise.all([
+    await $loadJS($resolvePath("static/lib/element/index.js"))
+    .then(() => Promise.all([
       $loadJS($resolvePath("static/lib/vue-i18n-8.1.0/vue-i18n.min.js")),
       $system.import($resolvePath("static/js/app/github/i18n.zh-cn.mjs"))
-    ])).
-    then((res) => {
+    ]))
+    .then((res) => {
       const {
         Vue,
         VueI18n,
@@ -106,8 +106,7 @@ export default async () => {
     }),
     /* js媒体查询库 https://wicky.nillia.ms/enquire.js/ */
     await $loadJS($resolvePath("static/lib/enquire.min.js")),
-    await $loadJS($resolvePath("static/lib/js-cookie-2.2.0/js-cookie.js")),
-    await $loadJS($resolvePath("static/js/app/github/http-axios.js")),
+    await $loadJS($resolvePath("static/js/app/github/http-axios.mjs")),
     /* localStorage */
     await $system.import($resolvePath("static/js/app/github/utils.mjs")),
     await (() => {

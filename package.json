@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "CRM with Koa2, Webpack,Vue Angular React=>var",
   "scripts": {
-    "c":"node ./config/pre/changeversion.js",
+    "c": "node ./config/pre/changeversion.js",
     "git:pull": "git pull && git pull gitee master && git pull coding master",
     "git:push": "npm run c && git push && git push gitee master && git push coding master",
     "lint": "eslint . --ignore-path .eslintignore",

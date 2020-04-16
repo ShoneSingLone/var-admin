@@ -1,10 +1,11 @@
-const fs = require("fs");
+const fs = require("fs-extra");
 const path = require("path");
 const Koa = require("koa");
 const Router = require("koa-router");
 const serve = require("koa-static");
 const mount = require("koa-mount");
 const webpack = require("webpack");
+const bodyParser = require("koa-bodyparser");
 const {
     koaDevMiddleware,
     koaHotMiddleware
@@ -13,18 +14,13 @@ const webpackDevConfig = require("./webpack.dev.config");
 const {
     isProd
 } = require("./config/phases");
-
-console.log("isProd",isProd);
 const webpackCompiler = webpack(webpackDevConfig);
 
 const app = new Koa();
 const router = new Router();
-const staticPath = path.resolve(__dirname, "./public");
-router.get("/a/api", async (ctx, next) => {
-    ctx.response.body = "hello";
-    next();
-});
-app.use(mount("/", serve(staticPath)));
+app.use(bodyParser());
+app.use(router.routes());
+app.use(mount("/", serve(path.resolve(__dirname, "./public"))));
 if (isProd) {
     const indexHtml = path.resolve(__dirname, "./public/index.html");
     app.use(ctx => {
@@ -41,6 +37,33 @@ if (isProd) {
         heartbeat: 10 * 1000,
     }));
 }
+
+
+router.get("/api/menu", async (ctx) => {
+    const menuPath = path.resolve(__dirname, "./public/static/mock/menu.json");
+    ctx.response.body = await fs.readJSON(menuPath);
+
+});
+router.post("/api/menu", async (ctx) => {
+    console.log(ctx.request);
+    const savePath4menu = path.resolve(__dirname, "./public/static/mock/menu.jsonpost");
+    let res = await fs.writeJSON(savePath4menu, {
+        ctx,
+        menuPath: savePath4menu,
+        info:{
+            query: ctx.query,
+            path: ctx.path,
+            method: ctx.method
+        }
+    });
+    ctx.response.body = {
+        res,
+        query: ctx.query,
+        path: ctx.path,
+        method: ctx.method
+    };
+});
+
 
 const port = process.env.PORT || 8082;
 app.listen(port, () => {

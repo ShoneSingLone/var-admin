@@ -11,7 +11,7 @@ export function getIDFromURL(url) {
 function getBaseurl() {
     var scriptMainSentryEle = document.getElementById("script-main-sentry");
     if (!scriptMainSentryEle) {
-        return alert("入口页面未设置script-main-sentry");
+        return console.error("入口页面未设置script-main-sentry");
     }
     var jsPath = scriptMainSentryEle.src;
     var _baseURL = jsPath.substring(0, jsPath.lastIndexOf(PATH_PREFIX + "/js/main.sentry.js")) || "/";
@@ -28,7 +28,7 @@ function resolveIfNotPlainOrUrl(relUrl, parentUrl) {
     if (relUrl[0] === "/" && relUrl[1] === "/") {
         return parentUrl.slice(0, parentUrl.indexOf(":") + 1) + relUrl;
     }
-    /* 相对 */
+    /* 相对路径 */
     // relative-url
     else if (relUrl[0] === "." && (relUrl[1] === "/" || relUrl[1] === "." && (relUrl[2] === "/" || relUrl.length === 2 && (relUrl += "/")) ||
             relUrl.length === 1 && (relUrl += "/")) ||

@@ -1,27 +1,23 @@
 <template>
   <div id="app">
-    <img
-      alt="Vue logo"
-      src="./styles/background.svg"
-    >
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <PageMenu />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import PageMenu from "@@/static/module/sys/menu/PageMenu.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld
+    PageMenu
   }
 };
 </script>
 
 <style lang="less">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
