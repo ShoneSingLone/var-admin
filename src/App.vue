@@ -1,16 +1,32 @@
 <template>
   <div id="app">
-    <PageMenu />
+    <div :is="currentView" />
   </div>
 </template>
 
 <script>
 import PageMenu from "@@/static/module/sys/menu/PageMenu.vue";
+import PageDevComponents from "@@/static/module/dev/PageDevComponents.vue";
 
 export default {
   name: "App",
   components: {
-    PageMenu
+    PageMenu,
+    PageDevComponents
+  },
+  data() {
+    return {
+      currentView: "PageMenu"
+    };
+  },
+  mounted() {
+    var url = new URL(window.location);
+    // Retrieve params via url.search, passed into ctor
+    var params = new URLSearchParams(url.search);
+    var view = params.get("view");
+    if (view) {
+      this.currentView = view;
+    }
   }
 };
 </script>

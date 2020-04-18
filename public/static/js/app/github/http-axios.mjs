@@ -1,3 +1,10 @@
+import {
+    getUtiles
+} from "@@/static/js/app/github/utils.mjs";
+const {
+    $loadLibById
+} = getUtiles();
+export const loadLibById = $loadLibById;
 export async function setAxiosInterceptors(axios, _, Cookies) {
     var service = axios.create({
         baseURL: window.APP_CONFIGS.BASE_URL,
@@ -10,7 +17,7 @@ export async function setAxiosInterceptors(axios, _, Cookies) {
 
     /****** request拦截器==>对请求参数做处理 ******/
     service.interceptors.request.use(
-        function (config) {
+        (config) => {
             config.headers = config.headers || {};
             // app.$vux.loading.show({});
             var token = _.$ls.get("access_token");
@@ -18,11 +25,10 @@ export async function setAxiosInterceptors(axios, _, Cookies) {
                 config.headers["Authorization"] = "token  " + token;
             }
             /* 菜单显示的语言，如果没有则为null */
-            debugger;
             config.headers["Accept-Language"] = Cookies.get("language") || "zh-CN";
             return config;
         },
-        function (error) {
+        (error) => {
             //请求错误处理
             // app.$vux.toast.show({ type: "warn", text: error });
             return Promise.reject(error);
@@ -30,23 +36,21 @@ export async function setAxiosInterceptors(axios, _, Cookies) {
     );
     /****** respone拦截器==>对响应做处理 ******/
     service.interceptors.response.use(
-        function (response) {
-            debugger;
+        (response) => {
             //成功请求到数据
             // app.$vux.loading.hide();
             //这里根据后端提供的数据进行对应的处理
             if (response.status === 200) {
                 return response.data;
             } else {
-                return response; //常规错误处理
+                //常规错误处理
                 // app.$vux.toast.show({ type: "warn", text: response.data.data.msg });
+                return response;
             }
         },
-        function (error) {
+        (error) => {
             //响应错误处理
-            console.log("error");
-            console.log(error);
-            console.log(JSON.stringify(error));
+            console.error(error);
             // let text = JSON.parse(JSON.stringify(error)).response.status === 404 ?
             //     "404" :
             //     "网络异常，请重试";

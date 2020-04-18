@@ -15,7 +15,8 @@ export default async () => {
   await $loadJS($resolvePath("static/lib/vue-2.6.11.broswer.js"));
   /* 获取完整lodash */
   await Promise.all([
-    await $loadJS($resolvePath("static/lib/lodash-4.17.11.js")).then(function () {
+    await $loadJS($resolvePath("static/lib/lodash-4.17.11.js"))
+    .then(function () {
       /* 之前的lodash值加入必要的工具，这是完整的 */
       window._ = merge(window._.noConflict(), window._);
       window._.$arrayTreeFilter = function arrayTreeFilter(
@@ -106,9 +107,16 @@ export default async () => {
     }),
     /* js媒体查询库 https://wicky.nillia.ms/enquire.js/ */
     await $loadJS($resolvePath("static/lib/enquire.min.js")),
-    await $loadJS($resolvePath("static/js/app/github/http-axios.mjs")),
+    await (async () => {
+      const {
+        setAxiosInterceptors,
+        loadLibById /* the same as window.loadLibById */
+      } = await $system.import($resolvePath("static/js/app/github/http-axios.mjs"));
+      const Cookies = await loadLibById("Cookies");
+      await setAxiosInterceptors(window._.$axios, window._, Cookies);
+      return Promise.resolve();
+    })(),
     /* localStorage */
-    await $system.import($resolvePath("static/js/app/github/utils.mjs")),
     await (() => {
       try {
         /* URL & URLSearchParams */

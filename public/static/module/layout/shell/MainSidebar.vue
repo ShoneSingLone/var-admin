@@ -80,7 +80,7 @@
         },
         async mounted() {
             this.getMenu();
-            const $ = await window._lib("$");
+            const $ = await window.loadLibById("$");
             console.log($("body"));
         },
         provide() {

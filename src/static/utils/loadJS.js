@@ -180,75 +180,88 @@ export async function xhrFetchWithCache(url, authorization, integrity, asBuffer)
 
 /* XMLHttpRequest兼容获取 source string */
 function xhrFetch(url, authorization, integrity, asBuffer) {
-    return window._.$$STORE
-        .getCache(url)
-        .then(function (res) {
-            /* TODO:cache */
-            if (res) {
-                return Promise.resolve(res);
-            } else {
-                console.log("xhrFetch", window._.$getIDFromURL(url));
-                return new Promise(function (resolve, reject) {
-                    // percent encode just "#" for HTTP requests
-                    url = url.replace(/#/g, "%23");
-                    var xhr = new XMLHttpRequest();
-                    if (asBuffer)
-                        xhr.responseType = "arraybuffer";
+    const canCache = !!(window._ && window._.$$STORE && window._.$$STORE.getCache);
 
-                    function load() {
-                        var source = (asBuffer ? xhr.response : xhr.responseText);
-                        if (url.slice(-4) === ".vue") {
-                            source = window._.$VueLoader(url, source);
-                        }
-                        window
-                            ._.$$STORE
-                            .setCache(url, source)
-                            .then(function () {
-                                return resolve(source);
-                            })
-                            .catch(function (error) {
-                                console.error(error);
-                            });
-                    }
+    function cacheOrNotBy(shouldCache) {
+        console.log("xhrFetch", window._.$getIDFromURL(url));
+        return new Promise(function (resolve, reject) {
+            // percent encode just "#" for HTTP requests
+            url = url.replace(/#/g, "%23");
+            var xhr = new XMLHttpRequest();
+            if (asBuffer)
+                xhr.responseType = "arraybuffer";
 
-                    function error() {
-                        reject(new Error("XHR error: " + (xhr.status ? " (" + xhr.status + (xhr.statusText ? " " + xhr.statusText : "") + ")" : "") + " loading " + url));
-                    }
+            function load() {
+                var source = (asBuffer ? xhr.response : xhr.responseText);
+                if (url.slice(-4) === ".vue") {
+                    source = window._.$VueLoader(url, source);
+                }
 
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4) {
-                            // in Chrome on file:/// URLs, status is 0
-                            if (xhr.status == 0) {
-                                if (xhr.response) {
-                                    load();
-                                } else {
-                                    // when responseText is empty, wait for load or error event
-                                    // to inform if it is a 404 or empty file
-                                    xhr.addEventListener("error", error);
-                                    xhr.addEventListener("load", load);
-                                }
-                            } else if (xhr.status === 200) {
-                                load();
-                            } else {
-                                error();
-                            }
-                        }
-                    };
-                    xhr.open("GET", `${url}?_t=${Date.now()}`, true);
-                    if (xhr.setRequestHeader) {
-                        xhr.setRequestHeader("Accept", "application/x-es-module, */*");
-                        // can set "authorization: true" to enable withCredentials only
-                        if (authorization) {
-                            if (typeof authorization == "string")
-                                xhr.setRequestHeader("Authorization", authorization);
-                            xhr.withCredentials = true;
-                        }
-                    }
-                    xhr.send(null);
-                });
-
+                if (shouldCache) {
+                    return window
+                        ._.$$STORE
+                        .setCache(url, source)
+                        .then(function () {
+                            return resolve(source);
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+                        });
+                } else {
+                    return resolve(source);
+                }
             }
+
+            function error() {
+                reject(new Error("XHR error: " + (xhr.status ? " (" + xhr.status + (xhr.statusText ? " " + xhr.statusText : "") + ")" : "") + " loading " + url));
+            }
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    // in Chrome on file:/// URLs, status is 0
+                    if (xhr.status == 0) {
+                        if (xhr.response) {
+                            load();
+                        } else {
+                            // when responseText is empty, wait for load or error event
+                            // to inform if it is a 404 or empty file
+                            xhr.addEventListener("error", error);
+                            xhr.addEventListener("load", load);
+                        }
+                    } else if (xhr.status === 200) {
+                        load();
+                    } else {
+                        error();
+                    }
+                }
+            };
+            xhr.open("GET", `${url}?_t=${Date.now()}`, true);
+            if (xhr.setRequestHeader) {
+                xhr.setRequestHeader("Accept", "application/x-es-module, */*");
+                // can set "authorization: true" to enable withCredentials only
+                if (authorization) {
+                    if (typeof authorization == "string")
+                        xhr.setRequestHeader("Authorization", authorization);
+                    xhr.withCredentials = true;
+                }
+            }
+            xhr.send(null);
         });
+    }
+
+    if (!canCache) {
+        return cacheOrNotBy(canCache);
+    } else {
+        return window._.$$STORE.getCache(url)
+            .then(function (res) {
+                /* TODO:cache */
+                if (res) {
+                    return Promise.resolve(res);
+                } else {
+                    return cacheOrNotBy(canCache);
+                }
+            });
+    }
 }
 
 const LOADED_JS = {};

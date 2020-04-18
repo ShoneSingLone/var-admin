@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="20">
+  <el-row :gutter="10">
     <el-col :span="12">
       <el-card class="box-card">
         <el-button @click="getMenu">
@@ -13,11 +13,10 @@
         </div>
         <el-tree
           :data="data"
+          :props="{label:'name'}"
           node-key="id"
           default-expand-all
           draggable
-          :allow-drop="allowDrop"
-          :allow-drag="allowDrag"
           @node-drag-start="handleDragStart"
           @node-drag-enter="handleDragEnter"
           @node-drag-leave="handleDragLeave"
@@ -100,25 +99,24 @@ export default {
     async getMenu() {
       try {
         this.data = await window._.$axios.get("/api/menu");
-        debugger;
       } catch (e) {
         console.error(e);
       }
     },
     handleDragStart(node, ev) {
-      console.log("drag start", node);
+      console.log("drag start1", node);
     },
     handleDragEnter(draggingNode, dropNode, ev) {
-      console.log("tree drag enter: ", dropNode.label);
+      console.log("tree drag enter: 2", dropNode.label);
     },
     handleDragLeave(draggingNode, dropNode, ev) {
-      console.log("tree drag leave: ", dropNode.label);
+      console.log("tree drag leave: 3", dropNode.label);
     },
     handleDragOver(draggingNode, dropNode, ev) {
-      console.log("tree drag over: ", dropNode.label);
+      console.log("tree drag over: 4", dropNode.label);
     },
     handleDragEnd(draggingNode, dropNode, dropType, ev) {
-      console.log("tree drag end: ", dropNode && dropNode.label, dropType);
+      console.log("tree drag end: 5", dropNode && dropNode.label, dropType);
     },
     handleDrop(draggingNode, dropNode, dropType, ev) {
       console.log("tree drop: ", dropNode.label, dropType);

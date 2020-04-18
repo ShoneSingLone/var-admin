@@ -11,21 +11,21 @@
  */
 (function (f) {
     if (typeof exports === "object" && typeof module !== "undefined") {
-        module.exports = f()
+        module.exports = f();
     } else if (typeof define === "function" && define.amd) {
-        define([], f)
+        define([], f);
     } else {
         var g;
         if (typeof window !== "undefined") {
-            g = window
+            g = window;
         } else if (typeof global !== "undefined") {
-            g = global
+            g = global;
         } else if (typeof self !== "undefined") {
-            g = self
+            g = self;
         } else {
-            g = this
+            g = this;
         }
-        g.less = f()
+        g.less = f();
     }
 })(function () {
     var define, module, exports;
@@ -37,24 +37,24 @@
                     if (!u && a) return a(o, !0);
                     if (i) return i(o, !0);
                     var f = new Error("Cannot find module '" + o + "'");
-                    throw f.code = "MODULE_NOT_FOUND", f
+                    throw f.code = "MODULE_NOT_FOUND", f;
                 }
                 var l = n[o] = {exports: {}};
                 t[o][0].call(l.exports, function (e) {
                     var n = t[o][1][e];
-                    return s(n ? n : e)
-                }, l, l.exports, e, t, n, r)
+                    return s(n ? n : e);
+                }, l, l.exports, e, t, n, r);
             }
-            return n[o].exports
+            return n[o].exports;
         }
 
         var i = typeof require == "function" && require;
         for (var o = 0; o < r.length; o++) s(r[o]);
-        return s
+        return s;
     })({
         1: [function (require, module, exports) {
-            var addDataAttr = require('./utils').addDataAttr,
-                browser = require('./browser');
+            var addDataAttr = require("./utils").addDataAttr,
+                browser = require("./browser");
 
             module.exports = function (window, options) {
 
@@ -77,13 +77,13 @@
                 // Interval between watch polls
                 options.poll = options.poll || (options.isFileProtocol ? 1000 : 1500);
 
-                options.env = options.env || (window.location.hostname == '127.0.0.1' ||
-                window.location.hostname == '0.0.0.0' ||
-                window.location.hostname == 'localhost' ||
+                options.env = options.env || (window.location.hostname == "127.0.0.1" ||
+                window.location.hostname == "0.0.0.0" ||
+                window.location.hostname == "localhost" ||
                 (window.location.port &&
                     window.location.port.length > 0) ||
-                options.isFileProtocol ? 'development'
-                    : 'production');
+                options.isFileProtocol ? "development"
+                    : "production");
 
                 var dumpLineNumbers = /!dumpLineNumbers:(comments|mediaquery|all)/.exec(window.location.hash);
                 if (dumpLineNumbers) {
@@ -99,7 +99,7 @@
                 }
 
                 if (options.relativeUrls) {
-                    options.rewriteUrls = 'all';
+                    options.rewriteUrls = "all";
                 }
             };
 
@@ -115,9 +115,9 @@
 // TODO - consider switching this out for a recommendation for this polyfill?
 // <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 // Browsers have good Promise support
-            require('promise/polyfill');
+            require("promise/polyfill");
 
-            var options = require('../less/default-options')();
+            var options = require("../less/default-options")();
 
             if (window.less) {
                 for (key in window.less) {
@@ -126,7 +126,7 @@
                     }
                 }
             }
-            require('./add-default-options')(window, options);
+            require("./add-default-options")(window, options);
 
             options.plugins = options.plugins || [];
 
@@ -134,7 +134,7 @@
                 options.plugins = options.plugins.concat(window.LESS_PLUGINS);
             }
 
-            var less = module.exports = require('./index')(window, options);
+            var less = module.exports = require("./index")(window, options);
 
             window.less = less;
 
@@ -156,11 +156,11 @@
                 }
                 // Simulate synchronous stylesheet loading by hiding page rendering
                 if (!options.async) {
-                    css = 'body { display: none !important }';
-                    head = document.head || document.getElementsByTagName('head')[0];
-                    style = document.createElement('style');
+                    css = "body { display: none !important }";
+                    head = document.head || document.getElementsByTagName("head")[0];
+                    style = document.createElement("style");
 
-                    style.type = 'text/css';
+                    style.type = "text/css";
                     if (style.styleSheet) {
                         style.styleSheet.cssText = css;
                     } else {
@@ -170,29 +170,29 @@
                     head.appendChild(style);
                 }
                 less.registerStylesheetsImmediately();
-                less.pageLoadFinished = less.refresh(less.env === 'development').then(resolveOrReject, resolveOrReject);
+                less.pageLoadFinished = less.refresh(less.env === "development").then(resolveOrReject, resolveOrReject);
             }
 
         }, {"../less/default-options": 17, "./add-default-options": 1, "./index": 8, "promise/polyfill": 104}],
         3: [function (require, module, exports) {
-            var utils = require('./utils');
+            var utils = require("./utils");
             module.exports = {
                 createCSS: function (document, styles, sheet) {
                     // Strip the query-string
-                    var href = sheet.href || '';
+                    var href = sheet.href || "";
 
                     // If there is no title set, use the filename, minus the extension
-                    var id = 'less:' + (sheet.title || utils.extractId(href));
+                    var id = "less:" + (sheet.title || utils.extractId(href));
 
                     // If this has already been inserted into the DOM, we may need to replace it
                     var oldStyleNode = document.getElementById(id);
                     var keepOldStyleNode = false;
 
                     // Create a new stylesheet node for insertion or (if necessary) replacement
-                    var styleNode = document.createElement('style');
-                    styleNode.setAttribute('type', 'text/css');
+                    var styleNode = document.createElement("style");
+                    styleNode.setAttribute("type", "text/css");
                     if (sheet.media) {
-                        styleNode.setAttribute('media', sheet.media);
+                        styleNode.setAttribute("media", sheet.media);
                     }
                     styleNode.id = id;
 
@@ -204,7 +204,7 @@
                             oldStyleNode.firstChild.nodeValue === styleNode.firstChild.nodeValue);
                     }
 
-                    var head = document.getElementsByTagName('head')[0];
+                    var head = document.getElementsByTagName("head")[0];
 
                     // If there is no oldStyleNode, just append; otherwise, only append if we need
                     // to replace oldStyleNode with an updated stylesheet
@@ -227,14 +227,14 @@
                         try {
                             styleNode.styleSheet.cssText = styles;
                         } catch (e) {
-                            throw new Error('Couldn\'t reassign styleSheet.cssText.');
+                            throw new Error("Couldn't reassign styleSheet.cssText.");
                         }
                     }
                 },
                 currentScript: function (window) {
                     var document = window.document;
                     return document.currentScript || (function () {
-                        var scripts = document.getElementsByTagName('script');
+                        var scripts = document.getElementsByTagName("script");
                         return scripts[scripts.length - 1];
                     })();
                 }
@@ -246,32 +246,32 @@
 
             module.exports = function (window, options, logger) {
                 var cache = null;
-                if (options.env !== 'development') {
+                if (options.env !== "development") {
                     try {
-                        cache = (typeof window.localStorage === 'undefined') ? null : window.localStorage;
+                        cache = (typeof window.localStorage === "undefined") ? null : window.localStorage;
                     } catch (_) {
                     }
                 }
                 return {
                     setCSS: function (path, lastModified, modifyVars, styles) {
                         if (cache) {
-                            logger.info('saving ' + path + ' to cache.');
+                            logger.info("saving " + path + " to cache.");
                             try {
                                 cache.setItem(path, styles);
-                                cache.setItem(path + ':timestamp', lastModified);
+                                cache.setItem(path + ":timestamp", lastModified);
                                 if (modifyVars) {
-                                    cache.setItem(path + ':vars', JSON.stringify(modifyVars));
+                                    cache.setItem(path + ":vars", JSON.stringify(modifyVars));
                                 }
                             } catch (e) {
                                 // TODO - could do with adding more robust error handling
-                                logger.error('failed to save "' + path + '" to local storage for caching.');
+                                logger.error("failed to save \"" + path + "\" to local storage for caching.");
                             }
                         }
                     },
                     getCSS: function (path, webInfo, modifyVars) {
                         var css = cache && cache.getItem(path),
-                            timestamp = cache && cache.getItem(path + ':timestamp'),
-                            vars = cache && cache.getItem(path + ':vars');
+                            timestamp = cache && cache.getItem(path + ":timestamp"),
+                            vars = cache && cache.getItem(path + ":vars");
 
                         modifyVars = modifyVars || {};
                         vars = vars || "{}"; // if not set, treat as the JSON representation of an empty object
@@ -289,23 +289,23 @@
 
         }, {}],
         5: [function (require, module, exports) {
-            var utils = require('./utils'),
-                browser = require('./browser');
+            var utils = require("./utils"),
+                browser = require("./browser");
 
             module.exports = function (window, less, options) {
 
                 function errorHTML(e, rootHref) {
-                    var id = 'less-error-message:' + utils.extractId(rootHref || '');
-                    var template = '<li><label>{line}</label><pre class="{class}">{content}</pre></li>';
-                    var elem = window.document.createElement('div'), timer, content, errors = [];
+                    var id = "less-error-message:" + utils.extractId(rootHref || "");
+                    var template = "<li><label>{line}</label><pre class=\"{class}\">{content}</pre></li>";
+                    var elem = window.document.createElement("div"), timer, content, errors = [];
                     var filename = e.filename || rootHref;
                     var filenameNoPath = filename.match(/([^\/]+(\?.*)?)$/)[1];
 
                     elem.id = id;
-                    elem.className = 'less-error-message';
+                    elem.className = "less-error-message";
 
-                    content = '<h3>' + (e.type || 'Syntax') + 'Error: ' + (e.message || 'There is an error in your .less file') +
-                        '</h3>' + '<p>in <a href="' + filename + '">' + filenameNoPath + '</a> ';
+                    content = "<h3>" + (e.type || "Syntax") + "Error: " + (e.message || "There is an error in your .less file") +
+                        "</h3>" + "<p>in <a href=\"" + filename + "\">" + filenameNoPath + "</a> ";
 
                     var errorline = function (e, i, classname) {
                         if (e.extract[i] !== undefined) {
@@ -316,70 +316,70 @@
                     };
 
                     if (e.line) {
-                        errorline(e, 0, '');
-                        errorline(e, 1, 'line');
-                        errorline(e, 2, '');
-                        content += 'on line ' + e.line + ', column ' + (e.column + 1) + ':</p>' +
-                            '<ul>' + errors.join('') + '</ul>';
+                        errorline(e, 0, "");
+                        errorline(e, 1, "line");
+                        errorline(e, 2, "");
+                        content += "on line " + e.line + ", column " + (e.column + 1) + ":</p>" +
+                            "<ul>" + errors.join("") + "</ul>";
                     }
                     if (e.stack && (e.extract || options.logLevel >= 4)) {
-                        content += '<br/>Stack Trace</br />' + e.stack.split('\n').slice(1).join('<br/>');
+                        content += "<br/>Stack Trace</br />" + e.stack.split("\n").slice(1).join("<br/>");
                     }
                     elem.innerHTML = content;
 
                     // CSS for error messages
                     browser.createCSS(window.document, [
-                        '.less-error-message ul, .less-error-message li {',
-                        'list-style-type: none;',
-                        'margin-right: 15px;',
-                        'padding: 4px 0;',
-                        'margin: 0;',
-                        '}',
-                        '.less-error-message label {',
-                        'font-size: 12px;',
-                        'margin-right: 15px;',
-                        'padding: 4px 0;',
-                        'color: #cc7777;',
-                        '}',
-                        '.less-error-message pre {',
-                        'color: #dd6666;',
-                        'padding: 4px 0;',
-                        'margin: 0;',
-                        'display: inline-block;',
-                        '}',
-                        '.less-error-message pre.line {',
-                        'color: #ff0000;',
-                        '}',
-                        '.less-error-message h3 {',
-                        'font-size: 20px;',
-                        'font-weight: bold;',
-                        'padding: 15px 0 5px 0;',
-                        'margin: 0;',
-                        '}',
-                        '.less-error-message a {',
-                        'color: #10a',
-                        '}',
-                        '.less-error-message .error {',
-                        'color: red;',
-                        'font-weight: bold;',
-                        'padding-bottom: 2px;',
-                        'border-bottom: 1px dashed red;',
-                        '}'
-                    ].join('\n'), {title: 'error-message'});
+                        ".less-error-message ul, .less-error-message li {",
+                        "list-style-type: none;",
+                        "margin-right: 15px;",
+                        "padding: 4px 0;",
+                        "margin: 0;",
+                        "}",
+                        ".less-error-message label {",
+                        "font-size: 12px;",
+                        "margin-right: 15px;",
+                        "padding: 4px 0;",
+                        "color: #cc7777;",
+                        "}",
+                        ".less-error-message pre {",
+                        "color: #dd6666;",
+                        "padding: 4px 0;",
+                        "margin: 0;",
+                        "display: inline-block;",
+                        "}",
+                        ".less-error-message pre.line {",
+                        "color: #ff0000;",
+                        "}",
+                        ".less-error-message h3 {",
+                        "font-size: 20px;",
+                        "font-weight: bold;",
+                        "padding: 15px 0 5px 0;",
+                        "margin: 0;",
+                        "}",
+                        ".less-error-message a {",
+                        "color: #10a",
+                        "}",
+                        ".less-error-message .error {",
+                        "color: red;",
+                        "font-weight: bold;",
+                        "padding-bottom: 2px;",
+                        "border-bottom: 1px dashed red;",
+                        "}"
+                    ].join("\n"), {title: "error-message"});
 
                     elem.style.cssText = [
-                        'font-family: Arial, sans-serif',
-                        'border: 1px solid #e00',
-                        'background-color: #eee',
-                        'border-radius: 5px',
-                        '-webkit-border-radius: 5px',
-                        '-moz-border-radius: 5px',
-                        'color: #e00',
-                        'padding: 15px',
-                        'margin-bottom: 15px'
-                    ].join(';');
+                        "font-family: Arial, sans-serif",
+                        "border: 1px solid #e00",
+                        "background-color: #eee",
+                        "border-radius: 5px",
+                        "-webkit-border-radius: 5px",
+                        "-moz-border-radius: 5px",
+                        "color: #e00",
+                        "padding: 15px",
+                        "margin-bottom: 15px"
+                    ].join(";");
 
-                    if (options.env === 'development') {
+                    if (options.env === "development") {
                         timer = setInterval(function () {
                             var document = window.document,
                                 body = document.body;
@@ -396,7 +396,7 @@
                 }
 
                 function removeErrorHTML(path) {
-                    var node = window.document.getElementById('less-error-message:' + utils.extractId(path));
+                    var node = window.document.getElementById("less-error-message:" + utils.extractId(path));
                     if (node) {
                         node.parentNode.removeChild(node);
                     }
@@ -407,21 +407,21 @@
                 }
 
                 function removeError(path) {
-                    if (!options.errorReporting || options.errorReporting === 'html') {
+                    if (!options.errorReporting || options.errorReporting === "html") {
                         removeErrorHTML(path);
-                    } else if (options.errorReporting === 'console') {
+                    } else if (options.errorReporting === "console") {
                         removeErrorConsole(path);
-                    } else if (typeof options.errorReporting === 'function') {
-                        options.errorReporting('remove', path);
+                    } else if (typeof options.errorReporting === "function") {
+                        options.errorReporting("remove", path);
                     }
                 }
 
                 function errorConsole(e, rootHref) {
-                    var template = '{line} {content}';
+                    var template = "{line} {content}";
                     var filename = e.filename || rootHref;
                     var errors = [];
-                    var content = (e.type || 'Syntax') + 'Error: ' + (e.message || 'There is an error in your .less file') +
-                        ' in ' + filename;
+                    var content = (e.type || "Syntax") + "Error: " + (e.message || "There is an error in your .less file") +
+                        " in " + filename;
 
                     var errorline = function (e, i, classname) {
                         if (e.extract[i] !== undefined) {
@@ -432,25 +432,25 @@
                     };
 
                     if (e.line) {
-                        errorline(e, 0, '');
-                        errorline(e, 1, 'line');
-                        errorline(e, 2, '');
-                        content += ' on line ' + e.line + ', column ' + (e.column + 1) + ':\n' +
-                            errors.join('\n');
+                        errorline(e, 0, "");
+                        errorline(e, 1, "line");
+                        errorline(e, 2, "");
+                        content += " on line " + e.line + ", column " + (e.column + 1) + ":\n" +
+                            errors.join("\n");
                     }
                     if (e.stack && (e.extract || options.logLevel >= 4)) {
-                        content += '\nStack Trace\n' + e.stack;
+                        content += "\nStack Trace\n" + e.stack;
                     }
                     less.logger.error(content);
                 }
 
                 function error(e, rootHref) {
-                    if (!options.errorReporting || options.errorReporting === 'html') {
+                    if (!options.errorReporting || options.errorReporting === "html") {
                         errorHTML(e, rootHref);
-                    } else if (options.errorReporting === 'console') {
+                    } else if (options.errorReporting === "console") {
                         errorConsole(e, rootHref);
-                    } else if (typeof options.errorReporting === 'function') {
-                        options.errorReporting('add', e, rootHref);
+                    } else if (typeof options.errorReporting === "function") {
+                        options.errorReporting("add", e, rootHref);
                     }
                 }
 
@@ -466,7 +466,7 @@
 
             module.exports = function (options, logger) {
 
-                var AbstractFileManager = require('../less/environment/abstract-file-manager.js');
+                var AbstractFileManager = require("../less/environment/abstract-file-manager.js");
 
                 var fileCache = {};
 
@@ -490,19 +490,19 @@
                     var xhr = new XMLHttpRequest();
                     var async = options.isFileProtocol ? options.fileAsync : true;
 
-                    if (typeof xhr.overrideMimeType === 'function') {
-                        xhr.overrideMimeType('text/css');
+                    if (typeof xhr.overrideMimeType === "function") {
+                        xhr.overrideMimeType("text/css");
                     }
-                    logger.debug('XHR: Getting \'' + url + '\'');
-                    xhr.open('GET', url, async);
-                    xhr.setRequestHeader('Accept', type || 'text/x-less, text/css; q=0.9, */*; q=0.5');
+                    logger.debug("XHR: Getting '" + url + "'");
+                    xhr.open("GET", url, async);
+                    xhr.setRequestHeader("Accept", type || "text/x-less, text/css; q=0.9, */*; q=0.5");
                     xhr.send(null);
 
                     function handleResponse(xhr, callback, errback) {
                         if (xhr.status >= 200 && xhr.status < 300) {
                             callback(xhr.responseText,
-                                xhr.getResponseHeader('Last-Modified'));
-                        } else if (typeof errback === 'function') {
+                                xhr.getResponseHeader("Last-Modified"));
+                        } else if (typeof errback === "function") {
                             errback(xhr.status, url);
                         }
                     }
@@ -561,7 +561,7 @@
                             } catch (e) {
                                 return reject({
                                     filename: href,
-                                    message: 'Error loading file ' + href + ' error was ' + e.message
+                                    message: "Error loading file " + href + " error was " + e.message
                                 });
                             }
                         }
@@ -574,8 +574,8 @@
                             resolve({contents: data, filename: href, webInfo: {lastModified: lastModified}});
                         }, function doXHRError(status, url) {
                             reject({
-                                type: 'File',
-                                message: '\'' + url + '\' wasn\'t found (' + status + ')',
+                                type: "File",
+                                message: "'" + url + "' wasn't found (" + status + ")",
                                 href: href
                             });
                         });
@@ -589,25 +589,25 @@
         7: [function (require, module, exports) {
             module.exports = function () {
 
-                var functionRegistry = require('./../less/functions/function-registry');
+                var functionRegistry = require("./../less/functions/function-registry");
 
                 function imageSize() {
                     throw {
-                        type: 'Runtime',
-                        message: 'Image size functions are not supported in browser version of less'
+                        type: "Runtime",
+                        message: "Image size functions are not supported in browser version of less"
                     };
                 }
 
                 var imageFunctions = {
-                    'image-size': function (filePathNode) {
+                    "image-size": function (filePathNode) {
                         imageSize(this, filePathNode);
                         return -1;
                     },
-                    'image-width': function (filePathNode) {
+                    "image-width": function (filePathNode) {
                         imageSize(this, filePathNode);
                         return -1;
                     },
-                    'image-height': function (filePathNode) {
+                    "image-height": function (filePathNode) {
                         imageSize(this, filePathNode);
                         return -1;
                     }
@@ -622,25 +622,25 @@
 // index.js
 // Should expose the additional browser functions on to the less object
 //
-            var addDataAttr = require('./utils').addDataAttr,
-                browser = require('./browser');
+            var addDataAttr = require("./utils").addDataAttr,
+                browser = require("./browser");
 
             module.exports = function (window, options) {
                 var document = window.document;
-                var less = require('../less')();
+                var less = require("../less")();
 
                 less.options = options;
                 var environment = less.environment,
-                    FileManager = require('./file-manager')(options, less.logger),
+                    FileManager = require("./file-manager")(options, less.logger),
                     fileManager = new FileManager();
                 environment.addFileManager(fileManager);
                 less.FileManager = FileManager;
-                less.PluginLoader = require('./plugin-loader');
+                less.PluginLoader = require("./plugin-loader");
 
-                require('./log-listener')(less, options);
-                var errors = require('./error-reporting')(window, less, options);
-                var cache = less.cache = options.cache || require('./cache')(window, options, less.logger);
-                require('./image-size')(less.environment);
+                require("./log-listener")(less, options);
+                var errors = require("./error-reporting")(window, less, options);
+                var cache = less.cache = options.cache || require("./cache")(window, options, less.logger);
+                require("./image-size")(less.environment);
 
                 // Setup user functions - Deprecate?
                 if (options.functions) {
@@ -669,7 +669,7 @@
                 }
 
                 function loadStyles(modifyVars) {
-                    var styles = document.getElementsByTagName('style'),
+                    var styles = document.getElementsByTagName("style"),
                         style;
 
                     for (var i = 0; i < styles.length; i++) {
@@ -677,17 +677,17 @@
                         if (style.type.match(typePattern)) {
                             var instanceOptions = clone(options);
                             instanceOptions.modifyVars = modifyVars;
-                            var lessText = style.innerHTML || '';
-                            instanceOptions.filename = document.location.href.replace(/#.*$/, '');
+                            var lessText = style.innerHTML || "";
+                            instanceOptions.filename = document.location.href.replace(/#.*$/, "");
 
                             /* jshint loopfunc:true */
                             // use closure to store current style
                             less.render(lessText, instanceOptions,
                                 bind(function (style, e, result) {
                                     if (e) {
-                                        errors.add(e, 'inline');
+                                        errors.add(e, "inline");
                                     } else {
-                                        style.type = 'text/css';
+                                        style.type = "text/css";
                                         if (style.styleSheet) {
                                             style.styleSheet.cssText = result.css;
                                         } else {
@@ -769,7 +769,7 @@
                 }
 
                 function initRunningMode() {
-                    if (less.env === 'development') {
+                    if (less.env === "development") {
                         less.watchTimer = setInterval(function () {
                             if (less.watchMode) {
                                 fileManager.clearFileCache();
@@ -790,7 +790,7 @@
                 //
                 less.watch = function () {
                     if (!less.watchMode) {
-                        less.env = 'development';
+                        less.env = "development";
                         initRunningMode();
                     }
                     this.watchMode = true;
@@ -808,11 +808,11 @@
                 // "stylesheet/less".
                 //
                 less.registerStylesheetsImmediately = function () {
-                    var links = document.getElementsByTagName('link');
+                    var links = document.getElementsByTagName("link");
                     less.sheets = [];
 
                     for (var i = 0; i < links.length; i++) {
-                        if (links[i].rel === 'stylesheet/less' || (links[i].rel.match(/stylesheet/) &&
+                        if (links[i].rel === "stylesheet/less" || (links[i].rel.match(/stylesheet/) &&
                             (links[i].type.match(typePattern)))) {
                             less.sheets.push(links[i]);
                         }
@@ -853,7 +853,7 @@
 
                             endTime = new Date();
                             totalMilliseconds = endTime - startTime;
-                            less.logger.info('Less has finished and no sheets were loaded.');
+                            less.logger.info("Less has finished and no sheets were loaded.");
                             resolve({
                                 startTime: startTime,
                                 endTime: endTime,
@@ -870,12 +870,12 @@
                                     return;
                                 }
                                 if (webInfo.local) {
-                                    less.logger.info('Loading ' + sheet.href + ' from cache.');
+                                    less.logger.info("Loading " + sheet.href + " from cache.");
                                 } else {
-                                    less.logger.info('Rendered ' + sheet.href + ' successfully.');
+                                    less.logger.info("Rendered " + sheet.href + " successfully.");
                                 }
                                 browser.createCSS(window.document, css, sheet);
-                                less.logger.info('CSS for ' + sheet.href + ' generated in ' + (new Date() - endTime) + 'ms');
+                                less.logger.info("CSS for " + sheet.href + " generated in " + (new Date() - endTime) + "ms");
 
                                 // Count completed sheet
                                 remainingSheets--;
@@ -883,7 +883,7 @@
                                 // Check if the last remaining sheet was processed and then call the promise
                                 if (remainingSheets === 0) {
                                     totalMilliseconds = new Date() - startTime;
-                                    less.logger.info('Less has finished. CSS generated in ' + totalMilliseconds + 'ms');
+                                    less.logger.info("Less has finished. CSS generated in " + totalMilliseconds + "ms");
                                     resolve({
                                         startTime: startTime,
                                         endTime: endTime,
@@ -928,7 +928,7 @@
                 // 1 - Errors
                 // 0 - None
                 // Defaults to 2
-                options.logLevel = typeof options.logLevel !== 'undefined' ? options.logLevel : (options.env === 'development' ? logLevel_info : logLevel_error);
+                options.logLevel = typeof options.logLevel !== "undefined" ? options.logLevel : (options.env === "development" ? logLevel_info : logLevel_error);
 
                 if (!options.loggers) {
                     options.loggers = [{
@@ -964,7 +964,7 @@
 // TODO: Add tests for browser @plugin
             /* global window */
 
-            var AbstractPluginLoader = require('../less/environment/abstract-plugin-loader.js');
+            var AbstractPluginLoader = require("../less/environment/abstract-plugin-loader.js");
 
             /**
              * Browser Plugin Loader
@@ -990,17 +990,17 @@
         11: [function (require, module, exports) {
             module.exports = {
                 extractId: function (href) {
-                    return href.replace(/^[a-z-]+:\/+?[^\/]+/, '')  // Remove protocol & domain
-                        .replace(/[\?\&]livereload=\w+/, '')        // Remove LiveReload cachebuster
-                        .replace(/^\//, '')                         // Remove root /
-                        .replace(/\.[a-zA-Z]+$/, '')                // Remove simple extension
-                        .replace(/[^\.\w-]+/g, '-')                 // Replace illegal characters
-                        .replace(/\./g, ':');                       // Replace dots with colons(for valid id)
+                    return href.replace(/^[a-z-]+:\/+?[^\/]+/, "")  // Remove protocol & domain
+                        .replace(/[\?\&]livereload=\w+/, "")        // Remove LiveReload cachebuster
+                        .replace(/^\//, "")                         // Remove root /
+                        .replace(/\.[a-zA-Z]+$/, "")                // Remove simple extension
+                        .replace(/[^\.\w-]+/g, "-")                 // Replace illegal characters
+                        .replace(/\./g, ":");                       // Replace dots with colons(for valid id)
                 },
                 addDataAttr: function (options, tag) {
                     for (var opt in tag.dataset) {
                         if (tag.dataset.hasOwnProperty(opt)) {
-                            if (opt === 'env' || opt === 'dumpLineNumbers' || opt === 'rootpath' || opt === 'errorReporting') {
+                            if (opt === "env" || opt === "dumpLineNumbers" || opt === "rootpath" || opt === "errorReporting") {
                                 options[opt] = tag.dataset[opt];
                             } else {
                                 try {
@@ -1032,7 +1032,7 @@
         13: [function (require, module, exports) {
             var contexts = {};
             module.exports = contexts;
-            var Constants = require('./constants');
+            var Constants = require("./constants");
 
             var copyFromOriginal = function copyFromOriginal(original, destination, propertiesToCopy) {
                 if (!original) {
@@ -1051,50 +1051,50 @@
  */
             var parseCopyProperties = [
                 // options
-                'paths',            // option - unmodified - paths to search for imports on
-                'rewriteUrls',      // option - whether to adjust URL's to be relative
-                'rootpath',         // option - rootpath to append to URL's
-                'strictImports',    // option -
-                'insecure',         // option - whether to allow imports from insecure ssl hosts
-                'dumpLineNumbers',  // option - whether to dump line numbers
-                'compress',         // option - whether to compress
-                'syncImport',       // option - whether to import synchronously
-                'chunkInput',       // option - whether to chunk input. more performant but causes parse issues.
-                'mime',             // browser only - mime type for sheet import
-                'useFileCache',     // browser only - whether to use the per file session cache
+                "paths",            // option - unmodified - paths to search for imports on
+                "rewriteUrls",      // option - whether to adjust URL's to be relative
+                "rootpath",         // option - rootpath to append to URL's
+                "strictImports",    // option -
+                "insecure",         // option - whether to allow imports from insecure ssl hosts
+                "dumpLineNumbers",  // option - whether to dump line numbers
+                "compress",         // option - whether to compress
+                "syncImport",       // option - whether to import synchronously
+                "chunkInput",       // option - whether to chunk input. more performant but causes parse issues.
+                "mime",             // browser only - mime type for sheet import
+                "useFileCache",     // browser only - whether to use the per file session cache
                 // context
-                'processImports',   // option & context - whether to process imports. if false then imports will not be imported.
+                "processImports",   // option & context - whether to process imports. if false then imports will not be imported.
                                     // Used by the import manager to stop multiple import visitors being created.
-                'pluginManager'     // Used as the plugin manager for the session
+                "pluginManager"     // Used as the plugin manager for the session
             ];
 
             contexts.Parse = function (options) {
                 copyFromOriginal(options, this, parseCopyProperties);
 
-                if (typeof this.paths === 'string') {
+                if (typeof this.paths === "string") {
                     this.paths = [this.paths];
                 }
             };
 
             var evalCopyProperties = [
-                'paths',             // additional include paths
-                'compress',          // whether to compress
-                'ieCompat',          // whether to enforce IE compatibility (IE8 data-uri)
-                'math',              // whether math has to be within parenthesis
-                'strictUnits',       // whether units need to evaluate correctly
-                'sourceMap',         // whether to output a source map
-                'importMultiple',    // whether we are currently importing multiple copies
-                'urlArgs',           // whether to add args into url tokens
-                'javascriptEnabled', // option - whether Inline JavaScript is enabled. if undefined, defaults to false
-                'pluginManager',     // Used as the plugin manager for the session
-                'importantScope',    // used to bubble up !important statements
-                'rewriteUrls'        // option - whether to adjust URL's to be relative
+                "paths",             // additional include paths
+                "compress",          // whether to compress
+                "ieCompat",          // whether to enforce IE compatibility (IE8 data-uri)
+                "math",              // whether math has to be within parenthesis
+                "strictUnits",       // whether units need to evaluate correctly
+                "sourceMap",         // whether to output a source map
+                "importMultiple",    // whether we are currently importing multiple copies
+                "urlArgs",           // whether to add args into url tokens
+                "javascriptEnabled", // option - whether Inline JavaScript is enabled. if undefined, defaults to false
+                "pluginManager",     // Used as the plugin manager for the session
+                "importantScope",    // used to bubble up !important statements
+                "rewriteUrls"        // option - whether to adjust URL's to be relative
             ];
 
             contexts.Eval = function (options, frames) {
                 copyFromOriginal(options, this, evalCopyProperties);
 
-                if (typeof this.paths === 'string') {
+                if (typeof this.paths === "string") {
                     this.paths = [this.paths];
                 }
 
@@ -1134,7 +1134,7 @@
                 if (!this.mathOn) {
                     return false;
                 }
-                if (op === '/' && this.math !== Constants.Math.ALWAYS && (!this.parensStack || !this.parensStack.length)) {
+                if (op === "/" && this.math !== Constants.Math.ALWAYS && (!this.parensStack || !this.parensStack.length)) {
                     return false;
                 }
                 if (this.math > Constants.Math.PARENS_DIVISION) {
@@ -1152,7 +1152,7 @@
             contexts.Eval.prototype.rewritePath = function (path, rootpath) {
                 var newPath;
 
-                rootpath = rootpath || '';
+                rootpath = rootpath || "";
                 newPath = this.normalizePath(rootpath + path);
 
                 // If a path was explicit relative and the rootpath was not an absolute path
@@ -1160,7 +1160,7 @@
                 if (isPathLocalRelative(path) &&
                     isPathRelative(rootpath) &&
                     isPathLocalRelative(newPath) === false) {
-                    newPath = './' + newPath;
+                    newPath = "./" + newPath;
                 }
 
                 return newPath;
@@ -1168,17 +1168,17 @@
 
             contexts.Eval.prototype.normalizePath = function (path) {
                 var
-                    segments = path.split('/').reverse(),
+                    segments = path.split("/").reverse(),
                     segment;
 
                 path = [];
                 while (segments.length !== 0) {
                     segment = segments.pop();
                     switch (segment) {
-                        case '.':
+                        case ".":
                             break;
-                        case '..':
-                            if ((path.length === 0) || (path[path.length - 1] === '..')) {
+                        case "..":
+                            if ((path.length === 0) || (path[path.length - 1] === "..")) {
                                 path.push(segment);
                             } else {
                                 path.pop();
@@ -1190,7 +1190,7 @@
                     }
                 }
 
-                return path.join('/');
+                return path.join("/");
             };
 
             function isPathRelative(path) {
@@ -1198,7 +1198,7 @@
             }
 
             function isPathLocalRelative(path) {
-                return path.charAt(0) === '.';
+                return path.charAt(0) === ".";
             }
 
 // todo - do the same for the toCSS ?
@@ -1206,183 +1206,183 @@
         }, {"./constants": 12}],
         14: [function (require, module, exports) {
             module.exports = {
-                'aliceblue': '#f0f8ff',
-                'antiquewhite': '#faebd7',
-                'aqua': '#00ffff',
-                'aquamarine': '#7fffd4',
-                'azure': '#f0ffff',
-                'beige': '#f5f5dc',
-                'bisque': '#ffe4c4',
-                'black': '#000000',
-                'blanchedalmond': '#ffebcd',
-                'blue': '#0000ff',
-                'blueviolet': '#8a2be2',
-                'brown': '#a52a2a',
-                'burlywood': '#deb887',
-                'cadetblue': '#5f9ea0',
-                'chartreuse': '#7fff00',
-                'chocolate': '#d2691e',
-                'coral': '#ff7f50',
-                'cornflowerblue': '#6495ed',
-                'cornsilk': '#fff8dc',
-                'crimson': '#dc143c',
-                'cyan': '#00ffff',
-                'darkblue': '#00008b',
-                'darkcyan': '#008b8b',
-                'darkgoldenrod': '#b8860b',
-                'darkgray': '#a9a9a9',
-                'darkgrey': '#a9a9a9',
-                'darkgreen': '#006400',
-                'darkkhaki': '#bdb76b',
-                'darkmagenta': '#8b008b',
-                'darkolivegreen': '#556b2f',
-                'darkorange': '#ff8c00',
-                'darkorchid': '#9932cc',
-                'darkred': '#8b0000',
-                'darksalmon': '#e9967a',
-                'darkseagreen': '#8fbc8f',
-                'darkslateblue': '#483d8b',
-                'darkslategray': '#2f4f4f',
-                'darkslategrey': '#2f4f4f',
-                'darkturquoise': '#00ced1',
-                'darkviolet': '#9400d3',
-                'deeppink': '#ff1493',
-                'deepskyblue': '#00bfff',
-                'dimgray': '#696969',
-                'dimgrey': '#696969',
-                'dodgerblue': '#1e90ff',
-                'firebrick': '#b22222',
-                'floralwhite': '#fffaf0',
-                'forestgreen': '#228b22',
-                'fuchsia': '#ff00ff',
-                'gainsboro': '#dcdcdc',
-                'ghostwhite': '#f8f8ff',
-                'gold': '#ffd700',
-                'goldenrod': '#daa520',
-                'gray': '#808080',
-                'grey': '#808080',
-                'green': '#008000',
-                'greenyellow': '#adff2f',
-                'honeydew': '#f0fff0',
-                'hotpink': '#ff69b4',
-                'indianred': '#cd5c5c',
-                'indigo': '#4b0082',
-                'ivory': '#fffff0',
-                'khaki': '#f0e68c',
-                'lavender': '#e6e6fa',
-                'lavenderblush': '#fff0f5',
-                'lawngreen': '#7cfc00',
-                'lemonchiffon': '#fffacd',
-                'lightblue': '#add8e6',
-                'lightcoral': '#f08080',
-                'lightcyan': '#e0ffff',
-                'lightgoldenrodyellow': '#fafad2',
-                'lightgray': '#d3d3d3',
-                'lightgrey': '#d3d3d3',
-                'lightgreen': '#90ee90',
-                'lightpink': '#ffb6c1',
-                'lightsalmon': '#ffa07a',
-                'lightseagreen': '#20b2aa',
-                'lightskyblue': '#87cefa',
-                'lightslategray': '#778899',
-                'lightslategrey': '#778899',
-                'lightsteelblue': '#b0c4de',
-                'lightyellow': '#ffffe0',
-                'lime': '#00ff00',
-                'limegreen': '#32cd32',
-                'linen': '#faf0e6',
-                'magenta': '#ff00ff',
-                'maroon': '#800000',
-                'mediumaquamarine': '#66cdaa',
-                'mediumblue': '#0000cd',
-                'mediumorchid': '#ba55d3',
-                'mediumpurple': '#9370d8',
-                'mediumseagreen': '#3cb371',
-                'mediumslateblue': '#7b68ee',
-                'mediumspringgreen': '#00fa9a',
-                'mediumturquoise': '#48d1cc',
-                'mediumvioletred': '#c71585',
-                'midnightblue': '#191970',
-                'mintcream': '#f5fffa',
-                'mistyrose': '#ffe4e1',
-                'moccasin': '#ffe4b5',
-                'navajowhite': '#ffdead',
-                'navy': '#000080',
-                'oldlace': '#fdf5e6',
-                'olive': '#808000',
-                'olivedrab': '#6b8e23',
-                'orange': '#ffa500',
-                'orangered': '#ff4500',
-                'orchid': '#da70d6',
-                'palegoldenrod': '#eee8aa',
-                'palegreen': '#98fb98',
-                'paleturquoise': '#afeeee',
-                'palevioletred': '#d87093',
-                'papayawhip': '#ffefd5',
-                'peachpuff': '#ffdab9',
-                'peru': '#cd853f',
-                'pink': '#ffc0cb',
-                'plum': '#dda0dd',
-                'powderblue': '#b0e0e6',
-                'purple': '#800080',
-                'rebeccapurple': '#663399',
-                'red': '#ff0000',
-                'rosybrown': '#bc8f8f',
-                'royalblue': '#4169e1',
-                'saddlebrown': '#8b4513',
-                'salmon': '#fa8072',
-                'sandybrown': '#f4a460',
-                'seagreen': '#2e8b57',
-                'seashell': '#fff5ee',
-                'sienna': '#a0522d',
-                'silver': '#c0c0c0',
-                'skyblue': '#87ceeb',
-                'slateblue': '#6a5acd',
-                'slategray': '#708090',
-                'slategrey': '#708090',
-                'snow': '#fffafa',
-                'springgreen': '#00ff7f',
-                'steelblue': '#4682b4',
-                'tan': '#d2b48c',
-                'teal': '#008080',
-                'thistle': '#d8bfd8',
-                'tomato': '#ff6347',
-                'turquoise': '#40e0d0',
-                'violet': '#ee82ee',
-                'wheat': '#f5deb3',
-                'white': '#ffffff',
-                'whitesmoke': '#f5f5f5',
-                'yellow': '#ffff00',
-                'yellowgreen': '#9acd32'
+                "aliceblue": "#f0f8ff",
+                "antiquewhite": "#faebd7",
+                "aqua": "#00ffff",
+                "aquamarine": "#7fffd4",
+                "azure": "#f0ffff",
+                "beige": "#f5f5dc",
+                "bisque": "#ffe4c4",
+                "black": "#000000",
+                "blanchedalmond": "#ffebcd",
+                "blue": "#0000ff",
+                "blueviolet": "#8a2be2",
+                "brown": "#a52a2a",
+                "burlywood": "#deb887",
+                "cadetblue": "#5f9ea0",
+                "chartreuse": "#7fff00",
+                "chocolate": "#d2691e",
+                "coral": "#ff7f50",
+                "cornflowerblue": "#6495ed",
+                "cornsilk": "#fff8dc",
+                "crimson": "#dc143c",
+                "cyan": "#00ffff",
+                "darkblue": "#00008b",
+                "darkcyan": "#008b8b",
+                "darkgoldenrod": "#b8860b",
+                "darkgray": "#a9a9a9",
+                "darkgrey": "#a9a9a9",
+                "darkgreen": "#006400",
+                "darkkhaki": "#bdb76b",
+                "darkmagenta": "#8b008b",
+                "darkolivegreen": "#556b2f",
+                "darkorange": "#ff8c00",
+                "darkorchid": "#9932cc",
+                "darkred": "#8b0000",
+                "darksalmon": "#e9967a",
+                "darkseagreen": "#8fbc8f",
+                "darkslateblue": "#483d8b",
+                "darkslategray": "#2f4f4f",
+                "darkslategrey": "#2f4f4f",
+                "darkturquoise": "#00ced1",
+                "darkviolet": "#9400d3",
+                "deeppink": "#ff1493",
+                "deepskyblue": "#00bfff",
+                "dimgray": "#696969",
+                "dimgrey": "#696969",
+                "dodgerblue": "#1e90ff",
+                "firebrick": "#b22222",
+                "floralwhite": "#fffaf0",
+                "forestgreen": "#228b22",
+                "fuchsia": "#ff00ff",
+                "gainsboro": "#dcdcdc",
+                "ghostwhite": "#f8f8ff",
+                "gold": "#ffd700",
+                "goldenrod": "#daa520",
+                "gray": "#808080",
+                "grey": "#808080",
+                "green": "#008000",
+                "greenyellow": "#adff2f",
+                "honeydew": "#f0fff0",
+                "hotpink": "#ff69b4",
+                "indianred": "#cd5c5c",
+                "indigo": "#4b0082",
+                "ivory": "#fffff0",
+                "khaki": "#f0e68c",
+                "lavender": "#e6e6fa",
+                "lavenderblush": "#fff0f5",
+                "lawngreen": "#7cfc00",
+                "lemonchiffon": "#fffacd",
+                "lightblue": "#add8e6",
+                "lightcoral": "#f08080",
+                "lightcyan": "#e0ffff",
+                "lightgoldenrodyellow": "#fafad2",
+                "lightgray": "#d3d3d3",
+                "lightgrey": "#d3d3d3",
+                "lightgreen": "#90ee90",
+                "lightpink": "#ffb6c1",
+                "lightsalmon": "#ffa07a",
+                "lightseagreen": "#20b2aa",
+                "lightskyblue": "#87cefa",
+                "lightslategray": "#778899",
+                "lightslategrey": "#778899",
+                "lightsteelblue": "#b0c4de",
+                "lightyellow": "#ffffe0",
+                "lime": "#00ff00",
+                "limegreen": "#32cd32",
+                "linen": "#faf0e6",
+                "magenta": "#ff00ff",
+                "maroon": "#800000",
+                "mediumaquamarine": "#66cdaa",
+                "mediumblue": "#0000cd",
+                "mediumorchid": "#ba55d3",
+                "mediumpurple": "#9370d8",
+                "mediumseagreen": "#3cb371",
+                "mediumslateblue": "#7b68ee",
+                "mediumspringgreen": "#00fa9a",
+                "mediumturquoise": "#48d1cc",
+                "mediumvioletred": "#c71585",
+                "midnightblue": "#191970",
+                "mintcream": "#f5fffa",
+                "mistyrose": "#ffe4e1",
+                "moccasin": "#ffe4b5",
+                "navajowhite": "#ffdead",
+                "navy": "#000080",
+                "oldlace": "#fdf5e6",
+                "olive": "#808000",
+                "olivedrab": "#6b8e23",
+                "orange": "#ffa500",
+                "orangered": "#ff4500",
+                "orchid": "#da70d6",
+                "palegoldenrod": "#eee8aa",
+                "palegreen": "#98fb98",
+                "paleturquoise": "#afeeee",
+                "palevioletred": "#d87093",
+                "papayawhip": "#ffefd5",
+                "peachpuff": "#ffdab9",
+                "peru": "#cd853f",
+                "pink": "#ffc0cb",
+                "plum": "#dda0dd",
+                "powderblue": "#b0e0e6",
+                "purple": "#800080",
+                "rebeccapurple": "#663399",
+                "red": "#ff0000",
+                "rosybrown": "#bc8f8f",
+                "royalblue": "#4169e1",
+                "saddlebrown": "#8b4513",
+                "salmon": "#fa8072",
+                "sandybrown": "#f4a460",
+                "seagreen": "#2e8b57",
+                "seashell": "#fff5ee",
+                "sienna": "#a0522d",
+                "silver": "#c0c0c0",
+                "skyblue": "#87ceeb",
+                "slateblue": "#6a5acd",
+                "slategray": "#708090",
+                "slategrey": "#708090",
+                "snow": "#fffafa",
+                "springgreen": "#00ff7f",
+                "steelblue": "#4682b4",
+                "tan": "#d2b48c",
+                "teal": "#008080",
+                "thistle": "#d8bfd8",
+                "tomato": "#ff6347",
+                "turquoise": "#40e0d0",
+                "violet": "#ee82ee",
+                "wheat": "#f5deb3",
+                "white": "#ffffff",
+                "whitesmoke": "#f5f5f5",
+                "yellow": "#ffff00",
+                "yellowgreen": "#9acd32"
             };
         }, {}],
         15: [function (require, module, exports) {
             module.exports = {
-                colors: require('./colors'),
-                unitConversions: require('./unit-conversions')
+                colors: require("./colors"),
+                unitConversions: require("./unit-conversions")
             };
 
         }, {"./colors": 14, "./unit-conversions": 16}],
         16: [function (require, module, exports) {
             module.exports = {
                 length: {
-                    'm': 1,
-                    'cm': 0.01,
-                    'mm': 0.001,
-                    'in': 0.0254,
-                    'px': 0.0254 / 96,
-                    'pt': 0.0254 / 72,
-                    'pc': 0.0254 / 72 * 12
+                    "m": 1,
+                    "cm": 0.01,
+                    "mm": 0.001,
+                    "in": 0.0254,
+                    "px": 0.0254 / 96,
+                    "pt": 0.0254 / 72,
+                    "pc": 0.0254 / 72 * 12
                 },
                 duration: {
-                    's': 1,
-                    'ms': 0.001
+                    "s": 1,
+                    "ms": 0.001
                 },
                 angle: {
-                    'rad': 1 / (2 * Math.PI),
-                    'deg': 1 / 360,
-                    'grad': 1 / 400,
-                    'turn': 1
+                    "rad": 1 / (2 * Math.PI),
+                    "deg": 1 / 360,
+                    "grad": 1 / 400,
+                    "turn": 1
                 }
             };
         }, {}],
@@ -1425,7 +1425,7 @@
                     /* Allows you to add a path to every generated import and url in your css.
          * This does not affect less import statements that are processed, just ones
          * that are left in the output css. */
-                    rootpath: '',
+                    rootpath: "",
 
                     /* By default URLs are kept as-is, so if you import a file in a sub-directory
          * that references an image, exactly the same URL will be output in the css.
@@ -1457,25 +1457,25 @@
                     modifyVars: null,
 
                     /* This option allows you to specify a argument to go on to every URL.  */
-                    urlArgs: ''
-                }
-            }
+                    urlArgs: ""
+                };
+            };
         }, {}],
         18: [function (require, module, exports) {
             var abstractFileManager = function () {
             };
 
             abstractFileManager.prototype.getPath = function (filename) {
-                var j = filename.lastIndexOf('?');
+                var j = filename.lastIndexOf("?");
                 if (j > 0) {
                     filename = filename.slice(0, j);
                 }
-                j = filename.lastIndexOf('/');
+                j = filename.lastIndexOf("/");
                 if (j < 0) {
-                    j = filename.lastIndexOf('\\');
+                    j = filename.lastIndexOf("\\");
                 }
                 if (j < 0) {
-                    return '';
+                    return "";
                 }
                 return filename.slice(0, j + 1);
             };
@@ -1485,7 +1485,7 @@
             };
 
             abstractFileManager.prototype.tryAppendLessExtension = function (path) {
-                return this.tryAppendExtension(path, '.less');
+                return this.tryAppendExtension(path, ".less");
             };
 
             abstractFileManager.prototype.supportsSync = function () {
@@ -1512,9 +1512,9 @@
 
                 var urlParts = this.extractUrlParts(url),
                     baseUrlParts = this.extractUrlParts(baseUrl),
-                    i, max, urlDirectories, baseUrlDirectories, diff = '';
+                    i, max, urlDirectories, baseUrlDirectories, diff = "";
                 if (urlParts.hostPart !== baseUrlParts.hostPart) {
-                    return '';
+                    return "";
                 }
                 max = Math.max(baseUrlParts.directories.length, urlParts.directories.length);
                 for (i = 0; i < max; i++) {
@@ -1525,10 +1525,10 @@
                 baseUrlDirectories = baseUrlParts.directories.slice(i);
                 urlDirectories = urlParts.directories.slice(i);
                 for (i = 0; i < baseUrlDirectories.length - 1; i++) {
-                    diff += '../';
+                    diff += "../";
                 }
                 for (i = 0; i < urlDirectories.length - 1; i++) {
-                    diff += urlDirectories[i] + '/';
+                    diff += urlDirectories[i] + "/";
                 }
                 return diff;
             };
@@ -1545,30 +1545,30 @@
                     returner = {}, rawDirectories = [], directories = [], i, baseUrlParts;
 
                 if (!urlParts) {
-                    throw new Error('Could not parse sheet href - \'' + url + '\'');
+                    throw new Error("Could not parse sheet href - '" + url + "'");
                 }
 
                 // Stylesheets in IE don't always return the full path
                 if (baseUrl && (!urlParts[1] || urlParts[2])) {
                     baseUrlParts = baseUrl.match(urlPartsRegex);
                     if (!baseUrlParts) {
-                        throw new Error('Could not parse page url - \'' + baseUrl + '\'');
+                        throw new Error("Could not parse page url - '" + baseUrl + "'");
                     }
-                    urlParts[1] = urlParts[1] || baseUrlParts[1] || '';
+                    urlParts[1] = urlParts[1] || baseUrlParts[1] || "";
                     if (!urlParts[2]) {
                         urlParts[3] = baseUrlParts[3] + urlParts[3];
                     }
                 }
 
                 if (urlParts[3]) {
-                    rawDirectories = urlParts[3].replace(/\\/g, '/').split('/');
+                    rawDirectories = urlParts[3].replace(/\\/g, "/").split("/");
 
                     // collapse '..' and skip '.'
                     for (i = 0; i < rawDirectories.length; i++) {
 
-                        if (rawDirectories[i] === '..') {
+                        if (rawDirectories[i] === "..") {
                             directories.pop();
-                        } else if (rawDirectories[i] !== '.') {
+                        } else if (rawDirectories[i] !== ".") {
                             directories.push(rawDirectories[i]);
                         }
 
@@ -1577,11 +1577,11 @@
 
                 returner.hostPart = urlParts[1];
                 returner.directories = directories;
-                returner.rawPath = (urlParts[1] || '') + rawDirectories.join('/');
-                returner.path = (urlParts[1] || '') + directories.join('/');
+                returner.rawPath = (urlParts[1] || "") + rawDirectories.join("/");
+                returner.path = (urlParts[1] || "") + directories.join("/");
                 returner.filename = urlParts[4];
-                returner.fileUrl = returner.path + (urlParts[4] || '');
-                returner.url = returner.fileUrl + (urlParts[5] || '');
+                returner.fileUrl = returner.path + (urlParts[4] || "");
+                returner.url = returner.fileUrl + (urlParts[5] || "");
                 return returner;
             };
 
@@ -1589,14 +1589,14 @@
 
         }, {}],
         19: [function (require, module, exports) {
-            var functionRegistry = require('../functions/function-registry'),
-                LessError = require('../less-error');
+            var functionRegistry = require("../functions/function-registry"),
+                LessError = require("../less-error");
 
             var AbstractPluginLoader = function () {
                 // Implemented by Node.js plugin loader
                 this.require = function () {
                     return null;
-                }
+                };
             };
 
             AbstractPluginLoader.prototype.evalPlugin = function (contents, context, imports, pluginOptions, fileInfo) {
@@ -1612,7 +1612,7 @@
                 pluginManager = context.pluginManager;
 
                 if (fileInfo) {
-                    if (typeof fileInfo === 'string') {
+                    if (typeof fileInfo === "string") {
                         filename = fileInfo;
                     } else {
                         filename = fileInfo.filename;
@@ -1633,7 +1633,7 @@
                                 pluginObj.use.call(this.context, pluginObj);
                             }
                         } catch (e) {
-                            e.message = e.message || 'Error during @plugin call';
+                            e.message = e.message || "Error during @plugin call";
                             return new LessError(e, imports, filename);
                         }
                         return pluginObj;
@@ -1651,7 +1651,7 @@
                 };
 
                 try {
-                    loader = new Function('module', 'require', 'registerPlugin', 'functions', 'tree', 'less', 'fileInfo', contents);
+                    loader = new Function("module", "require", "registerPlugin", "functions", "tree", "less", "fileInfo", contents);
                     loader(localModule, this.require(filename), registerPlugin, registry, this.less.tree, this.less, fileInfo);
                 } catch (e) {
                     return new LessError(e, imports, filename);
@@ -1671,7 +1671,7 @@
                     pluginObj.filename = filename;
 
                     // For < 3.x (or unspecified minVersion) - setOptions() before install()
-                    if (!pluginObj.minVersion || this.compareVersion('3.0.0', pluginObj.minVersion) < 0) {
+                    if (!pluginObj.minVersion || this.compareVersion("3.0.0", pluginObj.minVersion) < 0) {
                         result = this.trySetOptions(pluginObj, filename, shortname, pluginOptions);
 
                         if (result) {
@@ -1695,12 +1695,12 @@
                             pluginObj.use.call(this.context, pluginObj);
                         }
                     } catch (e) {
-                        e.message = e.message || 'Error during @plugin call';
+                        e.message = e.message || "Error during @plugin call";
                         return new LessError(e, imports, filename);
                     }
 
                 } else {
-                    return new LessError({message: 'Not a valid plugin'}, imports, filename);
+                    return new LessError({message: "Not a valid plugin"}, imports, filename);
                 }
 
                 return pluginObj;
@@ -1710,8 +1710,8 @@
             AbstractPluginLoader.prototype.trySetOptions = function (plugin, filename, name, options) {
                 if (options && !plugin.setOptions) {
                     return new LessError({
-                        message: 'Options have been provided but the plugin ' +
-                            name + ' does not support any options.'
+                        message: "Options have been provided but the plugin " +
+                            name + " does not support any options."
                     });
                 }
                 try {
@@ -1725,14 +1725,14 @@
                 if (plugin) {
                     // support plugins being a function
                     // so that the plugin can be more usable programmatically
-                    if (typeof plugin === 'function') {
+                    if (typeof plugin === "function") {
                         plugin = new plugin();
                     }
 
                     if (plugin.minVersion) {
                         if (this.compareVersion(plugin.minVersion, this.less.version) < 0) {
                             return new LessError({
-                                message: 'Plugin ' + name + ' requires version ' +
+                                message: "Plugin " + name + " requires version " +
                                     this.versionToString(plugin.minVersion)
                             });
                         }
@@ -1743,7 +1743,7 @@
             };
 
             AbstractPluginLoader.prototype.compareVersion = function (aVersion, bVersion) {
-                if (typeof aVersion === 'string') {
+                if (typeof aVersion === "string") {
                     aVersion = aVersion.match(/^(\d+)\.?(\d+)?\.?(\d+)?/);
                     aVersion.shift();
                 }
@@ -1755,9 +1755,9 @@
                 return 0;
             };
             AbstractPluginLoader.prototype.versionToString = function (version) {
-                var versionString = '';
+                var versionString = "";
                 for (var i = 0; i < version.length; i++) {
-                    versionString += (versionString ? '.' : '') + version[i];
+                    versionString += (versionString ? "." : "") + version[i];
                 }
                 return versionString;
             };
@@ -1780,12 +1780,12 @@
              *       environment, file managers, and plugin manager
              */
 
-            var logger = require('../logger');
+            var logger = require("../logger");
             var environment = function (externalEnvironment, fileManagers) {
                 this.fileManagers = fileManagers || [];
                 externalEnvironment = externalEnvironment || {};
 
-                var optionalFunctions = ['encodeBase64', 'mimeLookup', 'charsetLookup', 'getSourceMapGenerator'],
+                var optionalFunctions = ["encodeBase64", "mimeLookup", "charsetLookup", "getSourceMapGenerator"],
                     requiredFunctions = [],
                     functions = requiredFunctions.concat(optionalFunctions);
 
@@ -1795,7 +1795,7 @@
                     if (environmentFunc) {
                         this[propName] = environmentFunc.bind(externalEnvironment);
                     } else if (i < requiredFunctions.length) {
-                        this.warn('missing required function in environment - ' + propName);
+                        this.warn("missing required function in environment - " + propName);
                     }
                 }
             };
@@ -1803,10 +1803,10 @@
             environment.prototype.getFileManager = function (filename, currentDirectory, options, environment, isSync) {
 
                 if (!filename) {
-                    logger.warn('getFileManager called with no filename.. Please report this issue. continuing.');
+                    logger.warn("getFileManager called with no filename.. Please report this issue. continuing.");
                 }
                 if (currentDirectory == null) {
-                    logger.warn('getFileManager called with null directory.. Please report this issue. continuing.');
+                    logger.warn("getFileManager called with null directory.. Please report this issue. continuing.");
                 }
 
                 var fileManagers = this.fileManagers;
@@ -1815,7 +1815,7 @@
                 }
                 for (var i = fileManagers.length - 1; i >= 0; i--) {
                     var fileManager = fileManagers[i];
-                    if (fileManager[isSync ? 'supportsSync' : 'supports'](filename, currentDirectory, options, environment)) {
+                    if (fileManager[isSync ? "supportsSync" : "supports"](filename, currentDirectory, options, environment)) {
                         return fileManager;
                     }
                 }
@@ -1835,16 +1835,16 @@
         }, {"../logger": 39}],
         21: [function (require, module, exports) {
 
-            var functionRegistry = require('./function-registry'),
-                Anonymous = require('../tree/anonymous'),
-                Keyword = require('../tree/keyword');
+            var functionRegistry = require("./function-registry"),
+                Anonymous = require("../tree/anonymous"),
+                Keyword = require("../tree/keyword");
 
             functionRegistry.addMultiple({
                 boolean: function (condition) {
                     return condition ? Keyword.True : Keyword.False;
                 },
 
-                'if': function (condition, trueValue, falseValue) {
+                "if": function (condition, trueValue, falseValue) {
                     return condition ? trueValue
                         : (falseValue || new Anonymous);
                 }
@@ -1852,8 +1852,8 @@
 
         }, {"../tree/anonymous": 50, "../tree/keyword": 70, "./function-registry": 27}],
         22: [function (require, module, exports) {
-            var Color = require('../tree/color'),
-                functionRegistry = require('./function-registry');
+            var Color = require("../tree/color"),
+                functionRegistry = require("./function-registry");
 
 // Color Blending
 // ref: http://www.w3.org/TR/compositing-1
@@ -1929,11 +1929,11 @@
 
         }, {"../tree/color": 55, "./function-registry": 27}],
         23: [function (require, module, exports) {
-            var Dimension = require('../tree/dimension'),
-                Color = require('../tree/color'),
-                Quoted = require('../tree/quoted'),
-                Anonymous = require('../tree/anonymous'),
-                functionRegistry = require('./function-registry'),
+            var Dimension = require("../tree/dimension"),
+                Color = require("../tree/color"),
+                Quoted = require("../tree/quoted"),
+                Anonymous = require("../tree/anonymous"),
+                functionRegistry = require("./function-registry"),
                 colorFunctions;
 
             function clamp(val) {
@@ -1947,7 +1947,7 @@
                         /^(rgb|hsl)/.test(origColor.value)) {
                         color.value = origColor.value;
                     } else {
-                        color.value = 'rgb';
+                        color.value = "rgb";
                     }
                     return color;
                 }
@@ -1955,19 +1955,19 @@
 
             function number(n) {
                 if (n instanceof Dimension) {
-                    return parseFloat(n.unit.is('%') ? n.value / 100 : n.value);
-                } else if (typeof n === 'number') {
+                    return parseFloat(n.unit.is("%") ? n.value / 100 : n.value);
+                } else if (typeof n === "number") {
                     return n;
                 } else {
                     throw {
-                        type: 'Argument',
-                        message: 'color functions take numbers as parameters'
+                        type: "Argument",
+                        message: "color functions take numbers as parameters"
                     };
                 }
             }
 
             function scaled(n, size) {
-                if (n instanceof Dimension && n.unit.is('%')) {
+                if (n instanceof Dimension && n.unit.is("%")) {
                     return parseFloat(n.value * size / 100);
                 } else {
                     return number(n);
@@ -1978,7 +1978,7 @@
                 rgb: function (r, g, b) {
                     var color = colorFunctions.rgba(r, g, b, 1.0);
                     if (color) {
-                        color.value = 'rgb';
+                        color.value = "rgb";
                         return color;
                     }
                 },
@@ -1990,20 +1990,20 @@
                             } else {
                                 a = r.alpha;
                             }
-                            return new Color(r.rgb, a, 'rgba');
+                            return new Color(r.rgb, a, "rgba");
                         }
                         var rgb = [r, g, b].map(function (c) {
                             return scaled(c, 255);
                         });
                         a = number(a);
-                        return new Color(rgb, a, 'rgba');
+                        return new Color(rgb, a, "rgba");
                     } catch (e) {
                     }
                 },
                 hsl: function (h, s, l) {
                     var color = colorFunctions.hsla(h, s, l, 1.0);
                     if (color) {
-                        color.value = 'hsl';
+                        color.value = "hsl";
                         return color;
                     }
                 },
@@ -2015,7 +2015,7 @@
                             } else {
                                 a = h.alpha;
                             }
-                            return new Color(h.rgb, a, 'hsla');
+                            return new Color(h.rgb, a, "hsla");
                         }
 
                         var m1, m2;
@@ -2047,7 +2047,7 @@
                             hue(h - 1 / 3) * 255
                         ];
                         a = number(a);
-                        return new Color(rgb, a, 'hsla');
+                        return new Color(rgb, a, "hsla");
                     } catch (e) {
                     }
                 },
@@ -2087,19 +2087,19 @@
                     return new Dimension(color.toHSL().h);
                 },
                 saturation: function (color) {
-                    return new Dimension(color.toHSL().s * 100, '%');
+                    return new Dimension(color.toHSL().s * 100, "%");
                 },
                 lightness: function (color) {
-                    return new Dimension(color.toHSL().l * 100, '%');
+                    return new Dimension(color.toHSL().l * 100, "%");
                 },
                 hsvhue: function (color) {
                     return new Dimension(color.toHSV().h);
                 },
                 hsvsaturation: function (color) {
-                    return new Dimension(color.toHSV().s * 100, '%');
+                    return new Dimension(color.toHSV().s * 100, "%");
                 },
                 hsvvalue: function (color) {
-                    return new Dimension(color.toHSV().v * 100, '%');
+                    return new Dimension(color.toHSV().v * 100, "%");
                 },
                 red: function (color) {
                     return new Dimension(color.rgb[0]);
@@ -2114,7 +2114,7 @@
                     return new Dimension(color.toHSL().a);
                 },
                 luma: function (color) {
-                    return new Dimension(color.luma() * color.alpha * 100, '%');
+                    return new Dimension(color.luma() * color.alpha * 100, "%");
                 },
                 luminance: function (color) {
                     var luminance =
@@ -2122,7 +2122,7 @@
                         (0.7152 * color.rgb[1] / 255) +
                         (0.0722 * color.rgb[2] / 255);
 
-                    return new Dimension(luminance * color.alpha * 100, '%');
+                    return new Dimension(luminance * color.alpha * 100, "%");
                 },
                 saturate: function (color, amount, method) {
                     // filter: saturate(3.2);
@@ -2132,7 +2132,7 @@
                     }
                     var hsl = color.toHSL();
 
-                    if (typeof method !== 'undefined' && method.value === 'relative') {
+                    if (typeof method !== "undefined" && method.value === "relative") {
                         hsl.s += hsl.s * amount.value / 100;
                     } else {
                         hsl.s += amount.value / 100;
@@ -2143,7 +2143,7 @@
                 desaturate: function (color, amount, method) {
                     var hsl = color.toHSL();
 
-                    if (typeof method !== 'undefined' && method.value === 'relative') {
+                    if (typeof method !== "undefined" && method.value === "relative") {
                         hsl.s -= hsl.s * amount.value / 100;
                     } else {
                         hsl.s -= amount.value / 100;
@@ -2154,7 +2154,7 @@
                 lighten: function (color, amount, method) {
                     var hsl = color.toHSL();
 
-                    if (typeof method !== 'undefined' && method.value === 'relative') {
+                    if (typeof method !== "undefined" && method.value === "relative") {
                         hsl.l += hsl.l * amount.value / 100;
                     } else {
                         hsl.l += amount.value / 100;
@@ -2165,7 +2165,7 @@
                 darken: function (color, amount, method) {
                     var hsl = color.toHSL();
 
-                    if (typeof method !== 'undefined' && method.value === 'relative') {
+                    if (typeof method !== "undefined" && method.value === "relative") {
                         hsl.l -= hsl.l * amount.value / 100;
                     } else {
                         hsl.l -= amount.value / 100;
@@ -2176,7 +2176,7 @@
                 fadein: function (color, amount, method) {
                     var hsl = color.toHSL();
 
-                    if (typeof method !== 'undefined' && method.value === 'relative') {
+                    if (typeof method !== "undefined" && method.value === "relative") {
                         hsl.a += hsl.a * amount.value / 100;
                     } else {
                         hsl.a += amount.value / 100;
@@ -2187,7 +2187,7 @@
                 fadeout: function (color, amount, method) {
                     var hsl = color.toHSL();
 
-                    if (typeof method !== 'undefined' && method.value === 'relative') {
+                    if (typeof method !== "undefined" && method.value === "relative") {
                         hsl.a -= hsl.a * amount.value / 100;
                     } else {
                         hsl.a -= amount.value / 100;
@@ -2246,10 +2246,10 @@
                     if (!color.rgb) {
                         return null;
                     }
-                    if (typeof light === 'undefined') {
+                    if (typeof light === "undefined") {
                         light = colorFunctions.rgba(255, 255, 255, 1.0);
                     }
-                    if (typeof dark === 'undefined') {
+                    if (typeof dark === "undefined") {
                         dark = colorFunctions.rgba(0, 0, 0, 1.0);
                     }
                     // Figure out which is actually light and dark:
@@ -2258,7 +2258,7 @@
                         light = dark;
                         dark = t;
                     }
-                    if (typeof threshold === 'undefined') {
+                    if (typeof threshold === "undefined") {
                         threshold = 0.43;
                     } else {
                         threshold = number(threshold);
@@ -2314,15 +2314,15 @@
                     if ((c instanceof Quoted) &&
                         (/^#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3,4})$/i.test(c.value))) {
                         var val = c.value.slice(1);
-                        return new Color(val, undefined, '#' + val);
+                        return new Color(val, undefined, "#" + val);
                     }
                     if ((c instanceof Color) || (c = Color.fromKeyword(c.value))) {
                         c.value = undefined;
                         return c;
                     }
                     throw {
-                        type: 'Argument',
-                        message: 'argument must be a color keyword or 3|4|6|8 digit hex e.g. #FFF'
+                        type: "Argument",
+                        message: "argument must be a color keyword or 3|4|6|8 digit hex e.g. #FFF"
                     };
                 },
                 tint: function (color, amount) {
@@ -2343,16 +2343,16 @@
         }],
         24: [function (require, module, exports) {
             module.exports = function (environment) {
-                var Quoted = require('../tree/quoted'),
-                    URL = require('../tree/url'),
-                    utils = require('../utils'),
-                    functionRegistry = require('./function-registry'),
+                var Quoted = require("../tree/quoted"),
+                    URL = require("../tree/url"),
+                    utils = require("../utils"),
+                    functionRegistry = require("./function-registry"),
                     fallback = function (functionThis, node) {
                         return new URL(node, functionThis.index, functionThis.currentFileInfo).eval(functionThis.context);
                     },
-                    logger = require('../logger');
+                    logger = require("../logger");
 
-                functionRegistry.add('data-uri', function (mimetypeNode, filePathNode) {
+                functionRegistry.add("data-uri", function (mimetypeNode, filePathNode) {
 
                     if (!filePathNode) {
                         filePathNode = mimetypeNode;
@@ -2365,8 +2365,8 @@
                     var currentDirectory = currentFileInfo.rewriteUrls ?
                         currentFileInfo.currentDirectory : currentFileInfo.entryPath;
 
-                    var fragmentStart = filePath.indexOf('#');
-                    var fragment = '';
+                    var fragmentStart = filePath.indexOf("#");
+                    var fragment = "";
                     if (fragmentStart !== -1) {
                         fragment = filePath.slice(fragmentStart);
                         filePath = filePath.slice(0, fragmentStart);
@@ -2387,15 +2387,15 @@
 
                         mimetype = environment.mimeLookup(filePath);
 
-                        if (mimetype === 'image/svg+xml') {
+                        if (mimetype === "image/svg+xml") {
                             useBase64 = false;
                         } else {
                             // use base 64 unless it's an ASCII or UTF-8 format
                             var charset = environment.charsetLookup(mimetype);
-                            useBase64 = ['US-ASCII', 'UTF-8'].indexOf(charset) < 0;
+                            useBase64 = ["US-ASCII", "UTF-8"].indexOf(charset) < 0;
                         }
                         if (useBase64) {
-                            mimetype += ';base64';
+                            mimetype += ";base64";
                         }
                     } else {
                         useBase64 = /;base64$/.test(mimetype);
@@ -2403,7 +2403,7 @@
 
                     var fileSync = fileManager.loadFileSync(filePath, currentDirectory, context, environment);
                     if (!fileSync.contents) {
-                        logger.warn('Skipped data-uri embedding of ' + filePath + ' because file not found');
+                        logger.warn("Skipped data-uri embedding of " + filePath + " because file not found");
                         return fallback(this, filePathNode || mimetypeNode);
                     }
                     var buf = fileSync.contents;
@@ -2413,7 +2413,7 @@
 
                     buf = useBase64 ? environment.encodeBase64(buf) : encodeURIComponent(buf);
 
-                    var uri = 'data:' + mimetype + ',' + buf + fragment;
+                    var uri = "data:" + mimetype + "," + buf + fragment;
 
                     // IE8 cannot handle a data-uri larger than 32,768 characters. If this is exceeded
                     // and the --ieCompat flag is enabled, return a normal url() instead.
@@ -2421,21 +2421,21 @@
                     if (uri.length >= DATA_URI_MAX) {
 
                         if (this.context.ieCompat !== false) {
-                            logger.warn('Skipped data-uri embedding of ' + filePath + ' because its size (' + uri.length +
-                                ' characters) exceeds IE8-safe ' + DATA_URI_MAX + ' characters!');
+                            logger.warn("Skipped data-uri embedding of " + filePath + " because its size (" + uri.length +
+                                " characters) exceeds IE8-safe " + DATA_URI_MAX + " characters!");
 
                             return fallback(this, filePathNode || mimetypeNode);
                         }
                     }
 
-                    return new URL(new Quoted('"' + uri + '"', uri, false, this.index, this.currentFileInfo), this.index, this.currentFileInfo);
+                    return new URL(new Quoted("\"" + uri + "\"", uri, false, this.index, this.currentFileInfo), this.index, this.currentFileInfo);
                 });
             };
 
         }, {"../logger": 39, "../tree/quoted": 80, "../tree/url": 85, "../utils": 89, "./function-registry": 27}],
         25: [function (require, module, exports) {
-            var Keyword = require('../tree/keyword'),
-                functionRegistry = require('./function-registry');
+            var Keyword = require("../tree/keyword"),
+                functionRegistry = require("./function-registry");
 
             var defaultFunc = {
                 eval: function () {
@@ -2458,13 +2458,13 @@
                 }
             };
 
-            functionRegistry.add('default', defaultFunc.eval.bind(defaultFunc));
+            functionRegistry.add("default", defaultFunc.eval.bind(defaultFunc));
 
             module.exports = defaultFunc;
 
         }, {"../tree/keyword": 70, "./function-registry": 27}],
         26: [function (require, module, exports) {
-            var Expression = require('../tree/expression');
+            var Expression = require("../tree/expression");
 
             var functionCaller = function (name, context, index, currentFileInfo) {
                 this.name = name.toLowerCase();
@@ -2483,15 +2483,15 @@
                 // https://github.com/less/less.js/issues/2477
                 if (Array.isArray(args)) {
                     args = args.filter(function (item) {
-                        if (item.type === 'Comment') {
+                        if (item.type === "Comment") {
                             return false;
                         }
                         return true;
                     })
                         .map(function (item) {
-                            if (item.type === 'Expression') {
+                            if (item.type === "Expression") {
                                 var subNodes = item.value.filter(function (item) {
-                                    if (item.type === 'Comment') {
+                                    if (item.type === "Comment") {
                                         return false;
                                     }
                                     return true;
@@ -2552,22 +2552,22 @@
         28: [function (require, module, exports) {
             module.exports = function (environment) {
                 var functions = {
-                    functionRegistry: require('./function-registry'),
-                    functionCaller: require('./function-caller')
+                    functionRegistry: require("./function-registry"),
+                    functionCaller: require("./function-caller")
                 };
 
                 // register functions
-                require('./boolean');
-                require('./default');
-                require('./color');
-                require('./color-blending');
-                require('./data-uri')(environment);
-                require('./list');
-                require('./math');
-                require('./number');
-                require('./string');
-                require('./svg')(environment);
-                require('./types');
+                require("./boolean");
+                require("./default");
+                require("./color");
+                require("./color-blending");
+                require("./data-uri")(environment);
+                require("./list");
+                require("./math");
+                require("./number");
+                require("./string");
+                require("./svg")(environment);
+                require("./types");
 
                 return functions;
             };
@@ -2588,14 +2588,14 @@
             "./types": 35
         }],
         29: [function (require, module, exports) {
-            var Comment = require('../tree/comment'),
-                Dimension = require('../tree/dimension'),
-                Declaration = require('../tree/declaration'),
-                Expression = require('../tree/expression'),
-                Ruleset = require('../tree/ruleset'),
-                Selector = require('../tree/selector'),
-                Element = require('../tree/element'),
-                functionRegistry = require('./function-registry');
+            var Comment = require("../tree/comment"),
+                Dimension = require("../tree/dimension"),
+                Declaration = require("../tree/declaration"),
+                Expression = require("../tree/expression"),
+                Ruleset = require("../tree/ruleset"),
+                Selector = require("../tree/selector"),
+                Element = require("../tree/element"),
+                functionRegistry = require("./function-registry");
 
             var getItemsFromNode = function (node) {
                 // handle non-array values as an array of length 1
@@ -2664,9 +2664,9 @@
                         iterator = [list];
                     }
 
-                    var valueName = '@value',
-                        keyName = '@key',
-                        indexName = '@index';
+                    var valueName = "@value",
+                        keyName = "@key",
+                        indexName = "@index";
 
                     if (rs.params) {
                         valueName = rs.params[0] && rs.params[0].name;
@@ -2680,7 +2680,7 @@
                     for (var i = 0; i < iterator.length; i++) {
                         var key, value, item = iterator[i];
                         if (item instanceof Declaration) {
-                            key = typeof item.name === 'string' ? item.name : item.name[0].value;
+                            key = typeof item.name === "string" ? item.name : item.name[0].value;
                             value = item.value;
                         } else {
                             key = new Dimension(i + 1);
@@ -2708,14 +2708,14 @@
                                 false, false, this.index, this.currentFileInfo));
                         }
 
-                        rules.push(new Ruleset([new (Selector)([new Element("", '&')])],
+                        rules.push(new Ruleset([new (Selector)([new Element("", "&")])],
                             newRules,
                             rs.strictImports,
                             rs.visibilityInfo()
                         ));
                     }
 
-                    return new Ruleset([new (Selector)([new Element("", '&')])],
+                    return new Ruleset([new (Selector)([new Element("", "&")])],
                         rules,
                         rs.strictImports,
                         rs.visibilityInfo()
@@ -2735,13 +2735,13 @@
             "./function-registry": 27
         }],
         30: [function (require, module, exports) {
-            var Dimension = require('../tree/dimension');
+            var Dimension = require("../tree/dimension");
 
             var MathHelper = function () {
             };
             MathHelper._math = function (fn, unit, n) {
                 if (!(n instanceof Dimension)) {
-                    throw {type: 'Argument', message: 'argument must be a number'};
+                    throw {type: "Argument", message: "argument must be a number"};
                 }
                 if (unit == null) {
                     unit = n.unit;
@@ -2753,8 +2753,8 @@
             module.exports = MathHelper;
         }, {"../tree/dimension": 62}],
         31: [function (require, module, exports) {
-            var functionRegistry = require('./function-registry'),
-                mathHelper = require('./math-helper.js');
+            var functionRegistry = require("./function-registry"),
+                mathHelper = require("./math-helper.js");
 
             var mathFunctions = {
                 // name,  unit
@@ -2762,12 +2762,12 @@
                 floor: null,
                 sqrt: null,
                 abs: null,
-                tan: '',
-                sin: '',
-                cos: '',
-                atan: 'rad',
-                asin: 'rad',
-                acos: 'rad'
+                tan: "",
+                sin: "",
+                cos: "",
+                atan: "rad",
+                asin: "rad",
+                acos: "rad"
             };
 
             for (var f in mathFunctions) {
@@ -2777,7 +2777,7 @@
             }
 
             mathFunctions.round = function (n, f) {
-                var fraction = typeof f === 'undefined' ? 0 : f.value;
+                var fraction = typeof f === "undefined" ? 0 : f.value;
                 return mathHelper._math(function (num) {
                     return num.toFixed(fraction);
                 }, null, n);
@@ -2787,16 +2787,16 @@
 
         }, {"./function-registry": 27, "./math-helper.js": 30}],
         32: [function (require, module, exports) {
-            var Dimension = require('../tree/dimension'),
-                Anonymous = require('../tree/anonymous'),
-                functionRegistry = require('./function-registry'),
-                mathHelper = require('./math-helper.js');
+            var Dimension = require("../tree/dimension"),
+                Anonymous = require("../tree/anonymous"),
+                functionRegistry = require("./function-registry"),
+                mathHelper = require("./math-helper.js");
 
             var minMax = function (isMin, args) {
                 args = Array.prototype.slice.call(args);
                 switch (args.length) {
                     case 0:
-                        throw {type: 'Argument', message: 'one or more arguments required'};
+                        throw {type: "Argument", message: "one or more arguments required"};
                 }
                 var i, j, current, currentUnified, referenceUnified, unit, unitStatic, unitClone,
                     order = [], // elems only contains original argument values.
@@ -2810,20 +2810,20 @@
                         }
                         continue;
                     }
-                    currentUnified = current.unit.toString() === '' && unitClone !== undefined ? new Dimension(current.value, unitClone).unify() : current.unify();
-                    unit = currentUnified.unit.toString() === '' && unitStatic !== undefined ? unitStatic : currentUnified.unit.toString();
-                    unitStatic = unit !== '' && unitStatic === undefined || unit !== '' && order[0].unify().unit.toString() === '' ? unit : unitStatic;
-                    unitClone = unit !== '' && unitClone === undefined ? current.unit.toString() : unitClone;
-                    j = values[''] !== undefined && unit !== '' && unit === unitStatic ? values[''] : values[unit];
+                    currentUnified = current.unit.toString() === "" && unitClone !== undefined ? new Dimension(current.value, unitClone).unify() : current.unify();
+                    unit = currentUnified.unit.toString() === "" && unitStatic !== undefined ? unitStatic : currentUnified.unit.toString();
+                    unitStatic = unit !== "" && unitStatic === undefined || unit !== "" && order[0].unify().unit.toString() === "" ? unit : unitStatic;
+                    unitClone = unit !== "" && unitClone === undefined ? current.unit.toString() : unitClone;
+                    j = values[""] !== undefined && unit !== "" && unit === unitStatic ? values[""] : values[unit];
                     if (j === undefined) {
                         if (unitStatic !== undefined && unit !== unitStatic) {
-                            throw {type: 'Argument', message: 'incompatible types'};
+                            throw {type: "Argument", message: "incompatible types"};
                         }
                         values[unit] = order.length;
                         order.push(current);
                         continue;
                     }
-                    referenceUnified = order[j].unit.toString() === '' && unitClone !== undefined ? new Dimension(order[j].value, unitClone).unify() : order[j].unify();
+                    referenceUnified = order[j].unit.toString() === "" && unitClone !== undefined ? new Dimension(order[j].value, unitClone).unify() : order[j].unify();
                     if (isMin && currentUnified.value < referenceUnified.value ||
                         !isMin && currentUnified.value > referenceUnified.value) {
                         order[j] = current;
@@ -2834,8 +2834,8 @@
                 }
                 args = order.map(function (a) {
                     return a.toCSS(this.context);
-                }).join(this.context.compress ? ',' : ', ');
-                return new Anonymous((isMin ? 'min' : 'max') + '(' + args + ')');
+                }).join(this.context.compress ? "," : ", ");
+                return new Anonymous((isMin ? "min" : "max") + "(" + args + ")");
             };
             functionRegistry.addMultiple({
                 min: function () {
@@ -2854,11 +2854,11 @@
                     return new Dimension(a.value % b.value, a.unit);
                 },
                 pow: function (x, y) {
-                    if (typeof x === 'number' && typeof y === 'number') {
+                    if (typeof x === "number" && typeof y === "number") {
                         x = new Dimension(x);
                         y = new Dimension(y);
                     } else if (!(x instanceof Dimension) || !(y instanceof Dimension)) {
-                        throw {type: 'Argument', message: 'arguments must be numbers'};
+                        throw {type: "Argument", message: "arguments must be numbers"};
                     }
 
                     return new Dimension(Math.pow(x.value, y.value), x.unit);
@@ -2866,7 +2866,7 @@
                 percentage: function (n) {
                     var result = mathHelper._math(function (num) {
                         return num * 100;
-                    }, '%', n);
+                    }, "%", n);
 
                     return result;
                 }
@@ -2874,10 +2874,10 @@
 
         }, {"../tree/anonymous": 50, "../tree/dimension": 62, "./function-registry": 27, "./math-helper.js": 30}],
         33: [function (require, module, exports) {
-            var Quoted = require('../tree/quoted'),
-                Anonymous = require('../tree/anonymous'),
-                JavaScript = require('../tree/javascript'),
-                functionRegistry = require('./function-registry');
+            var Quoted = require("../tree/quoted"),
+                Anonymous = require("../tree/anonymous"),
+                JavaScript = require("../tree/javascript"),
+                functionRegistry = require("./function-registry");
 
             functionRegistry.addMultiple({
                 e: function (str) {
@@ -2885,49 +2885,49 @@
                 },
                 escape: function (str) {
                     return new Anonymous(
-                        encodeURI(str.value).replace(/=/g, '%3D').replace(/:/g, '%3A').replace(/#/g, '%23').replace(/;/g, '%3B')
-                            .replace(/\(/g, '%28').replace(/\)/g, '%29'));
+                        encodeURI(str.value).replace(/=/g, "%3D").replace(/:/g, "%3A").replace(/#/g, "%23").replace(/;/g, "%3B")
+                            .replace(/\(/g, "%28").replace(/\)/g, "%29"));
                 },
                 replace: function (string, pattern, replacement, flags) {
                     var result = string.value;
-                    replacement = (replacement.type === 'Quoted') ?
+                    replacement = (replacement.type === "Quoted") ?
                         replacement.value : replacement.toCSS();
-                    result = result.replace(new RegExp(pattern.value, flags ? flags.value : ''), replacement);
-                    return new Quoted(string.quote || '', result, string.escaped);
+                    result = result.replace(new RegExp(pattern.value, flags ? flags.value : ""), replacement);
+                    return new Quoted(string.quote || "", result, string.escaped);
                 },
-                '%': function (string /* arg, arg, ... */) {
+                "%": function (string /* arg, arg, ... */) {
                     var args = Array.prototype.slice.call(arguments, 1),
                         result = string.value;
 
                     for (var i = 0; i < args.length; i++) {
                         /* jshint loopfunc:true */
                         result = result.replace(/%[sda]/i, function (token) {
-                            var value = ((args[i].type === 'Quoted') &&
+                            var value = ((args[i].type === "Quoted") &&
                                 token.match(/s/i)) ? args[i].value : args[i].toCSS();
                             return token.match(/[A-Z]$/) ? encodeURIComponent(value) : value;
                         });
                     }
-                    result = result.replace(/%%/g, '%');
-                    return new Quoted(string.quote || '', result, string.escaped);
+                    result = result.replace(/%%/g, "%");
+                    return new Quoted(string.quote || "", result, string.escaped);
                 }
             });
 
         }, {"../tree/anonymous": 50, "../tree/javascript": 68, "../tree/quoted": 80, "./function-registry": 27}],
         34: [function (require, module, exports) {
             module.exports = function (environment) {
-                var Dimension = require('../tree/dimension'),
-                    Color = require('../tree/color'),
-                    Expression = require('../tree/expression'),
-                    Quoted = require('../tree/quoted'),
-                    URL = require('../tree/url'),
-                    functionRegistry = require('./function-registry');
+                var Dimension = require("../tree/dimension"),
+                    Color = require("../tree/color"),
+                    Expression = require("../tree/expression"),
+                    Quoted = require("../tree/quoted"),
+                    URL = require("../tree/url"),
+                    functionRegistry = require("./function-registry");
 
-                functionRegistry.add('svg-gradient', function (direction) {
+                functionRegistry.add("svg-gradient", function (direction) {
 
                     var stops,
                         gradientDirectionSvg,
-                        gradientType = 'linear',
-                        rectangleDimension = 'x="0" y="0" width="1" height="1"',
+                        gradientType = "linear",
+                        rectangleDimension = "x=\"0\" y=\"0\" width=\"1\" height=\"1\"",
                         renderEnv = {compress: false},
                         returner,
                         directionValue = direction.toCSS(renderEnv),
@@ -2935,9 +2935,9 @@
 
                     function throwArgumentDescriptor() {
                         throw {
-                            type: 'Argument',
-                            message: 'svg-gradient expects direction, start_color [start_position], [color position,]...,' +
-                                ' end_color [end_position] or direction, color list'
+                            type: "Argument",
+                            message: "svg-gradient expects direction, start_color [start_position], [color position,]...," +
+                                " end_color [end_position] or direction, color list"
                         };
                     }
 
@@ -2953,33 +2953,33 @@
                     }
 
                     switch (directionValue) {
-                        case 'to bottom':
-                            gradientDirectionSvg = 'x1="0%" y1="0%" x2="0%" y2="100%"';
+                        case "to bottom":
+                            gradientDirectionSvg = "x1=\"0%\" y1=\"0%\" x2=\"0%\" y2=\"100%\"";
                             break;
-                        case 'to right':
-                            gradientDirectionSvg = 'x1="0%" y1="0%" x2="100%" y2="0%"';
+                        case "to right":
+                            gradientDirectionSvg = "x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\"";
                             break;
-                        case 'to bottom right':
-                            gradientDirectionSvg = 'x1="0%" y1="0%" x2="100%" y2="100%"';
+                        case "to bottom right":
+                            gradientDirectionSvg = "x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\"";
                             break;
-                        case 'to top right':
-                            gradientDirectionSvg = 'x1="0%" y1="100%" x2="100%" y2="0%"';
+                        case "to top right":
+                            gradientDirectionSvg = "x1=\"0%\" y1=\"100%\" x2=\"100%\" y2=\"0%\"";
                             break;
-                        case 'ellipse':
-                        case 'ellipse at center':
-                            gradientType = 'radial';
-                            gradientDirectionSvg = 'cx="50%" cy="50%" r="75%"';
-                            rectangleDimension = 'x="-50" y="-50" width="101" height="101"';
+                        case "ellipse":
+                        case "ellipse at center":
+                            gradientType = "radial";
+                            gradientDirectionSvg = "cx=\"50%\" cy=\"50%\" r=\"75%\"";
+                            rectangleDimension = "x=\"-50\" y=\"-50\" width=\"101\" height=\"101\"";
                             break;
                         default:
                             throw {
-                                type: 'Argument',
-                                message: 'svg-gradient direction must be \'to bottom\', \'to right\',' +
-                                    ' \'to bottom right\', \'to top right\' or \'ellipse at center\''
+                                type: "Argument",
+                                message: "svg-gradient direction must be 'to bottom', 'to right'," +
+                                    " 'to bottom right', 'to top right' or 'ellipse at center'"
                             };
                     }
-                    returner = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">' +
-                        '<' + gradientType + 'Gradient id="g" ' + gradientDirectionSvg + '>';
+                    returner = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1 1\">" +
+                        "<" + gradientType + "Gradient id=\"g\" " + gradientDirectionSvg + ">";
 
                     for (i = 0; i < stops.length; i += 1) {
                         if (stops[i] instanceof Expression) {
@@ -2993,17 +2993,17 @@
                         if (!(color instanceof Color) || (!((i === 0 || i + 1 === stops.length) && position === undefined) && !(position instanceof Dimension))) {
                             throwArgumentDescriptor();
                         }
-                        positionValue = position ? position.toCSS(renderEnv) : i === 0 ? '0%' : '100%';
+                        positionValue = position ? position.toCSS(renderEnv) : i === 0 ? "0%" : "100%";
                         alpha = color.alpha;
-                        returner += '<stop offset="' + positionValue + '" stop-color="' + color.toRGB() + '"' + (alpha < 1 ? ' stop-opacity="' + alpha + '"' : '') + '/>';
+                        returner += "<stop offset=\"" + positionValue + "\" stop-color=\"" + color.toRGB() + "\"" + (alpha < 1 ? " stop-opacity=\"" + alpha + "\"" : "") + "/>";
                     }
-                    returner += '</' + gradientType + 'Gradient>' +
-                        '<rect ' + rectangleDimension + ' fill="url(#g)" /></svg>';
+                    returner += "</" + gradientType + "Gradient>" +
+                        "<rect " + rectangleDimension + " fill=\"url(#g)\" /></svg>";
 
                     returner = encodeURIComponent(returner);
 
-                    returner = 'data:image/svg+xml,' + returner;
-                    return new URL(new Quoted('\'' + returner + '\'', returner, false, this.index, this.currentFileInfo), this.index, this.currentFileInfo);
+                    returner = "data:image/svg+xml," + returner;
+                    return new URL(new Quoted("'" + returner + "'", returner, false, this.index, this.currentFileInfo), this.index, this.currentFileInfo);
                 });
             };
 
@@ -3016,26 +3016,26 @@
             "./function-registry": 27
         }],
         35: [function (require, module, exports) {
-            var Keyword = require('../tree/keyword'),
-                DetachedRuleset = require('../tree/detached-ruleset'),
-                Dimension = require('../tree/dimension'),
-                Color = require('../tree/color'),
-                Quoted = require('../tree/quoted'),
-                Anonymous = require('../tree/anonymous'),
-                URL = require('../tree/url'),
-                Operation = require('../tree/operation'),
-                functionRegistry = require('./function-registry');
+            var Keyword = require("../tree/keyword"),
+                DetachedRuleset = require("../tree/detached-ruleset"),
+                Dimension = require("../tree/dimension"),
+                Color = require("../tree/color"),
+                Quoted = require("../tree/quoted"),
+                Anonymous = require("../tree/anonymous"),
+                URL = require("../tree/url"),
+                Operation = require("../tree/operation"),
+                functionRegistry = require("./function-registry");
 
             var isa = function (n, Type) {
                     return (n instanceof Type) ? Keyword.True : Keyword.False;
                 },
                 isunit = function (n, unit) {
                     if (unit === undefined) {
-                        throw {type: 'Argument', message: 'missing the required second argument to isunit.'};
+                        throw {type: "Argument", message: "missing the required second argument to isunit."};
                     }
-                    unit = typeof unit.value === 'string' ? unit.value : unit;
-                    if (typeof unit !== 'string') {
-                        throw {type: 'Argument', message: 'Second argument to isunit should be a unit or a string.'};
+                    unit = typeof unit.value === "string" ? unit.value : unit;
+                    if (typeof unit !== "string") {
+                        throw {type: "Argument", message: "Second argument to isunit should be a unit or a string."};
                     }
                     return (n instanceof Dimension) && n.unit.is(unit) ? Keyword.True : Keyword.False;
                 };
@@ -3060,21 +3060,21 @@
                     return isa(n, URL);
                 },
                 ispixel: function (n) {
-                    return isunit(n, 'px');
+                    return isunit(n, "px");
                 },
                 ispercentage: function (n) {
-                    return isunit(n, '%');
+                    return isunit(n, "%");
                 },
                 isem: function (n) {
-                    return isunit(n, 'em');
+                    return isunit(n, "em");
                 },
                 isunit: isunit,
                 unit: function (val, unit) {
                     if (!(val instanceof Dimension)) {
                         throw {
-                            type: 'Argument',
-                            message: 'the first argument to unit must be a number' +
-                                (val instanceof Operation ? '. Have you forgotten parenthesis?' : '')
+                            type: "Argument",
+                            message: "the first argument to unit must be a number" +
+                                (val instanceof Operation ? ". Have you forgotten parenthesis?" : "")
                         };
                     }
                     if (unit) {
@@ -3084,11 +3084,11 @@
                             unit = unit.toCSS();
                         }
                     } else {
-                        unit = '';
+                        unit = "";
                     }
                     return new Dimension(val.value, unit);
                 },
-                'get-unit': function (n) {
+                "get-unit": function (n) {
                     return new Anonymous(n.unit);
                 }
             });
@@ -3105,12 +3105,12 @@
             "./function-registry": 27
         }],
         36: [function (require, module, exports) {
-            var contexts = require('./contexts'),
-                Parser = require('./parser/parser'),
-                LessError = require('./less-error'),
-                utils = require('./utils'),
-                PromiseConstructor = typeof Promise === 'undefined' ? require('promise') : Promise,
-                logger = require('./logger');
+            var contexts = require("./contexts"),
+                Parser = require("./parser/parser"),
+                LessError = require("./less-error"),
+                utils = require("./utils"),
+                PromiseConstructor = typeof Promise === "undefined" ? require("promise") : Promise,
+                logger = require("./logger");
 
             module.exports = function (environment) {
 
@@ -3157,7 +3157,7 @@
                         var importedEqualsRoot = fullPath === importManager.rootFilename;
                         if (importOptions.optional && e) {
                             callback(null, {rules: []}, false, null);
-                            logger.info('The file ' + fullPath + ' was skipped because it was not found and the import was marked optional.');
+                            logger.info("The file " + fullPath + " was skipped because it was not found and the import was marked optional.");
                         } else {
                             // Inline imports aren't cached here.
                             // If we start to cache them, please make sure they won't conflict with non-inline imports of the
@@ -3182,14 +3182,14 @@
                     var fileManager = environment.getFileManager(path, currentFileInfo.currentDirectory, this.context, environment);
 
                     if (!fileManager) {
-                        fileParsedFunc({message: 'Could not find a file-manager for ' + path});
+                        fileParsedFunc({message: "Could not find a file-manager for " + path});
                         return;
                     }
 
                     var loadFileCallback = function (loadedFile) {
                         var plugin,
                             resolvedFilename = loadedFile.filename,
-                            contents = loadedFile.contents.replace(/^\uFEFF/, '');
+                            contents = loadedFile.contents.replace(/^\uFEFF/, "");
 
                         // Pass on an updated rootpath if path of imported file is relative and file
                         // is in a (sub|sup) directory
@@ -3202,7 +3202,7 @@
                         newFileInfo.currentDirectory = fileManager.getPath(resolvedFilename);
                         if (newFileInfo.rewriteUrls) {
                             newFileInfo.rootpath = fileManager.join(
-                                (importManager.context.rootpath || ''),
+                                (importManager.context.rootpath || ""),
                                 fileManager.pathDiff(newFileInfo.currentDirectory, newFileInfo.entryPath));
 
                             if (!fileManager.isPathAbsolute(newFileInfo.rootpath) && fileManager.alwaysMakePathsAbsolute()) {
@@ -3248,7 +3248,7 @@
                     var promise, context = utils.clone(this.context);
 
                     if (tryAppendExtension) {
-                        context.ext = importOptions.isPlugin ? '.js' : '.less';
+                        context.ext = importOptions.isPlugin ? ".js" : ".less";
                     }
 
                     if (importOptions.isPlugin) {
@@ -3285,27 +3285,27 @@
 
                 var initial = {
                     version: [3, 9, 0],
-                    data: require('./data'),
-                    tree: require('./tree'),
-                    Environment: (Environment = require('./environment/environment')),
-                    AbstractFileManager: require('./environment/abstract-file-manager'),
-                    AbstractPluginLoader: require('./environment/abstract-plugin-loader'),
+                    data: require("./data"),
+                    tree: require("./tree"),
+                    Environment: (Environment = require("./environment/environment")),
+                    AbstractFileManager: require("./environment/abstract-file-manager"),
+                    AbstractPluginLoader: require("./environment/abstract-plugin-loader"),
                     environment: (environment = new Environment(environment, fileManagers)),
-                    visitors: require('./visitors'),
-                    Parser: require('./parser/parser'),
-                    functions: require('./functions')(environment),
-                    contexts: require('./contexts'),
-                    SourceMapOutput: (SourceMapOutput = require('./source-map-output')(environment)),
-                    SourceMapBuilder: (SourceMapBuilder = require('./source-map-builder')(SourceMapOutput, environment)),
-                    ParseTree: (ParseTree = require('./parse-tree')(SourceMapBuilder)),
-                    ImportManager: (ImportManager = require('./import-manager')(environment)),
-                    render: require('./render')(environment, ParseTree, ImportManager),
-                    parse: require('./parse')(environment, ParseTree, ImportManager),
-                    LessError: require('./less-error'),
-                    transformTree: require('./transform-tree'),
-                    utils: require('./utils'),
-                    PluginManager: require('./plugin-manager'),
-                    logger: require('./logger')
+                    visitors: require("./visitors"),
+                    Parser: require("./parser/parser"),
+                    functions: require("./functions")(environment),
+                    contexts: require("./contexts"),
+                    SourceMapOutput: (SourceMapOutput = require("./source-map-output")(environment)),
+                    SourceMapBuilder: (SourceMapBuilder = require("./source-map-builder")(SourceMapOutput, environment)),
+                    ParseTree: (ParseTree = require("./parse-tree")(SourceMapBuilder)),
+                    ImportManager: (ImportManager = require("./import-manager")(environment)),
+                    render: require("./render")(environment, ParseTree, ImportManager),
+                    parse: require("./parse")(environment, ParseTree, ImportManager),
+                    LessError: require("./less-error"),
+                    transformTree: require("./transform-tree"),
+                    utils: require("./utils"),
+                    PluginManager: require("./plugin-manager"),
+                    logger: require("./logger")
                 };
 
                 // Create a public API
@@ -3321,7 +3321,7 @@
                 for (var n in initial.tree) {
                     /* eslint guard-for-in: 0 */
                     t = initial.tree[n];
-                    if (typeof t === 'function') {
+                    if (typeof t === "function") {
                         api[n.toLowerCase()] = ctor(t);
                     } else {
                         api[n] = Object.create(null);
@@ -3358,7 +3358,7 @@
             "./visitors": 93
         }],
         38: [function (require, module, exports) {
-            var utils = require('./utils');
+            var utils = require("./utils");
             /**
              * This is a centralized class of any error that could be thrown internally (mostly by the parser).
              * Besides standard .message it keeps some additional data like a path to the file where the error
@@ -3395,12 +3395,12 @@
                         line = loc.line,
                         col = loc.column,
                         callLine = e.call && utils.getLocation(e.call, input).line,
-                        lines = input ? input.split('\n') : '';
+                        lines = input ? input.split("\n") : "";
 
-                    this.type = e.type || 'Syntax';
+                    this.type = e.type || "Syntax";
                     this.filename = filename;
                     this.index = e.index;
-                    this.line = typeof line === 'number' ? line + 1 : null;
+                    this.line = typeof line === "number" ? line + 1 : null;
                     this.column = col;
 
                     if (!this.line && this.stack) {
@@ -3429,7 +3429,7 @@
 
             };
 
-            if (typeof Object.create === 'undefined') {
+            if (typeof Object.create === "undefined") {
                 var F = function () {
                 };
                 F.prototype = Error.prototype;
@@ -3450,7 +3450,7 @@
             LessError.prototype.toString = function (options) {
                 options = options || {};
 
-                var message = '';
+                var message = "";
                 var extract = this.extract || [];
                 var error = [];
                 var stylize = function (str) {
@@ -3458,46 +3458,46 @@
                 };
                 if (options.stylize) {
                     var type = typeof options.stylize;
-                    if (type !== 'function') {
-                        throw Error('options.stylize should be a function, got a ' + type + '!');
+                    if (type !== "function") {
+                        throw Error("options.stylize should be a function, got a " + type + "!");
                     }
                     stylize = options.stylize;
                 }
 
                 if (this.line !== null) {
-                    if (typeof extract[0] === 'string') {
-                        error.push(stylize((this.line - 1) + ' ' + extract[0], 'grey'));
+                    if (typeof extract[0] === "string") {
+                        error.push(stylize((this.line - 1) + " " + extract[0], "grey"));
                     }
 
-                    if (typeof extract[1] === 'string') {
-                        var errorTxt = this.line + ' ';
+                    if (typeof extract[1] === "string") {
+                        var errorTxt = this.line + " ";
                         if (extract[1]) {
                             errorTxt += extract[1].slice(0, this.column) +
-                                stylize(stylize(stylize(extract[1].substr(this.column, 1), 'bold') +
-                                    extract[1].slice(this.column + 1), 'red'), 'inverse');
+                                stylize(stylize(stylize(extract[1].substr(this.column, 1), "bold") +
+                                    extract[1].slice(this.column + 1), "red"), "inverse");
                         }
                         error.push(errorTxt);
                     }
 
-                    if (typeof extract[2] === 'string') {
-                        error.push(stylize((this.line + 1) + ' ' + extract[2], 'grey'));
+                    if (typeof extract[2] === "string") {
+                        error.push(stylize((this.line + 1) + " " + extract[2], "grey"));
                     }
-                    error = error.join('\n') + stylize('', 'reset') + '\n';
+                    error = error.join("\n") + stylize("", "reset") + "\n";
                 }
 
-                message += stylize(this.type + 'Error: ' + this.message, 'red');
+                message += stylize(this.type + "Error: " + this.message, "red");
                 if (this.filename) {
-                    message += stylize(' in ', 'red') + this.filename;
+                    message += stylize(" in ", "red") + this.filename;
                 }
                 if (this.line) {
-                    message += stylize(' on line ' + this.line + ', column ' + (this.column + 1) + ':', 'grey');
+                    message += stylize(" on line " + this.line + ", column " + (this.column + 1) + ":", "grey");
                 }
 
-                message += '\n' + error;
+                message += "\n" + error;
 
                 if (this.callLine) {
-                    message += stylize('from ', 'red') + (this.filename || '') + '/n';
-                    message += stylize(this.callLine, 'grey') + ' ' + this.callExtract + '/n';
+                    message += stylize("from ", "red") + (this.filename || "") + "/n";
+                    message += stylize(this.callLine, "grey") + " " + this.callExtract + "/n";
                 }
 
                 return message;
@@ -3507,16 +3507,16 @@
         39: [function (require, module, exports) {
             module.exports = {
                 error: function (msg) {
-                    this._fireEvent('error', msg);
+                    this._fireEvent("error", msg);
                 },
                 warn: function (msg) {
-                    this._fireEvent('warn', msg);
+                    this._fireEvent("warn", msg);
                 },
                 info: function (msg) {
-                    this._fireEvent('info', msg);
+                    this._fireEvent("info", msg);
                 },
                 debug: function (msg) {
-                    this._fireEvent('debug', msg);
+                    this._fireEvent("debug", msg);
                 },
                 addListener: function (listener) {
                     this._listeners.push(listener);
@@ -3542,9 +3542,9 @@
 
         }, {}],
         40: [function (require, module, exports) {
-            var LessError = require('./less-error'),
-                transformTree = require('./transform-tree'),
-                logger = require('./logger');
+            var LessError = require("./less-error"),
+                transformTree = require("./transform-tree"),
+                logger = require("./logger");
 
             module.exports = function (SourceMapBuilder) {
                 var ParseTree = function (root, imports) {
@@ -3563,7 +3563,7 @@
                     try {
                         var compress = Boolean(options.compress);
                         if (compress) {
-                            logger.warn('The compress option has been deprecated. We recommend you use a dedicated css minifier, for instance see less-plugin-clean-css.');
+                            logger.warn("The compress option has been deprecated. We recommend you use a dedicated css minifier, for instance see less-plugin-clean-css.");
                         }
 
                         var toCSSOptions = {
@@ -3611,16 +3611,16 @@
         }, {"./less-error": 38, "./logger": 39, "./transform-tree": 49}],
         41: [function (require, module, exports) {
             var PromiseConstructor,
-                contexts = require('./contexts'),
-                Parser = require('./parser/parser'),
-                PluginManager = require('./plugin-manager'),
-                LessError = require('./less-error'),
-                utils = require('./utils');
+                contexts = require("./contexts"),
+                Parser = require("./parser/parser"),
+                PluginManager = require("./plugin-manager"),
+                LessError = require("./less-error"),
+                utils = require("./utils");
 
             module.exports = function (environment, ParseTree, ImportManager) {
                 var parse = function (input, options, callback) {
 
-                    if (typeof options === 'function') {
+                    if (typeof options === "function") {
                         callback = options;
                         options = utils.copyOptions(this.options, {});
                     } else {
@@ -3629,7 +3629,7 @@
 
                     if (!callback) {
                         if (!PromiseConstructor) {
-                            PromiseConstructor = typeof Promise === 'undefined' ? require('promise') : Promise;
+                            PromiseConstructor = typeof Promise === "undefined" ? require("promise") : Promise;
                         }
                         var self = this;
                         return new PromiseConstructor(function (resolve, reject) {
@@ -3653,19 +3653,19 @@
                         if (options.rootFileInfo) {
                             rootFileInfo = options.rootFileInfo;
                         } else {
-                            var filename = options.filename || 'input';
-                            var entryPath = filename.replace(/[^\/\\]*$/, '');
+                            var filename = options.filename || "input";
+                            var entryPath = filename.replace(/[^\/\\]*$/, "");
                             rootFileInfo = {
                                 filename: filename,
                                 rewriteUrls: context.rewriteUrls,
-                                rootpath: context.rootpath || '',
+                                rootpath: context.rootpath || "",
                                 currentDirectory: entryPath,
                                 entryPath: entryPath,
                                 rootFilename: filename
                             };
                             // add in a missing trailing slash
-                            if (rootFileInfo.rootpath && rootFileInfo.rootpath.slice(-1) !== '/') {
-                                rootFileInfo.rootpath += '/';
+                            if (rootFileInfo.rootpath && rootFileInfo.rootpath.slice(-1) !== "/") {
+                                rootFileInfo.rootpath += "/";
                             }
                         }
 
@@ -3679,7 +3679,7 @@
                             options.plugins.forEach(function (plugin) {
                                 var evalResult, contents;
                                 if (plugin.fileContent) {
-                                    contents = plugin.fileContent.replace(/^\uFEFF/, '');
+                                    contents = plugin.fileContent.replace(/^\uFEFF/, "");
                                     evalResult = pluginManager.Loader.evalPlugin(contents, context, imports, plugin.options, plugin.filename);
                                     if (evalResult instanceof LessError) {
                                         return callback(evalResult);
@@ -3741,7 +3741,7 @@
                             continue;
                         case 41:                        // )
                             if (--parenLevel < 0) {
-                                return fail('missing opening `(`', chunkerCurrentIndex);
+                                return fail("missing opening `(`", chunkerCurrentIndex);
                             }
                             continue;
                         case 59:                        // ;
@@ -3755,7 +3755,7 @@
                             continue;
                         case 125:                       // }
                             if (--level < 0) {
-                                return fail('missing opening `{`', chunkerCurrentIndex);
+                                return fail("missing opening `{`", chunkerCurrentIndex);
                             }
                             if (!level && !parenLevel) {
                                 emitChunk();
@@ -3766,7 +3766,7 @@
                                 chunkerCurrentIndex++;
                                 continue;
                             }
-                            return fail('unescaped `\\`', chunkerCurrentIndex);
+                            return fail("unescaped `\\`", chunkerCurrentIndex);
                         case 34:
                         case 39:
                         case 96:                        // ", ' and `
@@ -3783,7 +3783,7 @@
                                 }
                                 if (cc2 == 92) {        // \
                                     if (chunkerCurrentIndex == len - 1) {
-                                        return fail('unescaped `\\`', chunkerCurrentIndex);
+                                        return fail("unescaped `\\`", chunkerCurrentIndex);
                                     }
                                     chunkerCurrentIndex++;
                                 }
@@ -3791,7 +3791,7 @@
                             if (matched) {
                                 continue;
                             }
-                            return fail('unmatched `' + String.fromCharCode(cc) + '`', currentChunkStartIndex);
+                            return fail("unmatched `" + String.fromCharCode(cc) + "`", currentChunkStartIndex);
                         case 47:                        // /, check for comment
                             if (parenLevel || (chunkerCurrentIndex == len - 1)) {
                                 continue;
@@ -3821,14 +3821,14 @@
                                     }
                                 }
                                 if (chunkerCurrentIndex == len - 1) {
-                                    return fail('missing closing `*/`', currentChunkStartIndex);
+                                    return fail("missing closing `*/`", currentChunkStartIndex);
                                 }
                                 chunkerCurrentIndex++;
                             }
                             continue;
                         case 42:                       // *, check for unmatched */
                             if ((chunkerCurrentIndex < len - 1) && (input.charCodeAt(chunkerCurrentIndex + 1) == 47)) {
-                                return fail('unmatched `/*`', chunkerCurrentIndex);
+                                return fail("unmatched `/*`", chunkerCurrentIndex);
                             }
                             continue;
                     }
@@ -3836,12 +3836,12 @@
 
                 if (level !== 0) {
                     if ((lastMultiComment > lastOpening) && (lastMultiCommentEndBrace > lastMultiComment)) {
-                        return fail('missing closing `}` or `*/`', lastOpening);
+                        return fail("missing closing `}` or `*/`", lastOpening);
                     } else {
-                        return fail('missing closing `}`', lastOpening);
+                        return fail("missing closing `}`", lastOpening);
                     }
                 } else if (parenLevel !== 0) {
-                    return fail('missing closing `)`', lastOpeningParen);
+                    return fail("missing closing `)`", lastOpeningParen);
                 }
 
                 emitChunk(true);
@@ -3850,7 +3850,7 @@
 
         }, {}],
         43: [function (require, module, exports) {
-            var chunker = require('./chunker');
+            var chunker = require("./chunker");
 
             module.exports = function () {
                 var input,       // Less input string
@@ -3885,9 +3885,9 @@
 
                         if (parserInput.autoCommentAbsorb && c === CHARCODE_FORWARD_SLASH) {
                             nextChar = inp.charAt(parserInput.i + 1);
-                            if (nextChar === '/') {
+                            if (nextChar === "/") {
                                 comment = {index: parserInput.i, isLineComment: true};
-                                var nextNewLine = inp.indexOf('\n', parserInput.i + 2);
+                                var nextNewLine = inp.indexOf("\n", parserInput.i + 2);
                                 if (nextNewLine < 0) {
                                     nextNewLine = endIndex;
                                 }
@@ -3895,8 +3895,8 @@
                                 comment.text = inp.substr(comment.index, parserInput.i - comment.index);
                                 parserInput.commentStore.push(comment);
                                 continue;
-                            } else if (nextChar === '*') {
-                                var nextStarSlash = inp.indexOf('*/', parserInput.i + 2);
+                            } else if (nextChar === "*") {
+                                var nextStarSlash = inp.indexOf("*/", parserInput.i + 2);
                                 if (nextStarSlash >= 0) {
                                     comment = {
                                         index: parserInput.i,
@@ -3968,7 +3968,7 @@
                     }
 
                     skipWhitespace(m[0].length);
-                    if (typeof m === 'string') {
+                    if (typeof m === "string") {
                         return m;
                     }
 
@@ -4001,7 +4001,7 @@
                     var pos = loc || parserInput.i,
                         startChar = input.charAt(pos);
 
-                    if (startChar !== '\'' && startChar !== '"') {
+                    if (startChar !== "'" && startChar !== "\"") {
                         return;
                     }
                     var length = input.length,
@@ -4010,17 +4010,17 @@
                     for (var i = 1; i + currentPosition < length; i++) {
                         var nextChar = input.charAt(i + currentPosition);
                         switch (nextChar) {
-                            case '\\':
+                            case "\\":
                                 i++;
                                 continue;
-                            case '\r':
-                            case '\n':
+                            case "\r":
+                            case "\n":
                                 break;
                             case startChar:
                                 var str = input.substr(currentPosition, i + 1);
                                 if (!loc && loc !== 0) {
                                     skipWhitespace(i + 1);
-                                    return str
+                                    return str;
                                 }
                                 return [startChar, str];
                             default:
@@ -4034,7 +4034,7 @@
                  * until matching token (outside of blocks)
                  */
                 parserInput.$parseUntil = function (tok) {
-                    var quote = '',
+                    var quote = "",
                         returnVal = null,
                         inComment = false,
                         blockDepth = 0,
@@ -4047,14 +4047,14 @@
                         loop = true,
                         testChar;
 
-                    if (typeof tok === 'string') {
+                    if (typeof tok === "string") {
                         testChar = function (char) {
                             return char === tok;
-                        }
+                        };
                     } else {
                         testChar = function (char) {
                             return tok.test(char);
-                        }
+                        };
                     }
 
                     do {
@@ -4064,15 +4064,15 @@
                             if (returnVal) {
                                 parseGroups.push(returnVal);
                             } else {
-                                parseGroups.push(' ');
+                                parseGroups.push(" ");
                             }
                             returnVal = parseGroups;
                             skipWhitespace(i - startPos);
-                            loop = false
+                            loop = false;
                         } else {
                             if (inComment) {
-                                if (nextChar === '*' &&
-                                    input.charAt(i + 1) === '/') {
+                                if (nextChar === "*" &&
+                                    input.charAt(i + 1) === "/") {
                                     i++;
                                     blockDepth--;
                                     inComment = false;
@@ -4081,21 +4081,21 @@
                                 continue;
                             }
                             switch (nextChar) {
-                                case '\\':
+                                case "\\":
                                     i++;
                                     nextChar = input.charAt(i);
                                     parseGroups.push(input.substr(lastPos, i - lastPos + 1));
                                     lastPos = i + 1;
                                     break;
-                                case '/':
-                                    if (input.charAt(i + 1) === '*') {
+                                case "/":
+                                    if (input.charAt(i + 1) === "*") {
                                         i++;
                                         inComment = true;
                                         blockDepth++;
                                     }
                                     break;
-                                case '\'':
-                                case '"':
+                                case "'":
+                                case "\"":
                                     quote = parserInput.$quoted(i);
                                     if (quote) {
                                         parseGroups.push(input.substr(lastPos, i - lastPos), quote);
@@ -4107,21 +4107,21 @@
                                         loop = false;
                                     }
                                     break;
-                                case '{':
-                                    blockStack.push('}');
+                                case "{":
+                                    blockStack.push("}");
                                     blockDepth++;
                                     break;
-                                case '(':
-                                    blockStack.push(')');
+                                case "(":
+                                    blockStack.push(")");
                                     blockDepth++;
                                     break;
-                                case '[':
-                                    blockStack.push(']');
+                                case "[":
+                                    blockStack.push("]");
                                     blockDepth++;
                                     break;
-                                case '}':
-                                case ')':
-                                case ']':
+                                case "}":
+                                case ")":
+                                case "]":
                                     var expected = blockStack.pop();
                                     if (nextChar === expected) {
                                         blockDepth--;
@@ -4141,7 +4141,7 @@
                     } while (loop);
 
                     return returnVal ? returnVal : null;
-                }
+                };
 
                 parserInput.autoCommentAbsorb = true;
                 parserInput.commentStore = [];
@@ -4150,7 +4150,7 @@
                 // Same as $(), but don't change the state of the parser,
                 // just return the match.
                 parserInput.peek = function (tok) {
-                    if (typeof tok === 'string') {
+                    if (typeof tok === "string") {
                         // https://jsperf.com/string-startswith/21
                         for (var i = 0; i < tok.length; i++) {
                             if (input.charAt(parserInput.i + i) !== tok.charAt(i)) {
@@ -4234,12 +4234,12 @@
 
         }, {"./chunker": 42}],
         44: [function (require, module, exports) {
-            var LessError = require('../less-error'),
-                tree = require('../tree'),
-                visitors = require('../visitors'),
-                getParserInput = require('./parser-input'),
-                utils = require('../utils'),
-                functionRegistry = require('../functions/function-registry');
+            var LessError = require("../less-error"),
+                tree = require("../tree"),
+                visitors = require("../visitors"),
+                getParserInput = require("./parser-input"),
+                utils = require("../utils"),
+                functionRegistry = require("../functions/function-registry");
 
 //
 // less.js - parser
@@ -4283,7 +4283,7 @@
                         {
                             index: parserInput.i,
                             filename: fileInfo.filename,
-                            type: type || 'Syntax',
+                            type: type || "Syntax",
                             message: msg
                         },
                         imports
@@ -4297,9 +4297,9 @@
                         return result;
                     }
 
-                    error(msg || (typeof arg === 'string'
-                        ? 'expected \'' + arg + '\' got \'' + parserInput.currentChar() + '\''
-                        : 'unexpected token'));
+                    error(msg || (typeof arg === "string"
+                        ? "expected '" + arg + "' got '" + parserInput.currentChar() + "'"
+                        : "unexpected token"));
                 }
 
                 // Specialization of expect()
@@ -4307,7 +4307,7 @@
                     if (parserInput.$char(arg)) {
                         return arg;
                     }
-                    error(msg || 'expected \'' + arg + '\' got \'' + parserInput.currentChar() + '\'');
+                    error(msg || "expected '" + arg + "' got '" + parserInput.currentChar() + "'");
                 }
 
                 function getDebugInfo(index) {
@@ -4379,10 +4379,10 @@
                     // @param [additionalData] An optional map which can contains vars - a map (key, value) of variables to apply
                     //
                     parse: function (str, callback, additionalData) {
-                        var root, error = null, globalVars, modifyVars, ignored, preText = '';
+                        var root, error = null, globalVars, modifyVars, ignored, preText = "";
 
-                        globalVars = (additionalData && additionalData.globalVars) ? Parser.serializeVars(additionalData.globalVars) + '\n' : '';
-                        modifyVars = (additionalData && additionalData.modifyVars) ? '\n' + Parser.serializeVars(additionalData.modifyVars) : '';
+                        globalVars = (additionalData && additionalData.globalVars) ? Parser.serializeVars(additionalData.globalVars) + "\n" : "";
+                        modifyVars = (additionalData && additionalData.modifyVars) ? "\n" + Parser.serializeVars(additionalData.modifyVars) : "";
 
                         if (context.pluginManager) {
                             var preProcessors = context.pluginManager.getPreProcessors();
@@ -4396,15 +4396,15 @@
                         }
 
                         if (globalVars || (additionalData && additionalData.banner)) {
-                            preText = ((additionalData && additionalData.banner) ? additionalData.banner : '') + globalVars;
+                            preText = ((additionalData && additionalData.banner) ? additionalData.banner : "") + globalVars;
                             ignored = imports.contentsIgnoredChars;
                             ignored[fileInfo.filename] = ignored[fileInfo.filename] || 0;
                             ignored[fileInfo.filename] += preText.length;
                         }
 
-                        str = str.replace(/\r\n?/g, '\n');
+                        str = str.replace(/\r\n?/g, "\n");
                         // Remove potential UTF Byte Order Mark
-                        str = preText + str.replace(/^\uFEFF/, '') + modifyVars;
+                        str = preText + str.replace(/^\uFEFF/, "") + modifyVars;
                         imports.contents[fileInfo.filename] = str;
 
                         // Start with the primary rule.
@@ -4415,7 +4415,7 @@
                             parserInput.start(str, context.chunkInput, function fail(msg, index) {
                                 throw new LessError({
                                     index: index,
-                                    type: 'Parse',
+                                    type: "Parse",
                                     message: msg,
                                     filename: fileInfo.filename
                                 }, imports);
@@ -4446,18 +4446,18 @@
                             var message = endInfo.furthestPossibleErrorMessage;
 
                             if (!message) {
-                                message = 'Unrecognised input';
-                                if (endInfo.furthestChar === '}') {
-                                    message += '. Possibly missing opening \'{\'';
-                                } else if (endInfo.furthestChar === ')') {
-                                    message += '. Possibly missing opening \'(\'';
+                                message = "Unrecognised input";
+                                if (endInfo.furthestChar === "}") {
+                                    message += ". Possibly missing opening '{'";
+                                } else if (endInfo.furthestChar === ")") {
+                                    message += ". Possibly missing opening '('";
                                 } else if (endInfo.furthestReachedEnd) {
-                                    message += '. Possibly missing something';
+                                    message += ". Possibly missing something";
                                 }
                             }
 
                             error = new LessError({
-                                type: 'Parse',
+                                type: "Parse",
                                 message: message,
                                 index: endInfo.furthest,
                                 filename: fileInfo.filename
@@ -4546,7 +4546,7 @@
                                 if (parserInput.finished) {
                                     break;
                                 }
-                                if (parserInput.peek('}')) {
+                                if (parserInput.peek("}")) {
                                     break;
                                 }
 
@@ -4562,7 +4562,7 @@
                                     root.push(node);
                                 } else {
                                     var foundSemiColon = false;
-                                    while (parserInput.$char(';')) {
+                                    while (parserInput.$char(";")) {
                                         foundSemiColon = true;
                                     }
                                     if (!foundSemiColon) {
@@ -4599,7 +4599,7 @@
                                 var str, index = parserInput.i, isEscaped = false;
 
                                 parserInput.save();
-                                if (parserInput.$char('~')) {
+                                if (parserInput.$char("~")) {
                                     isEscaped = true;
                                 } else if (forceEscaped) {
                                     parserInput.restore();
@@ -4622,7 +4622,7 @@
                             //     black border-collapse
                             //
                             keyword: function () {
-                                var k = parserInput.$char('%') || parserInput.$re(/^\[?(?:[\w-]|\\(?:[A-Fa-f0-9]{1,6} ?|[^A-Fa-f0-9]))+\]?/);
+                                var k = parserInput.$char("%") || parserInput.$re(/^\[?(?:[\w-]|\\(?:[A-Fa-f0-9]{1,6} ?|[^A-Fa-f0-9]))+\]?/);
                                 if (k) {
                                     return tree.Color.fromKeyword(k) || new (tree.Keyword)(k);
                                 }
@@ -4663,8 +4663,8 @@
 
                                 args = this.arguments(args);
 
-                                if (!parserInput.$char(')')) {
-                                    parserInput.restore('Could not parse call arguments or missing \')\'');
+                                if (!parserInput.$char(")")) {
+                                    parserInput.restore("Could not parse call arguments or missing ')'");
                                     return;
                                 }
 
@@ -4689,7 +4689,7 @@
                                 return {
                                     alpha: f(parsers.ieAlpha, true),
                                     boolean: f(condition),
-                                    'if': f(condition)
+                                    "if": f(condition)
                                 }[name.toLowerCase()];
 
                                 function f(parse, stop) {
@@ -4701,7 +4701,7 @@
                                 }
 
                                 function condition() {
-                                    return [expect(parsers.condition, 'expected condition')];
+                                    return [expect(parsers.condition, "expected condition")];
                                 }
                             },
 
@@ -4728,11 +4728,11 @@
                                         argsComma.push(value);
                                     }
 
-                                    if (parserInput.$char(',')) {
+                                    if (parserInput.$char(",")) {
                                         continue;
                                     }
 
-                                    if (parserInput.$char(';') || isSemiColonSeparated) {
+                                    if (parserInput.$char(";") || isSemiColonSeparated) {
                                         isSemiColonSeparated = true;
                                         value = (argsComma.length < 1) ? argsComma[0]
                                             : new tree.Value(argsComma);
@@ -4765,7 +4765,7 @@
                                     parserInput.restore();
                                     return;
                                 }
-                                if (!parserInput.$char('=')) {
+                                if (!parserInput.$char("=")) {
                                     parserInput.restore();
                                     return;
                                 }
@@ -4790,17 +4790,17 @@
 
                                 parserInput.autoCommentAbsorb = false;
 
-                                if (!parserInput.$str('url(')) {
+                                if (!parserInput.$str("url(")) {
                                     parserInput.autoCommentAbsorb = true;
                                     return;
                                 }
 
                                 value = this.quoted() || this.variable() || this.property() ||
-                                    parserInput.$re(/^(?:(?:\\[\(\)'"])|[^\(\)'"])+/) || '';
+                                    parserInput.$re(/^(?:(?:\\[\(\)'"])|[^\(\)'"])+/) || "";
 
                                 parserInput.autoCommentAbsorb = true;
 
-                                expectChar(')');
+                                expectChar(")");
 
                                 return new (tree.URL)((value.value != null ||
                                     value instanceof tree.Variable ||
@@ -4820,9 +4820,9 @@
                                 var ch, name, index = parserInput.i;
 
                                 parserInput.save();
-                                if (parserInput.currentChar() === '@' && (name = parserInput.$re(/^@@?[\w-]+/))) {
+                                if (parserInput.currentChar() === "@" && (name = parserInput.$re(/^@@?[\w-]+/))) {
                                     ch = parserInput.currentChar();
-                                    if (ch === '(' || ch === '[' && !parserInput.prevChar().match(/^\s/)) {
+                                    if (ch === "(" || ch === "[" && !parserInput.prevChar().match(/^\s/)) {
                                         // this may be a VariableCall lookup
                                         var result = parsers.variableCall(name);
                                         if (result) {
@@ -4840,8 +4840,8 @@
                             variableCurly: function () {
                                 var curly, index = parserInput.i;
 
-                                if (parserInput.currentChar() === '@' && (curly = parserInput.$re(/^@\{([\w-]+)\}/))) {
-                                    return new (tree.Variable)('@' + curly[1], index, fileInfo);
+                                if (parserInput.currentChar() === "@" && (curly = parserInput.$re(/^@\{([\w-]+)\}/))) {
+                                    return new (tree.Variable)("@" + curly[1], index, fileInfo);
                                 }
                             },
                             //
@@ -4852,7 +4852,7 @@
                             property: function () {
                                 var name, index = parserInput.i;
 
-                                if (parserInput.currentChar() === '$' && (name = parserInput.$re(/^\$[\w-]+/))) {
+                                if (parserInput.currentChar() === "$" && (name = parserInput.$re(/^\$[\w-]+/))) {
                                     return new (tree.Property)(name, index, fileInfo);
                                 }
                             },
@@ -4861,8 +4861,8 @@
                             propertyCurly: function () {
                                 var curly, index = parserInput.i;
 
-                                if (parserInput.currentChar() === '$' && (curly = parserInput.$re(/^\$\{([\w-]+)\}/))) {
-                                    return new (tree.Property)('$' + curly[1], index, fileInfo);
+                                if (parserInput.currentChar() === "$" && (curly = parserInput.$re(/^\$\{([\w-]+)\}/))) {
+                                    return new (tree.Property)("$" + curly[1], index, fileInfo);
                                 }
                             },
                             //
@@ -4875,7 +4875,7 @@
                             color: function () {
                                 var rgb;
 
-                                if (parserInput.currentChar() === '#' && (rgb = parserInput.$re(/^#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3,4})/))) {
+                                if (parserInput.currentChar() === "#" && (rgb = parserInput.$re(/^#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3,4})/))) {
                                     return new (tree.Color)(rgb[1], undefined, rgb[0]);
                                 }
                             },
@@ -4938,8 +4938,8 @@
 
                                 parserInput.save();
 
-                                var escape = parserInput.$char('~');
-                                var jsQuote = parserInput.$char('`');
+                                var escape = parserInput.$char("~");
+                                var jsQuote = parserInput.$char("`");
 
                                 if (!jsQuote) {
                                     parserInput.restore();
@@ -4951,7 +4951,7 @@
                                     parserInput.forget();
                                     return new (tree.JavaScript)(js.substr(0, js.length - 1), Boolean(escape), index, fileInfo);
                                 }
-                                parserInput.restore('invalid javascript definition');
+                                parserInput.restore("invalid javascript definition");
                             }
                         },
 
@@ -4963,7 +4963,7 @@
                         variable: function () {
                             var name;
 
-                            if (parserInput.currentChar() === '@' && (name = parserInput.$re(/^(@[\w-]+)\s*:/))) {
+                            if (parserInput.currentChar() === "@" && (name = parserInput.$re(/^(@[\w-]+)\s*:/))) {
                                 return name[1];
                             }
                         },
@@ -4982,13 +4982,13 @@
 
                             parserInput.save();
 
-                            if (name || (parserInput.currentChar() === '@'
+                            if (name || (parserInput.currentChar() === "@"
                                 && (name = parserInput.$re(/^(@[\w-]+)(\(\s*\))?/)))) {
 
                                 lookups = this.mixin.ruleLookups();
 
-                                if (!lookups && ((inValue && parserInput.$str('()') !== '()') || (name[2] !== '()'))) {
-                                    parserInput.restore('Missing \'[...]\' lookup in variable call');
+                                if (!lookups && ((inValue && parserInput.$str("()") !== "()") || (name[2] !== "()"))) {
+                                    parserInput.restore("Missing '[...]' lookup in variable call");
                                     return;
                                 }
 
@@ -5019,7 +5019,7 @@
                         extend: function (isRule) {
                             var elements, e, index = parserInput.i, option, extendList, extend;
 
-                            if (!parserInput.$str(isRule ? '&:extend(' : ':extend(')) {
+                            if (!parserInput.$str(isRule ? "&:extend(" : ":extend(")) {
                                 return;
                             }
 
@@ -5040,7 +5040,7 @@
 
                                 option = option && option[1];
                                 if (!elements) {
-                                    error('Missing target selector for :extend().');
+                                    error("Missing target selector for :extend().");
                                 }
                                 extend = new (tree.Extend)(new (tree.Selector)(elements), option, index, fileInfo);
                                 if (extendList) {
@@ -5048,7 +5048,7 @@
                                 } else {
                                     extendList = [extend];
                                 }
-                            } while (parserInput.$char(','));
+                            } while (parserInput.$char(","));
 
                             expect(/^\)/);
 
@@ -5090,7 +5090,7 @@
                                 var s = parserInput.currentChar(), important = false, lookups,
                                     index = parserInput.i, elements, args, hasParens;
 
-                                if (s !== '.' && s !== '#') {
+                                if (s !== "." && s !== "#") {
                                     return;
                                 }
 
@@ -5099,9 +5099,9 @@
                                 elements = this.elements();
 
                                 if (elements) {
-                                    if (parserInput.$char('(')) {
+                                    if (parserInput.$char("(")) {
                                         args = this.args(true).args;
-                                        expectChar(')');
+                                        expectChar(")");
                                         hasParens = true;
                                     }
 
@@ -5156,7 +5156,7 @@
                                     } else {
                                         elements = [elem];
                                     }
-                                    c = parserInput.$char('>');
+                                    c = parserInput.$char(">");
                                 }
                                 return elements;
                             },
@@ -5174,9 +5174,9 @@
                                         arg = parsers.detachedRuleset() || parsers.expression();
                                     } else {
                                         parserInput.commentStore.length = 0;
-                                        if (parserInput.$str('...')) {
+                                        if (parserInput.$str("...")) {
                                             returner.variadic = true;
-                                            if (parserInput.$char(';') && !isSemiColonSeparated) {
+                                            if (parserInput.$char(";") && !isSemiColonSeparated) {
                                                 isSemiColonSeparated = true;
                                             }
                                             (isSemiColonSeparated ? argsSemiColon : argsComma)
@@ -5207,10 +5207,10 @@
                                     }
 
                                     if (val && (val instanceof tree.Variable || val instanceof tree.Property)) {
-                                        if (parserInput.$char(':')) {
+                                        if (parserInput.$char(":")) {
                                             if (expressions.length > 0) {
                                                 if (isSemiColonSeparated) {
-                                                    error('Cannot mix ; and , as delimiter types');
+                                                    error("Cannot mix ; and , as delimiter types");
                                                 }
                                                 expressionContainsNamed = true;
                                             }
@@ -5219,7 +5219,7 @@
 
                                             if (!value) {
                                                 if (isCall) {
-                                                    error('could not understand value for named argument');
+                                                    error("could not understand value for named argument");
                                                 } else {
                                                     parserInput.restore();
                                                     returner.args = [];
@@ -5227,10 +5227,10 @@
                                                 }
                                             }
                                             nameLoop = (name = val.name);
-                                        } else if (parserInput.$str('...')) {
+                                        } else if (parserInput.$str("...")) {
                                             if (!isCall) {
                                                 returner.variadic = true;
-                                                if (parserInput.$char(';') && !isSemiColonSeparated) {
+                                                if (parserInput.$char(";") && !isSemiColonSeparated) {
                                                     isSemiColonSeparated = true;
                                                 }
                                                 (isSemiColonSeparated ? argsSemiColon : argsComma)
@@ -5251,16 +5251,16 @@
 
                                     argsComma.push({name: nameLoop, value: value, expand: expand});
 
-                                    if (parserInput.$char(',')) {
+                                    if (parserInput.$char(",")) {
                                         hasSep = true;
                                         continue;
                                     }
-                                    hasSep = parserInput.$char(';') === ';';
+                                    hasSep = parserInput.$char(";") === ";";
 
                                     if (hasSep || isSemiColonSeparated) {
 
                                         if (expressionContainsNamed) {
-                                            error('Cannot mix ; and , as delimiter types');
+                                            error("Cannot mix ; and , as delimiter types");
                                         }
 
                                         isSemiColonSeparated = true;
@@ -5301,7 +5301,7 @@
                             //
                             definition: function () {
                                 var name, params = [], match, ruleset, cond, variadic = false;
-                                if ((parserInput.currentChar() !== '.' && parserInput.currentChar() !== '#') ||
+                                if ((parserInput.currentChar() !== "." && parserInput.currentChar() !== "#") ||
                                     parserInput.peek(/^[^{]*\}/)) {
                                     return;
                                 }
@@ -5321,15 +5321,15 @@
                                     // also
                                     // .mixincall(@a: {rule: set;});
                                     // so we have to be nice and restore
-                                    if (!parserInput.$char(')')) {
-                                        parserInput.restore('Missing closing \')\'');
+                                    if (!parserInput.$char(")")) {
+                                        parserInput.restore("Missing closing ')'");
                                         return;
                                     }
 
                                     parserInput.commentStore.length = 0;
 
-                                    if (parserInput.$str('when')) { // Guard
-                                        cond = expect(parsers.conditions, 'expected condition');
+                                    if (parserInput.$str("when")) { // Guard
+                                        cond = expect(parsers.conditions, "expected condition");
                                     }
 
                                     ruleset = parsers.block();
@@ -5348,7 +5348,7 @@
                             ruleLookups: function () {
                                 var rule, args, lookups = [];
 
-                                if (parserInput.currentChar() !== '[') {
+                                if (parserInput.currentChar() !== "[") {
                                     return;
                                 }
 
@@ -5356,7 +5356,7 @@
                                     parserInput.save();
                                     args = null;
                                     rule = this.lookupValue();
-                                    if (!rule && rule !== '') {
+                                    if (!rule && rule !== "") {
                                         parserInput.restore();
                                         break;
                                     }
@@ -5371,19 +5371,19 @@
                             lookupValue: function () {
                                 parserInput.save();
 
-                                if (!parserInput.$char('[')) {
+                                if (!parserInput.$char("[")) {
                                     parserInput.restore();
                                     return;
                                 }
 
                                 var name = parserInput.$re(/^(?:[@$]{0,2})[_a-zA-Z0-9-]*/);
 
-                                if (!parserInput.$char(']')) {
+                                if (!parserInput.$char("]")) {
                                     parserInput.restore();
                                     return;
                                 }
 
-                                if (name || name === '') {
+                                if (name || name === "") {
                                     parserInput.forget();
                                     return name;
                                 }
@@ -5409,7 +5409,7 @@
                         // it's there, if ';' was omitted.
                         //
                         end: function () {
-                            return parserInput.$char(';') || parserInput.peek('}');
+                            return parserInput.$char(";") || parserInput.peek("}");
                         },
 
                         //
@@ -5426,11 +5426,11 @@
                             }
                             value = parserInput.$re(/^\d+/);
                             if (!value) {
-                                value = expect(parsers.entities.variable, 'Could not parse alpha');
-                                value = '@{' + value.name.slice(1) + '}';
+                                value = expect(parsers.entities.variable, "Could not parse alpha");
+                                value = "@{" + value.name.slice(1) + "}";
                             }
-                            expectChar(')');
-                            return new tree.Quoted('', 'alpha(opacity=' + value + ')');
+                            expectChar(")");
+                            return new tree.Quoted("", "alpha(opacity=" + value + ")");
                         },
 
                         //
@@ -5452,18 +5452,18 @@
 
                             e = parserInput.$re(/^(?:\d+\.\d+|\d+)%/) ||
                                 parserInput.$re(/^(?:[.#]?|:*)(?:[\w-]|[^\x00-\x9f]|\\(?:[A-Fa-f0-9]{1,6} ?|[^A-Fa-f0-9]))+/) ||
-                                parserInput.$char('*') || parserInput.$char('&') || this.attribute() ||
+                                parserInput.$char("*") || parserInput.$char("&") || this.attribute() ||
                                 parserInput.$re(/^\([^&()@]+\)/) || parserInput.$re(/^[\.#:](?=@)/) ||
                                 this.entities.variableCurly();
 
                             if (!e) {
                                 parserInput.save();
-                                if (parserInput.$char('(')) {
-                                    if ((v = this.selector(false)) && parserInput.$char(')')) {
+                                if (parserInput.$char("(")) {
+                                    if ((v = this.selector(false)) && parserInput.$char(")")) {
                                         e = new (tree.Paren)(v);
                                         parserInput.forget();
                                     } else {
-                                        parserInput.restore('Missing closing \')\'');
+                                        parserInput.restore("Missing closing ')'");
                                     }
                                 } else {
                                     parserInput.forget();
@@ -5487,7 +5487,7 @@
                         combinator: function () {
                             var c = parserInput.currentChar();
 
-                            if (c === '/') {
+                            if (c === "/") {
                                 parserInput.save();
                                 var slashedCombinator = parserInput.$re(/^\/[a-z]+\//i);
                                 if (slashedCombinator) {
@@ -5497,10 +5497,10 @@
                                 parserInput.restore();
                             }
 
-                            if (c === '>' || c === '+' || c === '~' || c === '|' || c === '^') {
+                            if (c === ">" || c === "+" || c === "~" || c === "|" || c === "^") {
                                 parserInput.i++;
-                                if (c === '^' && parserInput.currentChar() === '^') {
-                                    c = '^^';
+                                if (c === "^" && parserInput.currentChar() === "^") {
+                                    c = "^^";
                                     parserInput.i++;
                                 }
                                 while (parserInput.isWhitespace()) {
@@ -5508,7 +5508,7 @@
                                 }
                                 return new (tree.Combinator)(c);
                             } else if (parserInput.isWhitespace(-1)) {
-                                return new (tree.Combinator)(' ');
+                                return new (tree.Combinator)(" ");
                             } else {
                                 return new (tree.Combinator)(null);
                             }
@@ -5525,11 +5525,11 @@
                         selector: function (isLess) {
                             var index = parserInput.i, elements, extendList, c, e, allExtends, when, condition;
                             isLess = isLess !== false;
-                            while ((isLess && (extendList = this.extend())) || (isLess && (when = parserInput.$str('when'))) || (e = this.element())) {
+                            while ((isLess && (extendList = this.extend())) || (isLess && (when = parserInput.$str("when"))) || (e = this.element())) {
                                 if (when) {
-                                    condition = expect(this.conditions, 'expected condition');
+                                    condition = expect(this.conditions, "expected condition");
                                 } else if (condition) {
-                                    error('CSS guard can only be used at the end of selector');
+                                    error("CSS guard can only be used at the end of selector");
                                 } else if (extendList) {
                                     if (allExtends) {
                                         allExtends = allExtends.concat(extendList);
@@ -5538,7 +5538,7 @@
                                     }
                                 } else {
                                     if (allExtends) {
-                                        error('Extend can only be used at the end of selector');
+                                        error("Extend can only be used at the end of selector");
                                     }
                                     c = parserInput.currentChar();
                                     if (elements) {
@@ -5548,7 +5548,7 @@
                                     }
                                     e = null;
                                 }
-                                if (c === '{' || c === '}' || c === ';' || c === ',' || c === ')') {
+                                if (c === "{" || c === "}" || c === ";" || c === "," || c === ")") {
                                     break;
                                 }
                             }
@@ -5557,7 +5557,7 @@
                                 return new (tree.Selector)(elements, allExtends, condition, index, fileInfo);
                             }
                             if (allExtends) {
-                                error('Extend must be used to extend a selector, it cannot be used on its own');
+                                error("Extend must be used to extend a selector, it cannot be used on its own");
                             }
                         },
                         selectors: function () {
@@ -5576,7 +5576,7 @@
                                 if (s.condition && selectors.length > 1) {
                                     error("Guards are only currently allowed on a single selector.");
                                 }
-                                if (!parserInput.$char(',')) {
+                                if (!parserInput.$char(",")) {
                                     break;
                                 }
                                 if (s.condition) {
@@ -5587,7 +5587,7 @@
                             return selectors;
                         },
                         attribute: function () {
-                            if (!parserInput.$char('[')) {
+                            if (!parserInput.$char("[")) {
                                 return;
                             }
 
@@ -5603,7 +5603,7 @@
                                 val = entities.quoted() || parserInput.$re(/^[0-9]+%/) || parserInput.$re(/^[\w-]+/) || entities.variableCurly();
                             }
 
-                            expectChar(']');
+                            expectChar("]");
 
                             return new (tree.Attribute)(key, op, val);
                         },
@@ -5614,7 +5614,7 @@
                         //
                         block: function () {
                             var content;
-                            if (parserInput.$char('{') && (content = this.primary()) && parserInput.$char('}')) {
+                            if (parserInput.$char("{") && (content = this.primary()) && parserInput.$char("}")) {
                                 return content;
                             }
                         },
@@ -5642,7 +5642,7 @@
                                 argInfo = this.mixin.args(false);
                                 params = argInfo.args;
                                 variadic = argInfo.variadic;
-                                if (!parserInput.$char(')')) {
+                                if (!parserInput.$char(")")) {
                                     parserInput.restore();
                                     return;
                                 }
@@ -5687,7 +5687,7 @@
                             var name, value, index = parserInput.i, hasDR,
                                 c = parserInput.currentChar(), important, merge, isVariable;
 
-                            if (c === '.' || c === '#' || c === '&' || c === ':') {
+                            if (c === "." || c === "#" || c === "&" || c === ":") {
                                 return;
                             }
 
@@ -5695,7 +5695,7 @@
 
                             name = this.variable() || this.ruleProperty();
                             if (name) {
-                                isVariable = typeof name === 'string';
+                                isVariable = typeof name === "string";
 
                                 if (isVariable) {
                                     value = this.detachedRuleset();
@@ -5712,7 +5712,7 @@
                                     merge = !isVariable && name.length > 1 && name.pop().value;
 
                                     // Custom property values get permissive parsing
-                                    if (name[0].value && name[0].value.slice(0, 2) === '--') {
+                                    if (name[0].value && name[0].value.slice(0, 2) === "--") {
                                         value = this.permissiveValue();
                                     }
                                         // Try to store values as anonymous
@@ -5766,12 +5766,12 @@
                          */
                         permissiveValue: function (untilTokens) {
                             var i, e, done, value,
-                                tok = untilTokens || ';',
+                                tok = untilTokens || ";",
                                 index = parserInput.i, result = [];
 
                             function testCurrentChar() {
                                 var char = parserInput.currentChar();
-                                if (typeof tok === 'string') {
+                                if (typeof tok === "string") {
                                     return char === tok;
                                 } else {
                                     return tok.test(char);
@@ -5804,8 +5804,8 @@
                                     result.push(value);
                                 }
                                 // Preserve space before $parseUntil as it will not
-                                if (parserInput.prevChar() === ' ') {
-                                    result.push(new tree.Anonymous(' ', index));
+                                if (parserInput.prevChar() === " ") {
+                                    result.push(new tree.Anonymous(" ", index));
                                 }
                             }
                             parserInput.save();
@@ -5813,12 +5813,12 @@
                             value = parserInput.$parseUntil(tok);
 
                             if (value) {
-                                if (typeof value === 'string') {
-                                    error('Expected \'' + value + '\'', 'Parse');
+                                if (typeof value === "string") {
+                                    error("Expected '" + value + "'", "Parse");
                                 }
-                                if (value.length === 1 && value[0] === ' ') {
+                                if (value.length === 1 && value[0] === " ") {
                                     parserInput.forget();
-                                    return new tree.Anonymous('', index);
+                                    return new tree.Anonymous("", index);
                                 }
                                 var item;
                                 for (i = 0; i < value.length; i++) {
@@ -5831,7 +5831,7 @@
                                             item = item.trim();
                                         }
                                         // Treat like quoted values, but replace vars like unquoted expressions
-                                        var quote = new tree.Quoted('\'', item, true, index, fileInfo);
+                                        var quote = new tree.Quoted("'", item, true, index, fileInfo);
                                         quote.variableRegex = /@([\w-]+)/g;
                                         quote.propRegex = /\$([\w-]+)/g;
                                         result.push(quote);
@@ -5853,7 +5853,7 @@
                         // file-system operation. The function used for importing is
                         // stored in `import`, which we pass to the Import constructor.
                         //
-                        'import': function () {
+                        "import": function () {
                             var path, features, index = parserInput.i;
 
                             var dir = parserInput.$re(/^@import?\s+/);
@@ -5864,15 +5864,15 @@
                                 if ((path = this.entities.quoted() || this.entities.url())) {
                                     features = this.mediaFeatures();
 
-                                    if (!parserInput.$char(';')) {
+                                    if (!parserInput.$char(";")) {
                                         parserInput.i = index;
-                                        error('missing semi-colon or unrecognised media features on import');
+                                        error("missing semi-colon or unrecognised media features on import");
                                     }
                                     features = features && new (tree.Value)(features);
                                     return new (tree.Import)(path, features, options, index, fileInfo);
                                 } else {
                                     parserInput.i = index;
-                                    error('malformed import statement');
+                                    error("malformed import statement");
                                 }
                             }
                         },
@@ -5881,7 +5881,7 @@
                             var o, options = {}, optionName, value;
 
                             // list of options, surrounded by parens
-                            if (!parserInput.$char('(')) {
+                            if (!parserInput.$char("(")) {
                                 return null;
                             }
                             do {
@@ -5890,22 +5890,22 @@
                                     optionName = o;
                                     value = true;
                                     switch (optionName) {
-                                        case 'css':
-                                            optionName = 'less';
+                                        case "css":
+                                            optionName = "less";
                                             value = false;
                                             break;
-                                        case 'once':
-                                            optionName = 'multiple';
+                                        case "once":
+                                            optionName = "multiple";
                                             value = false;
                                             break;
                                     }
                                     options[optionName] = value;
-                                    if (!parserInput.$char(',')) {
+                                    if (!parserInput.$char(",")) {
                                         break;
                                     }
                                 }
                             } while (o);
-                            expectChar(')');
+                            expectChar(")");
                             return options;
                         },
 
@@ -5923,19 +5923,19 @@
                                 e = entities.keyword() || entities.variable() || entities.mixinLookup();
                                 if (e) {
                                     nodes.push(e);
-                                } else if (parserInput.$char('(')) {
+                                } else if (parserInput.$char("(")) {
                                     p = this.property();
                                     e = this.value();
-                                    if (parserInput.$char(')')) {
+                                    if (parserInput.$char(")")) {
                                         if (p && e) {
                                             nodes.push(new (tree.Paren)(new (tree.Declaration)(p, e, null, null, parserInput.i, fileInfo, true)));
                                         } else if (e) {
                                             nodes.push(new (tree.Paren)(e));
                                         } else {
-                                            error('badly formed media feature definition');
+                                            error("badly formed media feature definition");
                                         }
                                     } else {
-                                        error('Missing closing \')\'', 'Parse');
+                                        error("Missing closing ')'", "Parse");
                                     }
                                 }
                             } while (e);
@@ -5952,14 +5952,14 @@
                                 e = this.mediaFeature();
                                 if (e) {
                                     features.push(e);
-                                    if (!parserInput.$char(',')) {
+                                    if (!parserInput.$char(",")) {
                                         break;
                                     }
                                 } else {
                                     e = entities.variable() || entities.mixinLookup();
                                     if (e) {
                                         features.push(e);
-                                        if (!parserInput.$char(',')) {
+                                        if (!parserInput.$char(",")) {
                                             break;
                                         }
                                     }
@@ -5978,13 +5978,13 @@
 
                             parserInput.save();
 
-                            if (parserInput.$str('@media')) {
+                            if (parserInput.$str("@media")) {
                                 features = this.mediaFeatures();
 
                                 rules = this.block();
 
                                 if (!rules) {
-                                    error('media definitions require block statements after any features');
+                                    error("media definitions require block statements after any features");
                                 }
 
                                 parserInput.forget();
@@ -6025,14 +6025,14 @@
 
                                 if ((path = this.entities.quoted() || this.entities.url())) {
 
-                                    if (!parserInput.$char(';')) {
+                                    if (!parserInput.$char(";")) {
                                         parserInput.i = index;
-                                        error('missing semi-colon on @plugin');
+                                        error("missing semi-colon on @plugin");
                                     }
                                     return new (tree.Import)(path, null, options, index, fileInfo);
                                 } else {
                                     parserInput.i = index;
-                                    error('malformed @plugin statement');
+                                    error("malformed @plugin statement");
                                 }
                             }
                         },
@@ -6040,7 +6040,7 @@
                         pluginArgs: function () {
                             // list of options, surrounded by parens
                             parserInput.save();
-                            if (!parserInput.$char('(')) {
+                            if (!parserInput.$char("(")) {
                                 parserInput.restore();
                                 return null;
                             }
@@ -6063,11 +6063,11 @@
                             var index = parserInput.i, name, value, rules, nonVendorSpecificName,
                                 hasIdentifier, hasExpression, hasUnknown, hasBlock = true, isRooted = true;
 
-                            if (parserInput.currentChar() !== '@') {
+                            if (parserInput.currentChar() !== "@") {
                                 return;
                             }
 
-                            value = this['import']() || this.plugin() || this.media();
+                            value = this["import"]() || this.plugin() || this.media();
                             if (value) {
                                 return value;
                             }
@@ -6081,25 +6081,25 @@
                             }
 
                             nonVendorSpecificName = name;
-                            if (name.charAt(1) == '-' && name.indexOf('-', 2) > 0) {
-                                nonVendorSpecificName = '@' + name.slice(name.indexOf('-', 2) + 1);
+                            if (name.charAt(1) == "-" && name.indexOf("-", 2) > 0) {
+                                nonVendorSpecificName = "@" + name.slice(name.indexOf("-", 2) + 1);
                             }
 
                             switch (nonVendorSpecificName) {
-                                case '@charset':
+                                case "@charset":
                                     hasIdentifier = true;
                                     hasBlock = false;
                                     break;
-                                case '@namespace':
+                                case "@namespace":
                                     hasExpression = true;
                                     hasBlock = false;
                                     break;
-                                case '@keyframes':
-                                case '@counter-style':
+                                case "@keyframes":
+                                case "@counter-style":
                                     hasIdentifier = true;
                                     break;
-                                case '@document':
-                                case '@supports':
+                                case "@document":
+                                case "@supports":
                                     hasUnknown = true;
                                     isRooted = false;
                                     break;
@@ -6113,19 +6113,19 @@
                             if (hasIdentifier) {
                                 value = this.entity();
                                 if (!value) {
-                                    error('expected ' + name + ' identifier');
+                                    error("expected " + name + " identifier");
                                 }
                             } else if (hasExpression) {
                                 value = this.expression();
                                 if (!value) {
-                                    error('expected ' + name + ' expression');
+                                    error("expected " + name + " expression");
                                 }
                             } else if (hasUnknown) {
                                 value = this.permissiveValue(/^[{;]/);
-                                hasBlock = (parserInput.currentChar() === '{');
+                                hasBlock = (parserInput.currentChar() === "{");
                                 if (!value) {
-                                    if (!hasBlock && parserInput.currentChar() !== ';') {
-                                        error(name + ' rule is missing block or ending semi-colon');
+                                    if (!hasBlock && parserInput.currentChar() !== ";") {
+                                        error(name + " rule is missing block or ending semi-colon");
                                     }
                                 } else if (!value.value) {
                                     value = null;
@@ -6136,7 +6136,7 @@
                                 rules = this.blockRuleset();
                             }
 
-                            if (rules || (!hasBlock && value && parserInput.$char(';'))) {
+                            if (rules || (!hasBlock && value && parserInput.$char(";"))) {
                                 parserInput.forget();
                                 return new (tree.AtRule)(name, value, rules, index, fileInfo,
                                     context.dumpLineNumbers ? getDebugInfo(index) : null,
@@ -6144,7 +6144,7 @@
                                 );
                             }
 
-                            parserInput.restore('at-rule options not recognised');
+                            parserInput.restore("at-rule options not recognised");
                         },
 
                         //
@@ -6162,7 +6162,7 @@
                                 e = this.expression();
                                 if (e) {
                                     expressions.push(e);
-                                    if (!parserInput.$char(',')) {
+                                    if (!parserInput.$char(",")) {
                                         break;
                                     }
                                 }
@@ -6173,7 +6173,7 @@
                             }
                         },
                         important: function () {
-                            if (parserInput.currentChar() === '!') {
+                            if (parserInput.currentChar() === "!") {
                                 return parserInput.$re(/^! *important/);
                             }
                         },
@@ -6181,15 +6181,15 @@
                             var a, e;
 
                             parserInput.save();
-                            if (parserInput.$char('(')) {
+                            if (parserInput.$char("(")) {
                                 a = this.addition();
-                                if (a && parserInput.$char(')')) {
+                                if (a && parserInput.$char(")")) {
                                     parserInput.forget();
                                     e = new (tree.Expression)([a]);
                                     e.parens = true;
                                     return e;
                                 }
-                                parserInput.restore('Expected \')\'');
+                                parserInput.restore("Expected ')'");
                                 return;
                             }
                             parserInput.restore();
@@ -6206,7 +6206,7 @@
 
                                     parserInput.save();
 
-                                    op = parserInput.$char('/') || parserInput.$char('*') || parserInput.$str('./');
+                                    op = parserInput.$char("/") || parserInput.$char("*") || parserInput.$str("./");
 
                                     if (!op) {
                                         parserInput.forget();
@@ -6235,7 +6235,7 @@
                             if (m) {
                                 isSpaced = parserInput.isWhitespace(-1);
                                 while (true) {
-                                    op = parserInput.$re(/^[-+]\s+/) || (!isSpaced && (parserInput.$char('+') || parserInput.$char('-')));
+                                    op = parserInput.$re(/^[-+]\s+/) || (!isSpaced && (parserInput.$char("+") || parserInput.$char("-")));
                                     if (!op) {
                                         break;
                                     }
@@ -6258,14 +6258,14 @@
                             a = this.condition(true);
                             if (a) {
                                 while (true) {
-                                    if (!parserInput.peek(/^,\s*(not\s*)?\(/) || !parserInput.$char(',')) {
+                                    if (!parserInput.peek(/^,\s*(not\s*)?\(/) || !parserInput.$char(",")) {
                                         break;
                                     }
                                     b = this.condition(true);
                                     if (!b) {
                                         break;
                                     }
-                                    condition = new (tree.Condition)('or', condition || a, b, index);
+                                    condition = new (tree.Condition)("or", condition || a, b, index);
                                 }
                                 return condition || a;
                             }
@@ -6274,7 +6274,7 @@
                             var result, logical, next;
 
                             function or() {
-                                return parserInput.$str('or');
+                                return parserInput.$str("or");
                             }
 
                             result = this.conditionAnd(needsParens);
@@ -6304,7 +6304,7 @@
                             }
 
                             function and() {
-                                return parserInput.$str('and');
+                                return parserInput.$str("and");
                             }
 
                             result = insideCondition();
@@ -6323,7 +6323,7 @@
                             return result;
                         },
                         negatedCondition: function (needsParens) {
-                            if (parserInput.$str('not')) {
+                            if (parserInput.$str("not")) {
                                 var result = this.parenthesisCondition(needsParens);
                                 if (result) {
                                     result.negate = !result.negate;
@@ -6340,7 +6340,7 @@
                                     parserInput.restore();
                                     return;
                                 }
-                                if (!parserInput.$char(')')) {
+                                if (!parserInput.$char(")")) {
                                     parserInput.restore();
                                     return;
                                 }
@@ -6350,7 +6350,7 @@
 
                             var body;
                             parserInput.save();
-                            if (!parserInput.$str('(')) {
+                            if (!parserInput.$str("(")) {
                                 parserInput.restore();
                                 return;
                             }
@@ -6365,8 +6365,8 @@
                                 parserInput.restore();
                                 return;
                             }
-                            if (!parserInput.$char(')')) {
-                                parserInput.restore('expected \')\' got \'' + parserInput.currentChar() + '\'');
+                            if (!parserInput.$char(")")) {
+                                parserInput.restore("expected ')' got '" + parserInput.currentChar() + "'");
                                 return;
                             }
                             parserInput.forget();
@@ -6383,25 +6383,25 @@
 
                             a = cond();
                             if (a) {
-                                if (parserInput.$char('>')) {
-                                    if (parserInput.$char('=')) {
-                                        op = '>=';
+                                if (parserInput.$char(">")) {
+                                    if (parserInput.$char("=")) {
+                                        op = ">=";
                                     } else {
-                                        op = '>';
+                                        op = ">";
                                     }
-                                } else if (parserInput.$char('<')) {
-                                    if (parserInput.$char('=')) {
-                                        op = '<=';
+                                } else if (parserInput.$char("<")) {
+                                    if (parserInput.$char("=")) {
+                                        op = "<=";
                                     } else {
-                                        op = '<';
+                                        op = "<";
                                     }
-                                } else if (parserInput.$char('=')) {
-                                    if (parserInput.$char('>')) {
-                                        op = '=>';
-                                    } else if (parserInput.$char('<')) {
-                                        op = '=<';
+                                } else if (parserInput.$char("=")) {
+                                    if (parserInput.$char(">")) {
+                                        op = "=>";
+                                    } else if (parserInput.$char("<")) {
+                                        op = "=<";
                                     } else {
-                                        op = '=';
+                                        op = "=";
                                     }
                                 }
                                 if (op) {
@@ -6409,10 +6409,10 @@
                                     if (b) {
                                         c = new (tree.Condition)(op, a, b, index, false);
                                     } else {
-                                        error('expected expression');
+                                        error("expected expression");
                                     }
                                 } else {
-                                    c = new (tree.Condition)('=', a, new (tree.Keyword)('true'), index, false);
+                                    c = new (tree.Condition)("=", a, new (tree.Keyword)("true"), index, false);
                                 }
                                 return c;
                             }
@@ -6426,7 +6426,7 @@
                             var entities = this.entities, negate;
 
                             if (parserInput.peek(/^-[@\$\(]/)) {
-                                negate = parserInput.$char('-');
+                                negate = parserInput.$char("-");
                             }
 
                             var o = this.sub() || entities.dimension() ||
@@ -6464,7 +6464,7 @@
                                     entities.push(e);
                                     // operations do not allow keyword "/" dimension (e.g. small/20px) so we support that here
                                     if (!parserInput.peek(/^\/[\/*]/)) {
-                                        delim = parserInput.$char('/');
+                                        delim = parserInput.$char("/");
                                         if (delim) {
                                             entities.push(new (tree.Anonymous)(delim, index));
                                         }
@@ -6514,17 +6514,17 @@
 
                                 // at last, we have the complete match now. move forward,
                                 // convert name particles to tree objects and return:
-                                if (name[0] === '') {
+                                if (name[0] === "") {
                                     name.shift();
                                     index.shift();
                                 }
                                 for (k = 0; k < name.length; k++) {
                                     s = name[k];
-                                    name[k] = (s.charAt(0) !== '@' && s.charAt(0) !== '$') ?
+                                    name[k] = (s.charAt(0) !== "@" && s.charAt(0) !== "$") ?
                                         new (tree.Keyword)(s) :
-                                        (s.charAt(0) === '@' ?
-                                            new (tree.Variable)('@' + s.slice(2, -1), index[k], fileInfo) :
-                                            new (tree.Property)('$' + s.slice(2, -1), index[k], fileInfo));
+                                        (s.charAt(0) === "@" ?
+                                            new (tree.Variable)("@" + s.slice(2, -1), index[k], fileInfo) :
+                                            new (tree.Property)("$" + s.slice(2, -1), index[k], fileInfo));
                                 }
                                 return name;
                             }
@@ -6534,13 +6534,13 @@
                 };
             };
             Parser.serializeVars = function (vars) {
-                var s = '';
+                var s = "";
 
                 for (var name in vars) {
                     if (Object.hasOwnProperty.call(vars, name)) {
                         var value = vars[name];
-                        s += ((name[0] === '@') ? '' : '@') + name + ': ' + value +
-                            ((String(value).slice(-1) === ';') ? '' : ';');
+                        s += ((name[0] === "@") ? "" : "@") + name + ": " + value +
+                            ((String(value).slice(-1) === ";") ? "" : ";");
                     }
                 }
 
@@ -6717,11 +6717,11 @@
         }, {}],
         46: [function (require, module, exports) {
             var PromiseConstructor,
-                utils = require('./utils');
+                utils = require("./utils");
 
             module.exports = function (environment, ParseTree, ImportManager) {
                 var render = function (input, options, callback) {
-                    if (typeof options === 'function') {
+                    if (typeof options === "function") {
                         callback = options;
                         options = utils.copyOptions(this.options, {});
                     } else {
@@ -6730,7 +6730,7 @@
 
                     if (!callback) {
                         if (!PromiseConstructor) {
-                            PromiseConstructor = typeof Promise === 'undefined' ? require('promise') : Promise;
+                            PromiseConstructor = typeof Promise === "undefined" ? require("promise") : Promise;
                         }
                         var self = this;
                         return new PromiseConstructor(function (resolve, reject) {
@@ -6805,15 +6805,15 @@
                     var sourceMapURL = this.sourceMapURL;
                     if (this.options.sourceMapFileInline) {
                         if (this.sourceMap === undefined) {
-                            return '';
+                            return "";
                         }
-                        sourceMapURL = 'data:application/json;base64,' + environment.encodeBase64(this.sourceMap);
+                        sourceMapURL = "data:application/json;base64," + environment.encodeBase64(this.sourceMap);
                     }
 
                     if (sourceMapURL) {
-                        return '/*# sourceMappingURL=' + sourceMapURL + ' */';
+                        return "/*# sourceMappingURL=" + sourceMapURL + " */";
                     }
-                    return '';
+                    return "";
                 };
 
                 SourceMapBuilder.prototype.getExternalSourceMap = function () {
@@ -6849,20 +6849,20 @@
                     this._contentsMap = options.contentsMap;
                     this._contentsIgnoredCharsMap = options.contentsIgnoredCharsMap;
                     if (options.sourceMapFilename) {
-                        this._sourceMapFilename = options.sourceMapFilename.replace(/\\/g, '/');
+                        this._sourceMapFilename = options.sourceMapFilename.replace(/\\/g, "/");
                     }
                     this._outputFilename = options.outputFilename;
                     this.sourceMapURL = options.sourceMapURL;
                     if (options.sourceMapBasepath) {
-                        this._sourceMapBasepath = options.sourceMapBasepath.replace(/\\/g, '/');
+                        this._sourceMapBasepath = options.sourceMapBasepath.replace(/\\/g, "/");
                     }
                     if (options.sourceMapRootpath) {
-                        this._sourceMapRootpath = options.sourceMapRootpath.replace(/\\/g, '/');
-                        if (this._sourceMapRootpath.charAt(this._sourceMapRootpath.length - 1) !== '/') {
-                            this._sourceMapRootpath += '/';
+                        this._sourceMapRootpath = options.sourceMapRootpath.replace(/\\/g, "/");
+                        if (this._sourceMapRootpath.charAt(this._sourceMapRootpath.length - 1) !== "/") {
+                            this._sourceMapRootpath += "/";
                         }
                     } else {
-                        this._sourceMapRootpath = '';
+                        this._sourceMapRootpath = "";
                     }
                     this._outputSourceFiles = options.outputSourceFiles;
                     this._sourceMapGeneratorConstructor = environment.getSourceMapGenerator();
@@ -6874,7 +6874,7 @@
                 SourceMapOutput.prototype.removeBasepath = function (path) {
                     if (this._sourceMapBasepath && path.indexOf(this._sourceMapBasepath) === 0) {
                         path = path.substring(this._sourceMapBasepath.length);
-                        if (path.charAt(0) === '\\' || path.charAt(0) === '/') {
+                        if (path.charAt(0) === "\\" || path.charAt(0) === "/") {
                             path = path.substring(1);
                         }
                     }
@@ -6883,9 +6883,9 @@
                 };
 
                 SourceMapOutput.prototype.normalizeFilename = function (filename) {
-                    filename = filename.replace(/\\/g, '/');
+                    filename = filename.replace(/\\/g, "/");
                     filename = this.removeBasepath(filename);
-                    return (this._sourceMapRootpath || '') + filename;
+                    return (this._sourceMapRootpath || "") + filename;
                 };
 
                 SourceMapOutput.prototype.add = function (chunk, fileInfo, index, mapLines) {
@@ -6915,11 +6915,11 @@
                             inputSource = inputSource.slice(this._contentsIgnoredCharsMap[fileInfo.filename]);
                         }
                         inputSource = inputSource.substring(0, index);
-                        sourceLines = inputSource.split('\n');
+                        sourceLines = inputSource.split("\n");
                         sourceColumns = sourceLines[sourceLines.length - 1];
                     }
 
-                    lines = chunk.split('\n');
+                    lines = chunk.split("\n");
                     columns = lines[lines.length - 1];
 
                     if (fileInfo && fileInfo.filename) {
@@ -6991,7 +6991,7 @@
                         this.sourceMap = sourceMapContent;
                     }
 
-                    return this._css.join('');
+                    return this._css.join("");
                 };
 
                 return SourceMapOutput;
@@ -6999,9 +6999,9 @@
 
         }, {}],
         49: [function (require, module, exports) {
-            var contexts = require('./contexts'),
-                visitor = require('./visitors'),
-                tree = require('./tree');
+            var contexts = require("./contexts"),
+                visitor = require("./visitors"),
+                tree = require("./tree");
 
             module.exports = function (root, options) {
                 options = options || {};
@@ -7022,7 +7022,7 @@
                 //     ])
                 //   )
                 //
-                if (typeof variables === 'object' && !Array.isArray(variables)) {
+                if (typeof variables === "object" && !Array.isArray(variables)) {
                     variables = Object.keys(variables).map(function (k) {
                         var value = variables[k];
 
@@ -7032,7 +7032,7 @@
                             }
                             value = new tree.Value([value]);
                         }
-                        return new tree.Declaration('@' + k, value, false, null, 0);
+                        return new tree.Declaration("@" + k, value, false, null, 0);
                     });
                     evalEnv.frames = [new tree.Ruleset(null, variables)];
                 }
@@ -7093,19 +7093,19 @@
 
         }, {"./contexts": 13, "./tree": 67, "./visitors": 93}],
         50: [function (require, module, exports) {
-            var Node = require('./node');
+            var Node = require("./node");
 
             var Anonymous = function (value, index, currentFileInfo, mapLines, rulesetLike, visibilityInfo) {
                 this.value = value;
                 this._index = index;
                 this._fileInfo = currentFileInfo;
                 this.mapLines = mapLines;
-                this.rulesetLike = (typeof rulesetLike === 'undefined') ? false : rulesetLike;
+                this.rulesetLike = (typeof rulesetLike === "undefined") ? false : rulesetLike;
                 this.allowRoot = true;
                 this.copyVisibilityInfo(visibilityInfo);
             };
             Anonymous.prototype = new Node();
-            Anonymous.prototype.type = 'Anonymous';
+            Anonymous.prototype.type = "Anonymous";
             Anonymous.prototype.eval = function () {
                 return new Anonymous(this.value, this._index, this._fileInfo, this.mapLines, this.rulesetLike, this.visibilityInfo());
             };
@@ -7125,7 +7125,7 @@
 
         }, {"./node": 76}],
         51: [function (require, module, exports) {
-            var Node = require('./node');
+            var Node = require("./node");
 
             var Assignment = function (key, val) {
                 this.key = key;
@@ -7133,7 +7133,7 @@
             };
 
             Assignment.prototype = new Node();
-            Assignment.prototype.type = 'Assignment';
+            Assignment.prototype.type = "Assignment";
             Assignment.prototype.accept = function (visitor) {
                 this.value = visitor.visit(this.value);
             };
@@ -7144,7 +7144,7 @@
                 return this;
             };
             Assignment.prototype.genCSS = function (context, output) {
-                output.add(this.key + '=');
+                output.add(this.key + "=");
                 if (this.value.genCSS) {
                     this.value.genCSS(context, output);
                 } else {
@@ -7155,10 +7155,10 @@
 
         }, {"./node": 76}],
         52: [function (require, module, exports) {
-            var Node = require('./node'),
-                Selector = require('./selector'),
-                Ruleset = require('./ruleset'),
-                Anonymous = require('./anonymous');
+            var Node = require("./node"),
+                Selector = require("./selector"),
+                Ruleset = require("./ruleset"),
+                Anonymous = require("./anonymous");
 
             var AtRule = function (name, value, rules, index, currentFileInfo, debugInfo, isRooted, visibilityInfo) {
                 var i;
@@ -7186,7 +7186,7 @@
             };
 
             AtRule.prototype = new Node();
-            AtRule.prototype.type = 'AtRule';
+            AtRule.prototype.type = "AtRule";
             AtRule.prototype.accept = function (visitor) {
                 var value = this.value, rules = this.rules;
                 if (rules) {
@@ -7200,19 +7200,19 @@
                 return this.rules || !this.isCharset();
             };
             AtRule.prototype.isCharset = function () {
-                return '@charset' === this.name;
+                return "@charset" === this.name;
             };
             AtRule.prototype.genCSS = function (context, output) {
                 var value = this.value, rules = this.rules;
                 output.add(this.name, this.fileInfo(), this.getIndex());
                 if (value) {
-                    output.add(' ');
+                    output.add(" ");
                     value.genCSS(context, output);
                 }
                 if (rules) {
                     this.outputRuleset(context, output, rules);
                 } else {
-                    output.add(';');
+                    output.add(";");
                 }
             };
             AtRule.prototype.eval = function (context) {
@@ -7265,27 +7265,27 @@
 
                 // Compressed
                 if (context.compress) {
-                    output.add('{');
+                    output.add("{");
                     for (i = 0; i < ruleCnt; i++) {
                         rules[i].genCSS(context, output);
                     }
-                    output.add('}');
+                    output.add("}");
                     context.tabLevel--;
                     return;
                 }
 
                 // Non-compressed
-                var tabSetStr = '\n' + Array(context.tabLevel).join('  '), tabRuleStr = tabSetStr + '  ';
+                var tabSetStr = "\n" + Array(context.tabLevel).join("  "), tabRuleStr = tabSetStr + "  ";
                 if (!ruleCnt) {
-                    output.add(' {' + tabSetStr + '}');
+                    output.add(" {" + tabSetStr + "}");
                 } else {
-                    output.add(' {' + tabRuleStr);
+                    output.add(" {" + tabRuleStr);
                     rules[0].genCSS(context, output);
                     for (i = 1; i < ruleCnt; i++) {
                         output.add(tabRuleStr);
                         rules[i].genCSS(context, output);
                     }
-                    output.add(tabSetStr + '}');
+                    output.add(tabSetStr + "}");
                 }
 
                 context.tabLevel--;
@@ -7294,7 +7294,7 @@
 
         }, {"./anonymous": 50, "./node": 76, "./ruleset": 81, "./selector": 82}],
         53: [function (require, module, exports) {
-            var Node = require('./node');
+            var Node = require("./node");
 
             var Attribute = function (key, op, value) {
                 this.key = key;
@@ -7302,7 +7302,7 @@
                 this.value = value;
             };
             Attribute.prototype = new Node();
-            Attribute.prototype.type = 'Attribute';
+            Attribute.prototype.type = "Attribute";
             Attribute.prototype.eval = function (context) {
                 return new Attribute(this.key.eval ? this.key.eval(context) : this.key,
                     this.op, (this.value && this.value.eval) ? this.value.eval(context) : this.value);
@@ -7318,27 +7318,27 @@
                     value += (this.value.toCSS ? this.value.toCSS(context) : this.value);
                 }
 
-                return '[' + value + ']';
+                return "[" + value + "]";
             };
             module.exports = Attribute;
 
         }, {"./node": 76}],
         54: [function (require, module, exports) {
-            var Node = require('./node'),
-                Anonymous = require('./anonymous'),
-                FunctionCaller = require('../functions/function-caller');
+            var Node = require("./node"),
+                Anonymous = require("./anonymous"),
+                FunctionCaller = require("../functions/function-caller");
 //
 // A function call node.
 //
             var Call = function (name, args, index, currentFileInfo) {
                 this.name = name;
                 this.args = args;
-                this.calc = name === 'calc';
+                this.calc = name === "calc";
                 this._index = index;
                 this._fileInfo = currentFileInfo;
             };
             Call.prototype = new Node();
-            Call.prototype.type = 'Call';
+            Call.prototype.type = "Call";
             Call.prototype.accept = function (visitor) {
                 if (this.args) {
                     this.args = visitor.visitArray(this.args);
@@ -7379,9 +7379,9 @@
                         result = funcCaller.call(args);
                     } catch (e) {
                         throw {
-                            type: e.type || 'Runtime',
-                            message: 'error evaluating function `' + this.name + '`' +
-                                (e.message ? ': ' + e.message : ''),
+                            type: e.type || "Runtime",
+                            message: "error evaluating function `" + this.name + "`" +
+                                (e.message ? ": " + e.message : ""),
                             index: this.getIndex(),
                             filename: this.fileInfo().filename,
                             line: e.lineNumber,
@@ -7410,23 +7410,23 @@
                 return new Call(this.name, args, this.getIndex(), this.fileInfo());
             };
             Call.prototype.genCSS = function (context, output) {
-                output.add(this.name + '(', this.fileInfo(), this.getIndex());
+                output.add(this.name + "(", this.fileInfo(), this.getIndex());
 
                 for (var i = 0; i < this.args.length; i++) {
                     this.args[i].genCSS(context, output);
                     if (i + 1 < this.args.length) {
-                        output.add(', ');
+                        output.add(", ");
                     }
                 }
 
-                output.add(')');
+                output.add(")");
             };
             module.exports = Call;
 
         }, {"../functions/function-caller": 26, "./anonymous": 50, "./node": 76}],
         55: [function (require, module, exports) {
-            var Node = require('./node'),
-                colors = require('../data/colors');
+            var Node = require("./node"),
+                colors = require("../data/colors");
 
 //
 // RGB Colors - #ff0014, #eee
@@ -7452,7 +7452,7 @@
                     });
                 } else {
                     this.rgb = [];
-                    rgb.split('').map(function (c, i) {
+                    rgb.split("").map(function (c, i) {
                         if (i < 3) {
                             self.rgb.push(parseInt(c + c, 16));
                         } else {
@@ -7460,24 +7460,24 @@
                         }
                     });
                 }
-                this.alpha = this.alpha || (typeof a === 'number' ? a : 1);
-                if (typeof originalForm !== 'undefined') {
+                this.alpha = this.alpha || (typeof a === "number" ? a : 1);
+                if (typeof originalForm !== "undefined") {
                     this.value = originalForm;
                 }
             };
 
             Color.prototype = new Node();
-            Color.prototype.type = 'Color';
+            Color.prototype.type = "Color";
 
             function clamp(v, max) {
                 return Math.min(Math.max(v, 0), max);
             }
 
             function toHex(v) {
-                return '#' + v.map(function (c) {
+                return "#" + v.map(function (c) {
                     c = clamp(Math.round(c), 255);
-                    return (c < 16 ? '0' : '') + c.toString(16);
-                }).join('');
+                    return (c < 16 ? "0" : "") + c.toString(16);
+                }).join("");
             }
 
             Color.prototype.luma = function () {
@@ -7504,55 +7504,55 @@
                 alpha = this.fround(context, this.alpha);
 
                 if (this.value) {
-                    if (this.value.indexOf('rgb') === 0) {
+                    if (this.value.indexOf("rgb") === 0) {
                         if (alpha < 1) {
-                            colorFunction = 'rgba';
+                            colorFunction = "rgba";
                         }
-                    } else if (this.value.indexOf('hsl') === 0) {
+                    } else if (this.value.indexOf("hsl") === 0) {
                         if (alpha < 1) {
-                            colorFunction = 'hsla';
+                            colorFunction = "hsla";
                         } else {
-                            colorFunction = 'hsl';
+                            colorFunction = "hsl";
                         }
                     } else {
                         return this.value;
                     }
                 } else {
                     if (alpha < 1) {
-                        colorFunction = 'rgba';
+                        colorFunction = "rgba";
                     }
                 }
 
                 switch (colorFunction) {
-                    case 'rgba':
+                    case "rgba":
                         args = this.rgb.map(function (c) {
                             return clamp(Math.round(c), 255);
                         }).concat(clamp(alpha, 1));
                         break;
-                    case 'hsla':
+                    case "hsla":
                         args.push(clamp(alpha, 1));
-                    case 'hsl':
+                    case "hsl":
                         color = this.toHSL();
                         args = [
                             this.fround(context, color.h),
-                            this.fround(context, color.s * 100) + '%',
-                            this.fround(context, color.l * 100) + '%'
+                            this.fround(context, color.s * 100) + "%",
+                            this.fround(context, color.l * 100) + "%"
                         ].concat(args);
                 }
 
                 if (colorFunction) {
                     // Values are capped between `0` and `255`, rounded and zero-padded.
-                    return colorFunction + '(' + args.join(',' + (compress ? '' : ' ')) + ')';
+                    return colorFunction + "(" + args.join("," + (compress ? "" : " ")) + ")";
                 }
 
                 color = this.toRGB();
 
                 if (compress) {
-                    var splitcolor = color.split('');
+                    var splitcolor = color.split("");
 
                     // Convert color to short format
                     if (splitcolor[1] === splitcolor[2] && splitcolor[3] === splitcolor[4] && splitcolor[5] === splitcolor[6]) {
-                        color = '#' + splitcolor[1] + splitcolor[3] + splitcolor[5];
+                        color = "#" + splitcolor[1] + splitcolor[3] + splitcolor[5];
                     }
                 }
 
@@ -7655,7 +7655,7 @@
                 var c, key = keyword.toLowerCase();
                 if (colors.hasOwnProperty(key)) {
                     c = new Color(colors[key].slice(1));
-                } else if (key === 'transparent') {
+                } else if (key === "transparent") {
                     c = new Color([0, 0, 0], 0);
                 }
 
@@ -7668,34 +7668,34 @@
 
         }, {"../data/colors": 14, "./node": 76}],
         56: [function (require, module, exports) {
-            var Node = require('./node');
+            var Node = require("./node");
 
             var Combinator = function (value) {
-                if (value === ' ') {
-                    this.value = ' ';
+                if (value === " ") {
+                    this.value = " ";
                     this.emptyOrWhitespace = true;
                 } else {
-                    this.value = value ? value.trim() : '';
-                    this.emptyOrWhitespace = this.value === '';
+                    this.value = value ? value.trim() : "";
+                    this.emptyOrWhitespace = this.value === "";
                 }
             };
             Combinator.prototype = new Node();
-            Combinator.prototype.type = 'Combinator';
+            Combinator.prototype.type = "Combinator";
             var _noSpaceCombinators = {
-                '': true,
-                ' ': true,
-                '|': true
+                "": true,
+                " ": true,
+                "|": true
             };
             Combinator.prototype.genCSS = function (context, output) {
-                var spaceOrEmpty = (context.compress || _noSpaceCombinators[this.value]) ? '' : ' ';
+                var spaceOrEmpty = (context.compress || _noSpaceCombinators[this.value]) ? "" : " ";
                 output.add(spaceOrEmpty + this.value + spaceOrEmpty);
             };
             module.exports = Combinator;
 
         }, {"./node": 76}],
         57: [function (require, module, exports) {
-            var Node = require('./node'),
-                getDebugInfo = require('./debug-info');
+            var Node = require("./node"),
+                getDebugInfo = require("./debug-info");
 
             var Comment = function (value, isLineComment, index, currentFileInfo) {
                 this.value = value;
@@ -7705,7 +7705,7 @@
                 this.allowRoot = true;
             };
             Comment.prototype = new Node();
-            Comment.prototype.type = 'Comment';
+            Comment.prototype.type = "Comment";
             Comment.prototype.genCSS = function (context, output) {
                 if (this.debugInfo) {
                     output.add(getDebugInfo(context, this), this.fileInfo(), this.getIndex());
@@ -7713,14 +7713,14 @@
                 output.add(this.value);
             };
             Comment.prototype.isSilent = function (context) {
-                var isCompressed = context.compress && this.value[2] !== '!';
+                var isCompressed = context.compress && this.value[2] !== "!";
                 return this.isLineComment || isCompressed;
             };
             module.exports = Comment;
 
         }, {"./debug-info": 59, "./node": 76}],
         58: [function (require, module, exports) {
-            var Node = require('./node');
+            var Node = require("./node");
 
             var Condition = function (op, l, r, i, negate) {
                 this.op = op.trim();
@@ -7730,7 +7730,7 @@
                 this.negate = negate;
             };
             Condition.prototype = new Node();
-            Condition.prototype.type = 'Condition';
+            Condition.prototype.type = "Condition";
             Condition.prototype.accept = function (visitor) {
                 this.lvalue = visitor.visit(this.lvalue);
                 this.rvalue = visitor.visit(this.rvalue);
@@ -7738,18 +7738,18 @@
             Condition.prototype.eval = function (context) {
                 var result = (function (op, a, b) {
                     switch (op) {
-                        case 'and':
+                        case "and":
                             return a && b;
-                        case 'or':
+                        case "or":
                             return a || b;
                         default:
                             switch (Node.compare(a, b)) {
                                 case -1:
-                                    return op === '<' || op === '=<' || op === '<=';
+                                    return op === "<" || op === "=<" || op === "<=";
                                 case 0:
-                                    return op === '=' || op === '>=' || op === '=<' || op === '<=';
+                                    return op === "=" || op === ">=" || op === "=<" || op === "<=";
                                 case 1:
-                                    return op === '>' || op === '>=';
+                                    return op === ">" || op === ">=";
                                 default:
                                     return false;
                             }
@@ -7763,17 +7763,17 @@
         }, {"./node": 76}],
         59: [function (require, module, exports) {
             var debugInfo = function (context, ctx, lineSeparator) {
-                var result = '';
+                var result = "";
                 if (context.dumpLineNumbers && !context.compress) {
                     switch (context.dumpLineNumbers) {
-                        case 'comments':
+                        case "comments":
                             result = debugInfo.asComment(ctx);
                             break;
-                        case 'mediaquery':
+                        case "mediaquery":
                             result = debugInfo.asMediaQuery(ctx);
                             break;
-                        case 'all':
-                            result = debugInfo.asComment(ctx) + (lineSeparator || '') + debugInfo.asMediaQuery(ctx);
+                        case "all":
+                            result = debugInfo.asComment(ctx) + (lineSeparator || "") + debugInfo.asMediaQuery(ctx);
                             break;
                     }
                 }
@@ -7781,50 +7781,50 @@
             };
 
             debugInfo.asComment = function (ctx) {
-                return '/* line ' + ctx.debugInfo.lineNumber + ', ' + ctx.debugInfo.fileName + ' */\n';
+                return "/* line " + ctx.debugInfo.lineNumber + ", " + ctx.debugInfo.fileName + " */\n";
             };
 
             debugInfo.asMediaQuery = function (ctx) {
                 var filenameWithProtocol = ctx.debugInfo.fileName;
                 if (!/^[a-z]+:\/\//i.test(filenameWithProtocol)) {
-                    filenameWithProtocol = 'file://' + filenameWithProtocol;
+                    filenameWithProtocol = "file://" + filenameWithProtocol;
                 }
-                return '@media -sass-debug-info{filename{font-family:' +
+                return "@media -sass-debug-info{filename{font-family:" +
                     filenameWithProtocol.replace(/([.:\/\\])/g, function (a) {
-                        if (a == '\\') {
-                            a = '\/';
+                        if (a == "\\") {
+                            a = "\/";
                         }
-                        return '\\' + a;
+                        return "\\" + a;
                     }) +
-                    '}line{font-family:\\00003' + ctx.debugInfo.lineNumber + '}}\n';
+                    "}line{font-family:\\00003" + ctx.debugInfo.lineNumber + "}}\n";
             };
 
             module.exports = debugInfo;
 
         }, {}],
         60: [function (require, module, exports) {
-            var Node = require('./node'),
-                Value = require('./value'),
-                Keyword = require('./keyword'),
-                Anonymous = require('./anonymous'),
-                MATH = require('../constants').Math;
+            var Node = require("./node"),
+                Value = require("./value"),
+                Keyword = require("./keyword"),
+                Anonymous = require("./anonymous"),
+                MATH = require("../constants").Math;
 
             var Declaration = function (name, value, important, merge, index, currentFileInfo, inline, variable) {
                 this.name = name;
                 this.value = (value instanceof Node) ? value : new Value([value ? new Anonymous(value) : null]);
-                this.important = important ? ' ' + important.trim() : '';
+                this.important = important ? " " + important.trim() : "";
                 this.merge = merge;
                 this._index = index;
                 this._fileInfo = currentFileInfo;
                 this.inline = inline || false;
                 this.variable = (variable !== undefined) ? variable
-                    : (name.charAt && (name.charAt(0) === '@'));
+                    : (name.charAt && (name.charAt(0) === "@"));
                 this.allowRoot = true;
                 this.setParent(this.value, this);
             };
 
             function evalName(context, name) {
-                var value = '', i, n = name.length,
+                var value = "", i, n = name.length,
                     output = {
                         add: function (s) {
                             value += s;
@@ -7837,9 +7837,9 @@
             }
 
             Declaration.prototype = new Node();
-            Declaration.prototype.type = 'Declaration';
+            Declaration.prototype.type = "Declaration";
             Declaration.prototype.genCSS = function (context, output) {
-                output.add(this.name + (context.compress ? ':' : ': '), this.fileInfo(), this.getIndex());
+                output.add(this.name + (context.compress ? ":" : ": "), this.fileInfo(), this.getIndex());
                 try {
                     this.value.genCSS(context, output);
                 } catch (e) {
@@ -7847,11 +7847,11 @@
                     e.filename = this._fileInfo.filename;
                     throw e;
                 }
-                output.add(this.important + ((this.inline || (context.lastRule && context.compress)) ? '' : ';'), this._fileInfo, this._index);
+                output.add(this.important + ((this.inline || (context.lastRule && context.compress)) ? "" : ";"), this._fileInfo, this._index);
             };
             Declaration.prototype.eval = function (context) {
                 var mathBypass = false, prevMath, name = this.name, evaldValue, variable = this.variable;
-                if (typeof name !== 'string') {
+                if (typeof name !== "string") {
                     // expand 'primitive' name directly to get
                     // things faster (~10% for benchmark.less):
                     name = (name.length === 1) && (name[0] instanceof Keyword) ?
@@ -7860,7 +7860,7 @@
                 }
 
                 // @todo remove when parens-division is default
-                if (name === 'font' && context.math === MATH.ALWAYS) {
+                if (name === "font" && context.math === MATH.ALWAYS) {
                     mathBypass = true;
                     prevMath = context.math;
                     context.math = MATH.PARENS_DIVISION;
@@ -7869,9 +7869,9 @@
                     context.importantScope.push({});
                     evaldValue = this.value.eval(context);
 
-                    if (!this.variable && evaldValue.type === 'DetachedRuleset') {
+                    if (!this.variable && evaldValue.type === "DetachedRuleset") {
                         throw {
-                            message: 'Rulesets cannot be evaluated on a property.',
+                            message: "Rulesets cannot be evaluated on a property.",
                             index: this.getIndex(), filename: this.fileInfo().filename
                         };
                     }
@@ -7888,7 +7888,7 @@
                         this.getIndex(), this.fileInfo(), this.inline,
                         variable);
                 } catch (e) {
-                    if (typeof e.index !== 'number') {
+                    if (typeof e.index !== "number") {
                         e.index = this.getIndex();
                         e.filename = this.fileInfo().filename;
                     }
@@ -7902,7 +7902,7 @@
             Declaration.prototype.makeImportant = function () {
                 return new Declaration(this.name,
                     this.value,
-                    '!important',
+                    "!important",
                     this.merge,
                     this.getIndex(), this.fileInfo(), this.inline);
             };
@@ -7910,9 +7910,9 @@
             module.exports = Declaration;
         }, {"../constants": 12, "./anonymous": 50, "./keyword": 70, "./node": 76, "./value": 86}],
         61: [function (require, module, exports) {
-            var Node = require('./node'),
-                contexts = require('../contexts'),
-                utils = require('../utils');
+            var Node = require("./node"),
+                contexts = require("../contexts"),
+                utils = require("../utils");
 
             var DetachedRuleset = function (ruleset, frames) {
                 this.ruleset = ruleset;
@@ -7920,7 +7920,7 @@
                 this.setParent(this.ruleset, this);
             };
             DetachedRuleset.prototype = new Node();
-            DetachedRuleset.prototype.type = 'DetachedRuleset';
+            DetachedRuleset.prototype.type = "DetachedRuleset";
             DetachedRuleset.prototype.evalFirst = true;
             DetachedRuleset.prototype.accept = function (visitor) {
                 this.ruleset = visitor.visit(this.ruleset);
@@ -7936,10 +7936,10 @@
 
         }, {"../contexts": 13, "../utils": 89, "./node": 76}],
         62: [function (require, module, exports) {
-            var Node = require('./node'),
-                unitConversions = require('../data/unit-conversions'),
-                Unit = require('./unit'),
-                Color = require('./color');
+            var Node = require("./node"),
+                unitConversions = require("../data/unit-conversions"),
+                Unit = require("./unit"),
+                Color = require("./color");
 
 //
 // A number with a unit
@@ -7947,7 +7947,7 @@
             var Dimension = function (value, unit) {
                 this.value = parseFloat(value);
                 if (isNaN(this.value)) {
-                    throw new Error('Dimension is not a number.');
+                    throw new Error("Dimension is not a number.");
                 }
                 this.unit = (unit && unit instanceof Unit) ? unit :
                     new Unit(unit ? [unit] : undefined);
@@ -7955,7 +7955,7 @@
             };
 
             Dimension.prototype = new Node();
-            Dimension.prototype.type = 'Dimension';
+            Dimension.prototype.type = "Dimension";
             Dimension.prototype.accept = function (visitor) {
                 this.unit = visitor.visit(this.unit);
             };
@@ -7967,7 +7967,7 @@
             };
             Dimension.prototype.genCSS = function (context, output) {
                 if ((context && context.strictUnits) && !this.unit.isSingular()) {
-                    throw new Error('Multiple units in dimension. Correct the units or use the unit function. Bad unit: ' + this.unit.toString());
+                    throw new Error("Multiple units in dimension. Correct the units or use the unit function. Bad unit: " + this.unit.toString());
                 }
 
                 var value = this.fround(context, this.value),
@@ -7975,7 +7975,7 @@
 
                 if (value !== 0 && value < 0.000001 && value > -0.000001) {
                     // would be output 1e-6 etc.
-                    strValue = value.toFixed(20).replace(/0+$/, '');
+                    strValue = value.toFixed(20).replace(/0+$/, "");
                 }
 
                 if (context && context.compress) {
@@ -8003,7 +8003,7 @@
                 var value = this._operate(context, op, this.value, other.value),
                     unit = this.unit.clone();
 
-                if (op === '+' || op === '-') {
+                if (op === "+" || op === "-") {
                     if (unit.numerator.length === 0 && unit.denominator.length === 0) {
                         unit = other.unit.clone();
                         if (this.unit.backupUnit) {
@@ -8015,17 +8015,17 @@
                         other = other.convertTo(this.unit.usedUnits());
 
                         if (context.strictUnits && other.unit.toString() !== unit.toString()) {
-                            throw new Error('Incompatible units. Change the units or use the unit function. Bad units: \'' + unit.toString() +
-                                '\' and \'' + other.unit.toString() + '\'.');
+                            throw new Error("Incompatible units. Change the units or use the unit function. Bad units: '" + unit.toString() +
+                                "' and '" + other.unit.toString() + "'.");
                         }
 
                         value = this._operate(context, op, this.value, other.value);
                     }
-                } else if (op === '*') {
+                } else if (op === "*") {
                     unit.numerator = unit.numerator.concat(other.unit.numerator).sort();
                     unit.denominator = unit.denominator.concat(other.unit.denominator).sort();
                     unit.cancel();
-                } else if (op === '/') {
+                } else if (op === "/") {
                     unit.numerator = unit.numerator.concat(other.unit.denominator).sort();
                     unit.denominator = unit.denominator.concat(other.unit.numerator).sort();
                     unit.cancel();
@@ -8053,13 +8053,13 @@
                 return Node.numericCompare(a.value, b.value);
             };
             Dimension.prototype.unify = function () {
-                return this.convertTo({length: 'px', duration: 's', angle: 'rad'});
+                return this.convertTo({length: "px", duration: "s", angle: "rad"});
             };
             Dimension.prototype.convertTo = function (conversions) {
                 var value = this.value, unit = this.unit.clone(),
                     i, groupName, group, targetUnit, derivedConversions = {}, applyUnit;
 
-                if (typeof conversions === 'string') {
+                if (typeof conversions === "string") {
                     for (i in unitConversions) {
                         if (unitConversions[i].hasOwnProperty(conversions)) {
                             derivedConversions = {};
@@ -8100,20 +8100,20 @@
 
         }, {"../data/unit-conversions": 16, "./color": 55, "./node": 76, "./unit": 84}],
         63: [function (require, module, exports) {
-            var Node = require('./node'),
-                Paren = require('./paren'),
-                Combinator = require('./combinator');
+            var Node = require("./node"),
+                Paren = require("./paren"),
+                Combinator = require("./combinator");
 
             var Element = function (combinator, value, isVariable, index, currentFileInfo, visibilityInfo) {
                 this.combinator = combinator instanceof Combinator ?
                     combinator : new Combinator(combinator);
 
-                if (typeof value === 'string') {
+                if (typeof value === "string") {
                     this.value = value.trim();
                 } else if (value) {
                     this.value = value;
                 } else {
-                    this.value = '';
+                    this.value = "";
                 }
                 this.isVariable = isVariable;
                 this._index = index;
@@ -8122,11 +8122,11 @@
                 this.setParent(this.combinator, this);
             };
             Element.prototype = new Node();
-            Element.prototype.type = 'Element';
+            Element.prototype.type = "Element";
             Element.prototype.accept = function (visitor) {
                 var value = this.value;
                 this.combinator = visitor.visit(this.combinator);
-                if (typeof value === 'object') {
+                if (typeof value === "object") {
                     this.value = visitor.visit(value);
                 }
             };
@@ -8157,8 +8157,8 @@
                 }
                 value = value.toCSS ? value.toCSS(context) : value;
                 context.firstSelector = firstSelector;
-                if (value === '' && this.combinator.value.charAt(0) === '&') {
-                    return '';
+                if (value === "" && this.combinator.value.charAt(0) === "&") {
+                    return "";
                 } else {
                     return this.combinator.toCSS(context) + value;
                 }
@@ -8167,21 +8167,21 @@
 
         }, {"./combinator": 56, "./node": 76, "./paren": 78}],
         64: [function (require, module, exports) {
-            var Node = require('./node'),
-                Paren = require('./paren'),
-                Comment = require('./comment'),
-                Dimension = require('./dimension'),
-                MATH = require('../constants').Math;
+            var Node = require("./node"),
+                Paren = require("./paren"),
+                Comment = require("./comment"),
+                Dimension = require("./dimension"),
+                MATH = require("../constants").Math;
 
             var Expression = function (value, noSpacing) {
                 this.value = value;
                 this.noSpacing = noSpacing;
                 if (!value) {
-                    throw new Error('Expression requires an array parameter');
+                    throw new Error("Expression requires an array parameter");
                 }
             };
             Expression.prototype = new Node();
-            Expression.prototype.type = 'Expression';
+            Expression.prototype.type = "Expression";
             Expression.prototype.accept = function (visitor) {
                 this.value = visitor.visitArray(this.value);
             };
@@ -8222,7 +8222,7 @@
                 for (var i = 0; i < this.value.length; i++) {
                     this.value[i].genCSS(context, output);
                     if (!this.noSpacing && i + 1 < this.value.length) {
-                        output.add(' ');
+                        output.add(" ");
                     }
                 }
             };
@@ -8235,8 +8235,8 @@
 
         }, {"../constants": 12, "./comment": 57, "./dimension": 62, "./node": 76, "./paren": 78}],
         65: [function (require, module, exports) {
-            var Node = require('./node'),
-                Selector = require('./selector');
+            var Node = require("./node"),
+                Selector = require("./selector");
 
             var Extend = function Extend(selector, option, index, currentFileInfo, visibilityInfo) {
                 this.selector = selector;
@@ -8249,7 +8249,7 @@
                 this.allowRoot = true;
 
                 switch (option) {
-                    case 'all':
+                    case "all":
                         this.allowBefore = true;
                         this.allowAfter = true;
                         break;
@@ -8263,7 +8263,7 @@
             Extend.next_id = 0;
 
             Extend.prototype = new Node();
-            Extend.prototype.type = 'Extend';
+            Extend.prototype.type = "Extend";
             Extend.prototype.accept = function (visitor) {
                 this.selector = visitor.visit(this.selector);
             };
@@ -8283,8 +8283,8 @@
                     selectorElements = selectors[i].elements;
                     // duplicate the logic in genCSS function inside the selector node.
                     // future TODO - move both logics into the selector joiner visitor
-                    if (i > 0 && selectorElements.length && selectorElements[0].combinator.value === '') {
-                        selectorElements[0].combinator.value = ' ';
+                    if (i > 0 && selectorElements.length && selectorElements[0].combinator.value === "") {
+                        selectorElements[0].combinator.value = " ";
                     }
                     selfElements = selfElements.concat(selectors[i].elements);
                 }
@@ -8296,14 +8296,14 @@
 
         }, {"./node": 76, "./selector": 82}],
         66: [function (require, module, exports) {
-            var Node = require('./node'),
-                Media = require('./media'),
-                URL = require('./url'),
-                Quoted = require('./quoted'),
-                Ruleset = require('./ruleset'),
-                Anonymous = require('./anonymous'),
-                utils = require('../utils'),
-                LessError = require('../less-error');
+            var Node = require("./node"),
+                Media = require("./media"),
+                URL = require("./url"),
+                Quoted = require("./quoted"),
+                Ruleset = require("./ruleset"),
+                Anonymous = require("./anonymous"),
+                utils = require("../utils"),
+                LessError = require("../less-error");
 
 //
 // CSS @import node
@@ -8348,7 +8348,7 @@
 // ruleset.
 //
             Import.prototype = new Node();
-            Import.prototype.type = 'Import';
+            Import.prototype.type = "Import";
             Import.prototype.accept = function (visitor) {
                 if (this.features) {
                     this.features = visitor.visit(this.features);
@@ -8360,13 +8360,13 @@
             };
             Import.prototype.genCSS = function (context, output) {
                 if (this.css && this.path._fileInfo.reference === undefined) {
-                    output.add('@import ', this._fileInfo, this._index);
+                    output.add("@import ", this._fileInfo, this._index);
                     this.path.genCSS(context, output);
                     if (this.features) {
-                        output.add(' ');
+                        output.add(" ");
                         this.features.genCSS(context, output);
                     }
-                    output.add(';');
+                    output.add(";");
                 }
             };
             Import.prototype.getPath = function () {
@@ -8434,7 +8434,7 @@
                         try {
                             this.root.eval(context);
                         } catch (e) {
-                            e.message = 'Plugin error during evaluation';
+                            e.message = "Plugin error during evaluation";
                             throw new LessError(e, this.root.imports, this.root.filename);
                         }
                     }
@@ -8447,7 +8447,7 @@
                 }
 
                 if (this.skip) {
-                    if (typeof this.skip === 'function') {
+                    if (typeof this.skip === "function") {
                         this.skip = this.skip();
                     }
                     if (this.skip) {
@@ -8490,44 +8490,44 @@
         67: [function (require, module, exports) {
             var tree = Object.create(null);
 
-            tree.Node = require('./node');
-            tree.Color = require('./color');
-            tree.AtRule = require('./atrule');
-            tree.DetachedRuleset = require('./detached-ruleset');
-            tree.Operation = require('./operation');
-            tree.Dimension = require('./dimension');
-            tree.Unit = require('./unit');
-            tree.Keyword = require('./keyword');
-            tree.Variable = require('./variable');
-            tree.Property = require('./property');
-            tree.Ruleset = require('./ruleset');
-            tree.Element = require('./element');
-            tree.Attribute = require('./attribute');
-            tree.Combinator = require('./combinator');
-            tree.Selector = require('./selector');
-            tree.Quoted = require('./quoted');
-            tree.Expression = require('./expression');
-            tree.Declaration = require('./declaration');
-            tree.Call = require('./call');
-            tree.URL = require('./url');
-            tree.Import = require('./import');
+            tree.Node = require("./node");
+            tree.Color = require("./color");
+            tree.AtRule = require("./atrule");
+            tree.DetachedRuleset = require("./detached-ruleset");
+            tree.Operation = require("./operation");
+            tree.Dimension = require("./dimension");
+            tree.Unit = require("./unit");
+            tree.Keyword = require("./keyword");
+            tree.Variable = require("./variable");
+            tree.Property = require("./property");
+            tree.Ruleset = require("./ruleset");
+            tree.Element = require("./element");
+            tree.Attribute = require("./attribute");
+            tree.Combinator = require("./combinator");
+            tree.Selector = require("./selector");
+            tree.Quoted = require("./quoted");
+            tree.Expression = require("./expression");
+            tree.Declaration = require("./declaration");
+            tree.Call = require("./call");
+            tree.URL = require("./url");
+            tree.Import = require("./import");
             tree.mixin = {
-                Call: require('./mixin-call'),
-                Definition: require('./mixin-definition')
+                Call: require("./mixin-call"),
+                Definition: require("./mixin-definition")
             };
-            tree.Comment = require('./comment');
-            tree.Anonymous = require('./anonymous');
-            tree.Value = require('./value');
-            tree.JavaScript = require('./javascript');
-            tree.Assignment = require('./assignment');
-            tree.Condition = require('./condition');
-            tree.Paren = require('./paren');
-            tree.Media = require('./media');
-            tree.UnicodeDescriptor = require('./unicode-descriptor');
-            tree.Negative = require('./negative');
-            tree.Extend = require('./extend');
-            tree.VariableCall = require('./variable-call');
-            tree.NamespaceValue = require('./namespace-value');
+            tree.Comment = require("./comment");
+            tree.Anonymous = require("./anonymous");
+            tree.Value = require("./value");
+            tree.JavaScript = require("./javascript");
+            tree.Assignment = require("./assignment");
+            tree.Condition = require("./condition");
+            tree.Paren = require("./paren");
+            tree.Media = require("./media");
+            tree.UnicodeDescriptor = require("./unicode-descriptor");
+            tree.Negative = require("./negative");
+            tree.Extend = require("./extend");
+            tree.VariableCall = require("./variable-call");
+            tree.NamespaceValue = require("./namespace-value");
 
             module.exports = tree;
 
@@ -8570,10 +8570,10 @@
             "./variable-call": 87
         }],
         68: [function (require, module, exports) {
-            var JsEvalNode = require('./js-eval-node'),
-                Dimension = require('./dimension'),
-                Quoted = require('./quoted'),
-                Anonymous = require('./anonymous');
+            var JsEvalNode = require("./js-eval-node"),
+                Dimension = require("./dimension"),
+                Quoted = require("./quoted"),
+                Anonymous = require("./anonymous");
 
             var JavaScript = function (string, escaped, index, currentFileInfo) {
                 this.escaped = escaped;
@@ -8582,17 +8582,17 @@
                 this._fileInfo = currentFileInfo;
             };
             JavaScript.prototype = new JsEvalNode();
-            JavaScript.prototype.type = 'JavaScript';
+            JavaScript.prototype.type = "JavaScript";
             JavaScript.prototype.eval = function (context) {
                 var result = this.evaluateJavaScript(this.expression, context);
                 var type = typeof result;
 
-                if (type === 'number' && !isNaN(result)) {
+                if (type === "number" && !isNaN(result)) {
                     return new Dimension(result);
-                } else if (type === 'string') {
-                    return new Quoted('"' + result + '"', result, this.escaped, this._index);
+                } else if (type === "string") {
+                    return new Quoted("\"" + result + "\"", result, this.escaped, this._index);
                 } else if (Array.isArray(result)) {
-                    return new Anonymous(result.join(', '));
+                    return new Anonymous(result.join(", "));
                 } else {
                     return new Anonymous(result);
                 }
@@ -8602,8 +8602,8 @@
 
         }, {"./anonymous": 50, "./dimension": 62, "./js-eval-node": 69, "./quoted": 80}],
         69: [function (require, module, exports) {
-            var Node = require('./node'),
-                Variable = require('./variable');
+            var Node = require("./node"),
+                Variable = require("./variable");
 
             var JsEvalNode = function () {
             };
@@ -8616,21 +8616,21 @@
 
                 if (!context.javascriptEnabled) {
                     throw {
-                        message: 'Inline JavaScript is not enabled. Is it set in your options?',
+                        message: "Inline JavaScript is not enabled. Is it set in your options?",
                         filename: this.fileInfo().filename,
                         index: this.getIndex()
                     };
                 }
 
                 expression = expression.replace(/@\{([\w-]+)\}/g, function (_, name) {
-                    return that.jsify(new Variable('@' + name, that.getIndex(), that.fileInfo()).eval(context));
+                    return that.jsify(new Variable("@" + name, that.getIndex(), that.fileInfo()).eval(context));
                 });
 
                 try {
-                    expression = new Function('return (' + expression + ')');
+                    expression = new Function("return (" + expression + ")");
                 } catch (e) {
                     throw {
-                        message: 'JavaScript evaluation error: ' + e.message + ' from `' + expression + '`',
+                        message: "JavaScript evaluation error: " + e.message + " from `" + expression + "`",
                         filename: this.fileInfo().filename,
                         index: this.getIndex()
                     };
@@ -8653,7 +8653,7 @@
                     result = expression.call(evalContext);
                 } catch (e) {
                     throw {
-                        message: 'JavaScript evaluation error: \'' + e.name + ': ' + e.message.replace(/["]/g, '\'') + '\'',
+                        message: "JavaScript evaluation error: '" + e.name + ": " + e.message.replace(/["]/g, "'") + "'",
                         filename: this.fileInfo().filename,
                         index: this.getIndex()
                     };
@@ -8662,9 +8662,9 @@
             };
             JsEvalNode.prototype.jsify = function (obj) {
                 if (Array.isArray(obj.value) && (obj.value.length > 1)) {
-                    return '[' + obj.value.map(function (v) {
+                    return "[" + obj.value.map(function (v) {
                         return v.toCSS();
-                    }).join(', ') + ']';
+                    }).join(", ") + "]";
                 } else {
                     return obj.toCSS();
                 }
@@ -8674,34 +8674,34 @@
 
         }, {"./node": 76, "./variable": 88}],
         70: [function (require, module, exports) {
-            var Node = require('./node');
+            var Node = require("./node");
 
             var Keyword = function (value) {
                 this.value = value;
             };
             Keyword.prototype = new Node();
-            Keyword.prototype.type = 'Keyword';
+            Keyword.prototype.type = "Keyword";
             Keyword.prototype.genCSS = function (context, output) {
-                if (this.value === '%') {
-                    throw {type: 'Syntax', message: 'Invalid % without number'};
+                if (this.value === "%") {
+                    throw {type: "Syntax", message: "Invalid % without number"};
                 }
                 output.add(this.value);
             };
 
-            Keyword.True = new Keyword('true');
-            Keyword.False = new Keyword('false');
+            Keyword.True = new Keyword("true");
+            Keyword.False = new Keyword("false");
 
             module.exports = Keyword;
 
         }, {"./node": 76}],
         71: [function (require, module, exports) {
-            var Ruleset = require('./ruleset'),
-                Value = require('./value'),
-                Selector = require('./selector'),
-                Anonymous = require('./anonymous'),
-                Expression = require('./expression'),
-                AtRule = require('./atrule'),
-                utils = require('../utils');
+            var Ruleset = require("./ruleset"),
+                Value = require("./value"),
+                Selector = require("./selector"),
+                Anonymous = require("./anonymous"),
+                Expression = require("./expression"),
+                AtRule = require("./atrule"),
+                utils = require("../utils");
 
             var Media = function (value, features, index, currentFileInfo, visibilityInfo) {
                 this._index = index;
@@ -8719,7 +8719,7 @@
                 this.setParent(this.rules, this);
             };
             Media.prototype = new AtRule();
-            Media.prototype.type = 'Media';
+            Media.prototype.type = "Media";
             Media.prototype.isRulesetLike = function () {
                 return true;
             };
@@ -8732,7 +8732,7 @@
                 }
             };
             Media.prototype.genCSS = function (context, output) {
-                output.add('@media ', this._fileInfo, this._index);
+                output.add("@media ", this._fileInfo, this._index);
                 this.features.genCSS(context, output);
                 this.outputRuleset(context, output, this.rules);
             };
@@ -8804,7 +8804,7 @@
                     });
 
                     for (i = path.length - 1; i > 0; i--) {
-                        path.splice(i, 0, new Anonymous('and'));
+                        path.splice(i, 0, new Anonymous("and"));
                     }
 
                     return new Expression(path);
@@ -8849,10 +8849,10 @@
             "./value": 86
         }],
         72: [function (require, module, exports) {
-            var Node = require('./node'),
-                Selector = require('./selector'),
-                MixinDefinition = require('./mixin-definition'),
-                defaultFunc = require('../functions/default');
+            var Node = require("./node"),
+                Selector = require("./selector"),
+                MixinDefinition = require("./mixin-definition"),
+                defaultFunc = require("../functions/default");
 
             var MixinCall = function (elements, args, index, currentFileInfo, important) {
                 this.selector = new Selector(elements);
@@ -8864,7 +8864,7 @@
                 this.setParent(this.selector, this);
             };
             MixinCall.prototype = new Node();
-            MixinCall.prototype.type = 'MixinCall';
+            MixinCall.prototype.type = "MixinCall";
             MixinCall.prototype.accept = function (visitor) {
                 if (this.selector) {
                     this.selector = visitor.visit(this.selector);
@@ -8972,8 +8972,8 @@
                             defaultResult = defTrue;
                             if ((count[defTrue] + count[defFalse]) > 1) {
                                 throw {
-                                    type: 'Runtime',
-                                    message: 'Ambiguous use of `default()` found when matching for `' + this.format(args) + '`',
+                                    type: "Runtime",
+                                    message: "Ambiguous use of `default()` found when matching for `" + this.format(args) + "`",
                                     index: this.getIndex(), filename: this.fileInfo().filename
                                 };
                             }
@@ -8986,7 +8986,7 @@
                                     mixin = candidates[m].mixin;
                                     if (!(mixin instanceof MixinDefinition)) {
                                         originalRuleset = mixin.originalRuleset || mixin;
-                                        mixin = new MixinDefinition('', [], mixin.rules, null, false, null, originalRuleset.visibilityInfo());
+                                        mixin = new MixinDefinition("", [], mixin.rules, null, false, null, originalRuleset.visibilityInfo());
                                         mixin.originalRuleset = originalRuleset;
                                     }
                                     var newRules = mixin.evalCall(context, args, this.important).rules;
@@ -9010,14 +9010,14 @@
                 }
                 if (isOneFound) {
                     throw {
-                        type: 'Runtime',
-                        message: 'No matching definition was found for `' + this.format(args) + '`',
+                        type: "Runtime",
+                        message: "No matching definition was found for `" + this.format(args) + "`",
                         index: this.getIndex(), filename: this.fileInfo().filename
                     };
                 } else {
                     throw {
-                        type: 'Name',
-                        message: this.selector.toCSS().trim() + ' is undefined',
+                        type: "Name",
+                        message: this.selector.toCSS().trim() + " is undefined",
                         index: this.getIndex(), filename: this.fileInfo().filename
                     };
                 }
@@ -9033,35 +9033,35 @@
                 }
             };
             MixinCall.prototype.format = function (args) {
-                return this.selector.toCSS().trim() + '(' +
+                return this.selector.toCSS().trim() + "(" +
                     (args ? args.map(function (a) {
-                        var argValue = '';
+                        var argValue = "";
                         if (a.name) {
-                            argValue += a.name + ':';
+                            argValue += a.name + ":";
                         }
                         if (a.value.toCSS) {
                             argValue += a.value.toCSS();
                         } else {
-                            argValue += '???';
+                            argValue += "???";
                         }
                         return argValue;
-                    }).join(', ') : '') + ')';
+                    }).join(", ") : "") + ")";
             };
             module.exports = MixinCall;
 
         }, {"../functions/default": 25, "./mixin-definition": 73, "./node": 76, "./selector": 82}],
         73: [function (require, module, exports) {
-            var Selector = require('./selector'),
-                Element = require('./element'),
-                Ruleset = require('./ruleset'),
-                Declaration = require('./declaration'),
-                DetachedRuleset = require('./detached-ruleset'),
-                Expression = require('./expression'),
-                contexts = require('../contexts'),
-                utils = require('../utils');
+            var Selector = require("./selector"),
+                Element = require("./element"),
+                Ruleset = require("./ruleset"),
+                Declaration = require("./declaration"),
+                DetachedRuleset = require("./detached-ruleset"),
+                Expression = require("./expression"),
+                contexts = require("../contexts"),
+                utils = require("../utils");
 
             var Definition = function (name, params, rules, condition, variadic, frames, visibilityInfo) {
-                this.name = name || 'anonymous mixin';
+                this.name = name || "anonymous mixin";
                 this.selectors = [new Selector([new Element(null, name, false, this._index, this._fileInfo)])];
                 this.params = params;
                 this.condition = condition;
@@ -9084,7 +9084,7 @@
                 this.allowRoot = true;
             };
             Definition.prototype = new Ruleset();
-            Definition.prototype.type = 'MixinDefinition';
+            Definition.prototype.type = "MixinDefinition";
             Definition.prototype.evalFirst = true;
             Definition.prototype.accept = function (visitor) {
                 if (this.params && this.params.length) {
@@ -9129,8 +9129,8 @@
                                 continue;
                             } else {
                                 throw {
-                                    type: 'Runtime', message: 'Named argument for ' + this.name +
-                                        ' ' + args[i].name + ' not found'
+                                    type: "Runtime", message: "Named argument for " + this.name +
+                                        " " + args[i].name + " not found"
                                 };
                             }
                         }
@@ -9156,7 +9156,7 @@
                             if (val) {
                                 // This was a mixin call, pass in a detached ruleset of it's eval'd rules
                                 if (Array.isArray(val)) {
-                                    val = new DetachedRuleset(new Ruleset('', val));
+                                    val = new DetachedRuleset(new Ruleset("", val));
                                 } else {
                                     val = val.eval(context);
                                 }
@@ -9165,8 +9165,8 @@
                                 frame.resetCache();
                             } else {
                                 throw {
-                                    type: 'Runtime', message: 'wrong number of arguments for ' + this.name +
-                                        ' (' + argsLength + ' for ' + this.arity + ')'
+                                    type: "Runtime", message: "wrong number of arguments for " + this.name +
+                                        " (" + argsLength + " for " + this.arity + ")"
                                 };
                             }
 
@@ -9205,7 +9205,7 @@
                     frame = this.evalParams(context, new contexts.Eval(context, mixinFrames), args, _arguments),
                     rules, ruleset;
 
-                frame.prependRule(new Declaration('@arguments', new Expression(_arguments).eval(context)));
+                frame.prependRule(new Declaration("@arguments", new Expression(_arguments).eval(context)));
 
                 rules = utils.copyArray(this.rules);
 
@@ -9276,10 +9276,10 @@
             "./selector": 82
         }],
         74: [function (require, module, exports) {
-            var Node = require('./node'),
-                Variable = require('./variable'),
-                Ruleset = require('./ruleset'),
-                Selector = require('./selector');
+            var Node = require("./node"),
+                Variable = require("./variable"),
+                Ruleset = require("./ruleset"),
+                Selector = require("./selector");
 
             var NamespaceValue = function (ruleCall, lookups, important, index, fileInfo) {
                 this.value = ruleCall;
@@ -9289,7 +9289,7 @@
                 this._fileInfo = fileInfo;
             };
             NamespaceValue.prototype = new Node();
-            NamespaceValue.prototype.type = 'NamespaceValue';
+            NamespaceValue.prototype.type = "NamespaceValue";
             NamespaceValue.prototype.eval = function (context) {
                 var i, j, name, rules = this.value.eval(context);
 
@@ -9305,11 +9305,11 @@
                         rules = new Ruleset([new Selector()], rules);
                     }
 
-                    if (name === '') {
+                    if (name === "") {
                         rules = rules.lastDeclaration();
-                    } else if (name.charAt(0) === '@') {
-                        if (name.charAt(1) === '@') {
-                            name = '@' + new Variable(name.substr(1)).eval(context).value;
+                    } else if (name.charAt(0) === "@") {
+                        if (name.charAt(1) === "@") {
+                            name = "@" + new Variable(name.substr(1)).eval(context).value;
                         }
                         if (rules.variables) {
                             rules = rules.variable(name);
@@ -9317,17 +9317,17 @@
 
                         if (!rules) {
                             throw {
-                                type: 'Name',
-                                message: 'variable ' + name + ' not found',
+                                type: "Name",
+                                message: "variable " + name + " not found",
                                 filename: this.fileInfo().filename,
                                 index: this.getIndex()
                             };
                         }
                     } else {
-                        if (name.substring(0, 2) === '$@') {
-                            name = '$' + new Variable(name.substr(1)).eval(context).value;
+                        if (name.substring(0, 2) === "$@") {
+                            name = "$" + new Variable(name.substr(1)).eval(context).value;
                         } else {
-                            name = name.charAt(0) === '$' ? name : '$' + name;
+                            name = name.charAt(0) === "$" ? name : "$" + name;
                         }
                         if (rules.properties) {
                             rules = rules.property(name);
@@ -9335,8 +9335,8 @@
 
                         if (!rules) {
                             throw {
-                                type: 'Name',
-                                message: 'property "' + name.substr(1) + '" not found',
+                                type: "Name",
+                                message: "property \"" + name.substr(1) + "\" not found",
                                 filename: this.fileInfo().filename,
                                 index: this.getIndex()
                             };
@@ -9359,22 +9359,22 @@
 
         }, {"./node": 76, "./ruleset": 81, "./selector": 82, "./variable": 88}],
         75: [function (require, module, exports) {
-            var Node = require('./node'),
-                Operation = require('./operation'),
-                Dimension = require('./dimension');
+            var Node = require("./node"),
+                Operation = require("./operation"),
+                Dimension = require("./dimension");
 
             var Negative = function (node) {
                 this.value = node;
             };
             Negative.prototype = new Node();
-            Negative.prototype.type = 'Negative';
+            Negative.prototype.type = "Negative";
             Negative.prototype.genCSS = function (context, output) {
-                output.add('-');
+                output.add("-");
                 this.value.genCSS(context, output);
             };
             Negative.prototype.eval = function (context) {
                 if (context.isMathOn()) {
-                    return (new Operation('*', [new Dimension(-1), this.value])).eval(context);
+                    return (new Operation("*", [new Dimension(-1), this.value])).eval(context);
                 }
                 return new Negative(this.value.eval(context));
             };
@@ -9390,12 +9390,12 @@
                 this.parsed = null;
 
                 var self = this;
-                Object.defineProperty(this, 'currentFileInfo', {
+                Object.defineProperty(this, "currentFileInfo", {
                     get: function () {
                         return self.fileInfo();
                     }
                 });
-                Object.defineProperty(this, 'index', {
+                Object.defineProperty(this, "index", {
                     get: function () {
                         return self.getIndex();
                     }
@@ -9434,7 +9434,7 @@
                         return strs.length === 0;
                     }
                 });
-                return strs.join('');
+                return strs.join("");
             };
             Node.prototype.genCSS = function (context, output) {
                 output.add(this.value);
@@ -9447,13 +9447,13 @@
             };
             Node.prototype._operate = function (context, op, a, b) {
                 switch (op) {
-                    case '+':
+                    case "+":
                         return a + b;
-                    case '-':
+                    case "-":
                         return a - b;
-                    case '*':
+                    case "*":
                         return a * b;
-                    case '/':
+                    case "/":
                         return a / b;
                 }
             };
@@ -9472,7 +9472,7 @@
                 if ((a.compare) &&
                     // for "symmetric results" force toCSS-based comparison
                     // of Quoted or Anonymous if either value is one of those
-                    !(b.type === 'Quoted' || b.type === 'Anonymous')) {
+                    !(b.type === "Quoted" || b.type === "Anonymous")) {
                     return a.compare(b);
                 } else if (b.compare) {
                     return -b.compare(a);
@@ -9554,10 +9554,10 @@
 
         }, {}],
         77: [function (require, module, exports) {
-            var Node = require('./node'),
-                Color = require('./color'),
-                Dimension = require('./dimension'),
-                MATH = require('../constants').Math;
+            var Node = require("./node"),
+                Color = require("./color"),
+                Dimension = require("./dimension"),
+                MATH = require("../constants").Math;
 
             var Operation = function (op, operands, isSpaced) {
                 this.op = op.trim();
@@ -9565,7 +9565,7 @@
                 this.isSpaced = isSpaced;
             };
             Operation.prototype = new Node();
-            Operation.prototype.type = 'Operation';
+            Operation.prototype.type = "Operation";
             Operation.prototype.accept = function (visitor) {
                 this.operands = visitor.visit(this.operands);
             };
@@ -9575,7 +9575,7 @@
                     op;
 
                 if (context.isMathOn(this.op)) {
-                    op = this.op === './' ? '/' : this.op;
+                    op = this.op === "./" ? "/" : this.op;
                     if (a instanceof Dimension && b instanceof Color) {
                         a = a.toColor();
                     }
@@ -9583,12 +9583,12 @@
                         b = b.toColor();
                     }
                     if (!a.operate) {
-                        if (a instanceof Operation && a.op === '/' && context.math === MATH.PARENS_DIVISION) {
+                        if (a instanceof Operation && a.op === "/" && context.math === MATH.PARENS_DIVISION) {
                             return new Operation(this.op, [a, b], this.isSpaced);
                         }
                         throw {
-                            type: 'Operation',
-                            message: 'Operation on an invalid type'
+                            type: "Operation",
+                            message: "Operation on an invalid type"
                         };
                     }
 
@@ -9600,11 +9600,11 @@
             Operation.prototype.genCSS = function (context, output) {
                 this.operands[0].genCSS(context, output);
                 if (this.isSpaced) {
-                    output.add(' ');
+                    output.add(" ");
                 }
                 output.add(this.op);
                 if (this.isSpaced) {
-                    output.add(' ');
+                    output.add(" ");
                 }
                 this.operands[1].genCSS(context, output);
             };
@@ -9613,17 +9613,17 @@
 
         }, {"../constants": 12, "./color": 55, "./dimension": 62, "./node": 76}],
         78: [function (require, module, exports) {
-            var Node = require('./node');
+            var Node = require("./node");
 
             var Paren = function (node) {
                 this.value = node;
             };
             Paren.prototype = new Node();
-            Paren.prototype.type = 'Paren';
+            Paren.prototype.type = "Paren";
             Paren.prototype.genCSS = function (context, output) {
-                output.add('(');
+                output.add("(");
                 this.value.genCSS(context, output);
-                output.add(')');
+                output.add(")");
             };
             Paren.prototype.eval = function (context) {
                 return new Paren(this.value.eval(context));
@@ -9632,8 +9632,8 @@
 
         }, {"./node": 76}],
         79: [function (require, module, exports) {
-            var Node = require('./node'),
-                Declaration = require('./declaration');
+            var Node = require("./node"),
+                Declaration = require("./declaration");
 
             var Property = function (name, index, currentFileInfo) {
                 this.name = name;
@@ -9641,7 +9641,7 @@
                 this._fileInfo = currentFileInfo;
             };
             Property.prototype = new Node();
-            Property.prototype.type = 'Property';
+            Property.prototype.type = "Property";
             Property.prototype.eval = function (context) {
                 var property, name = this.name;
                 // TODO: shorten this reference
@@ -9649,8 +9649,8 @@
 
                 if (this.evaluating) {
                     throw {
-                        type: 'Name',
-                        message: 'Recursive property reference for ' + name,
+                        type: "Name",
+                        message: "Recursive property reference for " + name,
                         filename: this.fileInfo().filename,
                         index: this.getIndex()
                     };
@@ -9691,8 +9691,8 @@
                     return property;
                 } else {
                     throw {
-                        type: 'Name',
-                        message: 'Property \'' + name + '\' is undefined',
+                        type: "Name",
+                        message: "Property '" + name + "' is undefined",
                         filename: this.currentFileInfo.filename,
                         index: this.index
                     };
@@ -9711,13 +9711,13 @@
 
         }, {"./declaration": 60, "./node": 76}],
         80: [function (require, module, exports) {
-            var Node = require('./node'),
-                Variable = require('./variable'),
-                Property = require('./property');
+            var Node = require("./node"),
+                Variable = require("./variable"),
+                Property = require("./property");
 
             var Quoted = function (str, content, escaped, index, currentFileInfo) {
                 this.escaped = (escaped == null) ? true : escaped;
-                this.value = content || '';
+                this.value = content || "";
                 this.quote = str.charAt(0);
                 this._index = index;
                 this._fileInfo = currentFileInfo;
@@ -9725,7 +9725,7 @@
                 this.propRegex = /\$\{([\w-]+)\}/g;
             };
             Quoted.prototype = new Node();
-            Quoted.prototype.type = 'Quoted';
+            Quoted.prototype.type = "Quoted";
             Quoted.prototype.genCSS = function (context, output) {
                 if (!this.escaped) {
                     output.add(this.quote, this.fileInfo(), this.getIndex());
@@ -9741,11 +9741,11 @@
             Quoted.prototype.eval = function (context) {
                 var that = this, value = this.value;
                 var variableReplacement = function (_, name) {
-                    var v = new Variable('@' + name, that.getIndex(), that.fileInfo()).eval(context, true);
+                    var v = new Variable("@" + name, that.getIndex(), that.fileInfo()).eval(context, true);
                     return (v instanceof Quoted) ? v.value : v.toCSS();
                 };
                 var propertyReplacement = function (_, name) {
-                    var v = new Property('$' + name, that.getIndex(), that.fileInfo()).eval(context, true);
+                    var v = new Property("$" + name, that.getIndex(), that.fileInfo()).eval(context, true);
                     return (v instanceof Quoted) ? v.value : v.toCSS();
                 };
 
@@ -9764,7 +9764,7 @@
             };
             Quoted.prototype.compare = function (other) {
                 // when comparing quoted strings allow the quote to differ
-                if (other.type === 'Quoted' && !this.escaped && !other.escaped) {
+                if (other.type === "Quoted" && !this.escaped && !other.escaped) {
                     return Node.numericCompare(this.value, other.value);
                 } else {
                     return other.toCSS && this.toCSS() === other.toCSS() ? 0 : undefined;
@@ -9774,19 +9774,19 @@
 
         }, {"./node": 76, "./property": 79, "./variable": 88}],
         81: [function (require, module, exports) {
-            var Node = require('./node'),
-                Declaration = require('./declaration'),
-                Keyword = require('./keyword'),
-                Comment = require('./comment'),
-                Paren = require('./paren'),
-                Selector = require('./selector'),
-                Element = require('./element'),
-                Anonymous = require('./anonymous'),
-                contexts = require('../contexts'),
-                globalFunctionRegistry = require('../functions/function-registry'),
-                defaultFunc = require('../functions/default'),
-                getDebugInfo = require('./debug-info'),
-                utils = require('../utils');
+            var Node = require("./node"),
+                Declaration = require("./declaration"),
+                Keyword = require("./keyword"),
+                Comment = require("./comment"),
+                Paren = require("./paren"),
+                Selector = require("./selector"),
+                Element = require("./element"),
+                Anonymous = require("./anonymous"),
+                contexts = require("../contexts"),
+                globalFunctionRegistry = require("../functions/function-registry"),
+                defaultFunc = require("../functions/default"),
+                getDebugInfo = require("./debug-info"),
+                utils = require("../utils");
 
             var Ruleset = function (selectors, rules, strictImports, visibilityInfo) {
                 this.selectors = selectors;
@@ -9803,7 +9803,7 @@
 
             };
             Ruleset.prototype = new Node();
-            Ruleset.prototype.type = 'Ruleset';
+            Ruleset.prototype.type = "Ruleset";
             Ruleset.prototype.isRuleset = true;
             Ruleset.prototype.isRulesetLike = function () {
                 return true;
@@ -9824,8 +9824,8 @@
                 if (this.selectors && (selCnt = this.selectors.length)) {
                     selectors = new Array(selCnt);
                     defaultFunc.error({
-                        type: 'Syntax',
-                        message: 'it is currently only allowed in parametric mixin guards,'
+                        type: "Syntax",
+                        message: "it is currently only allowed in parametric mixin guards,"
                     });
 
                     for (i = 0; i < selCnt; i++) {
@@ -9849,7 +9849,7 @@
                             toParseSelectors[i] = selector.toCSS(context);
                         }
                         this.parse.parseNode(
-                            toParseSelectors.join(','),
+                            toParseSelectors.join(","),
                             ["selectors"],
                             selectors[0].getIndex(),
                             selectors[0].fileInfo(),
@@ -9926,7 +9926,7 @@
 
                 // Evaluate mixin calls.
                 for (i = 0; (rule = rsRules[i]); i++) {
-                    if (rule.type === 'MixinCall') {
+                    if (rule.type === "MixinCall") {
                         /* jshint loopfunc:true */
                         rules = rule.eval(context).filter(function (r) {
                             if ((r instanceof Declaration) && r.variable) {
@@ -9940,7 +9940,7 @@
                         rsRules.splice.apply(rsRules, [i, 1].concat(rules));
                         i += rules.length - 1;
                         ruleset.resetCache();
-                    } else if (rule.type === 'VariableCall') {
+                    } else if (rule.type === "VariableCall") {
                         /* jshint loopfunc:true */
                         rules = rule.eval(context).rules.filter(function (r) {
                             if ((r instanceof Declaration) && r.variable) {
@@ -10001,7 +10001,7 @@
                 }
 
                 for (i = 0; i < rules.length; i++) {
-                    if (rules[i].type === 'Import') {
+                    if (rules[i].type === "Import") {
                         importRules = rules[i].eval(context);
                         if (importRules && (importRules.length || importRules.length === 0)) {
                             rules.splice.apply(rules, [i, 1].concat(importRules));
@@ -10056,7 +10056,7 @@
                         // when evaluating variables in an import statement, imports have not been eval'd
                         // so we need to go inside import statements.
                         // guard against root being a string (in the case of inlined less)
-                        if (r.type === 'Import' && r.root && r.root.variables) {
+                        if (r.type === "Import" && r.root && r.root.variables) {
                             var vars = r.root.variables();
                             for (var name in vars) {
                                 if (vars.hasOwnProperty(name)) {
@@ -10076,10 +10076,10 @@
                             var name = (r.name.length === 1) && (r.name[0] instanceof Keyword) ?
                                 r.name[0].value : r.name;
                             // Properties don't overwrite as they can merge
-                            if (!hash['$' + name]) {
-                                hash['$' + name] = [r];
+                            if (!hash["$" + name]) {
+                                hash["$" + name] = [r];
                             } else {
-                                hash['$' + name].push(r);
+                                hash["$" + name].push(r);
                             }
                         }
                         return hash;
@@ -10112,10 +10112,10 @@
 
                 function transformDeclaration(decl) {
                     if (decl.value instanceof Anonymous && !decl.parsed) {
-                        if (typeof decl.value.value === 'string') {
+                        if (typeof decl.value.value === "string") {
                             this.parse.parseNode(
                                 decl.value.value,
-                                ['value', 'important'],
+                                ["value", "important"],
                                 decl.value.getIndex(),
                                 decl.fileInfo(),
                                 function (err, result) {
@@ -10124,7 +10124,7 @@
                                     }
                                     if (result) {
                                         decl.value = result[0];
-                                        decl.important = result[1] || '';
+                                        decl.important = result[1] || "";
                                         decl.parsed = true;
                                     }
                                 });
@@ -10220,8 +10220,8 @@
                     context.tabLevel++;
                 }
 
-                var tabRuleStr = context.compress ? '' : Array(context.tabLevel + 1).join('  '),
-                    tabSetStr = context.compress ? '' : Array(context.tabLevel).join('  '),
+                var tabRuleStr = context.compress ? "" : Array(context.tabLevel + 1).join("  "),
+                    tabSetStr = context.compress ? "" : Array(context.tabLevel).join("  "),
                     sep;
 
                 var charsetNodeIndex = 0;
@@ -10236,7 +10236,7 @@
                         ruleNodes.splice(charsetNodeIndex, 0, rule);
                         charsetNodeIndex++;
                         importNodeIndex++;
-                    } else if (rule.type === 'Import') {
+                    } else if (rule.type === "Import") {
                         ruleNodes.splice(importNodeIndex, 0, rule);
                         importNodeIndex++;
                     } else {
@@ -10258,7 +10258,7 @@
                     var paths = this.paths, pathCnt = paths.length,
                         pathSubCnt;
 
-                    sep = context.compress ? ',' : (',\n' + tabSetStr);
+                    sep = context.compress ? "," : (",\n" + tabSetStr);
 
                     for (i = 0; i < pathCnt; i++) {
                         path = paths[i];
@@ -10278,7 +10278,7 @@
                         }
                     }
 
-                    output.add((context.compress ? '{' : ' {\n') + tabRuleStr);
+                    output.add((context.compress ? "{" : " {\n") + tabRuleStr);
                 }
 
                 // Compile rules and rulesets
@@ -10302,19 +10302,19 @@
                     context.lastRule = currentLastRule;
 
                     if (!context.lastRule && rule.isVisible()) {
-                        output.add(context.compress ? '' : ('\n' + tabRuleStr));
+                        output.add(context.compress ? "" : ("\n" + tabRuleStr));
                     } else {
                         context.lastRule = false;
                     }
                 }
 
                 if (!this.root) {
-                    output.add((context.compress ? '}' : '\n' + tabSetStr + '}'));
+                    output.add((context.compress ? "}" : "\n" + tabSetStr + "}"));
                     context.tabLevel--;
                 }
 
                 if (!output.isEmpty() && !context.compress && this.firstRoot) {
-                    output.add('\n');
+                    output.add("\n");
                 }
             };
 
@@ -10483,7 +10483,7 @@
 
                     for (i = 0; (el = inSelector.elements[i]); i++) {
                         // non parent reference elements just get added
-                        if (el.value !== '&') {
+                        if (el.value !== "&") {
                             var nestedSelector = findNestedSelector(el);
                             if (nestedSelector != null) {
                                 // merge the current list of non parent selector elements
@@ -10523,7 +10523,7 @@
                                     // the combinator used on el should now be applied to the next element instead so that
                                     // it is not lost
                                     if (sel.length > 0) {
-                                        sel[0].elements.push(new Element(el.combinator, '', el.isVariable, el._index, el._fileInfo));
+                                        sel[0].elements.push(new Element(el.combinator, "", el.isVariable, el._index, el._fileInfo));
                                     }
                                     selectorsMultiplied.push(sel);
                                 } else {
@@ -10610,9 +10610,9 @@
             "./selector": 82
         }],
         82: [function (require, module, exports) {
-            var Node = require('./node'),
-                Element = require('./element'),
-                LessError = require('../less-error');
+            var Node = require("./node"),
+                Element = require("./element"),
+                LessError = require("../less-error");
 
             var Selector = function (elements, extendList, condition, index, currentFileInfo, visibilityInfo) {
                 this.extendList = extendList;
@@ -10626,7 +10626,7 @@
                 this.setParent(this.elements, this);
             };
             Selector.prototype = new Node();
-            Selector.prototype.type = 'Selector';
+            Selector.prototype.type = "Selector";
             Selector.prototype.accept = function (visitor) {
                 if (this.elements) {
                     this.elements = visitor.visitArray(this.elements);
@@ -10648,12 +10648,12 @@
             };
             Selector.prototype.getElements = function (els) {
                 if (!els) {
-                    return [new Element('', '&', false, this._index, this._fileInfo)];
+                    return [new Element("", "&", false, this._index, this._fileInfo)];
                 }
-                if (typeof els === 'string') {
+                if (typeof els === "string") {
                     this.parse.parseNode(
                         els,
-                        ['selector'],
+                        ["selector"],
                         this._index,
                         this._fileInfo,
                         function (err, result) {
@@ -10669,7 +10669,7 @@
                 return els;
             };
             Selector.prototype.createEmptySelectors = function () {
-                var el = new Element('', '&', false, this._index, this._fileInfo),
+                var el = new Element("", "&", false, this._index, this._fileInfo),
                     sels = [new Selector([el], null, null, this._index, this._fileInfo)];
                 sels[0].mediaEmpty = true;
                 return sels;
@@ -10700,10 +10700,10 @@
 
                 var elements = this.elements.map(function (v) {
                     return v.combinator.value + (v.value.value || v.value);
-                }).join('').match(/[,&#\*\.\w-]([\w-]|(\\.))*/g);
+                }).join("").match(/[,&#\*\.\w-]([\w-]|(\\.))*/g);
 
                 if (elements) {
-                    if (elements[0] === '&') {
+                    if (elements[0] === "&") {
                         elements.shift();
                     }
                 } else {
@@ -10715,8 +10715,8 @@
             Selector.prototype.isJustParentSelector = function () {
                 return !this.mediaEmpty &&
                     this.elements.length === 1 &&
-                    this.elements[0].value === '&' &&
-                    (this.elements[0].combinator.value === ' ' || this.elements[0].combinator.value === '');
+                    this.elements[0].value === "&" &&
+                    (this.elements[0].combinator.value === " " || this.elements[0].combinator.value === "");
             };
             Selector.prototype.eval = function (context) {
                 var evaldCondition = this.condition && this.condition.eval(context),
@@ -10733,8 +10733,8 @@
             };
             Selector.prototype.genCSS = function (context, output) {
                 var i, element;
-                if ((!context || !context.firstSelector) && this.elements[0].combinator.value === '') {
-                    output.add(' ', this.fileInfo(), this.getIndex());
+                if ((!context || !context.firstSelector) && this.elements[0].combinator.value === "") {
+                    output.add(" ", this.fileInfo(), this.getIndex());
                 }
                 for (i = 0; i < this.elements.length; i++) {
                     element = this.elements[i];
@@ -10748,21 +10748,21 @@
 
         }, {"../less-error": 38, "./element": 63, "./node": 76}],
         83: [function (require, module, exports) {
-            var Node = require('./node');
+            var Node = require("./node");
 
             var UnicodeDescriptor = function (value) {
                 this.value = value;
             };
             UnicodeDescriptor.prototype = new Node();
-            UnicodeDescriptor.prototype.type = 'UnicodeDescriptor';
+            UnicodeDescriptor.prototype.type = "UnicodeDescriptor";
 
             module.exports = UnicodeDescriptor;
 
         }, {"./node": 76}],
         84: [function (require, module, exports) {
-            var Node = require('./node'),
-                unitConversions = require('../data/unit-conversions'),
-                utils = require('../utils');
+            var Node = require("./node"),
+                unitConversions = require("../data/unit-conversions"),
+                utils = require("../utils");
 
             var Unit = function (numerator, denominator, backupUnit) {
                 this.numerator = numerator ? utils.copyArray(numerator).sort() : [];
@@ -10775,7 +10775,7 @@
             };
 
             Unit.prototype = new Node();
-            Unit.prototype.type = 'Unit';
+            Unit.prototype.type = "Unit";
             Unit.prototype.clone = function () {
                 return new Unit(utils.copyArray(this.numerator), utils.copyArray(this.denominator), this.backupUnit);
             };
@@ -10791,9 +10791,9 @@
                 }
             };
             Unit.prototype.toString = function () {
-                var i, returnStr = this.numerator.join('*');
+                var i, returnStr = this.numerator.join("*");
                 for (i = 0; i < this.denominator.length; i++) {
-                    returnStr += '/' + this.denominator[i];
+                    returnStr += "/" + this.denominator[i];
                 }
                 return returnStr;
             };
@@ -10804,7 +10804,7 @@
                 return this.toString().toUpperCase() === unitString.toUpperCase();
             };
             Unit.prototype.isLength = function () {
-                return RegExp('^(px|em|ex|ch|rem|in|cm|mm|pc|pt|ex|vw|vh|vmin|vmax)$', 'gi').test(this.toCSS());
+                return RegExp("^(px|em|ex|ch|rem|in|cm|mm|pc|pt|ex|vw|vh|vmin|vmax)$", "gi").test(this.toCSS());
             };
             Unit.prototype.isEmpty = function () {
                 return this.numerator.length === 0 && this.denominator.length === 0;
@@ -10884,7 +10884,7 @@
 
         }, {"../data/unit-conversions": 16, "../utils": 89, "./node": 76}],
         85: [function (require, module, exports) {
-            var Node = require('./node');
+            var Node = require("./node");
 
             var URL = function (val, index, currentFileInfo, isEvald) {
                 this.value = val;
@@ -10893,14 +10893,14 @@
                 this.isEvald = isEvald;
             };
             URL.prototype = new Node();
-            URL.prototype.type = 'Url';
+            URL.prototype.type = "Url";
             URL.prototype.accept = function (visitor) {
                 this.value = visitor.visit(this.value);
             };
             URL.prototype.genCSS = function (context, output) {
-                output.add('url(');
+                output.add("url(");
                 this.value.genCSS(context, output);
-                output.add(')');
+                output.add(")");
             };
             URL.prototype.eval = function (context) {
                 var val = this.value.eval(context),
@@ -10909,8 +10909,8 @@
                 if (!this.isEvald) {
                     // Add the rootpath if the URL requires a rewrite
                     rootpath = this.fileInfo() && this.fileInfo().rootpath;
-                    if (typeof rootpath === 'string' &&
-                        typeof val.value === 'string' &&
+                    if (typeof rootpath === "string" &&
+                        typeof val.value === "string" &&
                         context.pathRequiresRewrite(val.value)) {
                         if (!val.quote) {
                             rootpath = escapePath(rootpath);
@@ -10923,10 +10923,10 @@
                     // Add url args if enabled
                     if (context.urlArgs) {
                         if (!val.value.match(/^\s*data:/)) {
-                            var delimiter = val.value.indexOf('?') === -1 ? '?' : '&';
+                            var delimiter = val.value.indexOf("?") === -1 ? "?" : "&";
                             var urlArgs = delimiter + context.urlArgs;
-                            if (val.value.indexOf('#') !== -1) {
-                                val.value = val.value.replace('#', urlArgs + '#');
+                            if (val.value.indexOf("#") !== -1) {
+                                val.value = val.value.replace("#", urlArgs + "#");
                             } else {
                                 val.value += urlArgs;
                             }
@@ -10939,7 +10939,7 @@
 
             function escapePath(path) {
                 return path.replace(/[\(\)'"\s]/g, function (match) {
-                    return '\\' + match;
+                    return "\\" + match;
                 });
             }
 
@@ -10947,11 +10947,11 @@
 
         }, {"./node": 76}],
         86: [function (require, module, exports) {
-            var Node = require('./node');
+            var Node = require("./node");
 
             var Value = function (value) {
                 if (!value) {
-                    throw new Error('Value requires an array argument');
+                    throw new Error("Value requires an array argument");
                 }
                 if (!Array.isArray(value)) {
                     this.value = [value];
@@ -10960,7 +10960,7 @@
                 }
             };
             Value.prototype = new Node();
-            Value.prototype.type = 'Value';
+            Value.prototype.type = "Value";
             Value.prototype.accept = function (visitor) {
                 if (this.value) {
                     this.value = visitor.visitArray(this.value);
@@ -10980,7 +10980,7 @@
                 for (i = 0; i < this.value.length; i++) {
                     this.value[i].genCSS(context, output);
                     if (i + 1 < this.value.length) {
-                        output.add((context && context.compress) ? ',' : ', ');
+                        output.add((context && context.compress) ? "," : ", ");
                     }
                 }
             };
@@ -10988,11 +10988,11 @@
 
         }, {"./node": 76}],
         87: [function (require, module, exports) {
-            var Node = require('./node'),
-                Variable = require('./variable'),
-                Ruleset = require('./ruleset'),
-                DetachedRuleset = require('./detached-ruleset'),
-                LessError = require('../less-error');
+            var Node = require("./node"),
+                Variable = require("./variable"),
+                Ruleset = require("./ruleset"),
+                DetachedRuleset = require("./detached-ruleset"),
+                LessError = require("../less-error");
 
             var VariableCall = function (variable, index, currentFileInfo) {
                 this.variable = variable;
@@ -11001,19 +11001,19 @@
                 this.allowRoot = true;
             };
             VariableCall.prototype = new Node();
-            VariableCall.prototype.type = 'VariableCall';
+            VariableCall.prototype.type = "VariableCall";
             VariableCall.prototype.eval = function (context) {
                 var rules,
                     detachedRuleset = new Variable(this.variable, this.getIndex(), this.fileInfo()).eval(context),
-                    error = new LessError({message: 'Could not evaluate variable call ' + this.variable});
+                    error = new LessError({message: "Could not evaluate variable call " + this.variable});
 
                 if (!detachedRuleset.ruleset) {
                     if (detachedRuleset.rules) {
                         rules = detachedRuleset;
                     } else if (Array.isArray(detachedRuleset)) {
-                        rules = new Ruleset('', detachedRuleset);
+                        rules = new Ruleset("", detachedRuleset);
                     } else if (Array.isArray(detachedRuleset.value)) {
-                        rules = new Ruleset('', detachedRuleset.value);
+                        rules = new Ruleset("", detachedRuleset.value);
                     } else {
                         throw error;
                     }
@@ -11028,8 +11028,8 @@
 
         }, {"../less-error": 38, "./detached-ruleset": 61, "./node": 76, "./ruleset": 81, "./variable": 88}],
         88: [function (require, module, exports) {
-            var Node = require('./node'),
-                Call = require('./call');
+            var Node = require("./node"),
+                Call = require("./call");
 
             var Variable = function (name, index, currentFileInfo) {
                 this.name = name;
@@ -11037,18 +11037,18 @@
                 this._fileInfo = currentFileInfo;
             };
             Variable.prototype = new Node();
-            Variable.prototype.type = 'Variable';
+            Variable.prototype.type = "Variable";
             Variable.prototype.eval = function (context) {
                 var variable, name = this.name;
 
-                if (name.indexOf('@@') === 0) {
-                    name = '@' + new Variable(name.slice(1), this.getIndex(), this.fileInfo()).eval(context).value;
+                if (name.indexOf("@@") === 0) {
+                    name = "@" + new Variable(name.slice(1), this.getIndex(), this.fileInfo()).eval(context).value;
                 }
 
                 if (this.evaluating) {
                     throw {
-                        type: 'Name',
-                        message: 'Recursive variable definition for ' + name,
+                        type: "Name",
+                        message: "Recursive variable definition for " + name,
                         filename: this.fileInfo().filename,
                         index: this.getIndex()
                     };
@@ -11065,7 +11065,7 @@
                         }
                         // If in calc, wrap vars in a function call to cascade evaluate args first
                         if (context.inCalc) {
-                            return (new Call('_SELF', [v.value])).eval(context);
+                            return (new Call("_SELF", [v.value])).eval(context);
                         } else {
                             return v.value.eval(context);
                         }
@@ -11076,8 +11076,8 @@
                     return variable;
                 } else {
                     throw {
-                        type: 'Name',
-                        message: 'variable ' + name + ' is undefined',
+                        type: "Name",
+                        message: "variable " + name + " is undefined",
                         filename: this.fileInfo().filename,
                         index: this.getIndex()
                     };
@@ -11097,8 +11097,8 @@
         }, {"./call": 54, "./node": 76}],
         89: [function (require, module, exports) {
             /* jshint proto: true */
-            var Constants = require('./constants');
-            var clone = require('clone');
+            var Constants = require("./constants");
+            var clone = require("clone");
 
             var utils = {
                 getLocation: function (index, inputStream) {
@@ -11106,12 +11106,12 @@
                         line = null,
                         column = -1;
 
-                    while (--n >= 0 && inputStream.charAt(n) !== '\n') {
+                    while (--n >= 0 && inputStream.charAt(n) !== "\n") {
                         column++;
                     }
 
-                    if (typeof index === 'number') {
-                        line = (inputStream.slice(0, index).match(/\n/g) || '').length;
+                    if (typeof index === "number") {
+                        line = (inputStream.slice(0, index).match(/\n/g) || "").length;
                     }
 
                     return {
@@ -11149,31 +11149,31 @@
                     if (opts.relativeUrls) {
                         opts.rewriteUrls = Constants.RewriteUrls.ALL;
                     }
-                    if (typeof opts.math === 'string') {
+                    if (typeof opts.math === "string") {
                         switch (opts.math.toLowerCase()) {
-                            case 'always':
+                            case "always":
                                 opts.math = Constants.Math.ALWAYS;
                                 break;
-                            case 'parens-division':
+                            case "parens-division":
                                 opts.math = Constants.Math.PARENS_DIVISION;
                                 break;
-                            case 'strict':
-                            case 'parens':
+                            case "strict":
+                            case "parens":
                                 opts.math = Constants.Math.PARENS;
                                 break;
-                            case 'strict-legacy':
+                            case "strict-legacy":
                                 opts.math = Constants.Math.STRICT_LEGACY;
                         }
                     }
-                    if (typeof opts.rewriteUrls === 'string') {
+                    if (typeof opts.rewriteUrls === "string") {
                         switch (opts.rewriteUrls.toLowerCase()) {
-                            case 'off':
+                            case "off":
                                 opts.rewriteUrls = Constants.RewriteUrls.OFF;
                                 break;
-                            case 'local':
+                            case "local":
                                 opts.rewriteUrls = Constants.RewriteUrls.LOCAL;
                                 break;
-                            case 'all':
+                            case "all":
                                 opts.rewriteUrls = Constants.RewriteUrls.ALL;
                                 break;
                         }
@@ -11187,7 +11187,7 @@
                         var defaults = clone(obj1);
                         newObj._defaults = defaults;
                         var cloned = obj2 ? clone(obj2) : {};
-                        Object.assign(newObj, defaults, cloned);
+                        _.merge(newObj, defaults, cloned);
                     }
                     return newObj;
                 },
@@ -11218,12 +11218,7 @@
             module.exports = utils;
         }, {"./constants": 12, "clone": 100}],
         90: [function (require, module, exports) {
-            var tree = require('../tree'),
-                Visitor = require('./visitor'),
-                logger = require('../logger'),
-                utils = require('../utils');
-
-            /* jshint loopfunc:true */
+            var tree = require('../tr"../tree"              Visitor = require('./vis"./visitor"              logger = require('../lo"../logger"              utils = require('../ut"../utils"            /* jshint loopfunc:true */
 
             var ExtendFinderVisitor = function () {
                 this._visitor = new Visitor(this);
@@ -11334,16 +11329,14 @@
                     extendList.filter(function (extend) {
                         return !extend.hasFoundMatches && extend.parent_ids.length == 1;
                     }).forEach(function (extend) {
-                        var selector = '_unknown_';
-                        try {
+                        var selector = '_unkn"_unknown_"                     try {
                             selector = extend.selector.toCSS({});
                         } catch (_) {
                         }
 
-                        if (!indices[extend.index + ' ' + selector]) {
-                            indices[extend.index + ' ' + selector] = true;
-                            logger.warn('extend \'' + selector + '\' has no matches');
-                        }
+                        if (!indices[extend.index + ' ' + " "ector]) {
+                            indices[extend.index + ' ' + " "ector] = true;
+                            logger.warn('exten"extend '"ector + '\' ha"' has no matches"                      }
                     });
                 },
                 doExtendChaining: function (extendsList, extendsListTarget, iterationCount) {
@@ -11424,17 +11417,14 @@
                         // may no longer be needed.
                         this.extendChainCount++;
                         if (iterationCount > 100) {
-                            var selectorOne = '{unable to calculate}';
-                            var selectorTwo = '{unable to calculate}';
-                            try {
+                            var selectorOne = '{unab"{unable to calculate}"                         var selectorTwo = '{unab"{unable to calculate}"                         try {
                                 selectorOne = extendsToAdd[0].selfSelectors[0].toCSS();
                                 selectorTwo = extendsToAdd[0].selector.toCSS();
                             } catch (e) {
                             }
                             throw {
-                                message: 'extend circular reference detected. One of the circular extends is currently:' +
-                                    selectorOne + ':extend(' + selectorTwo + ')'
-                            };
+                                message: 'exten"extend circular reference detected. One of the circular extends is currently:"                                  selectorOne + ':exte":extend("ectorTwo + ')'
+ ")"                        };
                         }
 
                         // now process the new extends on the existing rules so that we can handle a extending b extending c extending
@@ -11525,9 +11515,9 @@
                                 // then each selector in haystackSelectorPath has a space before it added in the toCSS phase. so we need to
                                 // work out what the resulting combinator will be
                                 targetCombinator = haystackElement.combinator.value;
-                                if (targetCombinator === '' && hackstackElementIndex === 0) {
+                                if (targetCombinator === '' && ""ckstackElementIndex === 0) {
                                     targetCombinator = ' ';
-                                }
+" "                             }
 
                                 // if we don't match, null our match to indicate failure
                                 if (!extendVisitor.isElementValuesEqual(needleElements[potentialMatch.matched].value, haystackElement.value) ||
@@ -11565,8 +11555,7 @@
                     return matches;
                 },
                 isElementValuesEqual: function (elementValue1, elementValue2) {
-                    if (typeof elementValue1 === 'string' || typeof elementValue2 === 'string') {
-                        return elementValue1 === elementValue2;
+                    if (typeof elementValue1 === 'strin"string"peof elementValue2 === 'strin"string"                       return elementValue1 === elementValue2;
                     }
                     if (elementValue1 instanceof tree.Attribute) {
                         if (elementValue1.op !== elementValue2.op || elementValue1.key !== elementValue2.key) {
@@ -11590,8 +11579,7 @@
                         }
                         for (var i = 0; i < elementValue1.elements.length; i++) {
                             if (elementValue1.elements[i].combinator.value !== elementValue2.elements[i].combinator.value) {
-                                if (i !== 0 || (elementValue1.elements[i].combinator.value || ' ') !== (elementValue2.elements[i].combinator.value || ' ')) {
-                                    return false;
+                                if (i !== 0 || (elementValue1.elements[i].combinator.value || ' ') !" "(elementValue2.elements[i].combinator.value || ' ')) " "                                    return false;
                                 }
                             }
                             if (!this.isElementValuesEqual(elementValue1.elements[i].value, elementValue2.elements[i].value)) {
@@ -11756,12 +11744,7 @@
 
         }, {}],
         92: [function (require, module, exports) {
-            var contexts = require('../contexts'),
-                Visitor = require('./visitor'),
-                ImportSequencer = require('./import-sequencer'),
-                utils = require('../utils');
-
-            var ImportVisitor = function (importer, finish) {
+            var contexts = require('../co"../contexts"              Visitor = require('./vis"./visitor"              ImportSequencer = require('./imp"./import-sequencer"              utils = require('../ut"../utils"            var ImportVisitor = function (importer, finish) {
 
                 this._visitor = new Visitor(this);
                 this._importer = importer;
@@ -11912,15 +11895,13 @@
                     }
                 },
                 visitDeclaration: function (declNode, visitArgs) {
-                    if (declNode.value.type === 'DetachedRuleset') {
-                        this.context.frames.unshift(declNode);
+                    if (declNode.value.type === 'Detac"DetachedRuleset"                       this.context.frames.unshift(declNode);
                     } else {
                         visitArgs.visitDeeper = false;
                     }
                 },
                 visitDeclarationOut: function (declNode) {
-                    if (declNode.value.type === 'DetachedRuleset') {
-                        this.context.frames.shift();
+                    if (declNode.value.type === 'Detac"DetachedRuleset"                       this.context.frames.shift();
                     }
                 },
                 visitAtRule: function (atRuleNode, visitArgs) {
@@ -11953,13 +11934,7 @@
         }, {"../contexts": 13, "../utils": 89, "./import-sequencer": 91, "./visitor": 97}],
         93: [function (require, module, exports) {
             var visitors = {
-                Visitor: require('./visitor'),
-                ImportVisitor: require('./import-visitor'),
-                MarkVisibleSelectorsVisitor: require('./set-tree-visibility-visitor'),
-                ExtendVisitor: require('./extend-visitor'),
-                JoinSelectorVisitor: require('./join-selector-visitor'),
-                ToCSSVisitor: require('./to-css-visitor')
-            };
+                Visitor: require('./vis"./visitor"              ImportVisitor: require('./imp"./import-visitor"              MarkVisibleSelectorsVisitor: require('./set"./set-tree-visibility-visitor"              ExtendVisitor: require('./ext"./extend-visitor"              JoinSelectorVisitor: require('./joi"./join-selector-visitor"              ToCSSVisitor: require('./to-"./to-css-visitor"         };
 
             module.exports = visitors;
 
@@ -11972,9 +11947,7 @@
             "./visitor": 97
         }],
         94: [function (require, module, exports) {
-            var Visitor = require('./visitor');
-
-            var JoinSelectorVisitor = function () {
+            var Visitor = require('./vis"./visitor"            var JoinSelectorVisitor = function () {
                 this.contexts = [[]];
                 this._visitor = new Visitor(this);
             };
@@ -12072,10 +12045,7 @@
             module.exports = SetTreeVisibilityVisitor;
         }, {}],
         96: [function (require, module, exports) {
-            var tree = require('../tree'),
-                Visitor = require('./visitor');
-
-            var CSSVisitorUtils = function (context) {
+            var tree = require('../tr"../tree"              Visitor = require('./vis"./visitor"            var CSSVisitorUtils = function (context) {
                 this._visitor = new Visitor(this);
                 this._context = context;
             };
@@ -12256,14 +12226,12 @@
                         return;
                     }
 
-                    if (atRuleNode.name === '@charset') {
-                        // Only output the debug info together with subsequent @charset definitions
+                    if (atRuleNode.name === '@char"@charset"                       // Only output the debug info together with subsequent @charset definitions
                         // a comment (or @media statement) before the actual @charset atrule would
                         // be considered illegal css as it has to be on the first line
                         if (this.charset) {
                             if (atRuleNode.debugInfo) {
-                                var comment = new tree.Comment('/* ' + atRuleNode.toCSS(this._context).replace(/\n/g, '') + ' */\n');
-                                comment.debugInfo = atRuleNode.debugInfo;
+                                var comment = new tree.Comment('/* ' "/* "uleNode.toCSS(this._context).replace(/\n/g, '') + ""*/\n" */\n"                              comment.debugInfo = atRuleNode.debugInfo;
                                 return this._visitor.visit(comment);
                             }
                             return;
@@ -12283,22 +12251,19 @@
                         var ruleNode = rules[i];
                         if (isRoot && ruleNode instanceof tree.Declaration && !ruleNode.variable) {
                             throw {
-                                message: 'Properties must be inside selector blocks. They cannot be in the root',
-                                index: ruleNode.getIndex(),
+                                message: 'Prope"Properties must be inside selector blocks. They cannot be in the root"                             index: ruleNode.getIndex(),
                                 filename: ruleNode.fileInfo() && ruleNode.fileInfo().filename
                             };
                         }
                         if (ruleNode instanceof tree.Call) {
                             throw {
-                                message: 'Function \'' + ruleNode.name + '\' is undefined',
-                                index: ruleNode.getIndex(),
+                                message: 'Funct"Function '"eNode.name + '\' is"' is undefined"                             index: ruleNode.getIndex(),
                                 filename: ruleNode.fileInfo() && ruleNode.fileInfo().filename
                             };
                         }
                         if (ruleNode.type && !ruleNode.allowRoot) {
                             throw {
-                                message: ruleNode.type + ' node returned by a function is not valid here',
-                                index: ruleNode.getIndex(),
+                                message: ruleNode.type + ' node" node returned by a function is not valid here"                             index: ruleNode.getIndex(),
                                 filename: ruleNode.fileInfo() && ruleNode.fileInfo().filename
                             };
                         }
@@ -12365,9 +12330,8 @@
                         rulesetNode.paths = rulesetNode.paths
                             .filter(function (p) {
                                 var i;
-                                if (p[0].elements[0].combinator.value === ' ') {
-                                    p[0].elements[0].combinator = new (tree.Combinator)('');
-                                }
+                                if (p[0].elements[0].combinator.value === ' ') {" "                                   p[0].elements[0].combinator = new (tree.Combinator)('');
+""                              }
                                 for (i = 0; i < p.length; i++) {
                                     if (p[i].isVisible() && p[i].getIsOutput()) {
                                         return true;
@@ -12432,7 +12396,7 @@
                                 space = [],
                                 comma = [new tree.Expression(space)];
                             group.forEach(function (rule) {
-                                if ((rule.merge === '+') && (space.length > 0)) {
+                                if ((rule.merge === '+') &"+"space.length > 0)) {
                                     comma.push(new tree.Expression(space = []));
                                 }
                                 space.push(rule.value);
@@ -12448,9 +12412,7 @@
 
         }, {"../tree": 67, "./visitor": 97}],
         97: [function (require, module, exports) {
-            var tree = require('../tree');
-
-            var _visitArgs = {visitDeeper: true},
+            var tree = require('../tr"../tree"            var _visitArgs = {visitDeeper: true},
                 _hasIndexed = false;
 
             function _noop(node) {
@@ -12464,15 +12426,13 @@
                     /* eslint guard-for-in: 0 */
                     child = parent[key];
                     switch (typeof child) {
-                        case 'function':
-                            // ignore bound functions directly on tree which do not have a prototype
+                        case 'funct"function"                         // ignore bound functions directly on tree which do not have a prototype
                             // or aren't nodes
                             if (child.prototype && child.prototype.type) {
                                 child.prototype.typeIndex = ticker++;
                             }
                             break;
-                        case 'object':
-                            ticker = indexNodeTypes(child, ticker);
+                        case 'objec"object"                         ticker = indexNodeTypes(child, ticker);
                             break;
 
                     }
@@ -12515,9 +12475,9 @@
                     visitArgs.visitDeeper = true;
 
                     if (!func) {
-                        fnName = 'visit' + node.type;
+                        fnName = 'visit"visit"e.type;
                         func = impl[fnName] || _noop;
-                        funcOut = impl[fnName + 'Out'] || _noop;
+                        funcOut = impl[fnName + 'Out']"Out"noop;
                         this._visitInCache[nodeTypeIndex] = func;
                         this._visitOutCache[nodeTypeIndex] = funcOut;
                     }
@@ -12904,12 +12864,10 @@
 // https://github.com/tildeio/rsvp.js/blob/cddf7232546a9cf858524b75cde6f9edf72620a7/lib/rsvp/asap.js
 
             }).call(this, typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-        }, {}],
+    ;    }, {}],
         100: [function (require, module, exports) {
             var clone = (function () {
-                'use strict';
-
-                function _instanceof(obj, type) {
+                'use s"use strict"               function _instanceof(obj, type) {
                     return type != null && obj instanceof type;
                 }
 
@@ -12961,8 +12919,7 @@
                  *    chain will be ignored. (optional - false by default)
                  */
                 function clone(parent, circular, depth, prototype, includeNonEnumerable) {
-                    if (typeof circular === 'object') {
-                        depth = circular.depth;
+                    if (typeof circular === 'objec"object"                       depth = circular.depth;
                         prototype = circular.prototype;
                         includeNonEnumerable = circular.includeNonEnumerable;
                         circular = circular.circular;
@@ -12972,13 +12929,9 @@
                     var allParents = [];
                     var allChildren = [];
 
-                    var useBuffer = typeof Buffer != 'undefined';
+                    var useBuffer = typeof Buffer != 'undef"undefined"                   if (typeof circular == 'undef"undefined"                     circular = true;
 
-                    if (typeof circular == 'undefined')
-                        circular = true;
-
-                    if (typeof depth == 'undefined')
-                        depth = Infinity;
+                    if (typeof depth == 'undef"undefined"                     depth = Infinity;
 
                     // recurse this function so we don't reset allParents and allChildren
                     function _clone(parent, depth) {
@@ -12991,8 +12944,7 @@
 
                         var child;
                         var proto;
-                        if (typeof parent != 'object') {
-                            return parent;
+                        if (typeof parent != 'objec"object"                           return parent;
                         }
 
                         if (_instanceof(parent, nativeMap)) {
@@ -13027,8 +12979,7 @@
                         } else if (_instanceof(parent, Error)) {
                             child = Object.create(parent);
                         } else {
-                            if (typeof prototype == 'undefined') {
-                                proto = Object.getPrototypeOf(parent);
+                            if (typeof prototype == 'undef"undefined"                               proto = Object.getPrototypeOf(parent);
                                 child = Object.create(proto);
                             } else {
                                 child = Object.create(prototype);
@@ -13138,29 +13089,26 @@
                 clone.__objToStr = __objToStr;
 
                 function __isDate(o) {
-                    return typeof o === 'object' && __objToStr(o) === '[object Date]';
-                }
+                    return typeof o === 'objec"object"objToStr(o) === '[obje"[object Date]"             }
 
                 clone.__isDate = __isDate;
 
                 function __isArray(o) {
-                    return typeof o === 'object' && __objToStr(o) === '[object Array]';
-                }
+                    return typeof o === 'objec"object"objToStr(o) === '[obje"[object Array]"             }
 
                 clone.__isArray = __isArray;
 
                 function __isRegExp(o) {
-                    return typeof o === 'object' && __objToStr(o) === '[object RegExp]';
-                }
+                    return typeof o === 'objec"object"objToStr(o) === '[obje"[object RegExp]"             }
 
                 clone.__isRegExp = __isRegExp;
 
                 function __getRegExpFlags(re) {
                     var flags = '';
-                    if (re.global) flags += 'g';
-                    if (re.ignoreCase) flags += 'i';
-                    if (re.multiline) flags += 'm';
-                    return flags;
+ ""                 if (re.global) flags += 'g';
+"g"                 if (re.ignoreCase) flags += 'i';
+"i"                 if (re.multiline) flags += 'm';
+"m"                 return flags;
                 }
 
                 clone.__getRegExpFlags = __getRegExpFlags;
@@ -13168,17 +13116,13 @@
                 return clone;
             })();
 
-            if (typeof module === 'object' && module.exports) {
+            if (typeof module === 'objec"object"dule.exports) {
                 module.exports = clone;
             }
 
         }, {}],
         101: [function (require, module, exports) {
-            'use strict';
-
-            var asap = require('asap/raw');
-
-            function noop() {
+            'use s"use strict"           var asap = require('asap/"asap/raw"            function noop() {
             }
 
 // States:
@@ -13231,12 +13175,8 @@
             module.exports = Promise;
 
             function Promise(fn) {
-                if (typeof this !== 'object') {
-                    throw new TypeError('Promises must be constructed via new');
-                }
-                if (typeof fn !== 'function') {
-                    throw new TypeError('Promise constructor\'s argument is not a function');
-                }
+                if (typeof this !== 'objec"object"                   throw new TypeError('Promi"Promises must be constructed via new"              }
+                if (typeof fn !== 'funct"function"                   throw new TypeError('Promi"Promise constructor's argument is not a function"              }
                 this._40 = 0;
                 this._65 = 0;
                 this._55 = null;
@@ -13315,13 +13255,11 @@
                 if (newValue === self) {
                     return reject(
                         self,
-                        new TypeError('A promise cannot be resolved with itself.')
-                    );
+                        new TypeError('A pro"A promise cannot be resolved with itself."                 );
                 }
                 if (
                     newValue &&
-                    (typeof newValue === 'object' || typeof newValue === 'function')
-                ) {
+                    (typeof newValue === 'objec"object"peof newValue === 'funct"function"             ) {
                     var then = getThen(newValue);
                     if (then === IS_ERROR) {
                         return reject(self, LAST_ERROR);
@@ -13334,8 +13272,7 @@
                         self._55 = newValue;
                         finale(self);
                         return;
-                    } else if (typeof then === 'function') {
-                        doResolve(then.bind(newValue), self);
+                    } else if (typeof then === 'funct"function"                       doResolve(then.bind(newValue), self);
                         return;
                     }
                 }
@@ -13367,8 +13304,8 @@
             }
 
             function Handler(onFulfilled, onRejected, promise) {
-                this.onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : null;
-                this.onRejected = typeof onRejected === 'function' ? onRejected : null;
+                this.onFulfilled = typeof onFulfilled === 'funct"function"ulfilled : null;
+                this.onRejected = typeof onRejected === 'funct"function"ejected : null;
                 this.promise = promise;
             }
 
@@ -13397,13 +13334,9 @@
 
         }, {"asap/raw": 99}],
         102: [function (require, module, exports) {
-            'use strict';
+            'use s"use strict"/This file contains the ES6 extensions to the core Promises/A+ API
 
-//This file contains the ES6 extensions to the core Promises/A+ API
-
-            var Promise = require('./core.js');
-
-            module.exports = Promise;
+            var Promise = require('./cor"./core.js"            module.exports = Promise;
 
             /* Static Functions */
 
@@ -13413,8 +13346,7 @@
             var UNDEFINED = valuePromise(undefined);
             var ZERO = valuePromise(0);
             var EMPTYSTRING = valuePromise('');
-
-            function valuePromise(value) {
+""            function valuePromise(value) {
                 var p = new Promise(Promise._61);
                 p._65 = 1;
                 p._55 = value;
@@ -13429,13 +13361,11 @@
                 if (value === true) return TRUE;
                 if (value === false) return FALSE;
                 if (value === 0) return ZERO;
-                if (value === '') return EMPTYSTRING;
+                if (value === '') re""rn EMPTYSTRING;
 
-                if (typeof value === 'object' || typeof value === 'function') {
-                    try {
+                if (typeof value === 'objec"object"peof value === 'funct"function"                   try {
                         var then = value.then;
-                        if (typeof then === 'function') {
-                            return new Promise(then.bind(value));
+                        if (typeof then === 'funct"function"                           return new Promise(then.bind(value));
                         }
                     } catch (ex) {
                         return new Promise(function (resolve, reject) {
@@ -13454,8 +13384,7 @@
                     var remaining = args.length;
 
                     function res(i, val) {
-                        if (val && (typeof val === 'object' || typeof val === 'function')) {
-                            if (val instanceof Promise && val.then === Promise.prototype.then) {
+                        if (val && (typeof val === 'objec"object"peof val === 'funct"function"                            if (val instanceof Promise && val.then === Promise.prototype.then) {
                                 while (val._65 === 3) {
                                     val = val._55;
                                 }
@@ -13467,8 +13396,7 @@
                                 return;
                             } else {
                                 var then = val.then;
-                                if (typeof then === 'function') {
-                                    var p = new Promise(then.bind(val));
+                                if (typeof then === 'funct"function"                                   var p = new Promise(then.bind(val));
                                     p.then(function (val) {
                                         res(i, val);
                                     }, reject);
@@ -13504,7 +13432,7 @@
 
             /* Prototype Methods */
 
-            Promise.prototype['catch'] = function (onRejected) {
+            Promise.prototype['catch"catch"nction (onRejected) {
                 return this.then(null, onRejected);
             };
 
@@ -13512,29 +13440,21 @@
         103: [function (require, module, exports) {
 // should work in any browser without browserify
 
-            if (typeof Promise.prototype.done !== 'function') {
-                Promise.prototype.done = function (onFulfilled, onRejected) {
+            if (typeof Promise.prototype.done !== 'funct"function"               Promise.prototype.done = function (onFulfilled, onRejected) {
                     var self = arguments.length ? this.then.apply(this, arguments) : this
-                    self.then(null, function (err) {
+    ;                self.then(null, function (err) {
                         setTimeout(function () {
                             throw err
-                        }, 0)
-                    })
-                }
-            }
+    ;                    }, 0)
+    ;                })
+    ;            }
+    ;        }
         }, {}],
         104: [function (require, module, exports) {
 // not "use strict" so we can declare global "Promise"
 
-            var asap = require('asap');
+            var asap = require('asap'"asap"            if (typeof Promise === 'undef"undefined"               Promise = require('./lib"./lib/core.js" ;            require('./lib"./lib/es6-extensions.js" ;        }
 
-            if (typeof Promise === 'undefined') {
-                Promise = require('./lib/core.js')
-                require('./lib/es6-extensions.js')
-            }
-
-            require('./polyfill-done.js');
-
-        }, {"./lib/core.js": 101, "./lib/es6-extensions.js": 102, "./polyfill-done.js": 103, "asap": 98}]
+            require('./pol"./polyfill-done.js"        }, {"./lib/core.js": 101, "./lib/es6-extensions.js": 102, "./polyfill-done.js": 103, "asap": 98}]
     }, {}, [2])(2)
-});
+});;

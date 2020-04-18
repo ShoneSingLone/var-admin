@@ -30,7 +30,6 @@
     /****** respone拦截器==>对响应做处理 ******/
 
     service.interceptors.response.use(
-        debugger;
         function (response) {
             //成功请求到数据
             // app.$vux.loading.hide();
