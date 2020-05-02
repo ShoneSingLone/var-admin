@@ -67,7 +67,6 @@ export default {
       return name.length > 6;
     },
     handleMenuItemClick(menuItem) {
-      debugger;
       console.info("在路由改变的时候缓存，切换时根据id取出");
       /*根据targetTab可以判断当前contentTab是否已经打开*/
       const targetTab = window.APP_STATE.contentTabsRouteMap[menuItem.id];

@@ -1,5 +1,4 @@
 let { APP_STATE, APP_ROUTER } = window;
-
 export default {
     data() {
         return {

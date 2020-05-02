@@ -4,15 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Webpack App</title>
-  <script>
-    window.location.href = "./shell.html"
-  </script>
+
   <link href="static/css/main.css" rel="stylesheet">
 </head>
 
 <body>
   <h1>index.html 用于开发时调试main.js</h1>
-  <a href="./shell.html">跳转至静态页面</a>
+  <a href="./shell.html">加载必要的js文件</a>
+  <script src="./static/js/main.sentry.js"></script>
+  <script src="./static/js/main.js"></script>
+  <script>
+  </script>
 </body>
 
 </html>

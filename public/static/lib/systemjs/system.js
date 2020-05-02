@@ -11,11 +11,21 @@
   let baseUrl;
   let PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
   let aliasBaseUrl = (function () {
-    var scriptMainSentryEle = document.getElementById("script-main-sentry");
-    var jsPath = scriptMainSentryEle.src;
-    var _baseURL = jsPath.substring(0, jsPath.lastIndexOf(PATH_PREFIX + "/js/main.sentry.js")) || "/";
+    const scriptMainSentryEle = document.getElementById("script-main-sentry");
+    if (!scriptMainSentryEle) {
+        const {
+            pathname,
+            href
+        } = window.location;
+        let baseURL = href.substring(0, href.indexOf(pathname));
+        console.error("入口页面未设置script-main-sentry");
+        return baseURL + "/";
+    }
+    let jsPath = scriptMainSentryEle.src;
+    const _baseURL = jsPath.substring(0, jsPath.lastIndexOf(PATH_PREFIX + "/js/main.sentry.js")) || "/";
+    /* 带有完成协议与域名的基本路径 */
     return _baseURL;
-  })();
+})();
 
 
   if (hasDocument) {

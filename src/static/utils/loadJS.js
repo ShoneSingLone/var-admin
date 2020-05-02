@@ -1,8 +1,23 @@
 import camelCase from "lodash/camelCase";
 import merge from "lodash/merge";
 import localforage from "localforage";
+import {
+    getIDFromURL
+} from "./resolvePath";
 
 
+
+function handleProgress(e) {
+    var {
+        loaded,
+        total
+    } = e;
+
+    if (total > 0) {
+        var progress = (loaded / total) * 100;
+        console.log(`${getIDFromURL(e.target.responseURL)}progress: ${progress}`);
+    }
+};
 /* 缓存fetch之后的静态资源 */
 const store_src = localforage.createInstance({
     name: window.APP_CONFIGS.cache.staticName
@@ -119,20 +134,28 @@ function shouldCache(url) {
 }
 
 function loadJSByAddScriptElement(url, _opts) {
+    console.log("url", url);
+
+
     return new Promise((resolve, reject) => {
-        let ele = merge(document.createElement("script"), {
-            id: camelCase(url).toLowerCase(),
-            src: url
-        });
-        ele.onerror = function (e) {
-            ele = ele.onerror = ele.onload = null;
-            reject(e);
-        };
-        ele.onload = function (e) {
-            ele = ele.onerror = ele.onload = null;
-            resolve();
-        };
-        document.body.appendChild(ele);
+        var req = new XMLHttpRequest();
+
+        // report progress events
+        req.addEventListener("error", event=>reject(event), false);
+        req.addEventListener("progress", handleProgress, false);
+        // load responseText into a new script element
+        req.addEventListener("load", function (event) {
+            debugger;
+            var e = event.target;
+            var s = document.createElement("script");
+            s.innerHTML = e.responseText;
+            document.documentElement.appendChild(s);
+            s.addEventListener("load", function () {
+                resolve();
+            });
+        }, false);
+        req.open("GET", url);
+        req.send();
     });
 }
 
@@ -215,6 +238,8 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
             function error() {
                 reject(new Error("XHR error: " + (xhr.status ? " (" + xhr.status + (xhr.statusText ? " " + xhr.statusText : "") + ")" : "") + " loading " + url));
             }
+
+            xhr.onprogress = handleProgress;
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {

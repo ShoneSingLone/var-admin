@@ -3,12 +3,6 @@
     class="Demo"
     style="height:100%;"
   >
-    <!-- <div
-      style="width:400px;position:absolute;top:210px;right:10px;background:white;padding:10px;"
-      class="elevation2"
-    >
-      Iframe:{{ options }}
-    </div> -->
     <iframe
       ref="iframe"
       :src="iframeSrc"
@@ -31,7 +25,11 @@ export default {
     }
   },
   data() {
-    return { iframeSrc: "/login.html" };
+    const { pathname, href } = window.location;
+    let baseURL = href.substring(0, href.indexOf(pathname));
+    return {
+      iframeSrc: `${baseURL}/static/demo/THREE%20Image%20Transition/THREE%20Image%20Transition.html`
+    };
   },
   mounted() {},
   methods: {}
