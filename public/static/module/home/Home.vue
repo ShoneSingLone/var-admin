@@ -29,7 +29,7 @@ export default {
     const { pathname, href } = window.location;
     // var a = pathname.lastOf("/");
     var index = _.lastIndexOf(pathname,"/");
-    let baseURL = href.substring(0, index);
+    let baseURL = pathname.substring(0, index);
     return {
       iframeSrc: `${baseURL}/static/demo/THREE%20Image%20Transition/THREE%20Image%20Transition.html`
     };
