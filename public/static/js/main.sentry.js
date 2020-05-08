@@ -16,7 +16,7 @@
             /* 开发模式不缓存 静态资源 */
             IS_DEV: IS_DEV,
             /* 版本号不一致就从remote更新 .vue之类的资源 */
-            STATIC_RES_VERSION: IS_DEV ? Date.now() : "1587031464799",
+            STATIC_RES_VERSION: IS_DEV ? Date.now() : "1588940354306",
             resource: {
                 /* 重置版本号后不需要更新的资源，第三方库，size相对较大且不容易变化 */
                 exclude: {
@@ -44,7 +44,7 @@
     /* 测试缓存策略 */
     // window.APP_CONFIGS.IS_DEV = false;
     /* 不缓存任何一个资源并且全部使用正常的fetch和script加载方式 */
-    window.APP_CONFIGS.cache.isCacheAll = true;
+    // window.APP_CONFIGS.cache.isCacheAll = true;
 })(/localhost:80/g.test(window.location.href));
 
 (function (PATH_PREFIX) {
