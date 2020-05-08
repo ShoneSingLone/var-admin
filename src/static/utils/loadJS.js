@@ -134,6 +134,23 @@ function shouldCache(url) {
 }
 
 function loadJSByAddScriptElement(url, _opts) {
+    return new Promise((resolve, reject) => {
+        let ele = merge(document.createElement("script"), {
+            id: camelCase(url).toLowerCase(),
+            src: url
+        });
+        ele.onerror = function (e) {
+            ele = ele.onerror = ele.onload = null;
+            reject(e);
+        };
+        ele.onload = function (e) {
+            ele = ele.onerror = ele.onload = null;
+            resolve();
+        };
+        document.body.appendChild(ele);
+    });
+
+    /* 
     console.log("url", url);
 
 
@@ -157,7 +174,7 @@ function loadJSByAddScriptElement(url, _opts) {
         req.open("GET", url);
         req.send();
     });
-}
+ */}
 
 
 
@@ -239,7 +256,10 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
                 reject(new Error("XHR error: " + (xhr.status ? " (" + xhr.status + (xhr.statusText ? " " + xhr.statusText : "") + ")" : "") + " loading " + url));
             }
 
-            xhr.onprogress = handleProgress;
+            xhr.onprogress = e=>{
+                debugger;
+                handleProgress(e);
+            };
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
