@@ -368,13 +368,14 @@ if (typeof window !== 'undefined') {
 /* harmony default export */ var setPublicPath = (null);
 
 // CONCATENATED MODULE: ./src/index.libs.js
+__webpack_require__.p = `${parentUrl}${PATH_PREFIX}/vlibs/`;
+
 const libCollection = {
 
 }
 const PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
 const parentUrl = getBaseurl();
 
-window.__webpack_public_path__ = `${parentUrl}${PATH_PREFIX}/lib/bundle/`;
 
 function getBaseurl() {
     const scriptMainSentryEle = document.getElementById("script-main-sentry");
