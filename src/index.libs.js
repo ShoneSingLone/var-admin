@@ -1,11 +1,11 @@
-__webpack_public_path__ = `${parentUrl}${PATH_PREFIX}/vlibs/`;
 
 const libCollection = {
-
+  
 }
 const PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
 const parentUrl = getBaseurl();
 
+__webpack_public_path__ = `${parentUrl}${PATH_PREFIX}/vlibs/`;
 
 function getBaseurl() {
     const scriptMainSentryEle = document.getElementById("script-main-sentry");
