@@ -8,8 +8,8 @@
     import PageMenu from "@@/static/module/sys/menu/PageMenu.vue";
     import PageDevComponents from "@@/static/module/dev/PageDevComponents.vue";
     import Scrollbar from "@@/static/module/dev/Scrollbar.vue";
-    import vlibs from "./index.libs";
-
+    import {vlibs} from "./index.libs";
+    console.log("vlibs:",vlibs);
     window.vlibs = vlibs;
     export default {
         name: "App",
