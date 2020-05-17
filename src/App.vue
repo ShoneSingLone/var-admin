@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+
     <div :is="currentView" />
   </div>
 </template>
@@ -7,12 +8,15 @@
 <script>
 import PageMenu from "@@/static/module/sys/menu/PageMenu.vue";
 import PageDevComponents from "@@/static/module/dev/PageDevComponents.vue";
-
+import Scrollbar from "@@/static/module/dev/Scrollbar.vue";
+import vlibs from "./index.libs";
+window.vlibs = vlibs;
 export default {
   name: "App",
   components: {
     PageMenu,
-    PageDevComponents
+    PageDevComponents,
+    Scrollbar
   },
   data() {
     return {

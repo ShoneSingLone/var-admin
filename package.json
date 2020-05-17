@@ -13,7 +13,8 @@
     "start:s": "cross-env NODE_ENV=development nodemon server.js",
     "serve": "cross-env NODE_ENV=production PORT=10080 pm2 start server.js -i 4 --name koa-webpack-example --merge-logs --log-date-format='YYYY-MM-DD HH:mm Z' && pm2 save 2> /dev/null",
     "vue:s": "vue-cli-service serve",
-    "vue:b": "vue-cli-service build"
+    "vue:b": "vue-cli-service build",
+    "vl": "vue-cli-service build --target lib --name vlibs --dest public/static/vlibs src/index.libs.js "
   },
   "author": "ShoneSingLone",
   "repository": {

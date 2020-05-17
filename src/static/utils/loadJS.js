@@ -257,7 +257,6 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
             }
 
             xhr.onprogress = e=>{
-                debugger;
                 handleProgress(e);
             };
 
