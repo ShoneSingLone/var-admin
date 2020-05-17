@@ -45,22 +45,10 @@ router.get("/api/menu", async (ctx) => {
 
 });
 router.post("/api/menu", async (ctx) => {
-    console.log(ctx.request);
-    const savePath4menu = path.resolve(__dirname, "./public/static/mock/menu.jsonpost");
-    let res = await fs.writeJSON(savePath4menu, {
-        ctx,
-        menuPath: savePath4menu,
-        info:{
-            query: ctx.query,
-            path: ctx.path,
-            method: ctx.method
-        }
-    });
+    const savePath4menu = path.resolve(__dirname, "./public/static/mock/menu.json");
+    let res = await fs.writeJSON(savePath4menu, ctx.request.body);
     ctx.response.body = {
-        res,
-        query: ctx.query,
-        path: ctx.path,
-        method: ctx.method
+        body:ctx.request.body
     };
 });
 
