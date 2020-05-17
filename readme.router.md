@@ -74,3 +74,6 @@ ViewRouter是以a方式处理
             }
         }
 ```
+
+判断是否是相同的路由的几个规则
+isSameRouter、
