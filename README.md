@@ -307,3 +307,9 @@ window.__webpack_public_path__ = `${parentUrl}${PATH_PREFIX}/lib/bundle/`;
 加载，进度 
 
 
+
+## 文档的读写
+
+1. 开发模式下，本地服务可以读取
+1. 在线模式下，可以通过Gitee或者Github开放的API读写文件，commit
+
