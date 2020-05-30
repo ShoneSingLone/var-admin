@@ -1,12 +1,13 @@
 <template>
-    <div id="app">
-        <div :is="currentView"/>
-    </div>
+  <div id="app">
+    <div :is="currentView" />
+  </div>
 </template>
 
 <script>
     import PageMenu from "@@/static/module/sys/menu/PageMenu.vue";
     import PageDevComponents from "@@/static/module/dev/PageDevComponents.vue";
+    import PageLogin from "@@/static/module/dev/PageLogin.vue";
     import Scrollbar from "@@/static/module/dev/Scrollbar.vue";
     import {vlibs} from "./index.libs";
     console.log("vlibs:",vlibs);
@@ -16,7 +17,8 @@
         components: {
             PageMenu,
             PageDevComponents,
-            Scrollbar
+            Scrollbar,
+            PageLogin
         },
         data() {
             return {
