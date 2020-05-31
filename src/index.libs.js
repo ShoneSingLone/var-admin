@@ -30,6 +30,7 @@ export const vlibs = {
     if(target)return target;
     const libMap = {
       Scrollbar: () => import("@@/static/module/dev/Scrollbar"),
+      PageLogin: () => import("@@/static/module/dev/PageLogin"),
     };
     const res = await (libMap[libName] && libMap[libName]())||"";
     if(res){

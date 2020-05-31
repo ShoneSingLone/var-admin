@@ -1,14 +1,23 @@
 <template>
-  <div id="flip-list-demo" class="demo">
-  trWrapperStyle.transform{{trWrapperStyle.transform}}
-  translateY{{translateY}}
-    <div class="info-wrapper" >
-      <div class="table" :style="trWrapperStyle">
-      <div class="tr" v-for="(item) in contentArrayVisual">
-        <div class="td">
-        {{item}}
+  <div
+    id="flip-list-demo"
+    class="demo"
+  >
+    trWrapperStyle.transform{{ trWrapperStyle.transform }}
+    translateY{{ translateY }}
+    <div class="info-wrapper">
+      <div
+        class="table"
+        :style="trWrapperStyle"
+      >
+        <div
+          v-for="(item) in contentArrayVisual"
+          class="tr"
+        >
+          <div class="td">
+            {{ item }}
+          </div>
         </div>
-      </div>
       </div>
     </div>
   </div>
@@ -22,17 +31,6 @@ export default {
   components: {
     Carousel
   },
-  computed:{
-    contentArrayVisual(){
-      return [
-        last(this.contentArrayReal),
-        ...this.contentArrayReal,
-        this.contentArrayReal[0],
-        this.contentArrayReal[1],
-        this.contentArrayReal[2]
-      ];
-    }
-  },
   data: function() {
     return {
       contentArrayReal:[
@@ -43,6 +41,17 @@ export default {
         transform:"translateY(-50px)"
       },
     };
+  },
+  computed:{
+    contentArrayVisual(){
+      return [
+        last(this.contentArrayReal),
+        ...this.contentArrayReal,
+        this.contentArrayReal[0],
+        this.contentArrayReal[1],
+        this.contentArrayReal[2]
+      ];
+    }
   },
   mounted() {
     this.shuffle();
