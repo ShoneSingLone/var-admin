@@ -14,6 +14,7 @@ export default {
   },
   methods: {
     async submit() {
+      const h = this.$createElement;
       axios
         .post("/api/v1/signup", {
           name: "",
@@ -25,13 +26,17 @@ export default {
         })
         .then(res => {
           console.log("res", res);
+          this.$notify({
+            title: res.data.user.email,
+            type: "success",
+            message: h("i", { style: "color: teal" }, res.data.user.username)
+          });
         })
         .catch(error => {
-          const h = this.$createElement;
-          console.log(error.toJSON());
+          console.log(error.response);
           this.$notify({
             title: error.response.data.message,
-            type:"error",
+            type: "error",
             message: h("i", { style: "color: teal" }, error.response.data.stack)
           });
         });
