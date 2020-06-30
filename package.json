@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "CRM with Koa2, Webpack,Vue Angular React=>var",
   "scripts": {
-    "c": "node ./config/pre/changeversion.js",
+    "changeversion": "node ./config/pre/changeversion.js",
     "git:pull": "git pull && git pull gitee master && git pull coding master",
     "git:push": "npm run c && git push && git push gitee master && git push coding master",
     "lint": "eslint . --ignore-path .eslintignore",
@@ -63,6 +63,7 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-terser": "^5.2.0",
+    "sass-loader": "^8.0.2",
     "style-loader": "^0.21.0",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
