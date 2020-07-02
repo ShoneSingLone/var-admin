@@ -14,6 +14,7 @@ import {
         const {
             $loadCSS,
             $resolvePath,
+            $loadLess,
             $lazyLoadComponent,
             $md5: md5,
             merge,
@@ -40,9 +41,19 @@ import {
                     }
                 }
             },
+            methods: {
+                async loadStyle() {
+                    try {
+                        await $loadLess($resolvePath(`static/module/layout/shell/Shell.less`));
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+            },
             async mounted() {
                 const shellComponent = await $loadComponentByURL("static/module/layout/shell/Shell.vue");
                 this.componentName = shellComponent;
+                this.loadStyle()
             },
             template: "<div :is=\"componentName\">waiting import</div>"
         }).$mount("#app");

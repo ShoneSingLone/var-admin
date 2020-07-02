@@ -1,7 +1,4 @@
-
-const libCollection = {
-  
-}
+const libCollection = {}
 const PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
 const parentUrl = getBaseurl();
 
@@ -25,22 +22,22 @@ function getBaseurl() {
 }
 
 export const vlibs = {
-  async get(libName) {
-    var target = libCollection[libName];
-    if(target)return target;
-    const libMap = {
-      Scrollbar: () => import("@@/static/module/dev/Scrollbar"),
-    };
-    const res = await (libMap[libName] && libMap[libName]())||"";
-    if(res){
-      libCollection[libName] = res&&res.default;
-      return res;
-    }else{
-      console.error("vlibs load "+libName+" failed")
-    }
-  },
-  async test() {
-    let res = await vlibs.get("Scrollbar");
-    console.log("res", res);
-  },
+    async get(libName) {
+        var target = libCollection[libName];
+        if (target) return target;
+        const libMap = {
+            Scrollbar: () => import("@@/static/module/dev/Scrollbar"),
+        };
+        const res = await (libMap[libName] && libMap[libName]()) || "";
+        if (res) {
+            libCollection[libName] = res && res.default;
+            return res;
+        } else {
+            console.error("vlibs load " + libName + " failed")
+        }
+    },
+    async test() {
+        let res = await vlibs.get("Scrollbar");
+        console.log("res", res);
+    },
 };

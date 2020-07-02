@@ -6,7 +6,6 @@ import {
 } from "./resolvePath";
 
 
-
 function handleProgress(e) {
     var {
         loaded,
@@ -42,6 +41,7 @@ const store_src_version = localforage.createInstance({
         console.timeEnd("clear cache");
     }
 })();
+
 /* 加载mian.js意味需要重新缓存数据，checkResourceCache调用用来检查静态资源 */
 export async function checkResourceCache(exclude = {}, _) {
     console.time("checkResourceCache");
@@ -62,6 +62,7 @@ export async function checkResourceCache(exclude = {}, _) {
     _.$$STORE_T.getCache = async url => await store_src_translated.getItem(_.$getIDFromURL(url));
 
     let _version = await store_src.getItem("VERSION");
+
     /* 版本号不相同，需要更新，清除版本号， */
 
     async function clear(store, exclude) {
@@ -70,10 +71,11 @@ export async function checkResourceCache(exclude = {}, _) {
         return Promise
             .all(keys
                 /* 不相同的就清除 */
-                .filter((srcID) => !exclude[srcID])
-                .map(async (srcID) => await store.removeItem(srcID))
+                    .filter((srcID) => !exclude[srcID])
+                    .map(async (srcID) => await store.removeItem(srcID))
             );
     }
+
     if (String(_version) !== String(window.APP_CONFIGS.STATIC_RES_VERSION)) {
         console.log("_version", _version);
         let oldExclude = await store_src.getItem("EXCLUDE");
@@ -174,8 +176,8 @@ function loadJSByAddScriptElement(url, _opts) {
         req.open("GET", url);
         req.send();
     });
- */}
-
+ */
+}
 
 
 export async function cacheStaticResourceAndToCode(url, _opts) {
@@ -236,6 +238,9 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
                 if (url.slice(-4) === ".vue") {
                     source = window._.$VueLoader(url, source);
                 }
+                if (url.slice(-5) === ".less") {
+                    debugger;
+                }
 
                 if (shouldCache) {
                     return window
@@ -256,7 +261,7 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
                 reject(new Error("XHR error: " + (xhr.status ? " (" + xhr.status + (xhr.statusText ? " " + xhr.statusText : "") + ")" : "") + " loading " + url));
             }
 
-            xhr.onprogress = e=>{
+            xhr.onprogress = e => {
                 handleProgress(e);
             };
 
@@ -309,6 +314,7 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
 }
 
 const LOADED_JS = {};
+
 export function loadJS(url) {
     if (LOADED_JS[camelCase(url).toLowerCase()]) return Promise.resolve();
     return (shouldCache(url) ? cacheStaticResourceAndToCode(url) : loadJSByAddScriptElement(url))

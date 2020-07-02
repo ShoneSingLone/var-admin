@@ -1463,10 +1463,10 @@
    * Source loading
    */
   function fetchFetch(url, authorization, integrity, asBuffer) {
-    return xhrFetch(url, authorization, integrity, asBuffer);
+    return (url, authorization, integrity, asBuffer);
   }
 
-  function xhrFetch(url, authorization, integrity, asBuffer) {
+  function (url, authorization, integrity, asBuffer) {
     return window._.$xhrFetchWithCache(url, authorization, integrity, asBuffer);
   }
 
@@ -1513,7 +1513,7 @@
   if (typeof self !== 'undefined' && typeof self.fetch !== 'undefined')
     fetchFunction = fetchFetch;
   else if (hasXhr)
-    fetchFunction = xhrFetch;
+    fetchFunction = ;
   else if (typeof require !== 'undefined' && typeof process !== 'undefined')
     fetchFunction = nodeFetch;
   else

@@ -157,9 +157,7 @@
             },
             async saveMenu() {
                 const res = await window._.$axios.post("/api/menu", this.data);
-                console.log("res", res);
-                debugger;
-
+                window.location.reload();
             },
             async getMenu() {
                 try {

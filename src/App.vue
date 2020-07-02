@@ -9,7 +9,8 @@
     import PageDevComponents from "@@/static/module/dev/PageDevComponents.vue";
     import Scrollbar from "@@/static/module/dev/Scrollbar.vue";
     import {vlibs} from "./index.libs";
-    console.log("vlibs:",vlibs);
+
+    console.log("vlibs:", vlibs);
     window.vlibs = vlibs;
     export default {
         name: "App",
@@ -24,10 +25,10 @@
             };
         },
         mounted() {
-            var url = new URL(window.location);
+            const url = new URL(window.location);
             // Retrieve params via url.search, passed into ctor
-            var params = new URLSearchParams(url.search);
-            var view = params.get("view");
+            const params = new URLSearchParams(url.search);
+            const view = params.get("view");
             if (view) {
                 this.currentView = view;
             }

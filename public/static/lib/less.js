@@ -1,7 +1,7 @@
 /**
  * Less - Leaner CSS v3.11.3
  * http://lesscss.org
- * 
+ *
  * Copyright (c) 2009-2020, Alexis Sellier <self@cloudhead.net>
  * Licensed under the Apache-2.0 License.
  *
@@ -6976,7 +6976,9 @@
               var modifyVars;
               var ignored;
               var preText = '';
+              debugger;
               globalVars = (additionalData && additionalData.globalVars) ? Parser.serializeVars(additionalData.globalVars) + "\n" : '';
+              debugger;
               modifyVars = (additionalData && additionalData.modifyVars) ? "\n" + Parser.serializeVars(additionalData.modifyVars) : '';
               if (context.pluginManager) {
                   var preProcessors = context.pluginManager.getPreProcessors();
@@ -7263,7 +7265,7 @@
                       function f(parse, stop) {
                           return {
                               parse: parse,
-                              stop: stop // when true - stop after parse() and return its result, 
+                              stop: stop // when true - stop after parse() and return its result,
                               // otherwise continue for plain args
                           };
                       }
@@ -10776,11 +10778,11 @@
               }
               new Parser(context_1, imports_1, rootFileInfo)
                   .parse(input, function (e, root) {
-                  if (e) {
-                      return callback(e);
-                  }
-                  callback(null, root, imports_1, options);
-              }, options);
+                      if (e) {
+                          return callback(e);
+                      }
+                      callback(null, root, imports_1, options);
+                  }, options);
           }
       };
       return parse;
@@ -11356,6 +11358,15 @@
               console.log(err);
               callback(err);
           });
+          window._.$loadLess = href=>{
+              fileManager.loadFile(href, null, instanceOptions, environment)
+                  .then(function (loadedFile) {
+                      loadInitialFileCallback(loadedFile);
+                  }).catch(function (err) {
+                  console.log(err);
+                  callback(err);
+              });
+          }
       }
       function loadStyleSheets(callback, reload, modifyVars) {
           for (var i_2 = 0; i_2 < less.sheets.length; i_2++) {
