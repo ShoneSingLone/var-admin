@@ -45,6 +45,8 @@ import {
                 async loadStyle() {
                     try {
                         await $loadLess($resolvePath(`static/module/layout/shell/Shell.less`));
+                        debugger;
+                        await $loadLess($resolvePath(`static/components/LoadingView.less`));
                     } catch (error) {
                         console.error(error);
                     }
