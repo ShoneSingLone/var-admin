@@ -7,6 +7,11 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const {
     BundleAnalyzerPlugin
 } = require("webpack-bundle-analyzer");
+const path = require("path");
+
+function resolve(name) {
+    return path.resolve(name);
+}
 
 module.exports = merge(webpackBaseConfig, {
     resolve: {

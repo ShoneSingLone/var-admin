@@ -95,11 +95,9 @@ function addLocalStorageHandler() {
     });
 }
 
-export function getUtiles() {
-    const Utiles = {};
+export function initUtiles() {
     addLocalStorageHandler();
-    Utiles.$ls = window._.$ls;
     addLoderHandler();
-    Utiles.$loadLibById = window.loadLibById;
-    return Utiles;
+    window._.$loadLibById = window.loadLibById;
+    debugger;
 };

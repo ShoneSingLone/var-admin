@@ -1,5 +1,4 @@
-// import "./styles/main.less";
-// import "../public/static/scss/main.scss";
+import "../public/static/style/less/shell.less";
 import _ from "./static/utils/tree-shaking/lodash.js";
 /* _ 通用工具命名空间 */
 window._ = _;

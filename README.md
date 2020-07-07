@@ -51,6 +51,9 @@ Vue\Angular\React
   - AllSigned 和 RemoteSigned 执行策略可防止 Windows PowerShell 运行没有数字签名的脚本。
 - [less javascriptEnable](https://juejin.im/post/5ca99f4e6fb9a05e6668ae85)
 
+loadLess({url:"",id:"",content:""})
+如果有url 加载url 添加 style块 id=`less${id}`,如果是content,直接编译content
+
 ```js
 set-executionpolicy remotesigned
 ```
