@@ -7,10 +7,13 @@ Vue\Angular\React
   - [gitee 免费版不能自动部署](https://shonesinglone.gitee.io/var-admin/login.html)
   - [coding 能自动部署，但是访问地址是随机码 jz0a27.coding-pages.com](https://jz0a27.coding-pages.com/public/login.html)
 
-基于SystemJS，使用VueJS编写基座的微前端Demo。如果是内部使用的中后台系统，第一次加载资源的时间漫长是可以忍受的，而且内部网络速度按常理是比较快的。并且如果确实有需要，也是可以优化。
+基于SystemJS，使用VueJS编写基座的微前端Demo。
+如果是内部使用的中后台系统，第一次加载资源的时间漫长是可以忍受的，而且内部网络速度按常理是比较快的。
+如果确实有需要，也是可以优化（按照优化手段，是可以渐进增强的，毕竟说到底还是三驾马车在跑）。
 
 - 以微件为单位构建应用；
 - 无须webpack打包；
+- 开发时可以单独用相关脚手架工具，热替换这类的丝滑开发体验一样不少。
 - 在线babel转译ES7（async/await）；
 - 支持.vue单文件；
 - 支持less在线编译；
@@ -18,6 +21,9 @@ Vue\Angular\React
 - 使用Koa2+webpack实现基座HRM开发。
 
 关键 > DOM.replace("#app",ApplicationInstance)=》先占位模块再替换（web开发基本操作）
+
+你要问有什么意义，可能就只是————我喜欢:)
+在线编辑，提交即部署。
 
 ## 参考
 
@@ -74,7 +80,7 @@ yarn add -D stylus stylus-loader confman vue-loader vue-template-compiler stylus
 
 ![middlewareerror.png](./doc/middlewareerror.png)
 
-~~node-sass sass-loader~~安装失败神烦，弃之
+~~node-sass sass-loader~~安装失败神烦，弃之。less在线编译不香吗？gitee的webIDE，提交就是部署不香吗？要用你node-sass？？
 
 ## 生成vue组件的vs code插件
 
@@ -114,7 +120,6 @@ md5
 
 在相同的目录下
 resolvePath以static为前缀
-
 
 ### 通信系统
 
@@ -164,6 +169,11 @@ EventBus 全局通信：messageBox not
 - [] 懒加载CDN路径问题??
 
 缓存逻辑
+
+- [ ] 需要重新设计一下
+- [ ] 自动生成文档可以了解一下
+- [ ] 主要还是考虑版本号的问题
+
 mini是每次访问页面都需要更新的，要求绝对没有缓存；
 mini版本号没有变动，直接读取缓存
 版本号有变动，除了白名单上的全部清除；
