@@ -1,0 +1,36 @@
+.card-wrapper {
+    width: 140px;
+    display: inline-block;
+    height: 60px;
+    text-align: center;
+    margin:24px;
+}
+
+
+.list-complete-item {
+    transform: rotateY(0deg);
+    transition: all 1s;
+    display: inline-block;
+}
+
+.list-complete-item.hide {
+    transform: rotateY(180deg);
+    opacity: 0;
+}
+
+.list-complete-enter, .list-complete-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.list-complete-leave-active {
+    position: absolute;
+}
+
+.this-title{
+    float:right;
+    margin: 24px;
+}
+.this-title.left{
+    float:left;
+}

@@ -1,7 +1,4 @@
-
-const libCollection = {
-  
-}
+const libCollection = {}
 const PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
 const parentUrl = getBaseurl();
 

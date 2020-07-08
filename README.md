@@ -57,6 +57,11 @@ Vue\Angular\React
   - AllSigned 和 RemoteSigned 执行策略可防止 Windows PowerShell 运行没有数字签名的脚本。
 - [less javascriptEnable](https://juejin.im/post/5ca99f4e6fb9a05e6668ae85)
 
+loadLess({url:"",id:"",content:""})
+如果有url 加载url 添加 style块 id=`less${id}`,如果是content,直接编译content
+
+$loadLess("static/style/less/Shell.less");
+
 ```js
 set-executionpolicy remotesigned
 ```
@@ -292,10 +297,10 @@ PAGE_*单例
       EventBus.off("menus-loaded");
 
 
-[x] zong
-[x] 首屏加载资源的进度
-[x] less 在线加载
-[x] babel jsx扩展
+[ ] zong
+[ ] 首屏加载资源的进度
+[ ] less 在线加载
+[ ] babel jsx扩展
 
 
 ## 码表的缓存
@@ -323,3 +328,18 @@ window.__webpack_public_path__ = `${parentUrl}${PATH_PREFIX}/lib/bundle/`;
 1. 开发模式下，本地服务可以读取
 1. 在线模式下，可以通过Gitee或者Github开放的API读写文件，commit
 
+
+currentScript 可以获取路径
+
+```js
+   currentScript: function (window) {
+                    var document = window.document;
+                    return document.currentScript || (function () {
+                        var scripts = document.getElementsByTagName("script");
+                        return scripts[scripts.length - 1];
+                    })();
+                }
+```
+
+
+less 获取less代码文本之后调用的方法在哪里？

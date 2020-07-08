@@ -10,6 +10,7 @@ import {
         const APP_STATE = window.APP_STATE = Vue.observable(shellState);
         const {
             _,
+            loadLibById
         } = window;
         const {
             $loadCSS,
@@ -19,11 +20,11 @@ import {
             merge,
             camelCase,
             $getIDFromURL,
-            $loadComponentByURL
+            $loadComponentByURL,
+            $loadLess
         } = _;
 
-        $loadCSS($resolvePath("static/module/layout/shell/shell.css"));
-
+        // $loadCSS($resolvePath("static/module/layout/shell/shell.css"));
         Vue.component("LoadingView", LoadingView);
         window.app = new Vue({
             data() {
@@ -40,9 +41,11 @@ import {
                     }
                 }
             },
+            methods: { },
             async mounted() {
                 const shellComponent = await $loadComponentByURL("static/module/layout/shell/Shell.vue");
                 this.componentName = shellComponent;
+                $loadLess("static/style/less/Shell.less");
             },
             template: "<div :is=\"componentName\">waiting import</div>"
         }).$mount("#app");

@@ -1,9 +1,6 @@
-import {
-    getUtiles
-} from "@@/static/js/app/github/utils.mjs";
-const {
-    $loadLibById
-} = getUtiles();
+import { initUtiles } from "@@/static/js/app/github/utils.mjs";
+initUtiles();
+const { $loadLibById } = window._;
 export const loadLibById = $loadLibById;
 export async function setAxiosInterceptors(axios, _, Cookies) {
     var service = axios.create({

@@ -22,18 +22,18 @@ module.exports = {
         test: /\.vue$/,
         loader: "vue-loader"
       },
-      {
+     /*  {
         test: /\.(scss|sass)$/,
         use: ["style-loader", "css-loader", {
           loader: "postcss-loader",
           options: {
             sourceMap: false,
-            config: {
+            conf个itig: {
               path: "postcss.config.js"
             }
           }
         }, "sass-loader"],
-      },
+      }, */
       {
         test: /\.less$/,
         loader: [isProd ? {

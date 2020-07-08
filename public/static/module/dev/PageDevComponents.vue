@@ -213,7 +213,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="less">
 .tree-wrapper {
   max-height: 666px;
   overflow: auto;

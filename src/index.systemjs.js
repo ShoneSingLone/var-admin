@@ -26,9 +26,7 @@ export default async (eleMain) => {
             await loadJS(resolvePath(`${PATH_PREFIX}/lib/systemjs/extras/transform.js`));
             await loadJS(resolvePath(`${PATH_PREFIX}/lib/systemjs/babel-transform.js`));
             // await loadJS("https://unpkg.com/@ventose/var@0.0.1/static/lib/systemjs/babel-transform.js");
-            const {
-                SystemJS
-            } = window;
+            const { SystemJS } = window;
 
             SystemJS.config({
                 map: {
@@ -50,7 +48,6 @@ export default async (eleMain) => {
                 await loadJS(resolvePath(`${PATH_PREFIX}/lib/systemjs/babel-transform.js`))
             ]);
         }
-        // await loadJS(resolvePath(`${PATH_PREFIX}/lib/less.min.js`));
         /* 基础的JS加载完毕之后加载entryjs */
         if (eleMain && eleMain.dataset && eleMain.dataset.entry) {
             window.$system = window[window.APP_CONFIGS.IS_OLD_BROWSER ? "SystemJS" : "System"];

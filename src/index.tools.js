@@ -1,14 +1,11 @@
-import "./styles/main.less";
-import "../public/static/scss/main.scss";
+// import "../public/static/style/less/Shell.less";
+/* 路径不一样 */
 import _ from "./static/utils/tree-shaking/lodash.js";
 /* _ 通用工具命名空间 */
 window._ = _;
 /* 以key-val方式方便操作indexedDB */
 import localforage from "localforage";
-import {
-    resolvePath,
-    getIDFromURL
-} from "./static/utils/resolvePath.js";
+import { resolvePath, getIDFromURL } from "./static/utils/resolvePath.js";
 import VueLoader from "./static/utils/VueLoader.js";
 import md5 from "md5";
 import {

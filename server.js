@@ -48,7 +48,7 @@ router.post("/api/menu", async (ctx) => {
     const savePath4menu = path.resolve(__dirname, "./public/static/mock/menu.json");
     let res = await fs.writeJSON(savePath4menu, ctx.request.body);
     ctx.response.body = {
-        body:ctx.request.body
+        body: ctx.request.body
     };
 });
 
