@@ -4,7 +4,8 @@ const {
         $loadJS,
         $resolvePath,
         $axios,
-        $getIDFromURL
+        $getIDFromURL,
+        $xhrFetchWithCache
     },
     $system
 } = window;
@@ -44,6 +45,7 @@ export default async () => {
                  * Vue 特有 全局component
                  * @return VueComponent
                  */
+
                 window._.$loadComponentByURL = async url => {
                     try {
                         url = $resolvePath(url);
@@ -62,6 +64,36 @@ export default async () => {
                 };
             })
     ]);
+    /**/
+    let LESS_GLOBAL_VAR = false;
+    let GLOBAL_VAR_URL = "static/style/less/val.less";
+    window._.$loadLess = async url => {
+        url = $resolvePath(url);
+        return new Promise((resolve, reject) => {
+            Promise.all([
+                LESS_GLOBAL_VAR ? Promise.resolve(LESS_GLOBAL_VAR) : $xhrFetchWithCache(GLOBAL_VAR_URL),
+                $xhrFetchWithCache(url), loadLibById("less")
+            ])
+                .then(([globalVar, contents, less]) => {
+                    if (!LESS_GLOBAL_VAR && globalVar) {
+                        LESS_GLOBAL_VAR = globalVar;
+                        /* GC */
+                        GLOBAL_VAR_URL = null;
+                    }
+                    less.urlPrefix = url.substring(0, url.lastIndexOf("/"));
+                    return less.render(`${LESS_GLOBAL_VAR}\n${contents}`)
+                })
+                .then(({css}) => {
+                    var styleEle = document.createElement("style");
+                    styleEle.innerHTML = css;
+                    styleEle.id = $getIDFromURL(url);
+                    document.body.appendChild(styleEle);
+                    resolve(css)
+                })
+                .catch(error => reject(error));
+        });
+    }
+
     /*  */
     let res = await Promise.all([
         await $loadJS($resolvePath("static/lib/element/index.js"))
@@ -107,7 +139,7 @@ export default async () => {
             }),
         /* js媒体查询库 https://wicky.nillia.ms/enquire.js/ */
         await $loadJS($resolvePath("static/lib/enquire.min.js")),
-        await (async () => {
+        await(async () => {
             const {
                 setAxiosInterceptors,
                 loadLibById /* the same as window.loadLibById */
@@ -117,7 +149,7 @@ export default async () => {
             return Promise.resolve();
         })(),
         /* localStorage */
-        await (() => {
+        await(() => {
             try {
                 /* URL & URLSearchParams */
                 if (URLSearchParams) {
@@ -136,4 +168,5 @@ export default async () => {
         window.open(url, "_blank");
     };
     return Promise.resolve(window.Vue);
-};
+}
+;

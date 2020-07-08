@@ -54,6 +54,8 @@ Vue\Angular\React
 loadLess({url:"",id:"",content:""})
 如果有url 加载url 添加 style块 id=`less${id}`,如果是content,直接编译content
 
+$loadLess("static/style/less/Shell.less");
+
 ```js
 set-executionpolicy remotesigned
 ```

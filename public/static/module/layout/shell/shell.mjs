@@ -10,21 +10,21 @@ import {
         const APP_STATE = window.APP_STATE = Vue.observable(shellState);
         const {
             _,
+            loadLibById
         } = window;
         const {
             $loadCSS,
             $resolvePath,
-            $loadLess,
             $lazyLoadComponent,
             $md5: md5,
             merge,
             camelCase,
             $getIDFromURL,
-            $loadComponentByURL
+            $loadComponentByURL,
+            $loadLess
         } = _;
 
-        $loadCSS($resolvePath("static/module/layout/shell/shell.css"));
-
+        // $loadCSS($resolvePath("static/module/layout/shell/shell.css"));
         Vue.component("LoadingView", LoadingView);
         window.app = new Vue({
             data() {
@@ -41,21 +41,11 @@ import {
                     }
                 }
             },
-            methods: {
-                async loadStyle() {
-                    try {
-                        await $loadLess($resolvePath(`static/module/layout/shell/Shell.less`));
-                        debugger;
-                        await $loadLess($resolvePath(`static/components/LoadingView.less`));
-                    } catch (error) {
-                        console.error(error);
-                    }
-                }
-            },
+            methods: { },
             async mounted() {
                 const shellComponent = await $loadComponentByURL("static/module/layout/shell/Shell.vue");
                 this.componentName = shellComponent;
-                this.loadStyle()
+                $loadLess("static/style/less/Shell.less");
             },
             template: "<div :is=\"componentName\">waiting import</div>"
         }).$mount("#app");

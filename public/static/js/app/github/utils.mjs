@@ -99,5 +99,4 @@ export function initUtiles() {
     addLocalStorageHandler();
     addLoderHandler();
     window._.$loadLibById = window.loadLibById;
-    debugger;
 };

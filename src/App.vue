@@ -10,7 +10,6 @@
     import Scrollbar from "@@/static/module/dev/Scrollbar.vue";
     import {vlibs} from "./index.libs";
 
-    console.log("vlibs:", vlibs);
     window.vlibs = vlibs;
     export default {
         name: "App",

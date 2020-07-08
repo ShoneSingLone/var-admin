@@ -2,11 +2,11 @@
     <el-row :gutter="10">
         <el-col :span="12">
             <el-card class="box-card">
-                
+
                 <div slot="header" class="clearfix"><span>菜单管理</span>
-                <a @click="saveMenu" class="a-btn">
-                    save menu
-                </a></div>
+                    <a @click="saveMenu" class="a-btn">
+                        save menunpm install -g @vue/cli
+                    </a></div>
                 <el-tree
                         :data="data"
                         :props="{label:'name'}"
@@ -197,28 +197,28 @@
         }
     };
 </script>
-<style lang="scss">
-.a-btn {
-  position: relative;
-  display: inline-block;
-  padding: 20px 60px;
-  text-decoration: none;
-  font-weight: 500;
-  letter-spacing: 2px;
-  color: #5a84a2;
-  font-size: 18px;
-  border-radius: 60px;
-  box-shadow: -2px -2px 8px rgba(255, 255, 255, 1),
-              -2px -2px 12px rgba(255, 255, 255, 0.5),
-              inset 2px 2px 4px rgba(255, 255, 255, 0.1),
-              2px 2px 8px rgba(0, 0, 0, 0.15);
- &:hover {
-    cursor: pointer;
-  box-shadow: inset -2px -2px 8px rgba(255, 255, 255, 1),
-              inset -2px -2px 12px rgba(255, 255, 255, 0.5),
-              inset 2px 2px 4px rgba(255, 255, 255, 0.1),
-              inset 2px 2px 8px rgba(0, 0, 0, 0.15);
-}
-}
+<style lang="less">
+    .a-btn {
+        position: relative;
+        display: inline-block;
+        padding: 20px 60px;
+        text-decoration: none;
+        font-weight: 500;
+        letter-spacing: 2px;
+        color: #5a84a2;
+        font-size: 18px;
+        border-radius: 60px;
+        box-shadow: -2px -2px 8px rgba(255, 255, 255, 1),
+            -2px -2px 12px rgba(255, 255, 255, 0.5),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.1),
+        2px 2px 8px rgba(0, 0, 0, 0.15);
+        &:hover {
+            cursor: pointer;
+            box-shadow: inset -2px -2px 8px rgba(255, 255, 255, 1),
+                inset -2px -2px 12px rgba(255, 255, 255, 0.5),
+            inset 2px 2px 4px rgba(255, 255, 255, 0.1),
+            inset 2px 2px 8px rgba(0, 0, 0, 0.15);
+        }
+    }
 
 </style>

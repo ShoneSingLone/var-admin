@@ -238,9 +238,6 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
                 if (url.slice(-4) === ".vue") {
                     source = window._.$VueLoader(url, source);
                 }
-                if (url.slice(-5) === ".less") {
-                    debugger;
-                }
 
                 if (shouldCache) {
                     return window
