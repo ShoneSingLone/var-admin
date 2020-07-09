@@ -74,7 +74,7 @@ this.shuffle();
 };
 </script>
 
-<style scoped  lang="scss" >
+<style scoped  lang="less" >
 .flip-list-move {
   transition: all 3s;
 }
