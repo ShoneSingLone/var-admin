@@ -24,7 +24,6 @@ import {
             $loadLess
         } = _;
 
-        // $loadCSS($resolvePath("static/module/layout/shell/shell.css"));
         Vue.component("LoadingView", LoadingView);
         window.app = new Vue({
             data() {
@@ -41,12 +40,12 @@ import {
                     }
                 }
             },
-            methods: { },
             async mounted() {
                 const shellComponent = await $loadComponentByURL("static/module/layout/shell/Shell.vue");
                 this.componentName = shellComponent;
-                $loadLess("static/style/less/Shell.less");
+                // $loadLess("static/style/less/Shell.less");
             },
+            methods: {},
             template: "<div :is=\"componentName\">waiting import</div>"
         }).$mount("#app");
     } catch (error) {

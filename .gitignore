@@ -85,3 +85,4 @@ typings/
 .dynamodb/ 
 .idea
 ./stats.json
+stats.json

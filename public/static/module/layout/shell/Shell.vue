@@ -1,33 +1,33 @@
 <template>
-    <div class="shell">
-        <!--
+  <div class="shell">
+    <!--
           <pre class="console202003045558 elevation12">
     {{ JSON.stringify(APP_ROUTER.currentRoute ,null,2) }}
           </pre>
         -->
-        <LoadingView
-                :is="APP_STATE.componentNavbar"
-                class="navbar elevation2"
-                @click-toggle="toggleSidebarFold"
-        >
-            {{ APP_STATE.isSidebarFold?APP_STATE.sysNavSubTitle:APP_STATE.sysNavTitle }}
-        </LoadingView>
+    <LoadingView
+      :is="APP_STATE.componentNavbar"
+      class="navbar elevation2"
+      @click-toggle="toggleSidebarFold"
+    >
+      {{ APP_STATE.isSidebarFold?APP_STATE.sysNavSubTitle:APP_STATE.sysNavTitle }}
+    </LoadingView>
 
-        <div class="main flex-horizon">
-            <LoadingView
-                    :is="APP_STATE.componentSidbar"
-                    :class="['sidebar elevation6',{fold:APP_STATE.isSidebarFold}]"
-            >
-                sidebar
-            </LoadingView>
-            <LoadingView
-                    :is="APP_STATE.componentContent"
-                    class="content flex1"
-            >
-                content
-            </LoadingView>
-        </div>
+    <div class="main flex-horizon">
+      <LoadingView
+        :is="APP_STATE.componentSidbar"
+        :class="['sidebar elevation6',{fold:APP_STATE.isSidebarFold}]"
+      >
+        sidebar
+      </LoadingView>
+      <LoadingView
+        :is="APP_STATE.componentContent"
+        class="content flex1"
+      >
+        content
+      </LoadingView>
     </div>
+  </div>
 </template>
 
 <script>
@@ -66,12 +66,11 @@
             });
         },
         async mounted() {
-            try {
+           /*  try {
                 const res = await $axios.get("https://www.singlone.top/api/movieinfo");
-                console.table(res);
             } catch (error) {
                 console.error(error);
-            }
+            } */
         },
         methods: {
             handleChange(value) {

@@ -16,23 +16,23 @@
         /* 开发模式不缓存 静态资源 */
         IS_DEV: IS_DEV,
         /* 版本号不一致就从remote更新 .vue之类的资源 */
-        STATIC_RES_VERSION: IS_DEV ? Date.now() : "1593535079726",
+        STATIC_RES_VERSION: IS_DEV ? Date.now() : "1594260289102",
         resource: {
             /* 重置版本号后不需要更新的资源，第三方库，size相对较大且不容易变化 */
             exclude: {
-                "staticjsappgithubutilsmjs": "202004101411",
-                "staticjshttpaxiosjs": "202004101411",
-                "staticjsmainjs": "202004101411",
-                "staticjsvueantdvmjs": "202004101411",
-                "staticlibantdvantdminjs": "202004101411",
-                "staticliblessminjs": "202004101411",
-                "staticliblodash41711js": "202004101411",
-                "staticlibsystemjsbabeltransformjs": "202004101411",
-                "staticlibsystemjsextrastransformjs": "202004101411",
-                "staticlibsystemjssystemjs": "202004101411",
-                "staticlibvue2611broswerjs": "202004101411",
-                "staticlibvuexesmbrowserjs": "202004101411",
-                "staticlibvuerouteresmbrowserjs": "202004101411"
+                "staticjsappgithubutilsmjs": "202007093915",
+                "staticjshttpaxiosjs": "202007093915",
+                "staticjsmainjs": "202007093915",
+                "staticjsvueantdvmjs": "202007093915",
+                "staticlibantdvantdminjs": "202007093915",
+                "staticliblessminjs": "202007093915",
+                "staticliblodash41711js": "202007093915",
+                "staticlibsystemjsbabeltransformjs": "202007093915",
+                "staticlibsystemjsextrastransformjs": "202007093915",
+                "staticlibsystemjssystemjs": "202007093915",
+                "staticlibvue2611broswerjs": "202007093915",
+                "staticlibvuexesmbrowserjs": "202007093915",
+                "staticlibvuerouteresmbrowserjs": "202007093915"
             }
         }
     };
