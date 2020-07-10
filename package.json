@@ -26,19 +26,19 @@
     "@babel/preset-env": "^7.9.0",
     "ant-design-vue": "^1.4.10",
     "axios": "^0.19.1",
-    "babel-loader": "^8.1.0",
-    "babel-polyfill": "^6.26.0",
     "element-ui": "^2.13.0",
     "jquery": "^3.4.1",
+    "jsstore": "^3.10.1",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^7.4.0",
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",
     "md5": "^2.2.1",
-    "vue": "^2.6.11",
-    "zangodb": "^1.0.7"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
+    "babel-loader": "^8.1.0",
+    "babel-polyfill": "^6.26.0",
     "@babel/core": "^7.10.2",
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",

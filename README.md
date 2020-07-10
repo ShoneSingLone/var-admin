@@ -50,6 +50,7 @@ Vue\Angular\React
 - [output :__webpack_public_path__](https://webpack.docschina.org/concepts/output/#%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6)
 - [MessageChannel](https://developer.mozilla.org/zh-CN/docs/Web/API/MessageChannel)
 - [rollup plugins](https://www.codercto.com/a/40178.html)
+- [rel-noopener-noreferrer](https://stackoverflow.com/questions/50709625/link-with-target-blank-and-rel-noopener-noreferrer-still-vulnerable)
 
 ## Error
 

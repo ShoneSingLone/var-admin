@@ -12,9 +12,12 @@
       >
         <div
           v-for="(item) in contentArrayVisual"
+          :key="item"
           class="tr"
         >
-          <div class="td">
+          <div
+            class="td"
+          >
             {{ item }}
           </div>
         </div>
@@ -33,17 +36,15 @@ export default {
   },
   data: function() {
     return {
-      contentArrayReal:[
-        1,2,3
-      ],
-      translateY:-50,
-      trWrapperStyle:{
-        transform:"translateY(-50px)"
-      },
+      contentArrayReal: [1, 2, 3],
+      translateY: -50,
+      trWrapperStyle: {
+        transform: "translateY(-50px)"
+      }
     };
   },
-  computed:{
-    contentArrayVisual(){
+  computed: {
+    contentArrayVisual() {
       return [
         last(this.contentArrayReal),
         ...this.contentArrayReal,
@@ -57,17 +58,17 @@ export default {
     this.shuffle();
   },
   methods: {
-    stop(){
-this.isStop=true;
+    stop() {
+      this.isStop = true;
     },
-    start(){
-this.shuffle();
+    start() {
+      this.shuffle();
     },
     shuffle: function() {
       setTimeout(this.shuffle, 20);
       if (this.isStop) return;
-      this.translateY=this.translateY-(1);
-      if(this.translateY<=-200)this.translateY=-50;
+      this.translateY = this.translateY - 1;
+      if (this.translateY <= -200) this.translateY = -50;
       this.trWrapperStyle.transform = `translateY(${this.translateY}px)`;
     }
   }
@@ -89,11 +90,11 @@ this.shuffle();
   }
 
   .tr {
-    height:50px;
+    height: 50px;
     color: red;
     .td {
-      margin:auto;
-      background:green;
+      margin: auto;
+      background: green;
       border: 1px #3490ba solid !important;
       color: #fff;
     }

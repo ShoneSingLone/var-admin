@@ -4,6 +4,7 @@
       <a
         href="https://mp.weixin.qq.com/s/VXPD2p7q2S3yR9I7lzAkfw"
         target="_blank"
+        rel="noopener noreferrer"
       >记忆卡片游戏</a>
     </h1>
     <h2 class="this-title">
@@ -58,7 +59,7 @@ export default {
     function generateData(cardNames) {
       return cardNames.map((name, id) => ({ name, id }));
     }
-    let cards = generateData([...cardNames, ...cardNames,"嘻嘻嘻..."]);
+    let cards = generateData([...cardNames, ...cardNames, "嘻嘻嘻..."]);
     return {
       clickTimes: 0,
       cards
