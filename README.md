@@ -27,6 +27,7 @@ Vue\Angular\React
 
 ## 参考
 
+- [Bundleless](https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&mid=2247497574&idx=1&sn=3c8c88f6336436c2dd311069568c4c1e&chksm=e92aca69de5d437f6ba5bd9c00da5396ba5817241c955ddd9c438bf071a252e1025010a0b89f&scene=126&sessionid=1594345206&key=842151d1d681a9dfda94e4c890c25f4b580fccf7ae6547f30920f0011b3fb1b4ae4ffcc98d8dd7a1657ce8de955b6cd78657478840ea2d0fb6e07ecf17625a9df0734c8eed0917c28f729eafbe4636aa&ascene=1&uin=NTY4MTYyOTM1&devicetype=Windows+10+x64&version=62090070&lang=zh_CN&exportkey=A5MbNrMwb%2FyoyNX5cATd0Lw%3D&pass_ticket=vh%2Fhki36G1zswa3xBB2a9B088ypu1Ch2LEvirJg1fIPBgtgDk7ceO%2BHd608c4%2BO2)
 - [rollupjs](https://rollupjs.org/guide/en/#using-config-files)
 - [Server-sent_events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events#Tools)
 - [eventsource](https://github.com/EventSource/eventsource)
