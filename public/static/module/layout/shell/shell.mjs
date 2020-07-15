@@ -1,17 +1,12 @@
 import setDefaultVueAntdvJS from "@@/static/js/vue-element.mjs";
 import LoadingView from "@@/static/components/LoadingView.vue";
-import {
-    shellState
-} from "@@/static/js/app/github/state/index.mjs";
+import { shellState } from "@@/static/js/app/github/state/index.mjs";
 
 (async () => {
     try {
         const Vue = await setDefaultVueAntdvJS();
         const APP_STATE = window.APP_STATE = Vue.observable(shellState);
-        const {
-            _,
-            loadLibById
-        } = window;
+        const { _, loadLibById } = window;
         const {
             $loadCSS,
             $resolvePath,
