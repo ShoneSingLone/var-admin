@@ -24,7 +24,7 @@ const components = {
   // Scrollbar,
   // PageLogin
 };
-// window.vlibs = vlibs;
+window.vlibs = vlibs;
 export default {
   name: "App",
   components,

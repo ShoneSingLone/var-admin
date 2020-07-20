@@ -1,8 +1,10 @@
 import camelCase from "lodash/camelCase";
+
 const PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
 const backslashRegEx = /\\/g;
 const parentUrl = getBaseurl();
 window.__webpack_public_path__ = `${parentUrl}${PATH_PREFIX}/lib/bundle/`;
+
 export function getIDFromURL(url) {
     // console.log(url);
     return camelCase(url.substring(url.lastIndexOf(`/${PATH_PREFIX}`))).toLowerCase();
@@ -26,7 +28,7 @@ function getBaseurl() {
 }
 
 /* system.js line:27 */
-function resolveIfNotPlainOrUrl(relUrl, parentUrl) {
+function resolveIfNotPlainOrUrl(relUrl = "", parentUrl) {
     if (relUrl.indexOf("\\") !== -1)
         relUrl = relUrl.replace(backslashRegEx, "/");
     /* 协议 */
@@ -37,7 +39,7 @@ function resolveIfNotPlainOrUrl(relUrl, parentUrl) {
     /* 相对路径 */
     // relative-url
     else if (relUrl[0] === "." && (relUrl[1] === "/" || relUrl[1] === "." && (relUrl[2] === "/" || relUrl.length === 2 && (relUrl += "/")) ||
-            relUrl.length === 1 && (relUrl += "/")) ||
+        relUrl.length === 1 && (relUrl += "/")) ||
         relUrl[0] === "/") {
         const parentProtocol = parentUrl.slice(0, parentUrl.indexOf(":") + 1);
         // Disabled, but these cases will give inconsistent results for deep backtracking

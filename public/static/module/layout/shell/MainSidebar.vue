@@ -1,46 +1,46 @@
 <template>
-    <aside v-if="sidebarMenuList.length>0">
-        <!-- <pre>
+  <aside v-if="sidebarMenuList.length>0">
+    <!-- <pre>
                 {{ JSON.stringify(_sidebarMenuList,null,2) }}
         </pre>-->
-        <div :class="['search-wrapper elevation2',{'fold':APP_STATE.isSidebarFold}]">
+    <div :class="['search-wrapper elevation2',{'fold':APP_STATE.isSidebarFold}]">
       <span class="icon prefix">
-        <i class="el-input__icon el-icon-search"/>
+        <i class="el-input__icon el-icon-search" />
       </span>
-            <input
-                    v-model.trim="searchKeyWord"
-                    class="input-search"
-                    type="text"
-                    autocomplete="off"
-                    placeholder="检索菜单..."
-            >
-            <span
-                    :class="['icon suffix',{'no-words':!searchKeyWord}]"
-                    @click="searchKeyWord=''"
-            >
-        <i class="el-input__icon el-icon-circle-close"/>
+      <input
+        v-model.trim="searchKeyWord"
+        class="input-search"
+        type="text"
+        autocomplete="off"
+        placeholder="检索菜单..."
+      >
+      <span
+        :class="['icon suffix',{'no-words':!searchKeyWord}]"
+        @click="searchKeyWord=''"
+      >
+        <i class="el-input__icon el-icon-circle-close" />
       </span>
-        </div>
-        <el-scrollbar class="sidebar__inner">
-            <el-menu
-                    :default-active="APP_STATE.sidebarMenuActiveName"
-                    :collapse="APP_STATE.isSidebarFold"
-                    :unique-opened="true"
-                    :collapse-transition="false"
-                    class="sidebar__menu"
-                    @select="handleMenuSelect"
-                    @open="handleMenuOpen"
-                    @close="handleMenuClose"
-            >
-                <main-sidebar-submenu
-                        v-for="menu in _sidebarMenuList"
-                        :key="menu.id"
-                        :menu="menu"
-                />
-            </el-menu>
-        </el-scrollbar>
-    </aside>
-    <LoadingView v-else/>
+    </div>
+    <el-scrollbar class="sidebar__inner">
+      <el-menu
+        :default-active="APP_STATE.sidebarMenuActiveName"
+        :collapse="APP_STATE.isSidebarFold"
+        :unique-opened="true"
+        :collapse-transition="false"
+        class="sidebar__menu"
+        @select="handleMenuSelect"
+        @open="handleMenuOpen"
+        @close="handleMenuClose"
+      >
+        <main-sidebar-submenu
+          v-for="menu in _sidebarMenuList"
+          :key="menu.id"
+          :menu="menu"
+        />
+      </el-menu>
+    </el-scrollbar>
+  </aside>
+  <LoadingView v-else />
 </template>
 
 
@@ -91,7 +91,7 @@
         methods: {
             async getMenu() {
                 try {
-                    /* 可以异步请求数据，此处为同步获取  */
+                    /* 可以异步请求数据  */
                     let data = await $xhrFetchWithCache(
                         $resolvePath("static/mock/menu.json")
                     );

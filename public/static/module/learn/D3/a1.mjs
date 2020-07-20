@@ -2,12 +2,17 @@ export function SimpleWidget(d3, spec) {
     var instance = {}; // <-- A
     var headline, description; // <-- B
     instance.render = function () {
-        var div = d3.select("d3").append("div");
-        div.append("h3").text(headline); // <-- C
-        div.attr("class", "box")
+        var div = d3.select("#d3").append("div");
+        div
+            .append("h3")
+            .text(headline); // <-- C
+
+        div
+            .attr("class", "box")
             .attr("style", "color:" + spec.color) // <-- D
             .append("p")
             .text(description); // <-- E
+
         return instance; // <-- F
     };
 

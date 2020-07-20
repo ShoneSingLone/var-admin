@@ -83,11 +83,11 @@ module.exports =
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"2":1};
+/******/ 		var cssChunks = {"3":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"1":"31d6cfe0","2":"c37919d1"}[chunkId] + ".css";
+/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"1":"31d6cfe0","2":"31d6cfe0","3":"41ec01d2","4":"31d6cfe0"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -368,10 +368,7 @@ if (typeof window !== 'undefined') {
 /* harmony default export */ var setPublicPath = (null);
 
 // CONCATENATED MODULE: ./src/index.libs.js
-
-const libCollection = {
-  
-}
+const libCollection = {}
 const PATH_PREFIX = window.APP_CONFIGS.PATH_PREFIX;
 const parentUrl = getBaseurl();
 
@@ -395,26 +392,25 @@ function getBaseurl() {
 }
 
 const vlibs = {
-  async get(libName) {
-    var target = libCollection[libName];
-    if(target)return target;
-    const libMap = {
-      Scrollbar: () => Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, "ac4c")),
-    };
-    const res = await (libMap[libName] && libMap[libName]())||"";
-    if(res){
-      libCollection[libName] = res&&res.default;
-      return res;
-    }else{
-      console.error("vlibs load "+libName+" failed")
-    }
-  },
-  async test() {
-    let res = await vlibs.get("Scrollbar");
-    console.log("res", res);
-  },
+    async get(libName) {
+        var target = libCollection[libName];
+        if (target) return target;
+        const libMap = {
+            Scrollbar: () => Promise.all(/* import() */[__webpack_require__.e(2), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, "ac4c")),
+            PageLogin: () => Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, "de40")),
+        };
+        const res = await (libMap[libName] && libMap[libName]()) || "";
+        if (res) {
+            return libCollection[libName] = (res && res.default) || (res);
+        } else {
+            console.error("vlibs load " + libName + " failed")
+        }
+    },
+    async test() {
+        let res = await vlibs.get("d3");
+        console.log("res", res);
+    },
 };
-
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
 
 

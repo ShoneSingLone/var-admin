@@ -81,19 +81,18 @@ export default async () => {
                         GLOBAL_VAR_URL = null;
                     }
                     less.urlPrefix = url.substring(0, url.lastIndexOf("/"));
-                    return less.render(`${LESS_GLOBAL_VAR}\n${contents}`)
+                    return less.render(`${LESS_GLOBAL_VAR}\n${contents}`);
                 })
                 .then(({css}) => {
                     var styleEle = document.createElement("style");
                     styleEle.innerHTML = css;
                     styleEle.id = $getIDFromURL(url);
-                    debugger;
                     document.body.appendChild(styleEle);
-                    resolve(css)
+                    resolve(css);
                 })
                 .catch(error => reject(error));
         });
-    }
+    };
 
     /*  */
     let res = await Promise.all([

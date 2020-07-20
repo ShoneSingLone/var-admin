@@ -22,23 +22,22 @@ function getBaseurl() {
 }
 
 export const vlibs = {
-  async get(libName) {
-    var target = libCollection[libName];
-    if(target)return target;
-    const libMap = {
-      Scrollbar: () => import("@@/static/module/dev/Scrollbar"),
-      PageLogin: () => import("@@/static/module/dev/PageLogin")
-    };
-    const res = await (libMap[libName] && libMap[libName]())||"";
-    if(res){
-      libCollection[libName] = res&&res.default;
-      return res;
-    }else{
-      console.error("vlibs load "+libName+" failed")
-    }
-  },
-  async test() {
-    let res = await vlibs.get("Scrollbar");
-    console.log("res", res);
-  },
+    async get(libName) {
+        var target = libCollection[libName];
+        if (target) return target;
+        const libMap = {
+            Scrollbar: () => import("@@/static/module/dev/Scrollbar"),
+            PageLogin: () => import("@@/static/module/dev/PageLogin"),
+        };
+        const res = await (libMap[libName] && libMap[libName]()) || "";
+        if (res) {
+            return libCollection[libName] = (res && res.default) || (res);
+        } else {
+            console.error("vlibs load " + libName + " failed")
+        }
+    },
+    async test() {
+        let res = await vlibs.get("d3");
+        console.log("res", res);
+    },
 };
