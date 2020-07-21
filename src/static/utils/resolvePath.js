@@ -6,8 +6,11 @@ const parentUrl = getBaseurl();
 window.__webpack_public_path__ = `${parentUrl}${PATH_PREFIX}/lib/bundle/`;
 
 export function getIDFromURL(url) {
-    console.log(url);
-    return camelCase(url?.substring(url?.lastIndexOf(`/${PATH_PREFIX}`))).toLowerCase();
+    if (!url) {
+        console.error("未提供 url");
+    } 
+
+    return camelCase(url.substring(url.lastIndexOf(`/${PATH_PREFIX}`))).toLowerCase();
 }
 
 function getBaseurl() {
