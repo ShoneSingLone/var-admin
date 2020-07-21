@@ -25,6 +25,30 @@ Vue\Angular\React
 你要问有什么意义，可能就只是————我喜欢:)
 在线编辑，提交即部署。
 
+## bootstrap
+
+```js
+ "scripts": {
+   /* git push 之后调用修改资源缓存版本号 */
+    "changeversion": "node ./config/pre/changeversion.js",
+    "git:pull": "git pull && git pull gitee master && git pull coding master",
+    "git:push": "npm run changeversion && git push && git push gitee master && git push coding master",
+    "lint": "eslint . --ignore-path .eslintignore",
+    "lint:fix": "eslint --fix . --ignore-path .eslintignore",
+    /* 基座相关，产出main.js */
+    "build": "cross-env NODE_ENV=production webpack --progress --profile --config config/index.js --json > stats.json",
+    /* koa HRM 可以添加api：比如本地开发可以修改菜单menu.json, /api/menu */
+    "start": "node server.js",
+    "start:s": "cross-env NODE_ENV=development nodemon server.js",
+    "serve": "cross-env NODE_ENV=production PORT=10080 pm2 start server.js -i 4 --name koa-webpack-example --merge-logs --log-date-format='YYYY-MM-DD HH:mm Z' && pm2 save 2> /dev/null",
+    /* vue-cli 开发微件 */
+    "vue:s": "vue-cli-service serve",
+    "vue:b": "vue-cli-service build",
+    /* vue-cli 打包libary UMD 通过懒加载JS资源 */
+    "vl": "vue-cli-service build --target lib --name vlibs --dest public/static/vlibs src/index.libs.js "
+  },
+```
+
 ## 参考
 
 - [Bundleless](https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&mid=2247497574&idx=1&sn=3c8c88f6336436c2dd311069568c4c1e&chksm=e92aca69de5d437f6ba5bd9c00da5396ba5817241c955ddd9c438bf071a252e1025010a0b89f&scene=126&sessionid=1594345206&key=842151d1d681a9dfda94e4c890c25f4b580fccf7ae6547f30920f0011b3fb1b4ae4ffcc98d8dd7a1657ce8de955b6cd78657478840ea2d0fb6e07ecf17625a9df0734c8eed0917c28f729eafbe4636aa&ascene=1&uin=NTY4MTYyOTM1&devicetype=Windows+10+x64&version=62090070&lang=zh_CN&exportkey=A5MbNrMwb%2FyoyNX5cATd0Lw%3D&pass_ticket=vh%2Fhki36G1zswa3xBB2a9B088ypu1Ch2LEvirJg1fIPBgtgDk7ceO%2BHd608c4%2BO2)
