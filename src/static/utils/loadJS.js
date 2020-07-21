@@ -11,6 +11,7 @@ function handleProgress(e) {
         loaded,
         total
     } = e;
+    console.log("handleProgress -> loaded / total", loaded, total);
 
     if (total > 0) {
         var progress = (loaded / total) * 100;
@@ -258,9 +259,7 @@ function xhrFetch(url, authorization, integrity, asBuffer) {
                 reject(new Error("XHR error: " + (xhr.status ? " (" + xhr.status + (xhr.statusText ? " " + xhr.statusText : "") + ")" : "") + " loading " + url));
             }
 
-            xhr.onprogress = e => {
-                handleProgress(e);
-            };
+            xhr.onprogress = handleProgress;
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
