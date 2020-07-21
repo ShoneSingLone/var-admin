@@ -12,14 +12,12 @@
       </li>
       <li>
         <a href="https://github.com/d3/d3-plugins">d3-plugins</a>
-      </li> 
+      </li>
       <li>
         <a href="https://bl.ocks.org/mbostock">mbostock</a>
       </li>
       <li>类似jQuery的选择器，链式调用方法，面向过程</li>
-      <li>
-        node()=>获取集合
-      </li>
+      <li>node()=>获取集合</li>
     </ul>
     <div id="d3" />
   </div>
@@ -35,7 +33,7 @@ export default {
     window._ &&
       window._.$loadLess &&
       window._.$loadLess("static/module/learn/D3/PageD3.less");
-      this.init();
+    this.init();
   },
   methods: {
     async init() {
@@ -46,8 +44,8 @@ export default {
         .description(
           "This is a simple widget demonstrating functional javaScript."
         );
+        
       widget.render();
-
       d3.selectAll("li").style("color", "green");
       d3.selectAll("li a")
         .style("color", "green")
