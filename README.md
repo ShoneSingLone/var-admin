@@ -29,7 +29,7 @@ Vue\Angular\React
 
 ```js
  "scripts": {
-   /* git push 之后调用修改资源缓存版本号 */
+   /* git push 之后调用,修改资源缓存版本号 */
     "changeversion": "node ./config/pre/changeversion.js",
     "git:pull": "git pull && git pull gitee master && git pull coding master",
     "git:push": "npm run changeversion && git push && git push gitee master && git push coding master",

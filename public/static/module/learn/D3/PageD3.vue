@@ -35,10 +35,12 @@ export default {
     window._ &&
       window._.$loadLess &&
       window._.$loadLess("static/module/learn/D3/PageD3.less");
+      this.init();
   },
   methods: {
     async init() {
       const d3 = await window.loadLibById("d3");
+      console.log("init -> d3", d3);
       var widget = SimpleWidget(d3, { color: "#6495ed" })
         .headline("Simple Widget")
         .description(
