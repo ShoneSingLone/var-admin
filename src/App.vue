@@ -25,6 +25,7 @@ const components = {
   // PageLogin
 };
 window.vlibs = vlibs;
+
 export default {
   name: "App",
   components,

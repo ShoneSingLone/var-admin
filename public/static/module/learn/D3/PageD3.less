@@ -1,3 +1,15 @@
+.description {
+    text-align: left;
+    text-indent: 2rem;
+    line-height: 24px;
+    padding:16px;
+    margin:16px;
+    background-color: black;
+    border-radius: 8px;
+    border: 1px solid white;
+    color: rgb(64, 255, 64);
+}
+
 .d3-wrapper {
     #d3 {
         text-align: center;
@@ -12,25 +24,45 @@
 
     }
 
-    .h-bar {
-        line-height: 24px;
-        margin: 4px;
-        color:white;
-        text-shadow: 1px 1px 1px black;
+    .d3-container {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: flex-end;
+        background-color: grey;
+        padding: 32px 0 16px 0;
 
-        &.red {
-            background-color: red;
+        .h-bar {
+            float: left;
+            width: 16px;
+            margin: 4px;
+            color: white;
+            text-shadow: 1px 1px 1px black;
+            position: relative;
+
+            .h-bar-text {
+                position: absolute;
+                top: -24px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            &.red {
+                background-color: red;
+            }
+
+            &.yellow {
+                background-color: yellow;
+            }
+
+            &.blue {
+                background-color: #00bcd4;
+            }
+
+            &.green {
+                background-color: green;
+            }
         }
 
-        &.yellow {
-            background-color: yellow;
-        }
-        &.blue {
-            background-color: #00bcd4;
-        }
-
-        &.green {
-            background-color: green;
-        }
     }
 }

@@ -13,6 +13,7 @@ function addLoderHandler() {
         dayjs: "static/lib/dayjs.min.js",
         Cookies: "static/lib/js-cookie-2.2.0/js-cookie.js",
         less: "static/lib/less.js",
+        markdownit:"static/lib/markdown-it.js",
         d3:"static/lib/d3/d3.js"
     };
     /*懒加载第三方库，accessID是第三方库暴露的访问器名字比如 jQuery=》$ 需要在在pathMap里面预先配置加载地址*/
