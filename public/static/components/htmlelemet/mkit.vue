@@ -1,6 +1,6 @@
 <template>
   <div
-    class="markdown-wrapper"
+    class="markdown-wrapper description"
     v-html="html"
   />
 </template>
@@ -11,13 +11,22 @@ export default {
   TEMPLATE_PLACEHOLDER,
   data() {
     return {
-      html: ""
+      originHTML: "",
+      html: "",
     };
   },
   async mounted() {
-    const content = this.$slots.default[0].text;
-    const MarkdownIt = await window.loadLibById("markdownit");
-    this.html = MarkdownIt().render(content);
-  }
+    this.originHTML = this.$slots.default[0].children[0].text;
+    const [marked, hljs] = await Promise.all([
+      window.loadLibById("marked"),
+      window.loadLibById("hljs"),
+    ]);
+    const { Renderer } = marked;
+    const renderer = new Renderer();
+    this.html = marked(this.originHTML, {
+      renderer,
+      highlight: (code) => hljs.highlightAuto(code).value,
+    });
+  },
 };
 </script>

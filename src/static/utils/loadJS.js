@@ -12,7 +12,6 @@ function handleProgress(e) {
         total
     } = e;
     console.log("handleProgress -> loaded / total", loaded, total);
-
     if (total > 0) {
         var progress = (loaded / total) * 100;
         console.log(`${getIDFromURL(e.target.responseURL)}progress: ${progress}`);
@@ -72,8 +71,8 @@ export async function checkResourceCache(exclude = {}, _) {
         return Promise
             .all(keys
                 /* 不相同的就清除 */
-                    .filter((srcID) => !exclude[srcID])
-                    .map(async (srcID) => await store.removeItem(srcID))
+                .filter((srcID) => !exclude[srcID])
+                .map(async (srcID) => await store.removeItem(srcID))
             );
     }
 
