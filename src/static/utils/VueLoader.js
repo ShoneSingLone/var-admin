@@ -4,7 +4,8 @@ export default function (url, code) {
         var openingTag = source.match(regex);
         if (!openingTag) return "";
         else openingTag = openingTag[0];
-        return source.slice(source.indexOf(openingTag) + openingTag.length, source.lastIndexOf("</" + type + ">"));
+        var targetSource = source.slice(source.indexOf(openingTag) + openingTag.length, source.lastIndexOf("</" + type + ">"));;
+        return type === "template" ? targetSource.replace(/`/g, "\\`") : targetSource;
     }
 
     function splitCode() {
