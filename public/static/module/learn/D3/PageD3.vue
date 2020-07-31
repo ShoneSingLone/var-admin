@@ -56,6 +56,19 @@ import { SimpleWidget } from "@@/static/module/learn/D3/a1.mjs";
 import D3Bar from "@@/static/module/learn/D3/subpages/D3Bar.vue";
 import D3Scale from "@@/static/module/learn/D3/subpages/D3Scale.vue";
 import { randomNumber } from "@@/static/js/app/github/utils.mjs";
+import ClassRouter from "@@/static/components/VarRouter/ClassRouter.mjs";
+const { APP_ROUTER } = window;
+const basePath = APP_ROUTER.currentRoute.path;
+const extendRoute = [
+  new ClassRouter(
+    "d3SubPage",
+    "d3",
+    "d3SubPage",
+    "/d3/subpage",
+    "@@/static/module/learn/D3/subpages/D3Bar.vue"
+  ),
+];
+APP_ROUTER.addRoutes(extendRoute);
 
 export default {
   TEMPLATE_PLACEHOLDER,
