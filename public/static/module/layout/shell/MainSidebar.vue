@@ -107,7 +107,6 @@
                             }
                         }
                     }));
-                    debugger;
                     /* 主要是home */
                     APP_ROUTER.addRoutes(APP_STATE.contentTabs.map(tab => tab.content));
                     /* 通知MainContent可以加载了 */

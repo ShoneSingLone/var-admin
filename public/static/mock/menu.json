@@ -14,18 +14,30 @@
     "parentName": null
   },
   {
-    "id": "test1",
-    "path": "/system/test",
+    "id": "business",
     "pid": "sys1",
-    "children": [],
-    "name": "测试页面",
-    "url": "static/module/dev/dev/Test.vue",
+    "name": "业务模块",
     "type": 0,
     "handler": 1,
     "icon": "icon-unorderedlist",
     "permissions": null,
     "sort": 0,
-    "parentName": null
+    "parentName": null,
+    "children": [
+      {
+        "id": "businessBase",
+        "path": "/business/base",
+        "pid": "business",
+        "name": "基础模块页面",
+        "url": "static/module/business/presentation/PageBase.vue",
+        "type": 0,
+        "handler": 1,
+        "icon": "icon-unorderedlist",
+        "permissions": null,
+        "sort": 0,
+        "parentName": null
+      }
+    ]
   },
   {
     "id": "demo",

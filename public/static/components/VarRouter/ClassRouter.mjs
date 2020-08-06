@@ -3,6 +3,7 @@ function checkValue(prop) {
         alert(prop);
     }
 }
+
 export default class router {
     constructor(id, pid, name, path, url, type = 0, handler = 1, icon = "icon-unorderedlist") {
         this.id = id; // "d3_init",

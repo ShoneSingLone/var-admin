@@ -28,7 +28,6 @@
 <script>
 import VarViewRouterContainer from "@@/static/components/VarRouter/VarViewRouterContainer.vue";
 const { APP_STATE, APP_ROUTER, _ } = window;
-
 export default {
   TEMPLATE_PLACEHOLDER,
   components: {

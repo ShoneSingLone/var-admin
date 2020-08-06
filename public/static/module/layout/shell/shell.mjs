@@ -1,12 +1,20 @@
 import setDefaultVueAntdvJS from "@@/static/js/vue-element.mjs";
 import LoadingView from "@@/static/components/LoadingView.vue";
-import { shellState } from "@@/static/js/app/github/state/index.mjs";
+import VarContainer from "@@/static/components/VarRouter/container/VarContainer.vue";
+import VarChild from "@@/static/components/VarRouter/container/VarChild.vue";
+
+import {
+    shellState
+} from "@@/static/js/app/github/state/index.mjs";
 
 (async () => {
     try {
         const Vue = await setDefaultVueAntdvJS();
         const APP_STATE = window.APP_STATE = Vue.observable(shellState);
-        const { _, loadLibById } = window;
+        const {
+            _,
+            loadLibById
+        } = window;
         const {
             $loadCSS,
             $resolvePath,
@@ -20,6 +28,9 @@ import { shellState } from "@@/static/js/app/github/state/index.mjs";
         } = _;
 
         Vue.component("LoadingView", LoadingView);
+        Vue.component("VarContainer", VarContainer);
+        Vue.component("VarChild", VarChild);
+        
         window.app = new Vue({
             data() {
                 return {
