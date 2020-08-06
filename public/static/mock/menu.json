@@ -29,7 +29,7 @@
         "path": "/business/base",
         "pid": "business",
         "name": "基础模块页面",
-        "url": "static/module/business/presentation/PageBase.vue",
+        "url": "static/module/business/presentation/PageBusiness.vue",
         "type": 0,
         "handler": 1,
         "icon": "icon-unorderedlist",

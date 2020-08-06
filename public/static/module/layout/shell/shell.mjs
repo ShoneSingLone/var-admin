@@ -2,6 +2,7 @@ import setDefaultVueAntdvJS from "@@/static/js/vue-element.mjs";
 import LoadingView from "@@/static/components/LoadingView.vue";
 import VarContainer from "@@/static/components/VarRouter/container/VarContainer.vue";
 import VarChild from "@@/static/components/VarRouter/container/VarChild.vue";
+import VarPanel from "@@/static/components/htmlelemet/VarPanel.vue";
 
 import {
     shellState
@@ -10,6 +11,19 @@ import {
 (async () => {
     try {
         const Vue = await setDefaultVueAntdvJS();
+        
+        /* 注册全局组件 */
+        Vue.component("LoadingView", LoadingView);
+        Vue.component("VarContainer", VarContainer);
+        Vue.component("VarChild", VarChild);
+        Vue.component("VarPanel", VarPanel);
+
+
+
+
+
+
+
         const APP_STATE = window.APP_STATE = Vue.observable(shellState);
         const {
             _,
@@ -27,9 +41,7 @@ import {
             $loadLess
         } = _;
 
-        Vue.component("LoadingView", LoadingView);
-        Vue.component("VarContainer", VarContainer);
-        Vue.component("VarChild", VarChild);
+        
         
         window.app = new Vue({
             data() {
