@@ -1,5 +1,5 @@
 <template>
-  <div class="var-panel el-card box-card is-always-shadow"> 
+  <div class="var-container-child-panel el-card box-card is-always-shadow"> 
     <div class="el-card__body"> 
         <slot/> 
     </div>

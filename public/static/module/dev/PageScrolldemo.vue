@@ -24,6 +24,7 @@
             if (!window.vlibs) {
                 await $loadJS($resolvePath("static/vlibs/vlibs.umd.js"));
             }
+            debugger;
             const componentScrollbar = await window.vlibs.vlibs.get("Scrollbar");;
             this.currentComponent = Vue.component("PageScrollDemoScrollbar", componentScrollbar);
         }

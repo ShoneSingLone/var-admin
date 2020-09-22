@@ -1,4 +1,4 @@
-export const routHome = {
+export const routeHome = {
     title: "Home",
     name: "home",
     content: {
@@ -30,14 +30,14 @@ export const shellState = {
     componentContent: "LoadingView",
     /* 当前路由 */
     contentTabsRouteMap: {
-        home: routHome.content
+        home: routeHome.content
     },
     /* 界面Tab页相关 */
-    contentTabs: [routHome],
+    contentTabs: [routeHome],
     /* 记录实际的例如add  update/:id */
     contentTabsMap: {
         /* id:route */
-        home: routHome
+        home: routeHome
     },
     addTab(route) {
         this.contentTabs.push(route);

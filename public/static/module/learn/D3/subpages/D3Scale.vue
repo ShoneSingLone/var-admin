@@ -57,13 +57,19 @@ export default {
     };
   },
   async mounted() {
+    /* 300*300  */
     const d3 = await window.loadLibById("d3");
     const data = [...new Array(10)].map((i, ii) => (ii + 1) * 3);
 
+    /* 定义域 映射到值域 */
     const fnLine = d3.scaleLinear().domain([1, 10]).range([1, 10]);
-    const fnLineCapped = d3.scaleLinear().domain([1, 10]).range([1, 20]);
+    const fnLineCapped = d3.scaleLinear().domain([1, 10]).range([1, 30]);
 
-    /* 指数 */
+    /* exponet指数 */
+    /* 定义域 domain */
+    /* 值域 range */
+    /* 值域 rangeRound 结果四舍五入 */
+
     const fnLinePow = d3.scalePow().exponent(2);
     const fnLinePowCapped = d3
       .scalePow()
@@ -84,7 +90,6 @@ export default {
     this.linePowCapped += getLine(fnLinePowCapped, data);
     this.lineLog += getLine(fnLineLog, data);
     this.lineLogCapped += getLine(fnLineLogCapped, data);
-  },
-  methods: {},
+  }
 };
 </script>

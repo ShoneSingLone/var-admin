@@ -28,6 +28,7 @@ export const vlibs = {
         const libMap = {
             Scrollbar: () => import("@@/static/module/dev/Scrollbar"),
             PageLogin: () => import("@@/static/module/dev/PageLogin"),
+            PageLayoutEditor: () => import("@@/static/bundle/PageLayoutEditor"),
         };
         const res = await (libMap[libName] && libMap[libName]()) || "";
         if (res) {

@@ -27,25 +27,28 @@
 const {
   _: { $lazyLoadComponent, $resolvePath, $loadComponentByURL },
   APP_STATE,
-  APP_ROUTER
+  APP_ROUTER,
 } = window;
 
 // const { $system } = _;
 
+/* 懒加载 */
+function getComponentPath(path) {
+  return $lazyLoadComponent($resolvePath(path));
+}
 export default {
   TEMPLATE_PLACEHOLDER,
   components: {
-    VarViewRouterContainerIframe: $lazyLoadComponent(
-      $resolvePath("static/components/VarRouter/VarViewRouterContainerIframe.vue")
-    )
+    VarViewRouterContainerIframe: getComponentPath( "static/components/VarRouter/VarViewRouterContainerIframe.vue" ),
+    PageForBundle: getComponentPath("static/module/layout/PageForBundle.vue"),
   },
   props: {
     options: {
       type: Object,
-      default: function() {
+      default: function () {
         return {};
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -60,8 +63,8 @@ export default {
         top: "10px",
         right: "10px",
         background: "white",
-        padding: "10px"
-      }
+        padding: "10px",
+      },
     };
   },
 
@@ -70,7 +73,7 @@ export default {
       return (
         (this.options && this.options.tab && this.options.tab.content) || {}
       );
-    }
+    },
   },
   async mounted() {
     setInterval(() => {
@@ -86,8 +89,8 @@ export default {
       if (!tab.path) return;
       if (tab.handler) {
         const HANDLER_MAP = {
-          "1": "vueComponentHandler",
-          "2": "iframeHandler"
+          1: "vueComponentHandler",
+          2: "iframeHandler",
         };
         const fn = this[HANDLER_MAP[tab.handler]];
         return fn && fn(tab);
@@ -112,7 +115,7 @@ export default {
       } catch (error) {
         console.error(error);
       }
-    }
-  }
+    },
+  },
 };
 </script>

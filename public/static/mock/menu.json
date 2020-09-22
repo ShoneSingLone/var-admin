@@ -63,6 +63,17 @@
         "icon": ""
       },
       {
+        "id": "layoutEditor",
+        "path": "/layout/editor",
+        "pid": "",
+        "name": "布局编辑器",
+        "url": "static/module/layout/PageForBundle.vue",
+        "bundle": "PageLayoutEditor",
+        "type": 0,
+        "handler": 1,
+        "icon": ""
+      },
+      {
         "id": "cardgame",
         "path": "/game/remenber-car",
         "pid": "",

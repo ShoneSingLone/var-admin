@@ -8,7 +8,8 @@
 <script>
 // import PageMenu from "@@/static/module/sys/menu/PageMenu.vue";
 // import PageMvvm from "@@/static/module/learn/MVVM/PageMvvm.vue";
-import PageMvvm from "@@/static/module/learn/D3/PageD3.vue";
+// import PageMvvm from "@@/static/module/learn/D3/PageD3.vue";
+import PageMvvm from "@@/static/bundle/PageLayoutEditor/index.vue";
 // import PageDevComponents from "@@/static/module/dev/PageDevComponents.vue";
 // import PageLogin from "@@/static/module/dev/PageLogin.vue";
 // import Scrollbar from "@@/static/module/dev/Scrollbar.vue";
