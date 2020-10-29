@@ -28,11 +28,9 @@ export default {
     if (!window.vlibs) {
       await $loadJS($resolvePath("static/vlibs/vlibs.umd.js"));
     }
-
     const componentScrollbar = await window.vlibs.vlibs.get(
       this.options.bundle
     );
-
     if (!componentScrollbar) return;
 
     /* 

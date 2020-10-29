@@ -1,6 +1,6 @@
 module.exports = {
-    // extends: ["plugin:vue/essential", "@vue/prettier"],
-    extends: ["plugin:vue/recommended", 'plugin:vue/recommended'],
+    extends: ["plugin:vue/essential", "@vue/prettier"],
+    // extends: ["plugin:vue/recommended", 'plugin:vue/recommended'],
     "env": {
         "browser": true,
         "commonjs": true,

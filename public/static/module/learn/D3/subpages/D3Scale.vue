@@ -1,41 +1,38 @@
 <template>
   <div class="d3-container d3-scale">
+    <mkit>
+      <pre>
+ ## scale
+
+ - 线性
+ - 指数
+ - 对数
+      </pre>
+    </mkit>
     <svg>
       <g>
-        <path
-          :d="lineCapped"
-          style="stroke:black;fill:none;"
-        />
-        <path
-          :d="line"
-          style="stroke:green;fill:none;"
-        />
+        <path :d="lineCapped" style="stroke: black; fill: none" />
+        <path :d="line" style="stroke: green; fill: none" />
       </g>
     </svg>
     <svg>
       <g>
-        <path
-          :d="linePowCapped"
-          style="stroke:black;fill:none;"
-        />
-        <path
-          :d="linePow"
-          style="stroke:green;fill:none;"
-        />
+        <path :d="linePowCapped" style="stroke: black; fill: none" />
+        <path :d="linePow" style="stroke: green; fill: none" />
       </g>
     </svg>
     <svg>
       <g>
-        <path
-          :d="lineLogCapped"
-          style="stroke:black;fill:none;"
-        />
-        <path
-          :d="lineLog"
-          style="stroke:green;fill:none;"
-        />
+        <path :d="lineLogCapped" style="stroke: black; fill: none" />
+        <path :d="lineLog" style="stroke: green; fill: none" />
       </g>
     </svg>
+    <mkit>
+      <pre>
+## 时间
+
+      </pre>
+    </mkit>
   </div>
 </template>
 <style>
@@ -90,6 +87,6 @@ export default {
     this.linePowCapped += getLine(fnLinePowCapped, data);
     this.lineLog += getLine(fnLineLog, data);
     this.lineLogCapped += getLine(fnLineLogCapped, data);
-  }
+  },
 };
 </script>

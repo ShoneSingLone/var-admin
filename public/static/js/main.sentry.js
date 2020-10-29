@@ -1,41 +1,41 @@
 (function (IS_DEV) {
     window
         .APP_CONFIGS = {
-        /* 静态资源文件夹，统一前缀 对应public\static*/
-        PATH_PREFIX: "static",
-        start: Date.now(),
-        cache: {
-            staticName: "STATIC_RES_DB",
-            staticNameTranslated: "STATIC_RES_DB_TRANSLATED",
-            staticNameVersion: "STATIC_RES_DB_VERSION",
-            /* 是否缓存所有能缓存的静态资源 */
-            isCacheAll: IS_DEV ? false : true
-        },
-        /* IE加载在线转译代码 */
-        IS_OLD_BROWSER: (typeof fetch === "undefined"),
-        /* 开发模式不缓存 静态资源 */
-        IS_DEV: IS_DEV,
-        /* 版本号不一致就从remote更新 .vue之类的资源 */
-        STATIC_RES_VERSION: IS_DEV ? Date.now() : "1596708323805",
-        resource: {
-            /* 重置版本号后不需要更新的资源，第三方库，size相对较大且不容易变化 */
-            exclude: {
-                "staticjsappgithubutilsmjs": "202007093915",
-                "staticjshttpaxiosjs": "202007093915",
-                "staticjsmainjs": "202007093915",
-                "staticjsvueantdvmjs": "202007093915",
-                "staticlibantdvantdminjs": "202007093915",
-                "staticliblessminjs": "202007093915",
-                "staticliblodash41711js": "202007093915",
-                "staticlibsystemjsbabeltransformjs": "202007093915",
-                "staticlibsystemjsextrastransformjs": "202007093915",
-                "staticlibsystemjssystemjs": "202007093915",
-                "staticlibvue2611broswerjs": "202007093915",
-                "staticlibvuexesmbrowserjs": "202007093915",
-                "staticlibvuerouteresmbrowserjs": "202007093915"
+            /* 静态资源文件夹，统一前缀 对应public\static*/
+            PATH_PREFIX: "static",
+            start: Date.now(),
+            cache: {
+                staticName: "STATIC_RES_DB",
+                staticNameTranslated: "STATIC_RES_DB_TRANSLATED",
+                staticNameVersion: "STATIC_RES_DB_VERSION",
+                /* 是否缓存所有能缓存的静态资源 */
+                isCacheAll: IS_DEV ? false : true
+            },
+            /* IE加载在线转译代码 */
+            IS_OLD_BROWSER: (typeof fetch === "undefined"),
+            /* 开发模式不缓存 静态资源 */
+            IS_DEV: IS_DEV,
+            /* 版本号不一致就从remote更新 .vue之类的资源 */
+            STATIC_RES_VERSION: IS_DEV ? Date.now() : "1600790087198",
+            resource: {
+                /* 重置版本号后不需要更新的资源，第三方库，size相对较大且不容易变化 */
+                exclude: {
+                    "staticjsappgithubutilsmjs": "202007093915",
+                    "staticjshttpaxiosjs": "202007093915",
+                    "staticjsmainjs": "202007093915",
+                    "staticjsvueantdvmjs": "202007093915",
+                    "staticlibantdvantdminjs": "202007093915",
+                    "staticliblessminjs": "202007093915",
+                    "staticliblodash41711js": "202007093915",
+                    "staticlibsystemjsbabeltransformjs": "202007093915",
+                    "staticlibsystemjsextrastransformjs": "202007093915",
+                    "staticlibsystemjssystemjs": "202007093915",
+                    "staticlibvue2611broswerjs": "202007093915",
+                    "staticlibvuexesmbrowserjs": "202007093915",
+                    "staticlibvuerouteresmbrowserjs": "202007093915"
+                }
             }
-        }
-    };
+        };
     /* for test 用Chrome跑IE代码,方便调试 */
     // window.APP_CONFIGS.IS_OLD_BROWSER = true;
     /* 开发模式缓存静态资源 */

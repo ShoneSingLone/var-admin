@@ -24,14 +24,13 @@
 > 满射函数
 
 > 假设A和B为两个非空集合。函数f是A到B的一个映射，使得集合A中的任何一个元素在集合B中都有唯一的元素与它对应。当元素b是集合A中的元素a通过函数f映射到集合B中的唯一元素时，记作f(a)=b。
-      </pre>
+      </pre
+          >
         </mkit>
         <div v-html="html" />
         <div id="d3" />
         <div>
-          <el-button @click="newData">
-            new data
-          </el-button>
+          <el-button @click="newData"> new data </el-button>
           <div>{{ dataBar }}</div>
         </div>
         <mkit>
@@ -42,16 +41,13 @@
 关键是理解这种数据与图形的映射关系，具体什么技术实现，由其他考量。
 `max` `min` 这些都是纯数据处理，并不一定用`d3`，像`lodash` 这些都可以做，特别是ES6原生的API也可以用（尽管我不喜欢用）。
 有了`Promise.all` `d3`的`defer`也不是特别需要了。
-      </pre>
+      </pre
+          >
         </mkit>
         <D3Bar :data="dataBar" />
       </div>
     </VarChild>
     <VarChild i-am="scale">
-      <mkit>
-        <pre> ## scale
-        ###  </pre>
-      </mkit>
       <D3Scale />
     </VarChild>
   </VarContainer>
@@ -59,10 +55,10 @@
 <script>
 import basePageMixin from "@@/static/js/app/github/mixin/basePageMixin.mjs";
 import { SimpleWidget } from "@@/static/module/learn/D3/a1.mjs";
-import D3Bar from "@@/static/module/learn/D3/subpages/D3Bar.vue";
-import D3Scale from "@@/static/module/learn/D3/subpages/D3Scale.vue";
 import { randomNumber } from "@@/static/js/app/github/utils.mjs";
 import ClassRouter from "@@/static/components/VarRouter/ClassRouter.mjs";
+import D3Bar from "@@/static/module/learn/D3/subpages/D3Bar.vue";
+import D3Scale from "@@/static/module/learn/D3/subpages/D3Scale.vue";
 
 export default {
   TEMPLATE_PLACEHOLDER,
@@ -84,9 +80,11 @@ export default {
     window._ &&
       window._.$loadLess &&
       window._.$loadLess("static/module/learn/D3/PageD3.less");
+    /* style 是为了HRM 方便开发 */
 
     const { APP_ROUTER } = window;
     const basePath = APP_ROUTER.currentRoute.path;
+    /* 动态加载tab页的数据，但是必须先加载主页面 */
     const extendRoute = [
       new ClassRouter(
         "d3SubPage",
@@ -97,7 +95,6 @@ export default {
       ),
     ];
     APP_ROUTER.addRoutes(extendRoute);
-
     this.init();
   },
   methods: {
