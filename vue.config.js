@@ -1,10 +1,20 @@
 const path = require("path");
+const _ = require("lodash");
 
 function resolve(dir) {
     return path.join(__dirname, dir);
 }
 
-module.exports = {
+module.exports = ((defaultOptions) => {
+    const envOptions = {};
+
+    if (process.env.NODE_ENV === "lib") {
+        envOptions.css = {
+            extract: false
+        };
+    }
+    return _.merge({}, defaultOptions, envOptions)
+})({
     lintOnSave: false,
     runtimeCompiler: true,
     devServer: {
@@ -34,4 +44,4 @@ module.exports = {
             chunks: ["chunk-vendors", "chunk-common", "index"]
         }
     }
-};
+});

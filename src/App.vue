@@ -8,11 +8,12 @@
 <script>
 // import PageMenu from "@@/static/module/sys/menu/PageMenu.vue";
 // import PageMvvm from "@@/static/module/learn/MVVM/PageMvvm.vue";
-import PageDev from "@@/static/module/learn/D3/PageD3.vue";
+// import PageDev from "@@/static/module/learn/D3/PageD3.vue";
 // import PageDevComponents from "@@/static/module/dev/PageDevComponents.vue";
 // import PageLogin from "@@/static/module/dev/PageLogin.vue";
 /* 需要打包 */
-import PageMvvm from "@@/static/bundle/PageLayoutEditor/index.vue";
+import PageDev from "@@/static/bundle/PageBpmnjs/index.vue";
+// import PageMvvm from "@@/static/bundle/PageLayoutEditor/index.vue";
 // import Scrollbar from "@@/static/module/dev/Scrollbar.vue";
 import { vlibs } from "./index.libs";
 import $ from "jquery";

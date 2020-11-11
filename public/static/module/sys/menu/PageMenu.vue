@@ -47,7 +47,12 @@
       </el-card>
     </el-col>
     <el-col :span="12">
-      currentSelect
+      				<mkit>
+                  <pre>
+>开发模式下 基于koa作为后端服务提供 CRUD=>menu.json 的API,线上无
+                  </pre>
+              </mkit>
+      <h4>当前选择</h4>
       <div>
         <el-button @click="modifi()">
           修改

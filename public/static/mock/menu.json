@@ -106,5 +106,28 @@
         "icon": ""
       }
     ]
+  },
+  {
+    "id": "bpmnjs",
+    "path": "/bpmnjs",
+    "pid": "0",
+    "name": "bpmnjs练习",
+    "url": "",
+    "type": 0,
+    "handler": 1,
+    "icon": "icon-setting",
+    "children": [
+      {
+        "id": "bpmnjs_init",
+        "path": "/bpmnjs/init",
+        "pid": "",
+        "name": "bpmnjs练习_init",
+        "url": "static/module/layout/PageForBundle.vue",
+        "bundle": "PageBpmnjs",
+        "type": 0,
+        "handler": 1,
+        "icon": ""
+      }
+    ]
   }
 ]

@@ -14,7 +14,7 @@
     "serve": "cross-env NODE_ENV=production PORT=10080 pm2 start server.js -i 4 --name koa-webpack-example --merge-logs --log-date-format='YYYY-MM-DD HH:mm Z' && pm2 save 2> /dev/null",
     "vue:s": "vue-cli-service serve",
     "vue:b": "vue-cli-service build",
-    "vl": "vue-cli-service build --target lib --name vlibs --dest public/static/vlibs src/index.libs.js "
+    "vl": "cross-env NODE_ENV=lib vue-cli-service build --target lib --name vlibs --dest public/static/vlibs src/index.libs.js "
   },
   "author": "ShoneSingLone",
   "repository": {
@@ -26,6 +26,9 @@
     "@babel/preset-env": "^7.9.0",
     "ant-design-vue": "^1.4.10",
     "axios": "^0.19.1",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "bpmn-js": "^7.4.0",
+    "bpmn-js-properties-panel": "^0.37.5",
     "d3": "^5.16.0",
     "element-ui": "^2.13.0",
     "jquery": "^3.4.1",
@@ -46,6 +49,7 @@
     "@rollup/plugin-node-resolve": "^7.0.0",
     "@vue/cli-service": "^4.1.0",
     "babel-loader": "^8.1.0",
+    "babel-plugin-transform-vue-jsx": "^3.7.0",
     "babel-polyfill": "^6.26.0",
     "clean-webpack-plugin": "^0.1.19",
     "confman": "^0.2.10",
