@@ -72,7 +72,6 @@ export default {
       const targetTab = window.APP_STATE.contentTabsRouteMap[menuItem.id];
       menuItem = targetTab ? targetTab : menuItem;
       /* 单向修改路由信息 */
-      console.log("menuItem", menuItem);
       const HANDLER_MAP = {
         "0": () => {
           /* TODO:如果是 iframe */

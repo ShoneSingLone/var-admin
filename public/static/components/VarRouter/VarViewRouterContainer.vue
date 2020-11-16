@@ -1,6 +1,6 @@
 <template>
   <div
-    v-show="APP_STATE.contentTabsActiveName===tab.id"
+    v-show="APP_STATE.contentTabsActiveName === tab.id"
     class="var-view-router-container"
   >
     <!-- <div
@@ -15,10 +15,7 @@
     {{ currentComponent }}
     {{ tab }}
     -->
-    <div
-      :is="currentComponent"
-      :options="tab"
-    />
+    <div :is="currentComponent" :options="tab" />
     <!-- <pre> {{ JSON.stringify(options.tab,null,2) }} </pre> -->
   </div>
 </template>
@@ -39,7 +36,9 @@ function getComponentPath(path) {
 export default {
   TEMPLATE_PLACEHOLDER,
   components: {
-    VarViewRouterContainerIframe: getComponentPath( "static/components/VarRouter/VarViewRouterContainerIframe.vue" ),
+    VarViewRouterContainerIframe: getComponentPath(
+      "static/components/VarRouter/VarViewRouterContainerIframe.vue"
+    ),
     PageForBundle: getComponentPath("static/module/layout/PageForBundle.vue"),
   },
   props: {
@@ -87,21 +86,7 @@ export default {
   methods: {
     init(tab) {
       if (!tab.path) return;
-      if (tab.handler) {
-        const HANDLER_MAP = {
-          1: "vueComponentHandler",
-          2: "iframeHandler",
-        };
-        const fn = this[HANDLER_MAP[tab.handler]];
-        return fn && fn(tab);
-      } else if (tab.url) {
-        this.iframeHandler(tab);
-      } else {
-        console.error("未找到任何匹配路由信息的容器");
-      }
-    },
-    iframeHandler() {
-      this.currentComponent = "VarViewRouterContainerIframe";
+      this.vueComponentHandler(tab);
     },
     async vueComponentHandler(tab) {
       try {

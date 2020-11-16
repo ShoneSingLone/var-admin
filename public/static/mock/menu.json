@@ -43,7 +43,7 @@
     "id": "demo",
     "path": "/demo",
     "pid": "0",
-    "name": "样例Demo",
+    "name": "Demo",
     "type": 0,
     "handler": 1,
     "icon": "icon-setting",
@@ -86,10 +86,10 @@
     ]
   },
   {
-    "id": "d3",
-    "path": "/d3",
+    "id": "practice",
+    "path": "/practice",
     "pid": "0",
-    "name": "D3练习",
+    "name": "基本练习",
     "url": "",
     "type": 0,
     "handler": 1,
@@ -97,33 +97,43 @@
     "children": [
       {
         "id": "d3_init",
-        "path": "/d3/init",
+        "path": "/practice/d3init",
         "pid": "",
-        "name": "init",
+        "name": "D3",
         "url": "static/module/learn/D3/PageD3.vue",
         "type": 0,
         "handler": 1,
         "icon": ""
-      }
-    ]
-  },
-  {
-    "id": "bpmnjs",
-    "path": "/bpmnjs",
-    "pid": "0",
-    "name": "bpmnjs练习",
-    "url": "",
-    "type": 0,
-    "handler": 1,
-    "icon": "icon-setting",
-    "children": [
+      },
       {
         "id": "bpmnjs_init",
-        "path": "/bpmnjs/init",
+        "path": "/practice/bpmnjsinit",
         "pid": "",
-        "name": "bpmnjs练习_init",
+        "name": "bpmnjs",
         "url": "static/module/layout/PageForBundle.vue",
         "bundle": "PageBpmnjs",
+        "type": 0,
+        "handler": 1,
+        "icon": ""
+      },
+      {
+        "id": "react",
+        "path": "/practice/react",
+        "pid": "",
+        "name": "react",
+        "url": "./static/module/layout/PageForIFrame.vue",
+        "iframe": "./static/module/demo/iframe/PageReact.html",
+        "type": 0,
+        "handler": 1,
+        "icon": ""
+      },
+      {
+        "id": "baidu",
+        "path": "/practice/baidu",
+        "pid": "",
+        "name": "baidu",
+        "url": "./static/module/layout/PageForIFrame.vue",
+        "iframe": "https://www.baidu.com",
         "type": 0,
         "handler": 1,
         "icon": ""

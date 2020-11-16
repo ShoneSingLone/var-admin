@@ -13,7 +13,7 @@
   <iframe
     ref="iframe"
     :src="iframeSrc"
-    style="width:100%;height:100%;"
+    style="width: 100%; height: 100%"
     frameborder="0"
   />
 </template>
@@ -25,23 +25,17 @@ export default {
   props: {
     options: {
       type: Object,
-      default: function() {
+      default: function () {
         return {};
-      }
-    }
+      },
+    },
   },
   data() {
-    let iframeSrc = (url => {
-      if (/\/statics\/base\/page.html/g.test(url)) {
-        return url;
-      } else {
-        return "./modules/" + url + ".html";
-      }
-    })(this.options.url);
+    let iframeSrc = this.options.url;
     return { iframeSrc };
   },
   mounted() {},
-  methods: {}
+  methods: {},
 };
 </script>
 <style lang="less">
