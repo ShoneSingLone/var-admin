@@ -1,13 +1,11 @@
 <template>
-  <div
-    id="main-content202003053224"
-    class="main-content overflow-auto"
-  >
+  <div id="main-content202003053224" class="main-content overflow-auto">
     <el-tabs
       class="content-tabs-wrapper"
       tab-position="top"
       :value="APP_STATE.contentTabsActiveName"
       @tab-click="handleTabClick"
+      @contextmenu="handleClickTab"
       @tab-remove="handleTabRemove"
     >
       <el-tab-pane
@@ -18,7 +16,7 @@
         :name="tab.name"
         :closable="tab.name !== 'home'"
       >
-        <VarViewRouterContainer :options="{tab:tab}" />
+        <VarViewRouterContainer :options="{ tab: tab }" :ref="tab.name" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -31,18 +29,18 @@ const { APP_STATE, APP_ROUTER, _ } = window;
 export default {
   TEMPLATE_PLACEHOLDER,
   components: {
-    VarViewRouterContainer
+    VarViewRouterContainer,
   },
   data() {
     return {
       APP_ROUTER,
-      APP_STATE
+      APP_STATE,
     };
   },
   computed: {
     matched() {
       return _.last(APP_ROUTER.currentRoute.matched);
-    }
+    },
   },
   watch: {
     /* 中间处理层 */
@@ -57,7 +55,7 @@ export default {
         /* 新增 */
         this.addTab(matched);
       }
-    }
+    },
   },
   mounted() {
     console.log("MainContent mounted");
@@ -70,13 +68,18 @@ export default {
     /* 默认是home */
   },
   methods: {
+    handleClickTab(tab) {
+      event.stopPropagation();
+      event.preventDefault();
+      EventBus.trigger("refresh-content", tab.id);
+    },
     addTab(currentRoute) {
       if (!currentRoute.id) alert("传入的参数需是带id的route");
       var currentTab = {
         title: currentRoute.name,
         /* name as id */
         name: currentRoute.id,
-        content: currentRoute
+        content: currentRoute,
       };
 
       APP_STATE.contentTabs.push(currentTab);
@@ -105,7 +108,7 @@ export default {
       }
 
       this.editableTabsValue = activeName;
-      this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+      this.editableTabs = tabs.filter((tab) => tab.name !== targetName);
     },
     handleTabRemove(routeId) {
       /* home 不能关闭 */
@@ -141,9 +144,9 @@ export default {
         path,
         hash,
         query,
-        params
+        params,
       });
-    }
-  }
+    },
+  },
 };
 </script>

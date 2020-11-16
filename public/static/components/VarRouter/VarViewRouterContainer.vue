@@ -25,6 +25,7 @@ const {
   _: { $lazyLoadComponent, $resolvePath, $loadComponentByURL },
   APP_STATE,
   APP_ROUTER,
+  EventBus,
 } = window;
 
 // const { $system } = _;
@@ -75,6 +76,9 @@ export default {
     },
   },
   async mounted() {
+    EventBus.on("refresh-content", (name) => {
+      if (this.options.tab.name === name) this.refresh();
+    });
     setInterval(() => {
       this.time = Date.now();
     }, 600);
@@ -84,6 +88,14 @@ export default {
     console.log(this, "destroyed");
   },
   methods: {
+    refresh() {
+      this.refresh.component = this.currentComponent;
+      this.currentComponent = "LoadingView";
+      setTimeout(() => {
+        this.currentComponent = this.refresh.component;
+        delete this.refresh.component;
+      }, 1000);
+    },
     init(tab) {
       if (!tab.path) return;
       this.vueComponentHandler(tab);
