@@ -111,8 +111,10 @@
 
     return (
       <fieldset>
-        <legend>CommentList 是Class ,挂载的是实例</legend>
+        <legend>HOC</legend>
+        <h6>CommentList 是Class ,挂载的是实例</h6>
         <h6>装饰器？AOP？逻辑复用？</h6>
+        <p> 获取数据的逻辑复用 </p>
         <h6>在运行时选择类型(渲染函数单纯渲染，所以要在之前确定？)</h6>
         <ComponentArray0 otherData={{ msg: 'hello' }} />
         <ComponentArray1 otherData={{ msg: 'hello' }} />

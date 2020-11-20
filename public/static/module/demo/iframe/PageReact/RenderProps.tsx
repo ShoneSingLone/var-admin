@@ -1,4 +1,14 @@
 (({ React, ReactDOM }) => {
+
+  class Cat extends React.Component {
+    render() {
+      const mouse = this.props.mouse;
+      return (
+        <div style={{ position: 'absolute', left: mouse.x + 10, top: mouse.y + 10, height: '50px', width: '50px' }}><div>{`X:${mouse.x} Y:${mouse.y}`}</div>fake cat,niia~</div>
+      );
+    }
+  }
+
   class MouseTracker extends React.Component {
     render() {
       return (
@@ -6,15 +16,6 @@
           <h1 style={{ position: "absolute", zIndex: -1 }} >移动鼠标!</h1>
           <Mouse render={mouse => (<Cat mouse={mouse} />)} />
         </div >
-      );
-    }
-  }
-
-  class Cat extends React.Component {
-    render() {
-      const mouse = this.props.mouse;
-      return (
-        <div style={{ position: 'absolute', left: mouse.x + 10, top: mouse.y + 10, height: '50px', width: '50px' }}><div>{`X:${mouse.x} Y:${mouse.y}`}</div>fake cat,niia~</div>
       );
     }
   }
@@ -50,7 +51,7 @@
 
   const element = (() => {
     return (
-      <fieldset>
+      <fieldset style={{ overflow: 'hidden' }}>
         <legend>Render Props </legend>
         <MouseTracker />
       </fieldset>
