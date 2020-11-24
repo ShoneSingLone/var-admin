@@ -1,10 +1,9 @@
 (({ React, ReactDOM }) => {
-
   class Cat extends React.Component {
     render() {
       const mouse = this.props.mouse;
       return (
-        <div style={{ position: 'absolute', left: mouse.x + 10, top: mouse.y + 10, height: '50px', width: '50px' }}><div>{`X:${mouse.x} Y:${mouse.y}`}</div>fake cat,niia~</div>
+        <div style={{ position: 'absolute', left: mouse.x + 10, top: mouse.y + 10, height: '50px', width: '50px', background: 'url(./PageReact/cat.png)center bottom/cover no-repeat' }}><div style={{ position: 'absolute', top: '-42px', right: '-82px' }}>{`X:${mouse.x} Y:${mouse.y}`}</div></div>
       );
     }
   }
@@ -13,7 +12,7 @@
     render() {
       return (
         <div>
-          <h1 style={{ position: "absolute", zIndex: -1 }} >移动鼠标!</h1>
+          <h6 style={{ position: "absolute", zIndex: -1 }} >移动鼠标，带好你的猫</h6>
           <Mouse render={mouse => (<Cat mouse={mouse} />)} />
         </div >
       );

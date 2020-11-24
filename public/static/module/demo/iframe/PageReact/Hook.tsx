@@ -15,12 +15,39 @@
     );
   }
 
+
+  function CandyDispenser() {
+    const initialCandies = ['snickers', 'skittles', 'twix', 'milky way']
+    const [candies, setCandies] = useState(initialCandies)
+    const dispense = candy => setCandies(allCandies => allCandies.filter(c => c !== candy));
+    const makeLi = candy => (<li key={candy}> <button onClick={() => dispense(candy)}>grab</button> {candy} </li>);
+    const showList = candies => {
+      if (candies.length === 0) {
+        return <button onClick={() => setCandies(initialCandies)}>refill</button>
+      } else {
+        return (<ul> {candies.map(makeLi)} </ul>);
+      }
+    };
+
+    return (
+      <fieldset>
+        <legend>Candy Dispenser</legend>
+        <a href="https://kentcdodds.com/blog/usememo-and-usecallback" target="_blank">When to useMemo and useCallback——Kent C. Dodds</a>
+        <div>Available Candy</div>
+        {showList(candies)}
+      </fieldset>
+    )
+  }
+
   const element = (() => {
     return (
-      <fieldset style={{ overflow: 'hidden' }}>
-        <legend>State Hook </legend>
-        <HookState />
-      </fieldset>
+      <>
+        <CandyDispenser />
+        <fieldset style={{ overflow: 'hidden' }}>
+          <legend>State Hook </legend>
+          <HookState />
+        </fieldset>
+      </>
     );
   })();
   const targetDom = document.getElementById('hook');

@@ -303,6 +303,7 @@
         return (
           <fieldset>
             <legend>ErrorBoundary 大于 3 就炸</legend>
+            <h1 style={{ color: 'blue' }}>可使用useReducer 方案替换</h1>
             <ErrorBoundary >
               <Count count={this.state.count} onClick={() => { this.change(1) }}>add</Count>
               <br />

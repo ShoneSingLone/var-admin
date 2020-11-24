@@ -16,7 +16,7 @@
             /* 开发模式不缓存 静态资源 */
             IS_DEV: IS_DEV,
             /* 版本号不一致就从remote更新 .vue之类的资源 */
-            STATIC_RES_VERSION: IS_DEV ? Date.now() : "1605693637258",
+            STATIC_RES_VERSION: IS_DEV ? Date.now() : "1605866106636",
             resource: {
                 /* 重置版本号后不需要更新的资源，第三方库，size相对较大且不容易变化 */
                 exclude: {
