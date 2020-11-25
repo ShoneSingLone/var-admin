@@ -5,6 +5,5 @@ var app = express(),
     publicDir = path.join(__dirname, "public");
 
 app.use(express.static(publicDir));
-
 app.listen(port, () => console.log(`Express demo listening on port ${port}!`));
 module.exports = app;

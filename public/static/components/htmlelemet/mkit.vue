@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="markdown-wrapper description"
-    v-html="html"
-  />
+  <div class="markdown-wrapper description" v-html="html" />
 </template>
 <style>
 </style>
@@ -17,11 +14,16 @@ export default {
   },
   async mounted() {
     this.originHTML = this.$slots.default[0].children[0].text;
+    const {
+      _: { $loadCSS, $resolvePath },
+    } = window;
     const [marked, hljs] = await Promise.all([
       window.loadLibById("marked"),
       window.loadLibById("hljs"),
+      $loadCSS($resolvePath("static/lib/highlightstyles/monokai-sublime.css")),
     ]);
     const { Renderer } = marked;
+    marked.options = { langClass: "hljs" };
     const renderer = new Renderer();
     this.html = marked(this.originHTML, {
       renderer,

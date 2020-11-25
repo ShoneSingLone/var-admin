@@ -956,8 +956,8 @@
 				(escaped ? code : escape(code, true)) +
 				"</code></pre>";
 		}
-
 		return "<pre><code class=\"" +
+			marked.options.langClass + " " +
 			this.options.langPrefix +
 			escape(lang, true) +
 			"\">" +
@@ -1065,7 +1065,14 @@
 		if (href === null) {
 			return text;
 		}
-		var out = "<a href=\"" + escape(href) + "\"";
+
+		var regEx = new RegExp("^@@/static", "g");
+		if (regEx.test(href)) {
+			href = href.substring(3);
+		} else {
+			href = escape(href);
+		}
+		var out = "<a href=\"" + href + "\"";
 		if (title) {
 			out += " title=\"" + title + "\"";
 		}
@@ -1742,3 +1749,4 @@
 		root.marked = marked;
 	}
 })(this || (typeof window !== "undefined" ? window : global));
+console.log("🚀 ~ file: marked.js ~ line 1754 ~ marked.options", marked.options);

@@ -9,7 +9,8 @@ export default (path) => {
 
     const id = $getIDFromURL(path);
     return Vue.component(id /* id */ , (resolve, reject) => {
-        window.$system
+        window
+		.$system
             .import(path)
             .then((res) => {
                 res.default.name = id;

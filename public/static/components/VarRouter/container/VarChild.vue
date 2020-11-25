@@ -1,6 +1,6 @@
 <template>
-  <div class="var-container-child" :data-layout="zIndex">
-    <slot v-show="zIndex === 1" />
+  <div class="var-container-child" :data-layout="zIndex" v-show="zIndex === 1">
+    <slot />
   </div>
 </template>
 

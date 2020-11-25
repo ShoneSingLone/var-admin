@@ -4,9 +4,7 @@ export default async (eleMain) => {
             _,
             APP_CONFIGS
         } = window;
-        const {
-            PATH_PREFIX
-        } = APP_CONFIGS;
+        const { PATH_PREFIX } = APP_CONFIGS;
         const {
             $checkResourceCache: checkResourceCache,
             $resolvePath: resolvePath,

@@ -15,6 +15,7 @@ import {
 import { routeHome } from "@@/static/js/app/github/state/index.mjs";
 import "@@/static/style/less/Shell.less";
 Vue.use(ElementUI);
+
 const {
     _
 } = window;
