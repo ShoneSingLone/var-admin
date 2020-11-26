@@ -6,6 +6,22 @@
 - [ordinal-scale](@@/static/module/learn/D3/subpages/cookbook/src/chapter4/ordinal-scale.html)
 - [d3-scaleordinal](https://observablehq.com/@d3/d3-scaleordinal)
 - [schemeCategory10](https://github.com/d3/d3-scale-chromatic/blob/master/README.md#schemeCategory10)
+
+```js
+//返回的函数fnNumberToAlphabet是映射数值的工具函数
+    this.fnNumberToAlphabet = this.d3
+      .scaleOrdinal()
+      .domain([...new Array(10)].map((i, ii) => ii + 1))
+      .range(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]);
+```
+```js
+//对应的就是字母，颜色等等
+      this.dataArrayColor = this.dataArray.map((i, ii) => ({
+        d: this.fnNumberToColor(i.d),
+        index: ii + 1,
+      }));
+
+```
       </pre>
     </mkit>
     <div>

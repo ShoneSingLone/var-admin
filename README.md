@@ -374,6 +374,22 @@ less 获取less代码文本之后调用的方法在哪里？
 # VarContainer 与 VarChild
 
 VarChild必须直接被VarContainer包含
+```js
+      children: [
+        { iAm: "init", component: D3Main },
+        { iAm: "scale", component: D3Scale },
+      ],
+```
+```html
+  <VarContainer>
+    <VarChild :iAm="child.iAm" v-for="child in children" :key="child.iAm">
+      <div :is="child.component" />
+    </VarChild>
+  </VarContainer>
+```
+![switch_page](./public/static/module/docs/sys/img/switch_page.png)
+生成下拉，用于切换不同的子页面
 
 # markdown hightlight
 ![hightlight](./public/static/module/docs/sys/img/hightlight.png)
+

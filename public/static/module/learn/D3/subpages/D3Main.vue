@@ -28,10 +28,7 @@
     </mkit>
     <div v-html="html" />
     <div id="d3" />
-    <div>
-      <el-button @click="newData"> new data </el-button>
-      <div>{{ dataBar }}</div>
-    </div>
+
     <mkit>
       <pre>
 数据与图形的映射关系：当前的数值影响的是柱状体的高度。
@@ -42,6 +39,10 @@
 有了`Promise.all` `d3`的`defer`也不是特别需要了。
       </pre>
     </mkit>
+    <div>
+      <el-button @click="newData"> new data </el-button>
+      <div>{{ dataBar }}</div>
+    </div>
     <D3Bar :data="dataBar" />
   </div>
 </template>

@@ -1,9 +1,20 @@
 <template>
   <div class="var-container">
     <div class="options">
-      <el-button @click="toggle(childName)" v-for="childName in childNameArray" :key="childName">
-        {{ childName }}
-      </el-button>
+      <el-dropdown v-if="childNameArray.length > 1">
+        <span class="el-dropdown-link">
+          {{ childView }}{{ childNameArray.length
+          }}<i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item
+            v-for="childName in childNameArray"
+            :key="childName"
+            @click.native="toggle(childName)"
+            >{{ childName }}</el-dropdown-item
+          >
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <slot />
   </div>
@@ -51,7 +62,8 @@ export default {
       var index = this.childNameArray.indexOf(this.childView) || 0;
       var cIndex = (index + 1) % this.childNameArray.length;
       this.childView = this.childNameArray[cIndex];
-     */},
+     */
+    },
     register(childName, child) {
       if (this.children[childName]) {
         console.error(`VarChild ${childName} i-am 属性值重复`);
