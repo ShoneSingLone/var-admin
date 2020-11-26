@@ -8,7 +8,7 @@ window.__webpack_public_path__ = `${parentUrl}${PATH_PREFIX}/lib/bundle/`;
 export function getIDFromURL(url) {
     if (!url) {
         console.error("未提供 url");
-    } 
+    }
 
     return camelCase(url.substring(url.lastIndexOf(`/${PATH_PREFIX}`))).toLowerCase();
 }
@@ -42,7 +42,7 @@ function resolveIfNotPlainOrUrl(relUrl = "", parentUrl) {
     /* 相对路径 */
     // relative-url
     else if (relUrl[0] === "." && (relUrl[1] === "/" || relUrl[1] === "." && (relUrl[2] === "/" || relUrl.length === 2 && (relUrl += "/")) ||
-        relUrl.length === 1 && (relUrl += "/")) ||
+            relUrl.length === 1 && (relUrl += "/")) ||
         relUrl[0] === "/") {
         const parentProtocol = parentUrl.slice(0, parentUrl.indexOf(":") + 1);
         // Disabled, but these cases will give inconsistent results for deep backtracking

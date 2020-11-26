@@ -374,3 +374,6 @@ less 获取less代码文本之后调用的方法在哪里？
 # VarContainer 与 VarChild
 
 VarChild必须直接被VarContainer包含
+
+# markdown hightlight
+![hightlight](./public/static/module/docs/sys/img/hightlight.png)

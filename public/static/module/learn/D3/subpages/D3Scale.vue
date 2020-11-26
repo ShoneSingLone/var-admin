@@ -50,7 +50,7 @@ var format = d3.timeFormat("%x");
     <div id="time" class="clear">
       <span>Linear Time Progression<br /></span>
       <span>将时间 [01/01/2016, 12/31/2016] 映射成 [0, 1200]的数值<br /></span>
-      <svg style="float: left" viewBox="0 0 1200 100">
+      <svg viewBox="0 0 1200 100">
         <g>
           <path
             d="M 0,50 1200,50"

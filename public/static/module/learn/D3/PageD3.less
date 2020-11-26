@@ -111,3 +111,21 @@
 
     }
 }
+
+.markdown-wrapper {
+    position: relative;
+
+    .markdown-theme {
+        z-index: 1;
+        position: absolute;
+        max-width: 20px;
+        transition: 1s ease-in;
+        top: 10px;
+        left: 10px;
+
+        &:hover {
+            max-width: 100%;
+            cursor: pointer;
+        }
+    }
+}
