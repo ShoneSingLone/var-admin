@@ -9,6 +9,7 @@
 import basePageMixin from "@@/static/js/app/github/mixin/basePageMixin.mjs";
 import ClassRouter from "@@/static/components/VarRouter/ClassRouter.mjs";
 import D3Main from "@@/static/module/learn/D3/subpages/D3Main.vue";
+import D3Axes from "@@/static/module/learn/D3/subpages/D3Axes.vue";
 import D3Scale from "@@/static/module/learn/D3/subpages/D3Scale.vue";
 import D3Interpolator from "@@/static/module/learn/D3/subpages/D3Interpolator.vue";
 
@@ -18,6 +19,7 @@ export default {
   data() {
     return {
       children: [
+        { iAm: "D3Axes", component: D3Axes },
         { iAm: "Interpolator", component: D3Interpolator },
         { iAm: "init", component: D3Main },
         { iAm: "scale", component: D3Scale },

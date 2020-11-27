@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>防止table变形 td固定宽度</title>
+    <style type="text/css">
+        /*         table {
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        td {
+            width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+ */
+
+
+        table {
+            border-collapse: collapse;
+            table-layout: fixed;
+            width: 620px;
+        }
+
+        td {
+            width: 120px;
+            border: 1px solid #ddd;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长篇大论</td>
+            <td>囧</td>
+            <td>囧</td>
+            <td>囧</td>
+        </tr>
+        <tr>
+            <td>囧</td>
+            <td>囧</td>
+            <td>囧</td>
+            <td>囧</td>
+        </tr>
+    </table>
+</body>
+
+</html>

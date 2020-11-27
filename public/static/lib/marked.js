@@ -1072,7 +1072,7 @@
 		} else {
 			href = escape(href);
 		}
-		var out = "<a href=\"" + href + "\"";
+		var out = "<a class='link' href=\"" + href + "\"";
 		if (title) {
 			out += " title=\"" + title + "\"";
 		}
