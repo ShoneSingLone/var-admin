@@ -13,18 +13,32 @@
             height: 100vh;
             overflow: hidden;
         }
+
+        .wrapper {
+            padding: 24px 0;
+        }
+
+        .stamp {
+            width: 100%;
+            height: 32px;
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
         <el-scrollbar>
-            <div class="demo-image__lazy">
-
-                <a :href="`#${item.url}`" v-for="item in urls" :key="item.url" >
-                    <h6>{{item.url}}</h6>
-                    <el-image :src="`./assets/${item.url}.png`"></el-image>
+            <div class="wrapper" v-for="item in urls" :key="item.url">
+                <a :href="`#${item.url}`">
+                    <el-tag>{{item.url}}</el-tag>
                 </a>
+                <div class="stamp"></div>
+                <el-timeline>
+                    <el-timeline-item v-for="(item, index) in item.question" :key="index">{{item}}
+                    </el-timeline-item>
+                </el-timeline>
+                <el-image :src="`./assets/${item.url}`" :preview-src-list="[`./assets/${item.url}`]">
+                </el-image>
             </div>
         </el-scrollbar>
     </div>
