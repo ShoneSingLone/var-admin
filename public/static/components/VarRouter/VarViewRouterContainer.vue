@@ -89,8 +89,11 @@ export default {
   },
   methods: {
     refresh() {
+      /* 将要刷新的组件暂存 function是特殊的对象，也可以有属性 */
       this.refresh.component = this.currentComponent;
+      /* 切换成其他的组件 div也可以 */
       this.currentComponent = "LoadingView";
+      /* 切换之后原组件会被销毁，再切换回来就会重新加载 */
       setTimeout(() => {
         this.currentComponent = this.refresh.component;
         delete this.refresh.component;
